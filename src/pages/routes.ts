@@ -4,7 +4,7 @@ import { HomePage } from "./home";
 import { LoginPage } from "./login";
 import { NotificationsPage } from "./notifications";
 import { StatisticsPage } from "./statistics";
-import { paths } from "@shared/routing";
+import { paths } from "@/shared/routing";
 
 export interface Route {
   path: string;

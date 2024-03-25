@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "./routes";
-import { useAppSelector } from "@shared/store";
+import { useAppSelector } from "@/shared/store";
 
 export const Routing = () => {
   const { isAuth } = useAppSelector((state) => state.exchangerReducer);
