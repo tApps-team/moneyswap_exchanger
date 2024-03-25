@@ -36,7 +36,7 @@ export const AuthByUserNameForm = () => {
     <div className="container w-[600px]">
       <Form {...authForm}>
         <form
-          className="grid grid-cols-1 grid-rows-3"
+          className="grid grid-cols-1 grid-rows-3 gap-6"
           onSubmit={authForm.handleSubmit(onSubmit)}
         >
           <FormField
