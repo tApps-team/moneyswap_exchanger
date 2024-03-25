@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Token } from "@shared/types/tokens";
+import { Token } from "@/shared/types/tokens";
 import Cookies from "js-cookie";
 
 interface ExchangerState {
