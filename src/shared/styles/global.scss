@@ -4,30 +4,15 @@
 
 body {
   font-family: "Montserrat", sans-serif;
-  padding-top: var(--container-padding-top);
-
-  &.sidebar-open {
-    overflow: hidden;
-
-    &::after {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      transition: opacity 1s ease-in;
-
-      backdrop-filter: blur(3px);
-    }
-  }
 }
 
 .main_layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: #dedede;
+  max-width: var(--container-width);
+  margin: 0 auto;
 
   header,
   footer {
@@ -51,11 +36,5 @@ body {
 }
 
 .container {
-  max-width: var(--container-width);
-  padding: 0 var(--container-padding-side);
-  margin: 0 auto;
-}
-
-.sidebar {
-  padding-left: 75px;
+  padding: var(--container-padding-all);
 }
