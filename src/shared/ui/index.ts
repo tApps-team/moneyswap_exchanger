@@ -10,7 +10,7 @@ export {
   useFormField,
 } from "./form";
 export { Label } from "./label";
-export { Input } from "./input";
+export { Input, PasswordInput, InputWitchIcon } from "./input";
 export {
   Tooltip,
   TooltipContent,
