@@ -2,22 +2,16 @@ import {
   Button,
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
   Input,
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
 } from "@/shared/ui";
+import { PasswordInput } from "@/shared/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { AuthFormSchema, authFormSchema } from "../model/authFormSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, User } from "lucide-react";
-import { InputWitchIcon, PasswordInput } from "@/shared/ui/input";
 
 export const AuthByUserNameForm = () => {
   const authForm = useForm<AuthFormSchema>({
