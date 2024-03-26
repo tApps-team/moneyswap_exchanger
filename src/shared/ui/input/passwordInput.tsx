@@ -10,13 +10,15 @@ import {
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
-
-const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+export type PasswordInputProps = InputProps & {
+  endIcon?: React.ReactNode;
+};
+const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
+  ({ className, type, endIcon, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false);
 
     const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
+      setShowPassword((prev) => !prev);
     };
 
     const inputType = type === "password" && showPassword ? "text" : type;
@@ -33,7 +35,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
         />
-        {type === "password" && (
+        {!endIcon && type === "password" && (
           <button
             type="button"
             className="absolute right-3 top-1/2 -translate-y-1/2"
@@ -65,6 +67,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
             )}
           </button>
         )}
+        {endIcon ? endIcon : null}
       </div>
     );
   }
