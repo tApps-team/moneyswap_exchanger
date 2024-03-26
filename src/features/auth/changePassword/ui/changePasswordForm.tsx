@@ -94,7 +94,7 @@ export const ChangePasswordForm = () => {
           />
           <Button
             type="submit"
-            className="rounded-full bg-[#F6FF5F] text-black text-lg"
+            className="rounded-full bg-[#F6FF5F]  text-black text-lg h-16 "
           >
             Сохранить изменения
           </Button>
