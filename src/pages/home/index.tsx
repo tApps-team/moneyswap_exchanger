@@ -1,5 +1,5 @@
 import { FC } from "react";
 
 export const HomePage: FC = () => {
-  return <div>HOME</div>;
+  return <div>HOME PAGE</div>;
 };
