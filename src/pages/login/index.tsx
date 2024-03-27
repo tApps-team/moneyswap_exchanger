@@ -1,4 +1,4 @@
-import { paths } from "@shared/routing";
+import { paths } from "@/shared/routing";
 import { Navigate } from "react-router-dom";
 
 export const LoginPage = () => {
