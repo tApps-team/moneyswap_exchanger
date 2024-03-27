@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Token } from "@shared/types/tokens";
 import Cookies from "js-cookie";
 
-interface ExchangerState {
+interface UserState {
   isAuth: boolean;
 }
 
-const initialState: ExchangerState = {
+const initialState: UserState = {
   isAuth: Cookies.get("isAuth") === "true" ? true : false,
 };
 
