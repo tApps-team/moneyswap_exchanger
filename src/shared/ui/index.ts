@@ -17,3 +17,5 @@ export {
   TooltipProvider,
   TooltipTrigger,
 } from "./tooltip";
+export * from "./carousel";
+export * from "./card";
