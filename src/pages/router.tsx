@@ -1,18 +1,18 @@
+import { RootLayout } from "@/app/layouts/RootLayout";
+import { paths } from "@/shared/routing";
 import { createBrowserRouter } from "react-router-dom";
-import { paths } from "@shared/routing";
-import { LoginPage } from "./login";
 import ProtectedRoutes from "./ProtectedRoutes";
+import { DirectionSettingsPage } from "./directionSettings";
 import { HomePage } from "./home";
+import { LocationSettingsPage } from "./locationSettings";
+import { LoginPage } from "./login";
+import { NotFoundPage } from "./notFound";
 import { NotificationsPage } from "./notifications";
 import { ProfilePage } from "./profile";
-import { StatisticsPage } from "./statistics";
-import { ProfileSettingsPage } from "./profileSettings";
 import { ProfileInfoPage } from "./profileInfo";
 import { ProfilePasswordPage } from "./profilePassword";
-import { LocationSettingsPage } from "./locationSettings";
-import { DirectionSettingsPage } from "./directionSettings";
-import { NotFoundPage } from "./notFound";
-import { RootLayout } from "@app/layouts/RootLayout";
+import { StatisticsPage } from "./statistics";
+import { ProfileSettingsPage } from "./profileSettings";
 
 export const router = createBrowserRouter([
   {
