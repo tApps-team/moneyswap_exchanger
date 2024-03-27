@@ -1,8 +1,8 @@
+import { userSlice } from "@entities/user";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import exchangerReducer from "./reducers/exchangerSlice";
 
 const rootReducer = combineReducers({
-  exchangerReducer,
+  [userSlice.name]: userSlice.reducer,
 });
 
 export const setupStore = () => {
