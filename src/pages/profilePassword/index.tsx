@@ -1,3 +1,1 @@
-export const ProfilePasswordPage = () => {
-  return <div>PROFILE FORGOT PASSWORD PAGE</div>;
-};
+export { ProfilePasswordPage } from "./ui/profilePasswordPage";

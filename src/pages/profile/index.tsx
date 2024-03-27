@@ -1,3 +1,1 @@
-export const ProfilePage = () => {
-  return <div>Profile Page</div>;
-};
+export { ProfilePage } from "./ui/profilePage";
