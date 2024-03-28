@@ -9,10 +9,11 @@ import { LoginPage } from "./login";
 import { NotFoundPage } from "./notFound";
 import { NotificationsPage } from "./notifications";
 import { ProfilePage } from "./profile";
-import { ProfileInfoPage } from "./profileInfo";
+
 import { ProfilePasswordPage } from "./profilePassword";
-import { StatisticsPage } from "./statistics";
 import { ProfileSettingsPage } from "./profileSettings";
+import { ProfileInfoPage } from "./profileInfo";
+import { StatisticsPage } from "./statistics";
 
 export const router = createBrowserRouter([
   {
