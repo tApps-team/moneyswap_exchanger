@@ -42,13 +42,16 @@ export const CityCarousel = () => {
     >
       <CarouselContent>
         {cities.map((city) => (
-          <CarouselItem>
+          <CarouselItem
+            className=" basis-8/12 "
+            //md:basis-1/2 lg:basis-8/12 sm:basis-11/12
+            key={city.id}
+          >
             <CityCard
               code_name={city.code_name}
               id={city.id}
               name={city.name}
               imageUrl={city.imageUrl}
-              key={city.id}
             />
           </CarouselItem>
         ))}
