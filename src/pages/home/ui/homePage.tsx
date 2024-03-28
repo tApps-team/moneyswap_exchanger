@@ -1,11 +1,13 @@
-import { CityCarousel } from "@/features/city";
-import { AddCityButton } from "@/features/city/addCityButton";
+import { DirectionCard } from "@/entities/direction";
+import { MyCities } from "@/widgets/myCities";
+import { MyDirection } from "@/widgets/myDirection";
 
 export const HomePage = () => {
   return (
-    <div className="flex gap-2">
-      <AddCityButton />
-      <CityCarousel />
+    <div className="grid grid-cols-1 grid-rows-2 gap-4">
+      <MyCities />
+      <MyDirection />
+      <DirectionCard />
     </div>
   );
 };
