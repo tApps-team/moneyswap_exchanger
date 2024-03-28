@@ -1,4 +1,4 @@
-import { userSlice } from "@entities/user";
+import { userSlice } from "@/entities/user";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 const rootReducer = combineReducers({
