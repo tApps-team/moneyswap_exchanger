@@ -1,5 +1,4 @@
-import { CityCarousel } from "@/features/city";
-import { AddCityButton } from "@/features/city/addCityButton";
+import { AddCityButton, CityCarousel } from "@/features/location";
 
 export const MyCities = () => {
   return (
