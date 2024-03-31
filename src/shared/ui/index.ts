@@ -20,3 +20,5 @@ export {
 export * from "./carousel";
 export * from "./card";
 export * from "./checkbox";
+export * from "./drawer";
+export * from "./scroll-area";
