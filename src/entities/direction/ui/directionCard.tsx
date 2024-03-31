@@ -26,8 +26,8 @@ export const DirectionCard = (props: Partial<DirectionCardProps>) => {
     valute_to,
   } = props;
   return (
-    <Card className="w-full h-16 rounded-xl">
-      <CardContent className="p-4 flex justify-between items-center">
+    <Card className="rounded-xl">
+      <CardContent className="relative p-4 flex justify-between items-center">
         <div className="flex items-center gap-1">
           <div>img</div>
           <div>35,98</div>
@@ -39,6 +39,7 @@ export const DirectionCard = (props: Partial<DirectionCardProps>) => {
         </div>
         <Checkbox className="data-[state=checked]:bg-white data-[state=checked]:text-black" />
       </CardContent>
+      <CardFooter className="bg-[#BBBBBB] rounded-b-xl "></CardFooter>
     </Card>
   );
 };
