@@ -5,7 +5,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import { DirectionSettingsPage } from "./directionSettings";
 import { HomePage } from "./home";
 import { LocationSettingsPage } from "./locationSettings";
-import { LoginPage } from "./login";
+
 import { NotFoundPage } from "./notFound";
 import { NotificationsPage } from "./notifications";
 import { ProfilePage } from "./profile";
@@ -14,6 +14,7 @@ import { ProfilePasswordPage } from "./profilePassword";
 import { ProfileSettingsPage } from "./profileSettings";
 import { ProfileInfoPage } from "./profileInfo";
 import { StatisticsPage } from "./statistics";
+import { LoginPage } from "./login";
 
 export const router = createBrowserRouter([
   {
