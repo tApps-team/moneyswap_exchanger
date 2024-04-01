@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Token } from "@shared/types/tokens";
 import Cookies from "js-cookie";
+import { Tokens } from "./types";
+import { paths } from "@/shared/routing";
 
 interface UserState {
   isAuth: boolean;
@@ -14,7 +15,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<Token>) => {
+    login: (state, action: PayloadAction<Tokens>) => {
       Cookies.set("isAuth", "true");
       state.isAuth = true;
       Cookies.set("accessToken", action.payload.access_token, {
@@ -35,7 +36,7 @@ export const userSlice = createSlice({
       Cookies.remove("refreshToken");
       Cookies.set("isAuth", "false");
       state.isAuth = false;
-      window.location.href = "/";
+      window.location.href = paths.login;
     },
     setAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload;
