@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { paths } from "@shared/routing";
+import { paths } from "@/shared/routing";
 import { LoginPage } from "./login";
 import ProtectedRoutes from "./ProtectedRoutes";
 import { HomePage } from "./home";
@@ -12,7 +12,7 @@ import { ProfilePasswordPage } from "./profilePassword";
 import { LocationSettingsPage } from "./locationSettings";
 import { DirectionSettingsPage } from "./directionSettings";
 import { NotFoundPage } from "./notFound";
-import { RootLayout } from "@app/layouts/RootLayout";
+import { RootLayout } from "@/pages/layouts/RootLayout";
 
 export const router = createBrowserRouter([
   {

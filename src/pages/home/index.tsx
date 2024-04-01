@@ -1,5 +1,10 @@
+import { MyCustomAuthReq } from "@/widgets/myCustomAuthReq/ui/myCustomAuthReq";
 import { FC } from "react";
 
 export const HomePage: FC = () => {
-  return <div>HOME PAGE</div>;
+  return (
+    <div>
+      <MyCustomAuthReq />
+    </div>
+  );
 };
