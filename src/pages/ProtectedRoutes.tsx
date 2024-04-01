@@ -1,5 +1,4 @@
-import { paths } from "@shared/routing";
-import React from "react";
+import { paths } from "@/shared/routing";
 
 import { Navigate, Outlet } from "react-router-dom";
 

@@ -1,5 +1,1 @@
-import { FC } from "react";
-
-export const HomePage: FC = () => {
-  return <div>HOME PAGE</div>;
-};
+export { HomePage } from "./ui/homePage";
