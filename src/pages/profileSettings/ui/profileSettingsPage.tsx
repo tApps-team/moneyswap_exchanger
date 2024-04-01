@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export const ProfileSettingsPage = () => {
   return (
-    <div className="flex flex-col w-[500px] gap-4">
+    <div className="flex flex-col gap-4">
       <Button className="justify-start gap-4 cursor-pointer" asChild>
         <Link
           to={`${paths.profile}${paths.profileSettings}${paths.profileInfo}`}
