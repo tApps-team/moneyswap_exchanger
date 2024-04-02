@@ -42,6 +42,11 @@ export const LocationSettingsPage = () => {
     form.setValue("country", location.name);
     console.log(form.getValues("country"));
   };
+  const onChangeCity = (location: Country | City) => {
+    form.setValue("country", location.name);
+    console.log(form.getValues("country"));
+  };
+
   return (
     <div className="grid gap-4">
       <Form {...form}>

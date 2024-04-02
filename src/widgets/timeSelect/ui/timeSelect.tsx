@@ -1,24 +1,25 @@
 import { IosPickerItem } from "@/features/timePicker/ui/timePicker";
-import styles from "./timeSelect.module.scss";
 import {
   Button,
   Drawer,
-  DrawerClose,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/shared/ui";
+import styles from "./timeSelect.module.scss";
+import { ChevronDown } from "lucide-react";
 export const TimeSelect = () => {
+  
   return (
     <Drawer>
       <DrawerTrigger asChild>
         <Button
-          className="w-full justify-between items-center rounded-full gap-2 select-none"
+          className="w-[103px] h-[38px] justify-between items-center rounded-full gap-2 select-none"
           variant={"outline"}
         >
-          Выбрать время
+          <div>12:00</div>
+          <ChevronDown />
         </Button>
       </DrawerTrigger>
       <DrawerContent className="h-screen">
