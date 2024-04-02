@@ -124,7 +124,7 @@ export const IosPickerItem: React.FC<PropType> = (props) => {
     });
     emblaApi.on("select", () => {
       const currentIndex = emblaApi.selectedScrollSnap();
-      setSelectedValue(currentIndex); // Обновляем выбранное значение
+      setSelectedValue(currentIndex);
     });
     emblaApi.on("scroll", rotateWheel);
 
@@ -161,7 +161,7 @@ export const IosPickerItem: React.FC<PropType> = (props) => {
           </div>
         </div>
       </div>
-      <div className={styles.embla__ios_picker__label}>{label}</div>
+      {/* <div className={styles.embla__ios_picker__label}>{label}</div> */}
     </div>
   );
 };
