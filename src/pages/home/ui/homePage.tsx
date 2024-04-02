@@ -1,7 +1,6 @@
 import { Direction } from "@/features/direction";
 import { MyCities } from "@/widgets/myCities";
 import { MyDirection } from "@/widgets/myDirection";
-import { TimeSelect } from "@/widgets/timeSelect";
 
 export const HomePage = () => {
   return (
@@ -9,7 +8,6 @@ export const HomePage = () => {
       <MyCities />
       <MyDirection />
       <Direction />
-      <TimeSelect />
     </div>
   );
 };
