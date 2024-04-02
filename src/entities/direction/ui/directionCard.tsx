@@ -6,6 +6,8 @@ import {
   Checkbox,
 } from "@/shared/ui";
 import { Direction } from "../model/directionType";
+import { TouchEvent, TouchEventHandler, useRef, useState } from "react";
+import { DeleteDirection, EditDirection } from "@/features/direction";
 
 export type DirectionCardProps = Direction;
 export const DirectionCard = (props: Partial<DirectionCardProps>) => {
@@ -25,8 +27,30 @@ export const DirectionCard = (props: Partial<DirectionCardProps>) => {
     valute_from,
     valute_to,
   } = props;
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [startX, setStartX] = useState<number>(0);
+  const [endX, setEndX] = useState<number | null>(null);
+  const onTouchStart = (e: TouchEvent) => {
+    const start = e.targetTouches[0].clientX;
+    setStartX(start);
+  };
+  const onTouchMove = (e: TouchEvent) => {
+    const currentX = e.targetTouches[0].clientX;
+    console.log(currentX - startX);
+    ref.current.style.transform = `translateX(${currentX - startX}px)`;
+  };
+  const onTouchEnd = () => {
+    ref.current.style.transform = `translateX(0px)`;
+  };
+
   return (
-    <Card className="rounded-xl">
+    <Card
+      ref={ref}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      className="rounded-xl select-none "
+    >
       <CardContent className="relative p-4 flex justify-between items-center">
         <div className="flex items-center gap-1">
           <div>img</div>
@@ -39,6 +63,10 @@ export const DirectionCard = (props: Partial<DirectionCardProps>) => {
         </div>
         <Checkbox className="data-[state=checked]:bg-white data-[state=checked]:text-black" />
       </CardContent>
+      <div className="flex">
+        <EditDirection />
+        <DeleteDirection />
+      </div>
       <CardFooter className="bg-[#BBBBBB] rounded-b-xl "></CardFooter>
     </Card>
   );
