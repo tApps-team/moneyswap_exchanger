@@ -51,7 +51,7 @@ export const CityCarousel = () => {
               code_name={city.code_name}
               id={city.id}
               name={city.name}
-              imageUrl={city.imageUrl}
+              imageUrl={city?.imageUrl}
             />
           </CarouselItem>
         ))}
