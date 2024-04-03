@@ -1,0 +1,28 @@
+.embla {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 22.2rem;
+  max-width: 30rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.embla:before,
+.embla:after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  content: "";
+  display: block;
+  height: calc(50% - 32px / 2);
+  z-index: 1;
+  pointer-events: none;
+}
+.embla:before {
+  top: -0.5px;
+  border-bottom: 0.5px solid rgba(49, 49, 49, 0.3);
+}
+.embla:after {
+  bottom: -0.5px;
+  border-top: 0.5px solid rgba(49, 49, 49, 0.3);
+}

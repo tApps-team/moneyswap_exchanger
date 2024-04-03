@@ -8,7 +8,7 @@ export const LoginPage = () => {
 
   return (
     <div>
-      <AuthByUserNameForm /> {isAuth && <Navigate to={paths.profile} replace />}
+      <AuthByUserNameForm /> {isAuth && <Navigate to={paths.home} replace />}
     </div>
   );
 };

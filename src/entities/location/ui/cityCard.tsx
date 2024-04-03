@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/shared/ui";
 import { City } from "../model/types";
 import { Settings } from "lucide-react";
 import { Link } from "react-router-dom";
+import { paths } from "@/shared/routing";
 export type CityCardProps = City & {
   imageUrl: string;
 };
@@ -18,16 +19,22 @@ export const CityCard = (props: CityCardProps) => {
     //   </CardContent>
     // </Card>
     <Card className="w-52 h-16 rounded-xl ">
-      <CardContent className="w-full h-full flex  p-0 pl-2 gap-2 justify-between items-center">
-        <div className="flex-2">img</div>
-        <div className="flex-1">name</div>
+      <CardContent className="w-full h-full flex  p-0 pl-3 gap-3 justify-between items-center">
+        <div className="flex-2">
+          <img
+            className="rounded-full w-8 h-8 object-cover"
+            src={imageUrl}
+            alt={`Иконка ${name}`}
+          />
+        </div>
+        <div className="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
+          {name}
+        </div>
         <Link
-          to={"/profile"}
+          to={paths.locationEdit}
           className="h-full w-12 items-center flex flex-0 justify-center rounded-l-none rounded-xl bg-[#E2FF54]"
         >
-          {/* <div > */}
           <Settings />
-          {/* </div> */}
         </Link>
       </CardContent>
     </Card>

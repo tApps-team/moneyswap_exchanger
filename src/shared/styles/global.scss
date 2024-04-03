@@ -82,25 +82,6 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-.main_layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: #dedede;
-  max-width: var(--container-width);
-  margin: 0 auto;
-
-  header,
-  footer {
-    flex-shrink: 0;
-  }
-
-  main {
-    flex-grow: 1;
-    overflow-y: auto;
-  }
-}
-
 .overlay {
   position: fixed;
   top: 0;

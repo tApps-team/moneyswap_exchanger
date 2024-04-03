@@ -4,31 +4,31 @@ const cities: CityCardProps[] = [
   {
     code_name: "BAN",
     id: 1,
-    imageUrl: "asdfsadfsaf",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
     name: "Багкок",
   },
   {
     code_name: "BAN",
     id: 2,
-    imageUrl: "asdfsadfsaf",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
     name: "Багкок",
   },
   {
     code_name: "BAN",
     id: 3,
-    imageUrl: "asdfsadfsaf",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
     name: "Багкок",
   },
   {
     code_name: "BAN",
     id: 4,
-    imageUrl: "asdfsadfsaf",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
     name: "Багкок",
   },
   {
     code_name: "BAN",
     id: 5,
-    imageUrl: "asdfsadfsaf",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
     name: "Багкок",
   },
 ];
@@ -38,12 +38,12 @@ export const CityCarousel = () => {
       opts={{
         align: "start",
       }}
-      className="w-full max-w-sm"
+      // className="max-w-sm"
     >
       <CarouselContent>
         {cities.map((city) => (
           <CarouselItem
-            className="basis-8/12 "
+            // className="basis-8/12"
             //md:basis-1/2 lg:basis-8/12 sm:basis-11/12
             key={city.id}
           >

@@ -1,12 +1,15 @@
 import { AddCityButton, CityCarousel } from "@/features/location";
+import styles from "./myCities.module.scss";
 
 export const MyCities = () => {
   return (
     <div>
       <div>Мои города</div>
-      <div className="flex gap-2">
+      <div className="flex gap-3">
         <AddCityButton />
-        <CityCarousel />
+        <div className={styles.cities}>
+          <CityCarousel />
+        </div>
       </div>
     </div>
   );

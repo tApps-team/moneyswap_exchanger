@@ -14,17 +14,8 @@ import {
   ScrollArea,
 } from "@/shared/ui";
 import { ChevronDown, Circle } from "lucide-react";
-const CountryCard = (props: CityCardProps) => {
-  const { code_name, id, imageUrl, name } = props;
-  return (
-    <Card className="cursor-pointer">
-      <CardContent className="flex gap-2">
-        <div>image</div>
-        <div>{name}</div>
-      </CardContent>
-    </Card>
-  );
-};
+import { useFormContext } from "react-hook-form";
+
 const cities: CityCardProps[] = [
   {
     code_name: "BAN",
@@ -60,7 +51,7 @@ const cities: CityCardProps[] = [
     code_name: "BAN",
     id: 6,
     imageUrl: "asdfsadfsaf",
-    name: "Багкок",
+    name: "Тайланд",
   },
   {
     code_name: "BAN",
@@ -90,56 +81,69 @@ const cities: CityCardProps[] = [
 type CountrySelectProps = {
   type?: "city" | "country";
   city?: City[];
+  label?: string;
   country?: Country[];
+  onClick: (location: Country | City) => void;
+};
+const CountryCard = (props: CityCardProps & { onClick: () => void }) => {
+  const { code_name, id, imageUrl, name, onClick } = props;
+  return (
+    <Card onClick={onClick} className="cursor-pointer">
+      <CardContent className="flex gap-2">
+        <div>image</div>
+        <div>{name}</div>
+      </CardContent>
+    </Card>
+  );
 };
 export const CountrySelect = (props: CountrySelectProps) => {
-  const { city, country, type } = props;
+  const { city, country, type, onClick, label } = props;
+  const emptyLabel = type === "city" ? "Выберите город" : "Выберите страну";
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
-        <Button
-          className="w-full justify-between items-center rounded-full gap-2 select-none"
-          variant={"outline"}
-        >
-          <div className="flex gap-2 items-center">
-            <Circle />
-            <div>Тайланд</div>
-          </div>
-          <div className="flex ">
-            <div>change</div>
-            <ChevronDown />
-          </div>
-        </Button>
-      </DrawerTrigger>
-      <DrawerContent className="h-screen">
-        <DrawerHeader>
-          <DrawerTitle>
-            Выберите страну в которой будет размещен обменик
-          </DrawerTitle>
-          <DrawerDescription>это можно будет изменить</DrawerDescription>
-        </DrawerHeader>
-        <div className="p-4">
-          <ScrollArea className="h-screen w-full ">
-            <div className="flex flex-col gap-4">
-              {cities.map((city) => (
-                <DrawerClose key={city.id}>
-                  <CountryCard
-                    code_name={city.code_name}
-                    id={city.id}
-                    imageUrl={city.imageUrl}
-                    name={city.name}
-                  />
-                </DrawerClose>
-              ))}
+    <div>
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button
+            className="w-full justify-between items-center rounded-full gap-2 select-none"
+            variant={"outline"}
+          >
+            <div className="flex gap-2 items-center">
+              <Circle />
+              <div>{label ? label : emptyLabel}</div>
             </div>
-          </ScrollArea>
-        </div>
-        <DrawerFooter>
-          <DrawerClose>
-            <Button variant="outline">Выйти</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+            <div className="flex ">
+              <div>change</div>
+              <ChevronDown />
+            </div>
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent className="h-screen">
+          <DrawerHeader>
+            <DrawerTitle>
+              Выберите страну в которой будет размещен обменик
+            </DrawerTitle>
+            <DrawerDescription>это можно будет изменить</DrawerDescription>
+          </DrawerHeader>
+          <div className="p-4">
+            <ScrollArea className="h-[320px] w-full ">
+              <div className="flex flex-col gap-4">
+                {cities.map((city) => (
+                  <DrawerClose key={city.id}>
+                    <CountryCard
+                      onClick={() => onClick(city)}
+                      code_name={city.code_name}
+                      id={city.id}
+                      imageUrl={city.imageUrl}
+                      name={city.name}
+                    />
+                    {/* <div onClick={() => onClick(city)}>{city.name}</div> */}
+                  </DrawerClose>
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+        </DrawerContent>
+      </Drawer>
+    </div>
   );
 };

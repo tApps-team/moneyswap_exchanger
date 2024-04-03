@@ -4,31 +4,31 @@ const cities: CityCardProps[] = [
   {
     code_name: "BAN",
     id: 1,
-    imageUrl: "asdfsadfsaf",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
     name: "Багкок",
   },
   {
     code_name: "BAN",
     id: 2,
-    imageUrl: "asdfsadfsaf",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
     name: "Багкок",
   },
   {
     code_name: "BAN",
     id: 3,
-    imageUrl: "asdfsadfsaf",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
     name: "Багкок",
   },
   {
     code_name: "BAN",
     id: 4,
-    imageUrl: "asdfsadfsaf",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
     name: "Багкок",
   },
   {
     code_name: "BAN",
     id: 5,
-    imageUrl: "asdfsadfsaf",
+    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
     name: "Багкок",
   },
 ];

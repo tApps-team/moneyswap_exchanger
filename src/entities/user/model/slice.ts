@@ -36,7 +36,6 @@ export const userSlice = createSlice({
       Cookies.remove("refreshToken");
       Cookies.set("isAuth", "false");
       state.isAuth = false;
-      window.location.href = paths.login;
     },
     setAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload;

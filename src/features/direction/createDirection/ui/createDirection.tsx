@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export const CreateDirection = () => {
   return (
     <Button className="flex justify-center h-16 rounded-xl" asChild>
-      <Link to={paths.directionSettings}>
+      <Link to={paths.directionAdd}>
         <CirclePlus />
       </Link>
     </Button>
