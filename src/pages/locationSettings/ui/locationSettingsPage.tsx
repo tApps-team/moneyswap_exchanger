@@ -1,6 +1,7 @@
 import { City, Country } from "@/entities/location";
 import { LocationSelect } from "@/features/location";
 import {
+  Button,
   Form,
   FormControl,
   FormField,
@@ -8,13 +9,13 @@ import {
   FormLabel,
   FormMessage,
   Input,
+  Switch,
 } from "@/shared/ui";
-import { TimeSelect } from "@/widgets/timeSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDown } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import "./location.scss";
+
 const cities: City[] = [
   {
     code_name: "BAN",
@@ -119,14 +120,23 @@ const countries: Country[] = [
     name: "Багкок",
   },
 ];
+const workDays = {
+  Пн: false,
+  Вт: false,
+  Ср: false,
+  Чт: false,
+  Пт: false,
+  Сб: false,
+  Вс: false,
+};
 export const locationSchema = z.object({
   city: z.string(),
   country: z.string(),
   deliviry: z.boolean(),
   office: z.boolean(),
-  timeStart: z.string().datetime(),
-  timeEnd: z.string().datetime(),
-  workDays: z.number().array(),
+  timeStart: z.string(),
+  timeEnd: z.string(),
+  workDays: z.record(z.string(), z.boolean()),
 });
 export type locationSchemaType = z.infer<typeof locationSchema>;
 export const LocationSettingsPage = () => {
@@ -139,37 +149,37 @@ export const LocationSettingsPage = () => {
       office: false,
       timeEnd: "00:00",
       timeStart: "00:00",
-      workDays: [],
+      workDays: {
+        Пн: false,
+        Вт: false,
+        Ср: false,
+        Чт: false,
+        Пт: false,
+        Сб: false,
+        Вс: false,
+      },
     },
   });
   form.watch(["timeStart", "timeEnd"]);
-  console.log(form.getValues("timeStart"));
-  console.log(form.getValues("timeEnd"));
-
-  const onChangeCountry = (location: Country | City) => {
-    form.setValue("country", location.name);
-    console.log(form.getValues("country"));
-  };
-  const onChangeCity = (location: Country | City) => {
-    form.setValue("country", location.name);
-    console.log(form.getValues("country"));
+  const onSubmit = (data: locationSchemaType) => {
+    console.log(data);
   };
 
   return (
     <div className="grid gap-4">
       <Form {...form}>
-        <form>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
             name={"city"}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{form.getValues("city")}</FormLabel>
+                <FormLabel>{field.value}</FormLabel>
                 <FormControl>
                   <LocationSelect
                     type="city"
                     city={cities}
-                    label={form.getValues("city")}
+                    label={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -181,12 +191,12 @@ export const LocationSettingsPage = () => {
             name={"country"}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{form.getValues("country")}</FormLabel>
+                <FormLabel>{field.value}</FormLabel>
                 <FormControl>
                   <LocationSelect
                     type="country"
                     country={countries}
-                    label={form.getValues("country")}
+                    label={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -201,12 +211,9 @@ export const LocationSettingsPage = () => {
                 <FormItem>
                   <FormControl>
                     <Input
-                      {...field}
-                      onChange={(e) =>
-                        form.setValue("timeStart", e.target.value)
-                      }
                       type="time"
                       className="w-[103px]  h-[38px] p-2 bg-white rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -220,10 +227,9 @@ export const LocationSettingsPage = () => {
                 <FormItem>
                   <FormControl>
                     <Input
-                      {...field}
-                      onChange={(e) => form.setValue("timeEnd", e.target.value)}
                       type="time"
                       className=" w-[103px]  h-[38px] p-2 bg-white rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -231,8 +237,72 @@ export const LocationSettingsPage = () => {
               )}
             />
           </div>
-
-          <TimeSelect />
+          <FormField
+            control={form.control}
+            name={"deliviry"}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="flex justify-between">
+                    <div className="flex gap-6">
+                      <SquarePen />
+                      <div>Доставка</div>
+                    </div>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name={"office"}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="flex justify-between">
+                    <div className="flex gap-6">
+                      <SquarePen />
+                      <div>Есть офис</div>
+                    </div>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {Object.keys(form.formState.defaultValues?.workDays || {}).map(
+            (day) => (
+              <FormField
+                key={day}
+                control={form.control}
+                name={`workDays.${day}`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                        <div>{day}</div>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )
+          )}
+          <Button type="submit">Submit</Button>
         </form>
       </Form>
     </div>
