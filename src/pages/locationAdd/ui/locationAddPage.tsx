@@ -1,5 +1,6 @@
 import { City, Country } from "@/entities/location";
 import { LocationSelect } from "@/features/location";
+import { LocationSelectRefactoringProps } from "@/features/location/locationSelect/ui/locationSelect";
 import {
   Button,
   Form,
@@ -167,9 +168,9 @@ export const LocationAddPage = () => {
   };
 
   return (
-    <div className="grid gap-4">
+    <div className="">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="grid gap-8" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
             name={"city"}
@@ -182,6 +183,7 @@ export const LocationAddPage = () => {
                     city={cities}
                     label={field.value}
                   />
+                  {/* <LocationSelectRefactoringProps labelWitchIcon/> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -280,29 +282,32 @@ export const LocationAddPage = () => {
               </FormItem>
             )}
           />
-          {Object.keys(form.formState.defaultValues?.workDays || {}).map(
-            (day) => (
-              <FormField
-                key={day}
-                control={form.control}
-                name={`workDays.${day}`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div>
-                        <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                        <div>{day}</div>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )
-          )}
+          <div className="flex">
+            {Object.keys(form.formState.defaultValues?.workDays || {}).map(
+              (day) => (
+                <FormField
+                  key={day}
+                  control={form.control}
+                  name={`workDays.${day}`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="flex flex-col items-center gap-4">
+                          <Switch
+                            className="rotate-90"
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                          <div>{day}</div>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )
+            )}
+          </div>
           <Button type="submit">Submit</Button>
         </form>
       </Form>
