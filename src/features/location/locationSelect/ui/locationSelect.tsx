@@ -1,4 +1,5 @@
-import { City, CityCard, Country, CountryCard } from "@/entities/location";
+import { City, Country, LocationCard } from "@/entities/location";
+import { List } from "@/features/list";
 import { locationSchemaType } from "@/pages/locationAdd/ui/locationAddPage";
 import {
   Button,
@@ -9,6 +10,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
+  Input,
   ScrollArea,
 } from "@/shared/ui";
 import { ChevronDown, Circle } from "lucide-react";
@@ -42,7 +44,7 @@ export const LocationSelect = (props: LocationSelectProps) => {
     type === "city"
       ? cityItem?.map((city) => (
           <DrawerClose key={city.id}>
-            <CityCard
+            <LocationCard
               code_name={city.code_name}
               id={city.id}
               name={city.name}
@@ -54,8 +56,8 @@ export const LocationSelect = (props: LocationSelectProps) => {
         ))
       : countryItem?.map((country) => (
           <DrawerClose key={country.id}>
-            <CountryCard
-              country_icon={country.country_icon}
+            <LocationCard
+              country_flag={country.country_flag}
               id={country.id}
               name={country.name}
               onClick={() => form.setValue("country", country.name)}
@@ -99,77 +101,45 @@ export const LocationSelect = (props: LocationSelectProps) => {
     </div>
   );
 };
-// type LocationSelectRefactoringProps = {
-//   label?: string;
-// } & (SelectCities | SelectCountry);
-// //Todo(refactoring) либо можно создать универсальный компонент которой будет рендерить универсальные карточки, если различия между карточкой города и страны только в иконке
-// export const LocationSelectRefactoring = (
-//   props: LocationSelectRefactoringProps
-// ) => {
-//   const { type, onClick, label } = props;
 
-//   const cityItem = type === "city" ? props.city : null;
-//   const countryItem = type === "country" ? props.country : null;
-
-//   const emptyLabel = type === "city" ? "Выберите город" : "Выберите страну";
-//   const selectName = type === "city" ? "Город" : "Страна";
-
-//   const locationItems =
-//     type === "city"
-//       ? cityItem?.map((city) => (
-//           <DrawerClose key={city.id}>
-//             <CityCard
-//               code_name={city.code_name}
-//               id={city.id}
-//               name={city.name}
-//               onClick={() => onClick(city)}
-//             />
-//           </DrawerClose>
-//         ))
-//       : countryItem?.map((country) => (
-//           <DrawerClose key={country.id}>
-//             <CountryCard
-//               country_icon={country.country_icon}
-//               id={country.id}
-//               name={country.name}
-//               onClick={() => onClick(country)}
-//             />
-//           </DrawerClose>
-//         ));
-
-//   return (
-//     <div>
-//       <div>{selectName}</div>
-//       <Drawer>
-//         <DrawerTrigger asChild>
-//           <Button
-//             className="w-full justify-between items-center rounded-full gap-2 select-none"
-//             variant={"outline"}
-//           >
-//             <div className="flex gap-2 items-center">
-//               <Circle />
-//               <div>{label ? label : emptyLabel}</div>
-//             </div>
-//             <div className="flex ">
-//               <div>change</div>
-//               <ChevronDown />
-//             </div>
-//           </Button>
-//         </DrawerTrigger>
-//         <DrawerContent className="h-screen">
-//           <DrawerHeader>
-//             <DrawerTitle>
-//               Выберите страну в которой будет размещен обменик
-//             </DrawerTitle>
-//             <DrawerDescription>это можно будет изменить</DrawerDescription>
-//           </DrawerHeader>
-//           <div className="p-4">
-//             <ScrollArea className="h-[320px] w-full ">
-//               <div className="flex flex-col gap-4">{locationItems}</div>
-//             </ScrollArea>
-//           </div>
-//         </DrawerContent>
-//       </Drawer>
-//     </div>
-//   );
-// };
+type LocationSelectRefactoringProps = {
+  label?: { locationName: string; icon: string };
+  emptyLabel?: string;
+  type: "city" | "country";
+  location: (City & Country)[];
+  onClick: () => void;
+};
+//Todo(refactoring) либо можно создать универсальный компонент которой будет рендерить универсальные карточки, если различия между карточкой города и страны только в иконке
+export const LocationSelectRefactoringProps = (
+  props: LocationSelectRefactoringProps
+) => {
+  const { location, onClick, type, emptyLabel, label } = props;
+  const label = label ? <div>
+    
+  </div>
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button
+          className="w-full justify-between items-center rounded-full gap-2 select-none"
+          variant={"outline"}
+        >
+          <div>
+            {cityLabel}
+            {countryLabel}
+          </div>
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <Input />
+        </DrawerHeader>
+        <div className="p-4">
+          <ScrollArea className="h-[320px] w-full ">
+            <div className="flex flex-col gap-4">{itemsRender}</div>
+          </ScrollArea>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  );
+};
