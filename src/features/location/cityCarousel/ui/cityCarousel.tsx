@@ -1,7 +1,11 @@
-import { CityCard, CityCardProps } from "@/entities/location";
 import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
 import { CityCardCarouselItem } from "./cityCardCarouseltem";
-const cities: CityCardProps[] = [
+const cities: {
+  code_name: string;
+  id: number;
+  imageUrl: string;
+  name: string;
+}[] = [
   {
     code_name: "BAN",
     id: 1,
