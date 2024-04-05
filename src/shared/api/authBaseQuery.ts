@@ -1,5 +1,4 @@
-import { userSlice } from "@/entities/user";
-import { Tokens } from "@/entities/user/model/types";
+import { Tokens, userSlice } from "@/entities/user";
 import {
   BaseQueryFn,
   FetchArgs,

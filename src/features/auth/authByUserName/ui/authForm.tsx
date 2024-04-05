@@ -12,11 +12,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { AuthFormSchema, authFormSchema } from "../model/authFormSchema";
-import { authAPI } from "@/entities/user/api/authService";
 import { useAppDispatch } from "@/shared/model";
 import { useNavigate } from "react-router-dom";
 import { paths } from "@/shared/routing";
-import { userSlice } from "@/entities/user";
+import { authAPI, userSlice } from "@/entities/user";
 import { CustomLoader } from "@/shared/ui/customLoader";
 
 export const AuthByUserNameForm = () => {

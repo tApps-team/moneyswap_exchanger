@@ -1,4 +1,4 @@
-import { Logout } from "@/features/logout";
+import { Logout } from "@/features/auth";
 import { paths } from "@/shared/routing";
 import { Button } from "@/shared/ui";
 import { ChevronRight, CircleHelp, Settings } from "lucide-react";

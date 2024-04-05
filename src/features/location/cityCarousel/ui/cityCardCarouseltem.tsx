@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/shared/ui";
 import { Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 export type CityCardProps = City & {
-  imageUrl: string;
   onClick?: () => void;
 };
 export const CityCardCarouselItem = (props: CityCardProps) => {

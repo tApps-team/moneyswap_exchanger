@@ -1,4 +1,4 @@
-import { ChangePasswordForm } from "@/features/auth/changePassword";
+import { ChangePasswordForm } from "@/features/auth";
 
 export const ProfilePasswordPage = () => {
   return <ChangePasswordForm />;

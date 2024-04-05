@@ -1,58 +1,24 @@
-import { CityCard, CityCardProps } from "@/entities/location";
 import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
-import { CityCardCarouselItem } from "./cityCardCarouseltem";
-const cities: CityCardProps[] = [
-  {
-    code_name: "BAN",
-    id: 1,
-    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 2,
-    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 3,
-    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 4,
-    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 5,
-    imageUrl: "https://cdn-icons-png.flaticon.com/512/197/197452.png",
-    name: "Багкок",
-  },
-];
-export const CityCarousel = () => {
+import { FC } from "react";
+import { MyCity, MyCityCard } from "@/entities/myCity";
+
+interface CityCarouselProps {
+  cities: MyCity[];
+}
+
+export const CityCarousel: FC<CityCarouselProps> = ({ cities }) => {
   return (
     <Carousel
       opts={{
         align: "start",
       }}
-      // className="max-w-sm"
     >
       <CarouselContent>
-        {cities.map((city) => (
-          <CarouselItem
-            // className="basis-8/12"
-            //md:basis-1/2 lg:basis-8/12 sm:basis-11/12
-            key={city.id}
-          >
-            <CityCardCarouselItem
-              code_name={city.code_name}
-              id={city.id}
-              name={city.name}
-              imageUrl={city.imageUrl}
+        {cities?.map((city) => (
+          <CarouselItem key={city.id}>
+            <MyCityCard
+              city={city}
+              onClick={() => console.log("city card click")}
             />
           </CarouselItem>
         ))}

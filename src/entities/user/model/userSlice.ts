@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { Tokens } from "./types";
-import { paths } from "@/shared/routing";
 
 interface UserState {
   isAuth: boolean;
