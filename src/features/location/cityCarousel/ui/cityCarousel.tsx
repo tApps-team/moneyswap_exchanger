@@ -1,12 +1,15 @@
 import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
 import { FC } from "react";
 import { MyCity, MyCityCard } from "@/entities/myCity";
+import { UseFormSetValue } from "react-hook-form";
+import { directionSchemaType } from "@/widgets/myDirections/ui/myDirections";
 
 interface CityCarouselProps {
   cities: MyCity[];
+  setValue: UseFormSetValue<directionSchemaType>;
 }
 
-export const CityCarousel: FC<CityCarouselProps> = ({ cities }) => {
+export const CityCarousel: FC<CityCarouselProps> = ({ cities, setValue }) => {
   return (
     <Carousel
       opts={{
@@ -18,7 +21,10 @@ export const CityCarousel: FC<CityCarouselProps> = ({ cities }) => {
           <CarouselItem key={city.id}>
             <MyCityCard
               city={city}
-              onClick={() => console.log("city card click")}
+              onClick={() => {
+                setValue("activeCity", city);
+                console.log("click");
+              }}
             />
           </CarouselItem>
         ))}

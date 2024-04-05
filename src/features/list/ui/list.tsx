@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 type ListProps<T> = {
   items: T[];
-  renderItem: (item: T) 
+  renderItem: (item: T)
 };
 export const List = <T extends object>(props: ListProps<T>) => {
   const { items, renderItem } = props;

@@ -13,12 +13,12 @@ export type MyCityCardProps = {
 };
 
 export const MyCityCard: FC<MyCityCardProps> = ({ city, onClick }) => {
-  const dispatch = useAppDispatch();
-  const setActiveCity = () => {
-    dispatch(myCitySlice.actions.setMyCity(city));
-  };
+  // const dispatch = useAppDispatch();
+  // const setActiveCity = () => {
+  //   dispatch(myCitySlice.actions.setMyCity(city));
+  // };
   return (
-    <Card className="w-52 h-16 rounded-xl" onClick={setActiveCity}>
+    <Card className="w-52 h-16 rounded-xl" onClick={onClick}>
       <CardContent className="w-full h-full flex  p-0 pl-3 gap-3 justify-between items-center">
         <div className="flex-2">
           <img
@@ -33,7 +33,6 @@ export const MyCityCard: FC<MyCityCardProps> = ({ city, onClick }) => {
         <Link
           to={paths.locationEdit}
           className="h-full w-12 items-center flex flex-0 justify-center rounded-l-none rounded-xl bg-[#E2FF54]"
-          onClick={onClick}
         >
           <Settings />
         </Link>

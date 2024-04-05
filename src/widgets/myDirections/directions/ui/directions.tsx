@@ -1,47 +1,39 @@
-import { Direction, directionAPI } from "@/entities/direction";
+import { useDirectionsByCityQuery } from "@/entities/direction";
 import { MyCity } from "@/entities/myCity";
 import { CreateDirection, DirectionList } from "@/features/direction";
 import { useAppSelector } from "@/shared/model";
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { UseFormReturn } from "react-hook-form";
+import { directionSchemaType } from "../../ui/myDirections";
 
-// interface DirectionsProps {
-//   directions: Direction[];
-// }
+interface DirectionsProps {
+  form: UseFormReturn<directionSchemaType>;
+}
 
-// export const Directions: FC<DirectionsProps> = ({ directions }) => {
-//   return (
-//     <div className="mt-5 mb-5 grid grid-flow-row gap-5">
-//       <div className="text-2xl">Мои направления</div>
-//       <CreateDirection />
-//       <DirectionList directions={directions} />
-//     </div>
-//   );
-// };
-
-interface DirectionsProps {}
-
-export const Directions: FC<DirectionsProps> = () => {
-  const activeCity = useAppSelector((state) => state.myCity.activeCity);
-
-  if (!activeCity) {
-    return <div>Выберите город</div>;
-  }
+export const Directions: FC<DirectionsProps> = ({ form }) => {
+  const activeCityCodeName = form.getValues("activeCity.code_name");
 
   const {
     data: directions,
-    isLoading: directionsLoading,
-    error: directionsError,
-  } = directionAPI.useDirectionsByCityQuery(activeCity.code_name);
+    isLoading,
+    error,
+  } = useDirectionsByCityQuery(activeCityCodeName, {
+    skip: !activeCityCodeName,
+  });
 
-  if (directionsLoading || !directions) {
-    return <div>Loading directions...</div>;
-  }
+  useEffect(() => {
+    if (directions) {
+      form.setValue("directions", directions);
+    }
+    console.log(form.getValues());
+  }, [directions]);
 
   return (
     <div className="mt-5 mb-5 grid grid-flow-row gap-5">
       <div className="text-2xl">Мои направления</div>
       <CreateDirection />
-      <DirectionList directions={directions} />
+      {/* <DirectionList directions={form.getValues("directions")} /> */}
+      <DirectionList directions={directions || []} />
     </div>
   );
 };

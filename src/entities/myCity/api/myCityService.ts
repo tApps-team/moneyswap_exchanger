@@ -1,13 +1,11 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import authBaseQuery from "@/shared/api/authBaseQuery";
 import { MyCity } from "../model/types";
+import { authApi } from "@/shared/api";
 
-export const myCityAPI = createApi({
-  reducerPath: "myCityAPI",
-  baseQuery: authBaseQuery,
+export const myCityAPI = authApi.injectEndpoints({
   endpoints: (build) => ({
-    getCities: build.query<MyCity[], string>({
+    getCities: build.query<MyCity[], void>({
       query: () => `/partner/partner_cities`,
     }),
   }),
 });
+export const { useGetCitiesQuery } = myCityAPI;

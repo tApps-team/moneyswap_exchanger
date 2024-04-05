@@ -15,7 +15,7 @@ import { AuthFormSchema, authFormSchema } from "../model/authFormSchema";
 import { useAppDispatch } from "@/shared/model";
 import { useNavigate } from "react-router-dom";
 import { paths } from "@/shared/routing";
-import { authAPI, userSlice } from "@/entities/user";
+import { useLoginMutation, userSlice } from "@/entities/user";
 import { CustomLoader } from "@/shared/ui/customLoader";
 
 export const AuthByUserNameForm = () => {
@@ -27,7 +27,7 @@ export const AuthByUserNameForm = () => {
     },
   });
 
-  const [Login, { isLoading, error }] = authAPI.useLoginMutation();
+  const [Login, { isLoading, error }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

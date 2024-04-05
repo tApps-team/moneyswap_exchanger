@@ -1,16 +1,16 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Tokens } from "../model/types";
+import { authApi, baseApi } from "@/shared/api";
 
 type AuthParams = {
   username: string;
   password: string;
 };
 
-export const authAPI = createApi({
-  reducerPath: "authAPI",
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL + "/auth",
-  }),
+type ChangePassword = {
+  new_password: string;
+};
+
+export const authorizationAPI = baseApi.injectEndpoints({
   endpoints: (build) => ({
     login: build.mutation<Tokens, AuthParams>({
       query: (authParams) => {
@@ -19,20 +19,25 @@ export const authAPI = createApi({
         formData.append("password", authParams.password);
 
         return {
-          url: `/token`,
+          url: `/auth/token`,
           method: `POST`,
           body: formData,
         };
       },
     }),
-    logout: build.mutation<void, string>({
-      query: (refreshToken) => ({
-        url: `/logout`,
-        method: `POST`,
-        body: {
-          refresh_token: refreshToken,
-        },
+  }),
+});
+export const { useLoginMutation } = authorizationAPI;
+
+export const changePasswordAPI = authApi.injectEndpoints({
+  endpoints: (build) => ({
+    changePassword: build.mutation<string, ChangePassword>({
+      query: (password) => ({
+        url: `/partner/change_password`,
+        method: "POST",
+        body: password,
       }),
     }),
   }),
 });
+export const { useChangePasswordMutation } = changePasswordAPI;

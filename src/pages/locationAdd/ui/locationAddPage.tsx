@@ -77,6 +77,7 @@ export const LocationAddPage = () => {
   useEffect(() => {
     form.resetField("city");
   }, [form]);
+
   return (
     <div className="">
       <Form {...form}>

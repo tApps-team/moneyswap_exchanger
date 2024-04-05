@@ -1,28 +1,64 @@
-import { MyCity, myCityAPI, myCitySlice } from "@/entities/myCity";
+import { z } from "zod";
 import { Cities } from "../cities";
 import { Directions } from "../directions";
-import { directionAPI } from "@/entities/direction";
-import { useAppDispatch, useAppSelector } from "@/shared/model";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Form } from "@/shared/ui";
+
+export const directionSchema = z.object({
+  activeCity: z.object({
+    id: z.number(),
+    name: z.string(),
+    code_name: z.string(),
+    country: z.string(),
+    country_flag: z.string(),
+    info: z.object({
+      delivery: z.boolean(),
+      office: z.boolean(),
+      working_days: z.record(z.string(), z.boolean()),
+      time_from: z.string(),
+      time_to: z.string(),
+    }),
+  }),
+  directions: z.array(
+    z.object({
+      id: z.number(),
+      valute_from: z.string(),
+      icon_valute_from: z.string(),
+      valute_to: z.string(),
+      icon_valute_to: z.string(),
+      in_count: z.number(),
+      out_count: z.number(),
+      is_active: z.boolean(),
+    })
+  ),
+});
+
+export type directionSchemaType = z.infer<typeof directionSchema>;
 
 export const MyDirections = () => {
-  const dispatch = useAppDispatch();
-  const activeCity = useAppSelector((state) => state.myCity.activeCity);
-  const {
-    data: cities,
-    isLoading: citiesLoading,
-    error: citiesError,
-  } = myCityAPI.useGetCitiesQuery("");
+  const form = useForm<directionSchemaType>({
+    resolver: zodResolver(directionSchema),
+    defaultValues: {
+      activeCity: {},
+      directions: [],
+    },
+  });
+  form.watch(["activeCity", "directions"]);
 
-  if (citiesLoading || !cities) {
-    return <div>Loading cities...</div>;
-  }
-
-  dispatch(myCitySlice.actions.setMyCity(cities[0]));
-
+  const onSubmit = (data: directionSchemaType) => {
+    console.log(data);
+  };
   return (
     <div>
-      <Cities cities={cities} />
-      <Directions />
+      <Form {...form}>
+        <form className="grid gap-6" onSubmit={form.handleSubmit(onSubmit)}>
+          <Cities form={form} />
+          <Directions form={form} />
+
+          <Button type="submit">Submit</Button>
+        </form>
+      </Form>
     </div>
   );
 };
