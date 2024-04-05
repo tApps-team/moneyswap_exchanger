@@ -16,9 +16,14 @@ export const LocationCard = (props: LocationCardProps) => {
     >
       <CardContent className="p-0 flex gap-2 items-center  text-white">
         {country_flag && (
-          <img src={country_flag} alt={`country flag ${name}`} />
+          <img
+            width={32}
+            height={32}
+            src={country_flag}
+            alt={`country flag ${name}`}
+          />
         )}
-        <div>{name}</div>
+        <div className="text-nowrap">{name}</div>
       </CardContent>
     </Card>
   );
