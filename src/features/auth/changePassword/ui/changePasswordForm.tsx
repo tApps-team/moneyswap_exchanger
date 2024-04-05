@@ -29,7 +29,7 @@ export const ChangePasswordForm = () => {
     console.log(currentPassword, newPassword, confirmPassword);
   };
   return (
-    <div className=" container w-[400px]">
+    <div className=" container ">
       <Form {...changePasswordForm}>
         <form
           className="grid  gap-6"
