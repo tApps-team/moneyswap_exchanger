@@ -1,6 +1,7 @@
 import { directionAPI } from "@/entities/direction";
 import { myCityAPI, myCitySlice } from "@/entities/myCity";
 import { authAPI, userSlice } from "@/entities/user";
+import { baseApi } from "@/shared/api";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 const rootReducer = combineReducers({
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   [authAPI.reducerPath]: authAPI.reducer,
   [myCityAPI.reducerPath]: myCityAPI.reducer,
   [directionAPI.reducerPath]: directionAPI.reducer,
+  [baseApi.reducerPath]: baseApi.reducer,
 });
 
 export const setupStore = () => {
@@ -18,7 +20,8 @@ export const setupStore = () => {
       getDefaultMiddleware().concat(
         authAPI.middleware,
         myCityAPI.middleware,
-        directionAPI.middleware
+        directionAPI.middleware,
+        baseApi.middleware
       ),
   });
 };

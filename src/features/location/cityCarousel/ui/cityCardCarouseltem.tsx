@@ -15,7 +15,7 @@ export const CityCardCarouselItem = (props: CityCardProps) => {
         <div className="flex-2">img</div>
         <div className="flex-1">name</div>
         <Link
-          to={paths.locationEdit}
+          to={paths.locationAdd}
           className="h-full w-12 items-center flex flex-0 justify-center rounded-l-none rounded-xl bg-[#E2FF54]"
         >
           <Settings />

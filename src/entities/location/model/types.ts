@@ -6,5 +6,5 @@ export type City = {
 export type Country = {
   name: string;
   id: number;
-  country_icon: string;
+  country_flag: string;
 };

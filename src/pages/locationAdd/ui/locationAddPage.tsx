@@ -1,5 +1,11 @@
-import { City, Country } from "@/entities/location";
+import {
+  City,
+  Country,
+  useAllCountriesQuery,
+  useCitiesByCountryNameQuery,
+} from "@/entities/location";
 import { LocationSelect } from "@/features/location";
+import { LocationSelectRefactoringProps } from "@/features/location/locationSelect/ui/locationSelect";
 import {
   Button,
   Form,
@@ -11,115 +17,15 @@ import {
   Input,
   Switch,
 } from "@/shared/ui";
+import { LocationDeliveryForm } from "@/widgets/locationOfficeDeliveryForm";
+import { LocationSelectForm } from "@/widgets/locationSelectForm";
+import { LocationTimeForm } from "@/widgets/locationTimeForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SquarePen } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const cities: City[] = [
-  {
-    code_name: "BAN",
-    id: 1,
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 2,
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 3,
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 4,
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 5,
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 6,
-    name: "Тайланд",
-  },
-  {
-    code_name: "BAN",
-    id: 7,
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 8,
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 9,
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 10,
-    name: "Багкок",
-  },
-];
-const countries: Country[] = [
-  {
-    country_icon: "asdasd",
-    id: 1,
-    name: "Багкок",
-  },
-  {
-    country_icon: "asdasd",
-    id: 2,
-    name: "Багкок",
-  },
-  {
-    country_icon: "asdasd",
-    id: 3,
-    name: "Багкок",
-  },
-  {
-    country_icon: "asdasd",
-    id: 4,
-    name: "Багкок",
-  },
-  {
-    country_icon: "asdasd",
-    id: 5,
-    name: "Багкок",
-  },
-  {
-    country_icon: "asdasd",
-    id: 6,
-    name: "Тайланд",
-  },
-  {
-    country_icon: "asdasd",
-    id: 7,
-    name: "Багкок",
-  },
-  {
-    country_icon: "asdasd",
-    id: 8,
-    name: "Багкок",
-  },
-  {
-    country_icon: "asdasd",
-    id: 9,
-    name: "Багкок",
-  },
-  {
-    country_icon: "asdasd",
-    id: 10,
-    name: "Багкок",
-  },
-];
 const workDays = {
   Пн: false,
   Вт: false,
@@ -161,148 +67,23 @@ export const LocationAddPage = () => {
       },
     },
   });
-  form.watch(["timeStart", "timeEnd"]);
+  form.watch(["timeStart", "timeEnd", "country"]);
+
   const onSubmit = (data: locationSchemaType) => {
     console.log(data);
   };
 
+  //Refactoring!!!!
+  useEffect(() => {
+    form.resetField("city");
+  }, [form]);
   return (
-    <div className="grid gap-4">
+    <div className="">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name={"city"}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{field.value}</FormLabel>
-                <FormControl>
-                  <LocationSelect
-                    type="city"
-                    city={cities}
-                    label={field.value}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name={"country"}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{field.value}</FormLabel>
-                <FormControl>
-                  <LocationSelect
-                    type="country"
-                    country={countries}
-                    label={field.value}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex gap-16">
-            <FormField
-              control={form.control}
-              name={"timeStart"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      type="time"
-                      className="w-[103px]  h-[38px] p-2 bg-white rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name={"timeEnd"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      type="time"
-                      className=" w-[103px]  h-[38px] p-2 bg-white rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <FormField
-            control={form.control}
-            name={"deliviry"}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div className="flex justify-between">
-                    <div className="flex gap-6">
-                      <SquarePen />
-                      <div>Доставка</div>
-                    </div>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name={"office"}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div className="flex justify-between">
-                    <div className="flex gap-6">
-                      <SquarePen />
-                      <div>Есть офис</div>
-                    </div>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {Object.keys(form.formState.defaultValues?.workDays || {}).map(
-            (day) => (
-              <FormField
-                key={day}
-                control={form.control}
-                name={`workDays.${day}`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div>
-                        <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                        <div>{day}</div>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )
-          )}
+        <form className="grid gap-6" onSubmit={form.handleSubmit(onSubmit)}>
+          <LocationSelectForm form={form} />
+          <LocationDeliveryForm form={form} />
+          <LocationTimeForm form={form} />
           <Button type="submit">Submit</Button>
         </form>
       </Form>
