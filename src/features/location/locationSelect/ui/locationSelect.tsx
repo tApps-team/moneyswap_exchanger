@@ -14,32 +14,31 @@ import {
   ScrollArea,
 } from "@/shared/ui";
 import { ChevronDown, Circle } from "lucide-react";
-import { useFormContext } from "react-hook-form";
+import { UseFormSetValue, useFormContext } from "react-hook-form";
 
 type SelectCities = {
   type: "city";
   city: City[];
-  // onClick: (location: City) => void;
 };
 type SelectCountry = {
   type: "country";
   country?: Country[];
-  // onClick: (location: Country) => void;
 };
 type LocationSelectProps = {
   label?: string;
+  disabled?: boolean;
+  setValue: UseFormSetValue<locationSchemaType>;
 } & (SelectCities | SelectCountry);
 //Todo(refactoring) либо можно создать универсальный компонент которой будет рендерить универсальные карточки, если различия между карточкой города и страны только в иконке
 export const LocationSelect = (props: LocationSelectProps) => {
-  const { type, label } = props;
-  const form = useFormContext<locationSchemaType>();
+  const { type, label, disabled, setValue } = props;
 
   const cityItem = type === "city" ? props.city : null;
   const countryItem = type === "country" ? props.country : null;
 
   const emptyLabel = type === "city" ? "Выберите город" : "Выберите страну";
   const selectName = type === "city" ? "Город" : "Страна";
-  console.log(form.getValues("city"));
+
   const locationItems =
     type === "city"
       ? cityItem?.map((city) => (
@@ -49,7 +48,7 @@ export const LocationSelect = (props: LocationSelectProps) => {
               id={city.id}
               name={city.name}
               onClick={() => {
-                form.setValue("city", city.name);
+                setValue("city", city.name);
               }}
             />
           </DrawerClose>
@@ -60,17 +59,17 @@ export const LocationSelect = (props: LocationSelectProps) => {
               country_flag={country.country_flag}
               id={country.id}
               name={country.name}
-              onClick={() => form.setValue("country", country.name)}
+              onClick={() => setValue("country", country.name)}
             />
           </DrawerClose>
         ));
 
   return (
     <div>
-      <div>{selectName}</div>
       <Drawer>
         <DrawerTrigger asChild>
           <Button
+            disabled={disabled}
             className="w-full justify-between items-center rounded-full gap-2 select-none"
             variant={"outline"}
           >
@@ -102,44 +101,38 @@ export const LocationSelect = (props: LocationSelectProps) => {
   );
 };
 
-type LocationSelectRefactoringProps = {
-  label?: { locationName: string; icon: string };
-  emptyLabel?: string;
-  type: "city" | "country";
-  location: (City & Country)[];
-  onClick: () => void;
-};
+// type LocationSelectRefactoringProps = {
+//   label?: { locationName: string; icon: string };
+//   emptyLabel?: string;
+//   disabled: string;
+//   type: "city" | "country";
+//   location: (City & Country)[];
+//   onClick: () => void;
+// };
 //Todo(refactoring) либо можно создать универсальный компонент которой будет рендерить универсальные карточки, если различия между карточкой города и страны только в иконке
-export const LocationSelectRefactoringProps = (
-  props: LocationSelectRefactoringProps
-) => {
-  const { location, onClick, type, emptyLabel, label } = props;
-  const label = label ? <div>
-    
-  </div>
-  return (
-    <Drawer>
-      <DrawerTrigger asChild>
-        <Button
-          className="w-full justify-between items-center rounded-full gap-2 select-none"
-          variant={"outline"}
-        >
-          <div>
-            {cityLabel}
-            {countryLabel}
-          </div>
-        </Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <Input />
-        </DrawerHeader>
-        <div className="p-4">
-          <ScrollArea className="h-[320px] w-full ">
-            <div className="flex flex-col gap-4">{itemsRender}</div>
-          </ScrollArea>
-        </div>
-      </DrawerContent>
-    </Drawer>
-  );
-};
+// export const LocationSelectRefactoringProps = (
+//   props: LocationSelectRefactoringProps
+// ) => {
+//   return (
+//     <Drawer>
+//       <DrawerTrigger asChild>
+//         <Button
+//           className="w-full justify-between items-center rounded-full gap-2 select-none"
+//           variant={"outline"}
+//         >
+//           <div></div>
+//         </Button>
+//       </DrawerTrigger>
+//       <DrawerContent>
+//         <DrawerHeader>
+//           <Input />
+//         </DrawerHeader>
+//         <div className="p-4">
+//           <ScrollArea className="h-[320px] w-full ">
+//             <div className="flex flex-col gap-4">{itemsRender}</div>
+//           </ScrollArea>
+//         </div>
+//       </DrawerContent>
+//     </Drawer>
+//   );
+// };
