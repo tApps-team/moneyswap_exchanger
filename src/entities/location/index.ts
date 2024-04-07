@@ -5,3 +5,7 @@ export {
   useAllCountriesQuery,
   useCitiesByCountryNameQuery,
 } from "./api/locationApi";
+export {
+  type LocationSchemaType,
+  locationSchema,
+} from "./model/locationSchema";
