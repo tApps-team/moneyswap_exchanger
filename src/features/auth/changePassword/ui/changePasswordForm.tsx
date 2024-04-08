@@ -14,6 +14,8 @@ import {
 } from "../model/changePasswordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SquarePen } from "lucide-react";
+import { useChangePasswordMutation } from "@/entities/user/api/authService";
+import { CustomLoader } from "@/shared/ui/customLoader";
 
 export const ChangePasswordForm = () => {
   const changePasswordForm = useForm<ChangePasswordSchema>({
@@ -24,12 +26,21 @@ export const ChangePasswordForm = () => {
       confirmPassword: "",
     },
   });
-  const onSubmit = (data: ChangePasswordSchema) => {
+  const [changePassword, { isLoading, error }] = useChangePasswordMutation();
+  const onSubmit = async (data: ChangePasswordSchema) => {
     const { currentPassword, newPassword, confirmPassword } = data;
-    console.log(currentPassword, newPassword, confirmPassword);
+    changePassword({ new_password: newPassword })
+      .unwrap()
+      .then((data) => {
+        changePasswordForm.reset();
+        alert("Пароль успешно изменен");
+      })
+      .catch((error) => {
+        console.error("Ошибка", error);
+      });
   };
   return (
-    <div className=" container w-[400px]">
+    <div className=" container ">
       <Form {...changePasswordForm}>
         <form
           className="grid  gap-6"
@@ -96,10 +107,15 @@ export const ChangePasswordForm = () => {
             type="submit"
             className="rounded-full bg-[#F6FF5F]  text-black text-lg h-16 "
           >
-            Сохранить изменения
+            {isLoading ? <CustomLoader /> : "Сохранить изменения"}
           </Button>
         </form>
       </Form>
+      {error && (
+        <h1 className="text-red-500 font-medium text-center mt-5">
+          Аккаунт не найден...
+        </h1>
+      )}
     </div>
   );
 };

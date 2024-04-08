@@ -12,6 +12,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { AuthFormSchema, authFormSchema } from "../model/authFormSchema";
+import { useAppDispatch } from "@/shared/model";
+import { useNavigate } from "react-router-dom";
+import { paths } from "@/shared/routing";
+import { useLoginMutation, userSlice } from "@/entities/user";
+import { CustomLoader } from "@/shared/ui/customLoader";
 
 export const AuthByUserNameForm = () => {
   const authForm = useForm<AuthFormSchema>({
@@ -21,13 +26,24 @@ export const AuthByUserNameForm = () => {
       password: "",
     },
   });
-  const onSubmit = (data: AuthFormSchema) => {
-    const { password, username } = data;
-    // authMutation
-    console.log(password, username);
+
+  const [Login, { isLoading, error }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: AuthFormSchema) => {
+    Login(data)
+      .unwrap()
+      .then((data) => {
+        dispatch(userSlice.actions.login(data));
+        navigate(paths.home);
+      })
+      .catch((error) => {
+        console.error("Ошибка получения токена:", error);
+      });
   };
   return (
-    <div className="container w-[600px]">
+    <div className="container">
       <Form {...authForm}>
         <form
           className="grid grid-cols-1 grid-rows-3 gap-6"
@@ -42,7 +58,7 @@ export const AuthByUserNameForm = () => {
                   <div className="relative">
                     <User className="absolute left-3 translate-y-2 " />
                     <Input
-                      className="rounded-full pl-10"
+                      className="rounded-full pl-12"
                       placeholder="Имя Фамилия"
                       {...field}
                     />
@@ -60,8 +76,8 @@ export const AuthByUserNameForm = () => {
                 <FormControl>
                   <PasswordInput
                     type="password"
-                    className="rounded-full"
-                    placeholder="********"
+                    className="rounded-full pl-12"
+                    placeholder="••••••••••••"
                     {...field}
                   />
                 </FormControl>
@@ -73,10 +89,15 @@ export const AuthByUserNameForm = () => {
             className="bg-[#F6FF5F] text-black  w-full rounded-full"
             type="submit"
           >
-            Войти
+            {isLoading ? <CustomLoader /> : "Войти"}
           </Button>
         </form>
       </Form>
+      {error && (
+        <h1 className="text-red-500 font-medium text-center mt-5">
+          Неверный логин или пароль
+        </h1>
+      )}
     </div>
   );
 };

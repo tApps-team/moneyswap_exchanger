@@ -1,0 +1,17 @@
+.root__container {
+
+  display: grid;
+  grid-template: auto 1fr / 1fr;
+  row-gap: 20px;
+  min-height: 100vh;
+  background: #dedede;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: var(--container-padding-all);
+
+  .root__header {}
+
+  .root__content {
+    overflow-y: auto;
+  }
+}

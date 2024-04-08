@@ -1,11 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { paths } from "@/shared/routing";
 import ProtectedRoutes from "./ProtectedRoutes";
-import { RootLayout } from "./layouts/RootLayout";
 import { LoginPage } from "./login";
-import { DirectionSettingsPage } from "./directionSettings";
 import { HomePage } from "./home";
-import { LocationSettingsPage } from "./locationSettings";
 import { NotificationsPage } from "./notifications";
 import { ProfilePage } from "./profile";
 import { ProfileSettingsPage } from "./profileSettings";
@@ -13,6 +10,11 @@ import { ProfileInfoPage } from "./profileInfo";
 import { ProfilePasswordPage } from "./profilePassword";
 import { StatisticsPage } from "./statistics";
 import { NotFoundPage } from "./notFound";
+import { MainLayout, RootLayout } from "./layouts";
+import { LocationAddPage } from "./locationAdd";
+import { LocationEditPage } from "./locationEdit";
+import { DirectionAddPage } from "./directionAdd";
+import { DirectionEditPage } from "./directionEdit";
 
 export const router = createBrowserRouter([
   {
@@ -25,23 +27,51 @@ export const router = createBrowserRouter([
         children: [
           {
             path: paths.home,
-            element: <HomePage />,
-          },
-          {
-            path: paths.locationSettings,
-            element: <LocationSettingsPage />,
-          },
-          {
-            path: paths.directionSettings,
-            element: <DirectionSettingsPage />,
-          },
-          {
-            path: paths.notifications,
-            element: <NotificationsPage />,
+            element: (
+              <MainLayout>
+                <HomePage />
+              </MainLayout>
+            ),
           },
           {
             path: paths.profile,
-            element: <ProfilePage />,
+            element: (
+              <MainLayout>
+                <ProfilePage />
+              </MainLayout>
+            ),
+          },
+          {
+            path: paths.notifications,
+            element: (
+              <MainLayout>
+                <NotificationsPage />
+              </MainLayout>
+            ),
+          },
+          {
+            path: paths.statistics,
+            element: (
+              <MainLayout>
+                <StatisticsPage />
+              </MainLayout>
+            ),
+          },
+          {
+            path: paths.locationAdd,
+            element: <LocationAddPage />,
+          },
+          {
+            path: paths.locationEdit,
+            element: <LocationEditPage />,
+          },
+          {
+            path: paths.directionAdd,
+            element: <DirectionAddPage />,
+          },
+          {
+            path: paths.directionEdit,
+            element: <DirectionEditPage />,
           },
           {
             path: `${paths.profile}${paths.profileSettings}`,
@@ -54,10 +84,6 @@ export const router = createBrowserRouter([
           {
             path: `${paths.profile}${paths.profileSettings}${paths.profilePassword}`,
             element: <ProfilePasswordPage />,
-          },
-          {
-            path: paths.statistics,
-            element: <StatisticsPage />,
           },
           {
             path: paths.notFound,

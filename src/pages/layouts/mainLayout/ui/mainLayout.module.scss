@@ -1,0 +1,13 @@
+.main__container {
+
+    .main__content {}
+
+    .main__footer {
+        position: fixed;
+        max-width: var(--container-width);
+        width: 100%;
+        bottom: 0px;
+        left: 50%;
+        transform: translate(-50%);
+    }
+}
