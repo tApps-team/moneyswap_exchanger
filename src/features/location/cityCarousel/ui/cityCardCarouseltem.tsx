@@ -8,7 +8,7 @@ export type CityCardProps = City & {
   onClick?: () => void;
 };
 export const CityCardCarouselItem = (props: CityCardProps) => {
-  const { code_name, id, imageUrl, name, onClick } = props;
+  const { code_name, id, name, onClick } = props;
   return (
     <Card onClick={onClick} className="w-52 h-16 rounded-xl ">
       <CardContent className="w-full h-full flex  p-0 pl-2 gap-2 justify-between items-center">

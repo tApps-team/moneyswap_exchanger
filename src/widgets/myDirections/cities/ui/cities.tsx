@@ -3,7 +3,6 @@ import styles from "./cities.module.scss";
 import { useGetCitiesQuery } from "@/entities/myCity";
 import { FC, useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { directionSchemaType } from "../../ui/myDirections";
 import {
   FormControl,
   FormField,
@@ -11,6 +10,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui";
+import { directionSchemaType } from "@/entities/direction";
 
 interface CitiesProps {
   form: UseFormReturn<directionSchemaType>;
