@@ -1,6 +1,9 @@
-import { City, Country, LocationCard } from "@/entities/location";
-import { List } from "@/features/list";
-import { locationSchemaType } from "@/pages/locationAdd/ui/locationAddPage";
+import {
+  City,
+  Country,
+  LocationCard,
+  LocationSchemaType,
+} from "@/entities/location";
 import {
   Button,
   Drawer,
@@ -10,11 +13,10 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-  Input,
   ScrollArea,
 } from "@/shared/ui";
 import { ChevronDown, Circle } from "lucide-react";
-import { UseFormSetValue, useFormContext } from "react-hook-form";
+import { UseFormSetValue } from "react-hook-form";
 
 type SelectCities = {
   type: "city";
@@ -27,7 +29,7 @@ type SelectCountry = {
 type LocationSelectProps = {
   label?: string;
   disabled?: boolean;
-  setValue: UseFormSetValue<locationSchemaType>;
+  setValue: UseFormSetValue<LocationSchemaType>;
 } & (SelectCities | SelectCountry);
 //Todo(refactoring) либо можно создать универсальный компонент которой будет рендерить универсальные карточки, если различия между карточкой города и страны только в иконке
 export const LocationSelect = (props: LocationSelectProps) => {
