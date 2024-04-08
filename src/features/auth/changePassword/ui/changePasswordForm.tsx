@@ -113,7 +113,7 @@ export const ChangePasswordForm = () => {
       </Form>
       {error && (
         <h1 className="text-red-500 font-medium text-center mt-5">
-          Неверный пароль
+          Аккаунт не найден...
         </h1>
       )}
     </div>
