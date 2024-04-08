@@ -2,7 +2,7 @@ import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
 import { FC } from "react";
 import { MyCity, MyCityCard } from "@/entities/myCity";
 import { UseFormSetValue } from "react-hook-form";
-import { directionSchemaType } from "@/widgets/myDirections/ui/myDirections";
+import { directionSchemaType } from "@/entities/direction";
 
 interface CityCarouselProps {
   cities: MyCity[];

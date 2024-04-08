@@ -1,4 +1,4 @@
-import { locationSchemaType } from "@/pages/locationAdd/ui/locationAddPage";
+import { LocationSchemaType } from "@/entities/location";
 import {
   FormControl,
   FormField,
@@ -10,7 +10,7 @@ import {
 import { SquarePen } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 type LocationOfficeDeliveryForm = {
-  form: UseFormReturn<locationSchemaType>;
+  form: UseFormReturn<LocationSchemaType>;
 };
 export const LocationDeliveryForm = (props: LocationOfficeDeliveryForm) => {
   const { form } = props;

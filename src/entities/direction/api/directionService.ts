@@ -1,4 +1,4 @@
-import { Direction } from "../model/directionType";
+import { Direction } from "../model/types";
 import { authApi } from "@/shared/api";
 
 export const directionAPI = authApi.injectEndpoints({

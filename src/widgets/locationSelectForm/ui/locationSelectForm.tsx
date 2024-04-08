@@ -1,9 +1,9 @@
 import {
+  LocationSchemaType,
   useAllCountriesQuery,
   useCitiesByCountryNameQuery,
 } from "@/entities/location";
 import { LocationSelect } from "@/features/location";
-import { locationSchemaType } from "@/pages/locationAdd/ui/locationAddPage";
 import {
   FormControl,
   FormField,
@@ -13,7 +13,7 @@ import {
 } from "@/shared/ui";
 import { UseFormReturn } from "react-hook-form";
 type LocationSelectFormProps = {
-  form: UseFormReturn<locationSchemaType>;
+  form: UseFormReturn<LocationSchemaType>;
 };
 export const LocationSelectForm = (props: LocationSelectFormProps) => {
   const { form } = props;

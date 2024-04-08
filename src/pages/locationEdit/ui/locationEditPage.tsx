@@ -70,52 +70,52 @@ const cities: City[] = [
 ];
 const countries: Country[] = [
   {
-    country_icon: "asdasd",
+    country_flag: "asdasd",
     id: 1,
     name: "Багкок",
   },
   {
-    country_icon: "asdasd",
+    country_flag: "asdasd",
     id: 2,
     name: "Багкок",
   },
   {
-    country_icon: "asdasd",
+    country_flag: "asdasd",
     id: 3,
     name: "Багкок",
   },
   {
-    country_icon: "asdasd",
+    country_flag: "asdasd",
     id: 4,
     name: "Багкок",
   },
   {
-    country_icon: "asdasd",
+    country_flag: "asdasd",
     id: 5,
     name: "Багкок",
   },
   {
-    country_icon: "asdasd",
+    country_flag: "asdasd",
     id: 6,
     name: "Тайланд",
   },
   {
-    country_icon: "asdasd",
+    country_flag: "asdasd",
     id: 7,
     name: "Багкок",
   },
   {
-    country_icon: "asdasd",
+    country_flag: "asdasd",
     id: 8,
     name: "Багкок",
   },
   {
-    country_icon: "asdasd",
+    country_flag: "asdasd",
     id: 9,
     name: "Багкок",
   },
   {
-    country_icon: "asdasd",
+    country_flag: "asdasd",
     id: 10,
     name: "Багкок",
   },
@@ -167,7 +167,7 @@ export const LocationEditPage = () => {
 
   return (
     <div className="grid gap-4">
-      <Form {...form}>
+      {/* <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
@@ -304,7 +304,7 @@ export const LocationEditPage = () => {
           )}
           <Button type="submit">Submit</Button>
         </form>
-      </Form>
+      </Form> */}
     </div>
   );
 };

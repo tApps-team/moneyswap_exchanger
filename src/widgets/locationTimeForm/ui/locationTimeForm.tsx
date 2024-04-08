@@ -1,4 +1,4 @@
-import { locationSchemaType } from "@/pages/locationAdd/ui/locationAddPage";
+import { LocationSchemaType } from "@/entities/location";
 import {
   FormControl,
   FormField,
@@ -9,7 +9,7 @@ import {
 } from "@/shared/ui";
 import { UseFormReturn } from "react-hook-form";
 type LocationTimeFormProps = {
-  form: UseFormReturn<locationSchemaType>;
+  form: UseFormReturn<LocationSchemaType>;
 };
 export const LocationTimeForm = (props: LocationTimeFormProps) => {
   const { form } = props;

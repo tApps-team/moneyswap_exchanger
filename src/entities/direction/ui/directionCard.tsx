@@ -5,7 +5,7 @@ import {
   CardHeader,
   Checkbox,
 } from "@/shared/ui";
-import { Direction } from "../model/directionType";
+import { Direction } from "../model/types";
 import { FC, TouchEvent, TouchEventHandler, useRef, useState } from "react";
 import { DeleteDirection, EditDirection } from "@/features/direction";
 
