@@ -17,7 +17,7 @@ type CurrencySelectProps = {
   disabled?: boolean;
   label: string;
   emptyLabel: string;
-  onClick: (currencyName: string) => void;
+  onClick: (currency: Currency) => void;
 };
 export const CurrencySelect = (props: CurrencySelectProps) => {
   const { currencies, disabled, emptyLabel, label, onClick } = props;
@@ -53,7 +53,7 @@ export const CurrencySelect = (props: CurrencySelectProps) => {
               {currencies.map((currency) => (
                 <DrawerClose key={currency.id}>
                   <CurrencyCard
-                    onClick={() => onClick(currency.code_name)}
+                    onClick={() => onClick(currency)}
                     currency={currency}
                   />
                 </DrawerClose>
