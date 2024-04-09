@@ -1,5 +1,6 @@
 import { useAvailableValutesQuery } from "@/entities/direction";
 import { CurrencySelect } from "@/features/direction";
+import { ActualCourse } from "@/features/direction/actualCourse";
 import { LocationSelect } from "@/features/location";
 import {
   Button,
@@ -9,14 +10,29 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  Input,
 } from "@/shared/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export const directionSchema = z.object({
-  giveCurrency: z.string(),
-  getCurrency: z.string(),
+  giveCurrency: z
+    .object({
+      id: z.number().nullable(),
+      name: z.string(),
+      code_name: z.string(),
+      icon_url: z.string(),
+    })
+    .nullable(),
+  getCurrency: z
+    .object({
+      id: z.number().nullable(),
+      name: z.string(),
+      code_name: z.string(),
+      icon_url: z.string(),
+    })
+    .nullable(),
   giveCurrencyPrice: z.number(),
   getCurrencyPrice: z.number(),
 });
@@ -25,8 +41,8 @@ export const DirectionAddForm = () => {
   const form = useForm<DirectionSchemaType>({
     resolver: zodResolver(directionSchema),
     defaultValues: {
-      getCurrency: "",
-      giveCurrency: "",
+      getCurrency: null,
+      giveCurrency: null,
       getCurrencyPrice: 0,
       giveCurrencyPrice: 0,
     },
@@ -35,15 +51,17 @@ export const DirectionAddForm = () => {
 
   const { data: currencies } = useAvailableValutesQuery({ base: "all" });
   const { data: availableCurrncies } = useAvailableValutesQuery(
-    { base: form.getValues("giveCurrency") },
-    { skip: !form.getValues("giveCurrency") }
+    { base: form.getValues("giveCurrency.code_name") },
+    { skip: !form.getValues("giveCurrency.code_name") }
   );
 
   const currectAllCurrencies = Object.values(currencies || {}).flat();
   const currectAvailableCurrncies = Object.values(
     availableCurrncies || {}
   ).flat();
-
+  const inputDisabled = Boolean(
+    form.getValues("getCurrency") && form.getValues("giveCurrency")
+  );
   const onSubmit = (data: DirectionSchemaType) => {
     console.log(data);
   };
@@ -59,12 +77,12 @@ export const DirectionAddForm = () => {
           name={"giveCurrency"}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{field.value}</FormLabel>
+              <FormLabel>{field.value?.name}</FormLabel>
               <FormControl>
                 <CurrencySelect
                   currencies={currectAllCurrencies}
                   emptyLabel="Выберите что отдаете"
-                  label={field.value}
+                  label={field.value?.name || ""}
                   onClick={(e) => {
                     field.onChange(e);
                     form.resetField("getCurrency");
@@ -80,15 +98,45 @@ export const DirectionAddForm = () => {
           name={"getCurrency"}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{field.value}</FormLabel>
+              <FormLabel>{field.value?.name}</FormLabel>
               <FormControl>
                 <CurrencySelect
                   currencies={currectAvailableCurrncies}
                   emptyLabel="Выберите что получаете"
-                  label={field.value}
+                  label={field.value?.name || ""}
                   onClick={(e) => field.onChange(e)}
                   disabled={!form.getValues("giveCurrency")}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name={"giveCurrencyPrice"}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div className="relative">
+                  <Input
+                    {...field}
+                    type="number"
+                    startAdornment={
+                      form.getValues("giveCurrency") ? (
+                        <img
+                          src={form.getValues("giveCurrency.icon_url")}
+                          alt={`image ${form.getValues("giveCurrency.name")}`}
+                          width={32}
+                          height={32}
+                          className="absolute left-3 top-1/2 -translate-y-1/2  "
+                        />
+                      ) : undefined
+                    }
+                    disabled={!inputDisabled}
+                    className="border-2  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
