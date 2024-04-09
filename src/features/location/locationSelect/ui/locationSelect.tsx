@@ -1,3 +1,4 @@
+import { Currency } from "@/entities/direction/model/types";
 import {
   City,
   Country,
@@ -102,36 +103,57 @@ export const LocationSelect = (props: LocationSelectProps) => {
     </div>
   );
 };
-
-// type LocationSelectRefactoringProps = {
-//   label?: { locationName: string; icon: string };
-//   emptyLabel?: string;
-//   disabled: string;
-//   type: "city" | "country";
-//   location: (City & Country)[];
+// type LocationSelectTestProps<T extends City | Currency | Country> = {
 //   onClick: () => void;
+//   disabled?: boolean;
+//   label: string;
+//   emptyLabel: string;
+//   items: T[];
 // };
-//Todo(refactoring) либо можно создать универсальный компонент которой будет рендерить универсальные карточки, если различия между карточкой города и страны только в иконке
-// export const LocationSelectRefactoringProps = (
-//   props: LocationSelectRefactoringProps
+// export const LocationSelectTest = <T extends City | Currency | Country>(
+//   props: LocationSelectTestProps<T>
 // ) => {
+//   const { disabled, items, label, onClick, emptyLabel } = props;
+
 //   return (
 //     <Drawer>
 //       <DrawerTrigger asChild>
 //         <Button
+//           disabled={disabled}
 //           className="w-full justify-between items-center rounded-full gap-2 select-none"
 //           variant={"outline"}
 //         >
-//           <div></div>
+//           <div className="flex gap-2 items-center">
+//             <Circle />
+//             <div>{label ? label : emptyLabel}</div>
+//           </div>
+//           <div className="flex ">
+//             <div>change</div>
+//             <ChevronDown />
+//           </div>
 //         </Button>
 //       </DrawerTrigger>
-//       <DrawerContent>
+//       <DrawerContent className="h-screen">
 //         <DrawerHeader>
-//           <Input />
+//           <DrawerTitle>
+//             Выберите страну в которой будет размещен обменик
+//           </DrawerTitle>
+//           <DrawerDescription>это можно будет изменить</DrawerDescription>
 //         </DrawerHeader>
 //         <div className="p-4">
 //           <ScrollArea className="h-[320px] w-full ">
-//             <div className="flex flex-col gap-4">{itemsRender}</div>
+//             <div className="flex flex-col gap-4">
+//               {items.map((item) => (
+//                 <DrawerClose key={item.id}>
+//                   <LocationCard
+//                     code_name={item.code_name}
+//                     id={item.id}
+//                     name={item.name}
+//                     onClick={onClick}
+//                   />
+//                 </DrawerClose>
+//               ))}
+//             </div>
 //           </ScrollArea>
 //         </div>
 //       </DrawerContent>
