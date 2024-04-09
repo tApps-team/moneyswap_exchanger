@@ -8,3 +8,12 @@ export type Direction = {
   out_count: number;
   is_active: boolean;
 };
+export type Currency = {
+  id: number;
+  name: string;
+  code_name: string;
+  icon_url: string;
+};
+export type CurrencyCategory = {
+  [key: string]: Currency[];
+};
