@@ -28,4 +28,4 @@ export const directionSchema = z.object({
     })
   ),
 });
-export type directionSchemaType = z.infer<typeof directionSchema>;
+export type DirectionSchemaType = z.infer<typeof directionSchema>;
