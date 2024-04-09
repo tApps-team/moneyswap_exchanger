@@ -1,10 +1,4 @@
-import { Currency } from "@/entities/direction/model/types";
-import {
-  City,
-  Country,
-  LocationCard,
-  LocationSchemaType,
-} from "@/entities/location";
+import { City, Country, LocationCard } from "@/entities/location";
 import {
   Button,
   Drawer,
@@ -17,30 +11,29 @@ import {
   ScrollArea,
 } from "@/shared/ui";
 import { ChevronDown, Circle } from "lucide-react";
-import { UseFormSetValue } from "react-hook-form";
 
 type SelectCities = {
   type: "city";
   city: City[];
+  onClick: (city: City) => void;
 };
 type SelectCountry = {
   type: "country";
   country?: Country[];
+  onClick: (country: Country) => void;
 };
 type LocationSelectProps = {
   label?: string;
   disabled?: boolean;
-  setValue: UseFormSetValue<LocationSchemaType>;
 } & (SelectCities | SelectCountry);
 //Todo(refactoring) либо можно создать универсальный компонент которой будет рендерить универсальные карточки, если различия между карточкой города и страны только в иконке
 export const LocationSelect = (props: LocationSelectProps) => {
-  const { type, label, disabled, setValue } = props;
+  const { type, label, disabled } = props;
 
   const cityItem = type === "city" ? props.city : null;
   const countryItem = type === "country" ? props.country : null;
 
   const emptyLabel = type === "city" ? "Выберите город" : "Выберите страну";
-  const selectName = type === "city" ? "Город" : "Страна";
 
   const locationItems =
     type === "city"
@@ -50,9 +43,7 @@ export const LocationSelect = (props: LocationSelectProps) => {
               code_name={city.code_name}
               id={city.id}
               name={city.name}
-              onClick={() => {
-                setValue("city", city.name);
-              }}
+              onClick={() => props.onClick(city)}
             />
           </DrawerClose>
         ))
@@ -62,7 +53,7 @@ export const LocationSelect = (props: LocationSelectProps) => {
               country_flag={country.country_flag}
               id={country.id}
               name={country.name}
-              onClick={() => setValue("country", country.name)}
+              onClick={() => props.onClick(country)}
             />
           </DrawerClose>
         ));
