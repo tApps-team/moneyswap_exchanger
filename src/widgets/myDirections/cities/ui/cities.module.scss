@@ -1,3 +1,11 @@
 .cities {
-    width: calc(100% - 72px);
+
+    &__title {
+        color: var(--main-color);
+        font-size: 30px;
+        margin-bottom: var(--padding-l);
+    }
+
+    .carousel {
+    }
 }

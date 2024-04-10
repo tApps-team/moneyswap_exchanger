@@ -1,14 +1,12 @@
 import { paths } from "@/shared/routing";
-import { Button } from "@/shared/ui";
-import { CirclePlus } from "lucide-react";
 import { Link } from "react-router-dom";
+import styles from "./addCityButton.module.scss";
+import { PlusIcon } from "@/shared/assets/icons";
 
 export const AddCityButton = () => {
   return (
-    <Button className="w-14 h-16 rounded-xl flex items-center">
-      <Link to={paths.locationAdd}>
-        <CirclePlus />
-      </Link>
-    </Button>
+    <Link to={paths.locationAdd} className={styles.add_city_btn}>
+      <PlusIcon fill="#F6FF5F" />
+    </Link>
   );
 };

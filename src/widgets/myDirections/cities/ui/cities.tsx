@@ -1,56 +1,22 @@
 import { AddCityButton, CityCarousel } from "@/features/location";
 import styles from "./cities.module.scss";
-import { useGetCitiesQuery } from "@/entities/myCity";
-import { FC, useEffect } from "react";
-import { UseFormReturn } from "react-hook-form";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/shared/ui";
-import { directionSchemaType } from "@/entities/direction";
+import { MyCity } from "@/entities/myCity";
+import { FC } from "react";
 
 interface CitiesProps {
-  form: UseFormReturn<directionSchemaType>;
+  cities: MyCity[];
+  setActiveCity: (city: MyCity) => void;
 }
 
-export const Cities: FC<CitiesProps> = ({ form }) => {
-  const {
-    data: cities,
-    isLoading: citiesLoading,
-    error: citiesError,
-  } = useGetCitiesQuery();
-
-  useEffect(() => {
-    if (cities) {
-      form.setValue("activeCity", cities[0]);
-    }
-  }, [cities]);
-
+export const Cities: FC<CitiesProps> = ({ cities, setActiveCity }) => {
   return (
-    <div>
-      <div className="mb-5 text-2xl">Мои города</div>
+    <div className={styles.cities}>
+      <h2 className={styles.cities__title}>Мои города</h2>
       <div className="flex gap-3">
         <AddCityButton />
-        <FormField
-          control={form.control}
-          name={"activeCity.country"}
-          render={() => (
-            <FormItem>
-              <FormControl>
-                <div className={styles.cities}>
-                  <CityCarousel
-                    cities={cities || []}
-                    setValue={form.setValue}
-                  />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div>
+          <CityCarousel cities={cities || []} setActiveCity={setActiveCity} />
+        </div>
       </div>
     </div>
   );

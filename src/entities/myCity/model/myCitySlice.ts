@@ -20,3 +20,4 @@ export const myCitySlice = createSlice({
 });
 
 export default myCitySlice.reducer;
+export const { setMyCity } = myCitySlice.actions;

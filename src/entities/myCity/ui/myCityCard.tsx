@@ -4,8 +4,8 @@ import { Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MyCity } from "../model/types";
 import { FC } from "react";
-import { useAppDispatch } from "@/shared/model";
-import { myCitySlice } from "../model/myCitySlice";
+import styles from "./myCityCard.module.scss";
+import { SettingsIcon } from "@/shared/assets/icons";
 
 export type MyCityCardProps = {
   city: MyCity;
@@ -13,30 +13,15 @@ export type MyCityCardProps = {
 };
 
 export const MyCityCard: FC<MyCityCardProps> = ({ city, onClick }) => {
-  // const dispatch = useAppDispatch();
-  // const setActiveCity = () => {
-  //   dispatch(myCitySlice.actions.setMyCity(city));
-  // };
   return (
-    <Card className="w-52 h-16 rounded-xl" onClick={onClick}>
-      <CardContent className="w-full h-full flex  p-0 pl-3 gap-3 justify-between items-center">
-        <div className="flex-2">
-          <img
-            className="rounded-full w-8 h-8 object-cover"
-            src={city.country_flag}
-            alt={`Иконка ${city.name}`}
-          />
-        </div>
-        <div className="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis">
-          {city.name}
-        </div>
-        <Link
-          to={paths.locationEdit}
-          className="h-full w-12 items-center flex flex-0 justify-center rounded-l-none rounded-xl bg-[#E2FF54]"
-        >
-          <Settings />
-        </Link>
-      </CardContent>
-    </Card>
+    <div className={styles.card} onClick={onClick}>
+      <div className={styles.icon}>
+        <img src={city.country_flag} alt={`Иконка ${city.name}`} />
+      </div>
+      <p className={styles.name}>{city.name}</p>
+      <Link to={paths.locationEdit} className={styles.settings_btn}>
+        <SettingsIcon fill={"#F6FF5F"} />
+      </Link>
+    </div>
   );
 };

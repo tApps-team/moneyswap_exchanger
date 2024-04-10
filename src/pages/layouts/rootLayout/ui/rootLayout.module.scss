@@ -4,14 +4,13 @@
   grid-template: auto 1fr / 1fr;
   row-gap: 20px;
   min-height: 100vh;
-  background: #dedede;
+  background: var(--dark-grey);
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: var(--container-padding-all);
-
-  .root__header {}
+  padding: var(--padding-xl);
 
   .root__content {
     overflow-y: auto;
+    height: 80vh;
   }
 }
