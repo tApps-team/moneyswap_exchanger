@@ -1,4 +1,3 @@
-export { DirectionCard } from "./ui/directionCard";
 export { CurrencyCard } from "./ui/currencyCard";
 export type { Direction, Currency, CurrencyCategory } from "./model/types";
 export {
