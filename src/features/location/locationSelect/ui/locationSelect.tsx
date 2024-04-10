@@ -8,9 +8,11 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
+  Input,
   ScrollArea,
 } from "@/shared/ui";
 import { ChevronDown, Circle } from "lucide-react";
+import { useState } from "react";
 
 type SelectCities = {
   type: "city";
@@ -29,7 +31,7 @@ type LocationSelectProps = {
 //Todo(refactoring) либо можно создать универсальный компонент которой будет рендерить универсальные карточки, если различия между карточкой города и страны только в иконке
 export const LocationSelect = (props: LocationSelectProps) => {
   const { type, label, disabled } = props;
-
+  const [searchValue, setSearchValue] = useState<string>("");
   const cityItem = type === "city" ? props.city : null;
   const countryItem = type === "country" ? props.country : null;
 
@@ -37,26 +39,34 @@ export const LocationSelect = (props: LocationSelectProps) => {
 
   const locationItems =
     type === "city"
-      ? cityItem?.map((city) => (
-          <DrawerClose key={city.id}>
-            <LocationCard
-              code_name={city.code_name}
-              id={city.id}
-              name={city.name}
-              onClick={() => props.onClick(city)}
-            />
-          </DrawerClose>
-        ))
-      : countryItem?.map((country) => (
-          <DrawerClose key={country.id}>
-            <LocationCard
-              country_flag={country.country_flag}
-              id={country.id}
-              name={country.name}
-              onClick={() => props.onClick(country)}
-            />
-          </DrawerClose>
-        ));
+      ? cityItem
+          ?.filter((city) =>
+            city.name.toLowerCase().includes(searchValue.toLowerCase())
+          )
+          .map((city) => (
+            <DrawerClose key={city.id}>
+              <LocationCard
+                code_name={city.code_name}
+                id={city.id}
+                name={city.name}
+                onClick={() => props.onClick(city)}
+              />
+            </DrawerClose>
+          ))
+      : countryItem
+          ?.filter((country) =>
+            country.name.toLowerCase().includes(searchValue.toLowerCase())
+          )
+          .map((country) => (
+            <DrawerClose key={country.id}>
+              <LocationCard
+                country_flag={country.country_flag}
+                id={country.id}
+                name={country.name}
+                onClick={() => props.onClick(country)}
+              />
+            </DrawerClose>
+          ));
 
   return (
     <div>
@@ -79,10 +89,10 @@ export const LocationSelect = (props: LocationSelectProps) => {
         </DrawerTrigger>
         <DrawerContent className="h-screen">
           <DrawerHeader>
-            <DrawerTitle>
-              Выберите страну в которой будет размещен обменик
-            </DrawerTitle>
-            <DrawerDescription>это можно будет изменить</DrawerDescription>
+            <Input
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value.trim())}
+            />
           </DrawerHeader>
           <div className="p-4">
             <ScrollArea className="h-[320px] w-full ">
@@ -94,60 +104,3 @@ export const LocationSelect = (props: LocationSelectProps) => {
     </div>
   );
 };
-// type LocationSelectTestProps<T extends City | Currency | Country> = {
-//   onClick: () => void;
-//   disabled?: boolean;
-//   label: string;
-//   emptyLabel: string;
-//   items: T[];
-// };
-// export const LocationSelectTest = <T extends City | Currency | Country>(
-//   props: LocationSelectTestProps<T>
-// ) => {
-//   const { disabled, items, label, onClick, emptyLabel } = props;
-
-//   return (
-//     <Drawer>
-//       <DrawerTrigger asChild>
-//         <Button
-//           disabled={disabled}
-//           className="w-full justify-between items-center rounded-full gap-2 select-none"
-//           variant={"outline"}
-//         >
-//           <div className="flex gap-2 items-center">
-//             <Circle />
-//             <div>{label ? label : emptyLabel}</div>
-//           </div>
-//           <div className="flex ">
-//             <div>change</div>
-//             <ChevronDown />
-//           </div>
-//         </Button>
-//       </DrawerTrigger>
-//       <DrawerContent className="h-screen">
-//         <DrawerHeader>
-//           <DrawerTitle>
-//             Выберите страну в которой будет размещен обменик
-//           </DrawerTitle>
-//           <DrawerDescription>это можно будет изменить</DrawerDescription>
-//         </DrawerHeader>
-//         <div className="p-4">
-//           <ScrollArea className="h-[320px] w-full ">
-//             <div className="flex flex-col gap-4">
-//               {items.map((item) => (
-//                 <DrawerClose key={item.id}>
-//                   <LocationCard
-//                     code_name={item.code_name}
-//                     id={item.id}
-//                     name={item.name}
-//                     onClick={onClick}
-//                   />
-//                 </DrawerClose>
-//               ))}
-//             </div>
-//           </ScrollArea>
-//         </div>
-//       </DrawerContent>
-//     </Drawer>
-//   );
-// };

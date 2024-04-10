@@ -4,13 +4,13 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
+  Input,
   ScrollArea,
 } from "@/shared/ui";
 import { ChevronDown, Circle } from "lucide-react";
+import { useState } from "react";
 
 type CurrencySelectProps = {
   currencies: Currency[];
@@ -21,7 +21,7 @@ type CurrencySelectProps = {
 };
 export const CurrencySelect = (props: CurrencySelectProps) => {
   const { currencies, disabled, emptyLabel, label, onClick } = props;
-
+  const [searchValue, setSearchValue] = useState<string>("");
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -42,22 +42,28 @@ export const CurrencySelect = (props: CurrencySelectProps) => {
       </DrawerTrigger>
       <DrawerContent className="h-screen">
         <DrawerHeader>
-          <DrawerTitle>
-            Выберите страну в которой будет размещен обменик
-          </DrawerTitle>
-          <DrawerDescription>это можно будет изменить</DrawerDescription>
+          <Input
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value.trim())}
+          />
         </DrawerHeader>
         <div className="p-4">
           <ScrollArea className="h-3/5 w-full ">
             <div className="flex flex-col gap-4">
-              {currencies.map((currency) => (
-                <DrawerClose key={currency.id}>
-                  <CurrencyCard
-                    onClick={() => onClick(currency)}
-                    currency={currency}
-                  />
-                </DrawerClose>
-              ))}
+              {currencies
+                ?.filter((currency) =>
+                  currency.name
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase())
+                )
+                .map((currency) => (
+                  <DrawerClose key={currency.id}>
+                    <CurrencyCard
+                      onClick={() => onClick(currency)}
+                      currency={currency}
+                    />
+                  </DrawerClose>
+                ))}
             </div>
           </ScrollArea>
         </div>
