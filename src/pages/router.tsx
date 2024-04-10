@@ -15,6 +15,7 @@ import { LocationAddPage } from "./locationAdd";
 import { LocationEditPage } from "./locationEdit";
 import { DirectionAddPage } from "./directionAdd";
 import { DirectionEditPage } from "./directionEdit";
+import { SecondLayout } from "./layouts/secondPagesLayout";
 
 export const router = createBrowserRouter([
   {
@@ -58,36 +59,68 @@ export const router = createBrowserRouter([
             ),
           },
           {
+            path: paths.notFound,
+            element: (
+              <MainLayout>
+                <NotFoundPage />
+              </MainLayout>
+            ),
+          },
+          {
             path: paths.locationAdd,
-            element: <LocationAddPage />,
+            element: (
+              <SecondLayout>
+                <LocationAddPage />
+              </SecondLayout>
+            ),
           },
           {
             path: paths.locationEdit,
-            element: <LocationEditPage />,
+            element: (
+              <SecondLayout>
+                <LocationEditPage />
+              </SecondLayout>
+            ),
           },
           {
             path: paths.directionAdd,
-            element: <DirectionAddPage />,
+            element: (
+              <SecondLayout>
+                <DirectionAddPage />
+              </SecondLayout>
+            ),
           },
           {
             path: paths.directionEdit,
-            element: <DirectionEditPage />,
+            element: (
+              <SecondLayout>
+                <DirectionEditPage />
+              </SecondLayout>
+            ),
           },
           {
             path: `${paths.profile}${paths.profileSettings}`,
-            element: <ProfileSettingsPage />,
+            element: (
+              <SecondLayout>
+                <ProfileSettingsPage />
+              </SecondLayout>
+            ),
           },
           {
             path: `${paths.profile}${paths.profileSettings}${paths.profileInfo}`,
-            element: <ProfileInfoPage />,
+            element: (
+              <SecondLayout>
+                <ProfileInfoPage />
+              </SecondLayout>
+            ),
           },
           {
             path: `${paths.profile}${paths.profileSettings}${paths.profilePassword}`,
-            element: <ProfilePasswordPage />,
-          },
-          {
-            path: paths.notFound,
-            element: <NotFoundPage />,
+            element: (
+              <SecondLayout>
+                <ProfilePasswordPage />
+              </SecondLayout>
+            ),
           },
         ],
       },

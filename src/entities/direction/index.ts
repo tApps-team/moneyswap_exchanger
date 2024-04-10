@@ -1,4 +1,3 @@
-export { DirectionCard } from "./ui/directionCard";
 export type { Direction } from "./model/types";
 export { useDirectionsByCityQuery, directionAPI } from "./api/directionService";
 export {
