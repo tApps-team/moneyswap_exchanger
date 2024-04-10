@@ -1,7 +1,6 @@
 import { useAvailableValutesQuery } from "@/entities/direction";
 import { CurrencySelect } from "@/features/direction";
 import { ActualCourse } from "@/features/direction/actualCourse";
-import { LocationSelect } from "@/features/location";
 import {
   Button,
   Form,
@@ -33,8 +32,8 @@ export const directionSchema = z.object({
       icon_url: z.string(),
     })
     .nullable(),
-  giveCurrencyPrice: z.coerce.number(),
-  getCurrencyPrice: z.coerce.number(),
+  giveCurrencyPrice: z.coerce.number().positive(),
+  getCurrencyPrice: z.coerce.number().positive(),
 });
 export type DirectionSchemaType = z.infer<typeof directionSchema>;
 export const DirectionAddForm = () => {
@@ -112,6 +111,12 @@ export const DirectionAddForm = () => {
             </FormItem>
           )}
         />
+
+        <ActualCourse
+          valuteFrom={form.getValues("getCurrency.code_name")}
+          valuteTo={form.getValues("giveCurrency.code_name")}
+        />
+
         <div className="flex items-center gap-10">
           <FormField
             control={form.control}
