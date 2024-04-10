@@ -33,8 +33,8 @@ export const directionSchema = z.object({
       icon_url: z.string(),
     })
     .nullable(),
-  giveCurrencyPrice: z.number(),
-  getCurrencyPrice: z.number(),
+  giveCurrencyPrice: z.coerce.number(),
+  getCurrencyPrice: z.coerce.number(),
 });
 export type DirectionSchemaType = z.infer<typeof directionSchema>;
 export const DirectionAddForm = () => {
@@ -112,45 +112,71 @@ export const DirectionAddForm = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name={"giveCurrencyPrice"}
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div className="relative">
-                  <Input
-                    {...field}
-                    type="number"
-                    startAdornment={
-                      form.getValues("giveCurrency") ? (
-                        <img
-                          src={form.getValues("giveCurrency.icon_url")}
-                          alt={`image ${form.getValues("giveCurrency.name")}`}
-                          width={32}
-                          height={32}
-                          className="absolute left-3 top-1/2 -translate-y-1/2  "
-                        />
-                      ) : undefined
-                    }
-                    disabled={!inputDisabled}
-                    className="border-2  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                  />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex items-center gap-10">
+          <FormField
+            control={form.control}
+            name={"giveCurrencyPrice"}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      {...field}
+                      type="number"
+                      disabled={!inputDisabled}
+                      startAdornment={
+                        form.getValues("giveCurrency") ? (
+                          <img
+                            src={form.getValues("giveCurrency.icon_url")}
+                            alt={`image ${form.getValues("giveCurrency.name")}`}
+                            width={32}
+                            height={32}
+                            className="absolute left-3 top-1/2 -translate-y-1/2  "
+                          />
+                        ) : undefined
+                      }
+                      className="border-2  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name={"getCurrencyPrice"}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      {...field}
+                      type="number"
+                      startAdornment={
+                        form.getValues("getCurrency") ? (
+                          <img
+                            src={form.getValues("getCurrency.icon_url")}
+                            alt={`image ${form.getValues("getCurrency.name")}`}
+                            width={32}
+                            height={32}
+                            className="absolute left-3 top-1/2 -translate-y-1/2  "
+                          />
+                        ) : undefined
+                      }
+                      disabled={!inputDisabled}
+                      className="border-2  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <Button type="submit">Добавить </Button>
       </form>
     </Form>
   );
 };
-
-// <CurrencySelect
-//   emptyLabel="Выберите что отдаете"
-//   label="asd"
-//   currencies={currectAllCurrencies || {}}
-// />
