@@ -1,7 +1,10 @@
-import { Direction, directionSchemaType } from "@/entities/direction";
+import {
+  Direction,
+  DirectionCard,
+  directionSchemaType,
+} from "@/entities/direction";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { DirectionCard } from "./directionCard";
 
 interface DirectionListProps {
   directions: Direction[];

@@ -1,8 +1,4 @@
 .root__container {
-
-  display: grid;
-  grid-template: auto 1fr / 1fr;
-  row-gap: 20px;
   min-height: 100vh;
   background: var(--dark-grey);
   max-width: var(--container-width);
@@ -11,6 +7,6 @@
 
   .root__content {
     overflow-y: auto;
-    height: 80vh;
+    // height: 100vh;
   }
 }

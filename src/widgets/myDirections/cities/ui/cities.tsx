@@ -1,21 +1,26 @@
 import { AddCityButton, CityCarousel } from "@/features/location";
 import styles from "./cities.module.scss";
-import { MyCity } from "@/entities/myCity";
 import { FC } from "react";
+import { ActiveCity } from "@/entities/location";
 
 interface CitiesProps {
-  cities: MyCity[];
-  setActiveCity: (city: MyCity) => void;
+  cities: ActiveCity[];
+  setActive: (city: ActiveCity) => void;
+  activeCity: ActiveCity | null;
 }
 
-export const Cities: FC<CitiesProps> = ({ cities, setActiveCity }) => {
+export const Cities: FC<CitiesProps> = ({ cities, setActive, activeCity }) => {
   return (
     <div className={styles.cities}>
       <h2 className={styles.cities__title}>Мои города</h2>
       <div className="flex gap-3">
         <AddCityButton />
-        <div>
-          <CityCarousel cities={cities || []} setActiveCity={setActiveCity} />
+        <div className={styles.carousel}>
+          <CityCarousel
+            cities={cities || []}
+            setActive={setActive}
+            activeCity={activeCity}
+          />
         </div>
       </div>
     </div>

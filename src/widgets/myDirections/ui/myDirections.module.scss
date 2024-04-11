@@ -1,10 +1,23 @@
 .submit_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 20px;
     text-transform: uppercase;
     text-align: center;
-    background: #2D2D2D;
+    background: var(--dark-grey);
     color: #fff;
     border: 2px solid #fff;
     padding: 25px;
     border-radius: 50px;
+    height: 80px;
+    width: 100%;
+}
+
+.success {
+    background: var(--main-color);
+}
+
+.error {
+    background: var(--light-grey);
 }
