@@ -1,57 +1,33 @@
-import { CityCard, CityCardProps } from "@/entities/location";
+import { ActiveCity, MyCityCard } from "@/entities/location";
 import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
-const cities: CityCardProps[] = [
-  {
-    code_name: "BAN",
-    id: 1,
-    imageUrl: "asdfsadfsaf",
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 2,
-    imageUrl: "asdfsadfsaf",
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 3,
-    imageUrl: "asdfsadfsaf",
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 4,
-    imageUrl: "asdfsadfsaf",
-    name: "Багкок",
-  },
-  {
-    code_name: "BAN",
-    id: 5,
-    imageUrl: "asdfsadfsaf",
-    name: "Багкок",
-  },
-];
-export const CityCarousel = () => {
+import { FC } from "react";
+
+interface CityCarouselProps {
+  cities: ActiveCity[];
+  setActive: (city: ActiveCity) => void;
+  activeCity: ActiveCity | null;
+}
+
+export const CityCarousel: FC<CityCarouselProps> = ({
+  cities,
+  setActive,
+  activeCity,
+}) => {
   return (
     <Carousel
       opts={{
         align: "start",
       }}
-      className="w-full max-w-sm"
     >
       <CarouselContent>
-        {cities.map((city) => (
-          <CarouselItem
-            className="basis-8/12 "
-            //md:basis-1/2 lg:basis-8/12 sm:basis-11/12
-            key={city.id}
-          >
-            <CityCard
-              code_name={city.code_name}
-              id={city.id}
-              name={city.name}
-              imageUrl={city.imageUrl}
+        {cities?.map((city) => (
+          <CarouselItem key={city.id}>
+            <MyCityCard
+              city={city}
+              onClick={() => {
+                setActive(city);
+              }}
+              activeCity={activeCity?.id === city?.id}
             />
           </CarouselItem>
         ))}

@@ -80,24 +80,15 @@
 
 body {
   font-family: "Montserrat", sans-serif;
-}
 
-.main_layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: #dedede;
-  max-width: var(--container-width);
-  margin: 0 auto;
-
-  header,
-  footer {
-    flex-shrink: 0;
+  // input number
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
-
-  main {
-    flex-grow: 1;
-    overflow-y: auto;
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
 }
 

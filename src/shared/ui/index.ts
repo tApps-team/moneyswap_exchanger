@@ -22,3 +22,6 @@ export * from "./card";
 export * from "./checkbox";
 export * from "./drawer";
 export * from "./scroll-area";
+export * from "./switch";
+export { DirectionCardSwiper } from "./directionCardSwiper";
+export { CustomLoader } from "./customLoader";

@@ -1,19 +1,20 @@
+import { locationSlice } from "@/entities/location";
 import { userSlice } from "@/entities/user";
-import { authAPI } from "@/entities/user/api/authService";
+import { authApi, baseApi } from "@/shared/api";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { testAPI } from "@/widgets/myCustomAuthReq/api/testService";
 
 const rootReducer = combineReducers({
   [userSlice.name]: userSlice.reducer,
-  [authAPI.reducerPath]: authAPI.reducer,
-  [testAPI.reducerPath]: testAPI.reducer,
+  [locationSlice.name]: locationSlice.reducer,
+  [baseApi.reducerPath]: baseApi.reducer,
+  [authApi.reducerPath]: authApi.reducer,
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(authAPI.middleware, testAPI.middleware),
+      getDefaultMiddleware().concat(baseApi.middleware, authApi.middleware),
   });
 };
 

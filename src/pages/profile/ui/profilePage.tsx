@@ -1,11 +1,12 @@
+import { Logout } from "@/features/auth";
 import { paths } from "@/shared/routing";
 import { Button } from "@/shared/ui";
-import { ChevronRight, CircleHelp, LogOut, Settings } from "lucide-react";
+import { ChevronRight, CircleHelp, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const ProfilePage = () => {
   return (
-    <div className="grid gap-4 w-[500px]">
+    <div className="grid gap-4">
       <Button className="items-center justify-start " asChild>
         <Link
           className="grid grid-cols-[auto,1fr,auto] gap-6 justify-between"
@@ -26,12 +27,7 @@ export const ProfilePage = () => {
           <ChevronRight />
         </Link>
       </Button>
-      <Button className="items-center justify-start  " asChild>
-        <Link className="gap-6" to={`${paths.profile}${paths.profileSettings}`}>
-          <LogOut />
-          <div>Выйти</div>
-        </Link>
-      </Button>
+      <Logout />
     </div>
   );
 };

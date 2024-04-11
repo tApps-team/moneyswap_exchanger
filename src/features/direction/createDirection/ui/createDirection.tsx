@@ -1,14 +1,12 @@
 import { paths } from "@/shared/routing";
-import { Button } from "@/shared/ui";
-import { CirclePlus } from "lucide-react";
 import { Link } from "react-router-dom";
+import styles from "./createDirection.module.scss";
+import { PlusIcon } from "@/shared/assets/icons";
 
 export const CreateDirection = () => {
   return (
-    <Button className="flex justify-center h-16 rounded-xl" asChild>
-      <Link to={paths.directionSettings}>
-        <CirclePlus />
-      </Link>
-    </Button>
+    <Link to={paths.directionAdd} className={styles.create_btn}>
+      <PlusIcon fill="#fff" />
+    </Link>
   );
 };
