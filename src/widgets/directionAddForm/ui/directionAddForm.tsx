@@ -7,6 +7,9 @@ import {
 } from "@/entities/direction";
 import { CurrencySelect } from "@/features/direction";
 import { ActualCourse } from "@/features/direction/actualCourse";
+import { router } from "@/pages/router";
+import { useAppSelector } from "@/shared/model";
+import { paths } from "@/shared/routing";
 import {
   Button,
   Form,
@@ -20,6 +23,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export const DirectionAddForm = () => {
   const form = useForm<DirectionAddSchemaType>({
@@ -31,6 +35,10 @@ export const DirectionAddForm = () => {
       giveCurrencyPrice: 0,
     },
   });
+  const navigate = useNavigate();
+  const activeCity = useAppSelector(
+    (state) => state.activeCity.activeCity?.code_name || ""
+  );
   form.watch(["giveCurrency", "getCurrency"]);
   const [addDirection] = useAddDirectionMutation();
   const { data: currencies } = useAvailableValutesQuery({ base: "all" });
@@ -71,13 +79,15 @@ export const DirectionAddForm = () => {
 
   const onSubmit = (data: DirectionAddSchemaType) => {
     addDirection({
-      city: "Москва",
-      in_count: data.getCurrencyPrice,
+      city: activeCity,
+      in_count: data.giveCurrencyPrice,
+      out_count: data.getCurrencyPrice,
       is_active: false,
-      out_count: data.giveCurrencyPrice,
       valute_from: data.giveCurrency?.code_name || "",
       valute_to: data.getCurrency?.code_name || "",
-    });
+    })
+      .unwrap()
+      .then(() => navigate(paths.home));
     console.log(data);
   };
 
