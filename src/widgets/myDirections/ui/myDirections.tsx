@@ -8,16 +8,22 @@ import {
   directionSchemaType,
   useDirectionsByCityQuery,
 } from "@/entities/direction";
-import { MyCity, setMyCity, useGetCitiesQuery } from "@/entities/myCity";
 import { useEffect } from "react";
 import styles from "./myDirections.module.scss";
 import { useAppDispatch, useAppSelector } from "@/shared/model";
+import { useEditDirectionMutation } from "@/entities/direction/api/directionService";
+import { CustomLoader } from "@/shared/ui/customLoader";
+import {
+  ActiveCity,
+  setActiveCity,
+  useGetCitiesQuery,
+} from "@/entities/location";
 
 export const MyDirections = () => {
-  const activeCity = useAppSelector((state) => state.myCity.activeCity);
+  const activeCity = useAppSelector((state) => state.activeCity.activeCity);
   const dispatch = useAppDispatch();
-  const setActiveCity = (city: MyCity) => {
-    dispatch(setMyCity(city));
+  const setActive = (city: ActiveCity) => {
+    dispatch(setActiveCity(city));
   };
 
   const {
@@ -28,7 +34,7 @@ export const MyDirections = () => {
 
   useEffect(() => {
     if (cities) {
-      setActiveCity(cities[0]);
+      setActive(cities[0]);
     }
   }, [cities]);
 
@@ -42,8 +48,8 @@ export const MyDirections = () => {
 
   const {
     data: directions,
-    isLoading,
-    error,
+    isLoading: directionsLoading,
+    error: directionsError,
   } = useDirectionsByCityQuery(activeCity?.code_name || "", {
     skip: !activeCity,
   });
@@ -54,19 +60,42 @@ export const MyDirections = () => {
     }
   }, [directions]);
 
+  const [
+    editDireciton,
+    { isLoading: editLoading, error: editError, isSuccess: editSuccess },
+  ] = useEditDirectionMutation();
+
   const onSubmit = (data: directionSchemaType) => {
-    console.log(data);
+    if (activeCity) {
+      const formData = {
+        city: activeCity?.code_name,
+        directions: data.directions,
+      };
+      console.log(data);
+      editDireciton(formData)
+        .unwrap()
+        .catch((error) => console.error("Ошибка...", error));
+    }
   };
 
   return (
-    <div>
-      <Form {...form}>
-        <form className="grid" onSubmit={form.handleSubmit(onSubmit)}>
-          <Cities cities={cities || []} setActiveCity={setActiveCity} />
-          {directions && <Directions directions={directions} form={form} />}
-          <button className={styles.submit_btn}>Обновить</button>
-        </form>
-      </Form>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <Cities
+          cities={cities || []}
+          setActive={setActive}
+          activeCity={activeCity}
+        />
+        {directions && <Directions directions={directions} form={form} />}
+        <button
+          className={`${styles.submit_btn} ${editError && styles.error} ${
+            editSuccess && styles.success
+          }`}
+        >
+          {editLoading ? <CustomLoader /> : "Обновить"}
+        </button>
+      </form>
+      {activeCity?.updated.date} {activeCity?.updated.time}
+    </Form>
   );
 };

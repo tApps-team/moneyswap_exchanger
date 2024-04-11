@@ -17,3 +17,12 @@ export type ActualCourseDtoRequest = {
   valute_from: string;
   valute_to: string;
 };
+export type EditDirecitonRequest = {
+  city: string;
+  directions: {
+    id: number;
+    in_count: number;
+    out_count: number;
+    is_active: boolean;
+  }[];
+};

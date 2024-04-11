@@ -1,15 +1,17 @@
+import { ActiveCity, MyCityCard } from "@/entities/location";
 import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
 import { FC } from "react";
-import { MyCity, MyCityCard } from "@/entities/myCity";
 
 interface CityCarouselProps {
-  cities: MyCity[];
-  setActiveCity: (city: MyCity) => void;
+  cities: ActiveCity[];
+  setActive: (city: ActiveCity) => void;
+  activeCity: ActiveCity | null;
 }
 
 export const CityCarousel: FC<CityCarouselProps> = ({
   cities,
-  setActiveCity,
+  setActive,
+  activeCity,
 }) => {
   return (
     <Carousel
@@ -17,14 +19,15 @@ export const CityCarousel: FC<CityCarouselProps> = ({
         align: "start",
       }}
     >
-      <CarouselContent className="w-[350px]">
+      <CarouselContent>
         {cities?.map((city) => (
           <CarouselItem key={city.id}>
             <MyCityCard
               city={city}
               onClick={() => {
-                setActiveCity(city);
+                setActive(city);
               }}
+              activeCity={activeCity?.id === city?.id}
             />
           </CarouselItem>
         ))}

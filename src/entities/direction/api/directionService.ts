@@ -5,12 +5,20 @@ import {
   ActualCourseDtoResponse,
   AvailableValutesDtoRequest,
   AvailableValutesDtoResponse,
+  EditDirecitonRequest,
 } from "./directionDto";
 
 export const directionAPI = authApi.injectEndpoints({
   endpoints: (build) => ({
     directionsByCity: build.query<Direction[], string>({
       query: (codeName) => `partner/directions_by_city?code_name=${codeName}`,
+    }),
+    editDirection: build.mutation<void, EditDirecitonRequest>({
+      query: (BodyParams) => ({
+        url: `/partner/edit_partner_directions`,
+        method: `POST`,
+        body: BodyParams,
+      }),
     }),
     availableValutes: build.query<
       AvailableValutesDtoResponse,
@@ -32,6 +40,7 @@ export const directionAPI = authApi.injectEndpoints({
 });
 export const {
   useDirectionsByCityQuery,
+  useEditDirectionMutation,
   useAvailableValutesQuery,
   useActualCourseQuery,
 } = directionAPI;
