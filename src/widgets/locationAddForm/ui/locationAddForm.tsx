@@ -1,10 +1,12 @@
 import {
   LocationSchemaType,
   locationSchema,
+  useAddPartnerCityMutation,
   useAllCountriesQuery,
   useCitiesByCountryNameQuery,
 } from "@/entities/location";
 import { LocationSelect } from "@/features/location";
+import { paths } from "@/shared/routing";
 
 import {
   Button,
@@ -19,8 +21,8 @@ import {
 } from "@/shared/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SquarePen } from "lucide-react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export const LocationAddForm = () => {
   const form = useForm<LocationSchemaType>({
@@ -43,8 +45,22 @@ export const LocationAddForm = () => {
       },
     },
   });
+  const navigate = useNavigate();
+
+  const [addPartnerCity] = useAddPartnerCityMutation();
+
   const onSubmit = (data: LocationSchemaType) => {
     console.log(data);
+    addPartnerCity({
+      city: data.city?.code_name || "",
+      delivery: data.deliviry,
+      office: data.office,
+      time_from: data.timeStart,
+      time_to: data.timeEnd,
+      working_days: data.workDays,
+    })
+      .unwrap()
+      .then(() => navigate(paths.home));
   };
 
   form.watch(["timeStart", "timeEnd", "country.name"]);
