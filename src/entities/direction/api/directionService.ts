@@ -3,6 +3,8 @@ import { authApi } from "@/shared/api";
 import {
   ActualCourseDtoRequest,
   ActualCourseDtoResponse,
+  AddDirectionDtoRequest,
+  AddDirectionDtoResponse,
   AvailableValutesDtoRequest,
   AvailableValutesDtoResponse,
 } from "./directionDto";
@@ -28,10 +30,21 @@ export const directionAPI = authApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    addDirection: build.mutation<
+      AddDirectionDtoResponse,
+      AddDirectionDtoRequest
+    >({
+      query: (body) => ({
+        url: `partner/add_partner_direction`,
+        method: "POST",
+        body: body,
+      }),
+    }),
   }),
 });
 export const {
   useDirectionsByCityQuery,
   useAvailableValutesQuery,
   useActualCourseQuery,
+  useAddDirectionMutation,
 } = directionAPI;

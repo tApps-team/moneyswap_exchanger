@@ -15,3 +15,25 @@ export const directionSchema = z.object({
   ),
 });
 export type DirectionSchemaType = z.infer<typeof directionSchema>;
+
+export const directionAddSchema = z.object({
+  giveCurrency: z
+    .object({
+      id: z.number().nullable(),
+      name: z.string(),
+      code_name: z.string(),
+      icon_url: z.string(),
+    })
+    .nullable(),
+  getCurrency: z
+    .object({
+      id: z.number().nullable(),
+      name: z.string(),
+      code_name: z.string(),
+      icon_url: z.string(),
+    })
+    .nullable(),
+  giveCurrencyPrice: z.coerce.number().positive().min(1),
+  getCurrencyPrice: z.coerce.number().positive().min(1),
+});
+export type DirectionAddSchemaType = z.infer<typeof directionAddSchema>;
