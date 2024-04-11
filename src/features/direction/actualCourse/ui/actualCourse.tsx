@@ -1,34 +1,24 @@
-import { useActualCourseQuery } from "@/entities/direction";
 import { Card, CardContent } from "@/shared/ui";
-
+//refactoring
 type ActualCourseProps = {
-  actualCourse: Act;
+  actualCourse?: {
+    valute_from: string;
+    icon_valute_from: string;
+    in_count: number;
+    valute_to: string;
+    icon_valute_to: string;
+    out_count: number;
+  };
 };
 export const ActualCourse = (props: ActualCourseProps) => {
-  const { valuteFrom, valuteTo } = props;
-  const { data: actualCourse } = useActualCourseQuery(
-    { valute_from: valuteFrom, valute_to: valuteTo },
-    {
-      skip: !valuteTo || !valuteFrom,
-    }
-  );
+  const { actualCourse } = props;
+
   return (
     <Card className="p-0 rounded-full">
-      <CardContent className="p-4 flex items-center gap-4">
+      <CardContent className="p-4 flex items-center gap-4 overflow-hidden">
         {actualCourse ? (
           <>
-            <div className="flex items-center gap-1">
-              <img
-                src={actualCourse?.icon_valute_to}
-                alt={`icon ${actualCourse?.valute_to}`}
-                width={32}
-                height={32}
-              />
-              <div>{actualCourse?.out_count}</div>
-              <div>{actualCourse?.valute_to}</div>
-            </div>
-            <div>=</div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 ">
               <img
                 src={actualCourse?.icon_valute_from}
                 alt={`icon ${actualCourse?.valute_to}`}
@@ -37,6 +27,18 @@ export const ActualCourse = (props: ActualCourseProps) => {
               />
               <div>{actualCourse?.in_count}</div>
               <div>{actualCourse?.valute_from}</div>
+            </div>
+            <div>=</div>
+
+            <div className="flex items-center gap-1 ">
+              <img
+                src={actualCourse?.icon_valute_to}
+                alt={`icon ${actualCourse?.valute_to}`}
+                width={32}
+                height={32}
+              />
+              <div>{actualCourse?.out_count}</div>
+              <div>{actualCourse?.valute_to}</div>
             </div>
           </>
         ) : (
