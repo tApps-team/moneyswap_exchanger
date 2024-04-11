@@ -4,12 +4,7 @@
     display: grid;
     gap: 30px;
     padding: var(--padding-l);
-
-    @media (max-width: 450px) {
-        border-radius: var(--border-radius-l);
-        gap: 10px;
-        padding: var(--padding-m);
-    }
+    height: 150px;
 
     .inputs {
         display: grid;

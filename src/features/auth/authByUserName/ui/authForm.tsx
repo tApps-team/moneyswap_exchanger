@@ -16,7 +16,7 @@ import { useAppDispatch } from "@/shared/model";
 import { useNavigate } from "react-router-dom";
 import { paths } from "@/shared/routing";
 import { useLoginMutation, userSlice } from "@/entities/user";
-import { CustomLoader } from "@/shared/ui/customLoader";
+import { CustomLoader } from "@/shared/ui";
 
 export const AuthByUserNameForm = () => {
   const authForm = useForm<AuthFormSchema>({

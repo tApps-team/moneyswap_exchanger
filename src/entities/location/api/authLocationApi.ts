@@ -5,6 +5,7 @@ export const authLocationApi = authApi.injectEndpoints({
   endpoints: (build) => ({
     getCities: build.query<ActiveCity[], void>({
       query: () => `/partner/partner_cities`,
+      providesTags: ["City"],
     }),
   }),
 });

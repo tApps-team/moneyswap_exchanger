@@ -9,15 +9,14 @@ import {
   useDirectionsByCityQuery,
 } from "@/entities/direction";
 import { useEffect } from "react";
-import styles from "./myDirections.module.scss";
 import { useAppDispatch, useAppSelector } from "@/shared/model";
 import { useEditDirectionMutation } from "@/entities/direction/api/directionService";
-import { CustomLoader } from "@/shared/ui/customLoader";
 import {
   ActiveCity,
   setActiveCity,
   useGetCitiesQuery,
 } from "@/entities/location";
+import { EditDirection, UpdatedInfo } from "@/features/direction";
 
 export const MyDirections = () => {
   const activeCity = useAppSelector((state) => state.activeCity.activeCity);
@@ -86,16 +85,18 @@ export const MyDirections = () => {
           setActive={setActive}
           activeCity={activeCity}
         />
-        {directions && <Directions directions={directions} form={form} />}
-        <button
-          className={`${styles.submit_btn} ${editError && styles.error} ${
-            editSuccess && styles.success
-          }`}
-        >
-          {editLoading ? <CustomLoader /> : "Обновить"}
-        </button>
+        <Directions directions={directions} form={form} />
+        {directions && (
+          <EditDirection
+            editError={editError && true}
+            editLoading={editLoading}
+            editSuccess={editSuccess}
+          />
+        )}
       </form>
-      {activeCity?.updated.date} {activeCity?.updated.time}
+      {activeCity && directions && (
+        <UpdatedInfo activeCity={activeCity} editSuccess={editSuccess} />
+      )}
     </Form>
   );
 };

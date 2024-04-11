@@ -6,7 +6,7 @@ import styles from "./directions.module.scss";
 
 interface DirectionsProps {
   form: UseFormReturn<directionSchemaType>;
-  directions: Direction[];
+  directions: Direction[] | undefined;
 }
 
 export const Directions: FC<DirectionsProps> = ({ form, directions }) => {
@@ -14,7 +14,7 @@ export const Directions: FC<DirectionsProps> = ({ form, directions }) => {
     <div className="mt-5 mb-5 grid grid-flow-row gap-5">
       <h2 className={styles.title}>Мои направления</h2>
       <CreateDirection />
-      <DirectionList form={form} directions={directions} />
+      {directions && <DirectionList form={form} directions={directions} />}
     </div>
   );
 };

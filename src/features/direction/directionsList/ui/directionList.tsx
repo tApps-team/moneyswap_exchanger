@@ -13,7 +13,7 @@ interface DirectionListProps {
 
 export const DirectionList: FC<DirectionListProps> = ({ directions, form }) => {
   return (
-    <div className="mt-2 grid gap-3 overflow-auto max-h-[50vh]">
+    <div className="mt-2 grid gap-3 overflow-auto max-h-[35vh]">
       {directions.map((direction, index) => (
         <DirectionCard
           form={form}
