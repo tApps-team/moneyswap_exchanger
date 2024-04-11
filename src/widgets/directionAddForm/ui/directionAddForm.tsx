@@ -1,4 +1,10 @@
-import { useAvailableValutesQuery } from "@/entities/direction";
+import {
+  DirectionAddSchemaType,
+  directionAddSchema,
+  useActualCourseQuery,
+  useAddDirectionMutation,
+  useAvailableValutesQuery,
+} from "@/entities/direction";
 import { CurrencySelect } from "@/features/direction";
 import { ActualCourse } from "@/features/direction/actualCourse";
 import {
@@ -12,33 +18,12 @@ import {
   Input,
 } from "@/shared/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-export const directionSchema = z.object({
-  giveCurrency: z
-    .object({
-      id: z.number().nullable(),
-      name: z.string(),
-      code_name: z.string(),
-      icon_url: z.string(),
-    })
-    .nullable(),
-  getCurrency: z
-    .object({
-      id: z.number().nullable(),
-      name: z.string(),
-      code_name: z.string(),
-      icon_url: z.string(),
-    })
-    .nullable(),
-  giveCurrencyPrice: z.coerce.number().positive(),
-  getCurrencyPrice: z.coerce.number().positive(),
-});
-export type DirectionSchemaType = z.infer<typeof directionSchema>;
 export const DirectionAddForm = () => {
-  const form = useForm<DirectionSchemaType>({
-    resolver: zodResolver(directionSchema),
+  const form = useForm<DirectionAddSchemaType>({
+    resolver: zodResolver(directionAddSchema),
     defaultValues: {
       getCurrency: null,
       giveCurrency: null,
@@ -47,8 +32,9 @@ export const DirectionAddForm = () => {
     },
   });
   form.watch(["giveCurrency", "getCurrency"]);
-
+  const [addDirection] = useAddDirectionMutation();
   const { data: currencies } = useAvailableValutesQuery({ base: "all" });
+
   const { data: availableCurrncies } = useAvailableValutesQuery(
     { base: form.getValues("giveCurrency.code_name") },
     { skip: !form.getValues("giveCurrency.code_name") }
@@ -58,10 +44,40 @@ export const DirectionAddForm = () => {
   const currectAvailableCurrncies = Object.values(
     availableCurrncies || {}
   ).flat();
-  const inputDisabled = Boolean(
-    form.getValues("getCurrency") && form.getValues("giveCurrency")
+
+  const { data: actualCourse } = useActualCourseQuery(
+    {
+      valute_from: form.getValues("giveCurrency.code_name"),
+      valute_to: form.getValues("getCurrency.code_name"),
+    },
+    {
+      skip:
+        !form.getValues("giveCurrency.code_name") ||
+        !form.getValues("getCurrency.code_name"),
+    }
   );
-  const onSubmit = (data: DirectionSchemaType) => {
+
+  const inputInCountValue = actualCourse?.in_count === 1;
+  const inputOutCountValue = actualCourse?.out_count === 1;
+
+  //refactoring
+  useEffect(() => {
+    inputInCountValue && form.setValue("giveCurrencyPrice", 1);
+    inputOutCountValue && form.setValue("getCurrencyPrice", 1);
+  }, [form, inputInCountValue, inputOutCountValue]);
+
+  const inputDisabled =
+    !form.getValues("getCurrency") || !form.getValues("giveCurrency");
+
+  const onSubmit = (data: DirectionAddSchemaType) => {
+    addDirection({
+      city: "Москва",
+      in_count: data.getCurrencyPrice,
+      is_active: false,
+      out_count: data.giveCurrencyPrice,
+      valute_from: data.giveCurrency?.code_name || "",
+      valute_to: data.getCurrency?.code_name || "",
+    });
     console.log(data);
   };
 
@@ -112,10 +128,7 @@ export const DirectionAddForm = () => {
           )}
         />
 
-        <ActualCourse
-          valuteFrom={form.getValues("getCurrency.code_name")}
-          valuteTo={form.getValues("giveCurrency.code_name")}
-        />
+        <ActualCourse actualCourse={actualCourse} />
 
         <div className="flex items-center gap-10">
           <FormField
@@ -128,7 +141,7 @@ export const DirectionAddForm = () => {
                     <Input
                       {...field}
                       type="number"
-                      disabled={!inputDisabled}
+                      disabled={inputDisabled || inputInCountValue}
                       startAdornment={
                         form.getValues("giveCurrency") ? (
                           <img
@@ -169,7 +182,7 @@ export const DirectionAddForm = () => {
                           />
                         ) : undefined
                       }
-                      disabled={!inputDisabled}
+                      disabled={inputDisabled || inputOutCountValue}
                       className="border-2  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
