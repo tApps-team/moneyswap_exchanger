@@ -15,7 +15,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SquarePen } from "lucide-react";
 import { useChangePasswordMutation } from "@/entities/user/api/authService";
-import { CustomLoader } from "@/shared/ui/customLoader";
+import { CustomLoader } from "@/shared/ui";
 
 export const ChangePasswordForm = () => {
   const changePasswordForm = useForm<ChangePasswordSchema>({

@@ -7,3 +7,31 @@ export type CitiesByCountryDtoNameResponse = City[];
 export type CitiesByCountryDtoNameRequest = {
   country_name: string;
 };
+
+export type EditPartnerCityDtoResponse = void;
+export type EditPartnerCityDtoRequest = Partial<{
+  city: string;
+  delivery: boolean;
+  office: boolean;
+  time_from: string;
+  time_to: string;
+  working_days: {
+    Пн: boolean;
+    Вт: boolean;
+    Ср: boolean;
+    Чт: boolean;
+    Пт: boolean;
+    Сб: boolean;
+    Вс: boolean;
+  };
+}>;
+
+export type AddPartnerCityDtoResponse = void;
+export type AddPartnerCityDtoRequest = {
+  city: string;
+  delivery: boolean;
+  office: boolean;
+  time_from: string;
+  time_to: string;
+  working_days: Record<string, boolean>;
+};

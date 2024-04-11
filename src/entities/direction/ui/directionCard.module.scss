@@ -1,0 +1,80 @@
+.card {
+    border-radius: var(--border-radius-l);
+    background: var(--main-color);
+    display: grid;
+    gap: 30px;
+    padding: var(--padding-l);
+    height: 150px;
+
+    .inputs {
+        display: grid;
+        grid-template: 1fr / 1fr min-content 1fr;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+
+
+        .input__block {
+
+            display: grid;
+            grid-template: 1fr / 40px 1fr;
+            gap: 10px;
+            position: relative;
+
+            .icon {}
+
+            .input {
+                border-radius: var(--border-radius-xl);
+                background: var(--dark-grey);
+                color: var(--white-color);
+                border: none;
+                padding: var(--padding-xs);
+                max-width: 100px;
+                height: 40px;
+                font-size: 14px;
+                text-align: center;
+
+                &:focus {
+                    outline: 1px solid #fff;
+                    box-shadow: 0 0 15px var(--white-color);
+                }
+            }
+
+            .input_disable {
+                color: var(--light-grey);
+            }
+
+            .code {
+                position: absolute;
+                left: 0;
+                bottom: -25px;
+
+                max-width: 60px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    .card__active {
+        display: grid;
+        align-items: center;
+        grid-template: 1fr / 0.1fr 1fr;
+        gap: 10px;
+
+        .switcher {
+            margin-top: 5px;
+        }
+
+        .text {
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+    }
+}
+
+
+.is_active {
+    background: var(--light-grey);
+}

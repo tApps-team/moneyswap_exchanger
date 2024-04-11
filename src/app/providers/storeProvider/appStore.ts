@@ -1,11 +1,11 @@
-import { myCitySlice } from "@/entities/myCity";
+import { locationSlice } from "@/entities/location";
 import { userSlice } from "@/entities/user";
 import { authApi, baseApi } from "@/shared/api";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 const rootReducer = combineReducers({
   [userSlice.name]: userSlice.reducer,
-  [myCitySlice.name]: myCitySlice.reducer,
+  [locationSlice.name]: locationSlice.reducer,
   [baseApi.reducerPath]: baseApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
 });

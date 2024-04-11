@@ -1,3 +1,5 @@
+import { DirectionAddForm } from "@/widgets/directionAddForm";
+
 export const DirectionAddPage = () => {
-  return <div>DIRECTION ADD PAGE</div>;
+  return <DirectionAddForm />;
 };

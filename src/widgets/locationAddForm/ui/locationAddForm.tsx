@@ -1,10 +1,12 @@
 import {
   LocationSchemaType,
   locationSchema,
+  useAddPartnerCityMutation,
   useAllCountriesQuery,
   useCitiesByCountryNameQuery,
 } from "@/entities/location";
 import { LocationSelect } from "@/features/location";
+import { paths } from "@/shared/routing";
 
 import {
   Button,
@@ -19,15 +21,15 @@ import {
 } from "@/shared/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SquarePen } from "lucide-react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export const LocationAddForm = () => {
   const form = useForm<LocationSchemaType>({
     resolver: zodResolver(locationSchema),
     defaultValues: {
-      city: "",
-      country: "",
+      city: null,
+      country: null,
       deliviry: false,
       office: false,
       timeEnd: "00:00",
@@ -43,22 +45,34 @@ export const LocationAddForm = () => {
       },
     },
   });
+  const navigate = useNavigate();
+
+  const [addPartnerCity] = useAddPartnerCityMutation();
+
   const onSubmit = (data: LocationSchemaType) => {
     console.log(data);
+    addPartnerCity({
+      city: data.city?.code_name || "",
+      delivery: data.deliviry,
+      office: data.office,
+      time_from: data.timeStart,
+      time_to: data.timeEnd,
+      working_days: data.workDays,
+    })
+      .unwrap()
+      .then(() => navigate(paths.home));
   };
 
-  form.watch(["timeStart", "timeEnd", "country"]);
+  form.watch(["timeStart", "timeEnd", "country.name"]);
 
   const { data: countries } = useAllCountriesQuery();
   const { data: cities } = useCitiesByCountryNameQuery(
     {
-      country_name: form.getValues("country"),
+      country_name: form.getValues("country.name"),
     },
-    { skip: !form.getValues("country") }
+    { skip: !form.getValues("country.name") }
   );
-  useEffect(() => {
-    form.resetField("city");
-  }, [form]);
+
   return (
     <Form {...form}>
       <form
@@ -70,13 +84,16 @@ export const LocationAddForm = () => {
           name={"country"}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{field.value}</FormLabel>
+              <FormLabel>{field.value?.name}</FormLabel>
               <FormControl>
                 <LocationSelect
                   type="country"
                   country={countries}
-                  setValue={form.setValue}
-                  label={field.value}
+                  onClick={(e) => {
+                    field.onChange(e);
+                    form.resetField("city");
+                  }}
+                  label={field.value?.name}
                 />
               </FormControl>
               <FormMessage />
@@ -88,14 +105,14 @@ export const LocationAddForm = () => {
           name={"city"}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{field.value}</FormLabel>
+              <FormLabel>{field.value?.name}</FormLabel>
               <FormControl>
                 <LocationSelect
                   disabled={!form.getValues("country")}
                   type="city"
-                  setValue={form.setValue}
+                  onClick={(e) => field.onChange(e)}
                   city={cities || []}
-                  label={field.value}
+                  label={field.value?.name}
                 />
               </FormControl>
               <FormMessage />

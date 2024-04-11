@@ -10,8 +10,20 @@ const workDays = {
   Вс: false,
 };
 export const locationSchema = z.object({
-  city: z.string(),
-  country: z.string(),
+  city: z
+    .object({
+      name: z.string(),
+      code_name: z.string(),
+      id: z.number(),
+    })
+    .nullable(),
+  country: z
+    .object({
+      id: z.number(),
+      name: z.string(),
+      country_flag: z.string(),
+    })
+    .nullable(),
   deliviry: z.boolean(),
   office: z.boolean(),
   timeStart: z.string(),

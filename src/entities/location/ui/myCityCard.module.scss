@@ -1,0 +1,43 @@
+.card {
+    display: grid;
+    grid-template: 1fr / 0.5fr 1fr 0.5fr;
+    align-items: center;
+    gap: 20px;
+    background: var(--light-grey);
+    height: 80px;
+    border-radius: var(--border-radius-xl);
+    padding-left: var(--padding-m);
+
+    .icon {
+        width: 50px;
+        height: 50px;
+        position: relative;
+
+        img {
+            position: absolute;
+        }
+    }
+
+    .name {
+        font-size: 20px;
+        white-space: nowrap;
+        width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis; 
+    }
+
+    .settings_btn {
+        background: var(--dark-grey);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+        border: 2px solid var(--light-grey);
+    }
+}
+
+.card_active {
+    background: var(--main-color);
+}
