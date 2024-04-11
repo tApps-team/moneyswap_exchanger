@@ -4,6 +4,8 @@ import {
   AllCountriesDtoResponse,
   CitiesByCountryDtoNameRequest,
   CitiesByCountryDtoNameResponse,
+  EditPartnerCityDtoRequest,
+  EditPartnerCityDtoResponse,
 } from "./types";
 
 export const locationApi = baseApi.injectEndpoints({
@@ -23,7 +25,21 @@ export const locationApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    editPartnerCity: build.mutation<
+      EditPartnerCityDtoResponse,
+      EditPartnerCityDtoRequest
+    >({
+      query: (body) => ({
+        url: "partner/edit_partner_city",
+        body: body,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["LOCATION"],
+    }),
   }),
 });
-export const { useAllCountriesQuery, useCitiesByCountryNameQuery } =
-  locationApi;
+export const {
+  useAllCountriesQuery,
+  useCitiesByCountryNameQuery,
+  useEditPartnerCityMutation,
+} = locationApi;

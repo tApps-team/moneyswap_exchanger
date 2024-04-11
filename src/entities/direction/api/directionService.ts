@@ -14,6 +14,7 @@ export const directionAPI = authApi.injectEndpoints({
   endpoints: (build) => ({
     directionsByCity: build.query<Direction[], string>({
       query: (codeName) => `partner/directions_by_city?code_name=${codeName}`,
+      providesTags: ["DIRECTION"],
     }),
     editDirection: build.mutation<void, EditDirecitonRequest>({
       query: (BodyParams) => ({
@@ -47,6 +48,7 @@ export const directionAPI = authApi.injectEndpoints({
         method: "POST",
         body: body,
       }),
+      invalidatesTags: ["DIRECTION"],
     }),
   }),
 });
