@@ -8,8 +8,8 @@ export const directionSchema = z.object({
       // icon_valute_from: z.string(),
       // valute_to: z.string(),
       // icon_valute_to: z.string(),
-      in_count: z.number(),
-      out_count: z.number(),
+      in_count: z.coerce.number().positive().min(1),
+      out_count: z.coerce.number().positive().min(1),
       is_active: z.boolean(),
     })
   ),

@@ -28,13 +28,13 @@ export const DirectionCard: FC<DirectionCardProps> = ({
 
   const handleChangeInCount = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = Number(e.target.value);
-    if (inputValue > 0 && inputValue !== 1) {
+    if (inputValue >= 0) {
       form.setValue(`directions.${index}.in_count`, inputValue);
     }
   };
   const handleChangeOutCount = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = Number(e.target.value);
-    if (inputValue > 0 && inputValue !== 1) {
+    if (inputValue >= 0) {
       form.setValue(`directions.${index}.out_count`, inputValue);
     }
   };
@@ -51,12 +51,12 @@ export const DirectionCard: FC<DirectionCardProps> = ({
           </div>
           <input
             type="number"
-            value={inCount || 2}
+            value={inCount || 0}
             onChange={handleChangeInCount}
             className={`${styles.input} ${
-              inCount === 1 && styles.input_disable
+              direction.in_count === 1 && styles.input_disable
             }`}
-            disabled={inCount === 1}
+            disabled={direction.in_count === 1}
           />
           <p className={styles.code}>{direction.valute_from}</p>
         </div>
@@ -67,12 +67,12 @@ export const DirectionCard: FC<DirectionCardProps> = ({
           </div>
           <input
             type="number"
-            value={outCount || 2}
+            value={outCount || 0}
             onChange={handleChangeOutCount}
             className={`${styles.input} ${
-              outCount === 1 && styles.input_disable
+              direction.out_count === 1 && styles.input_disable
             }`}
-            disabled={outCount === 1}
+            disabled={direction.out_count === 1}
           />
           <p className={styles.code}>{direction.valute_to}</p>
         </div>

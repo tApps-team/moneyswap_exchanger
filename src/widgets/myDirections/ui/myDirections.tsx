@@ -32,7 +32,7 @@ export const MyDirections = () => {
   } = useGetCitiesQuery();
 
   useEffect(() => {
-    if (cities) {
+    if (cities && !activeCity) {
       setActive(cities[0]);
     }
   }, [cities]);
@@ -86,7 +86,7 @@ export const MyDirections = () => {
           activeCity={activeCity}
         />
         <Directions directions={directions} form={form} />
-        {directions && (
+        {directions && directions?.length > 0 && (
           <EditDirection
             editError={editError && true}
             editLoading={editLoading}
@@ -94,7 +94,7 @@ export const MyDirections = () => {
           />
         )}
       </form>
-      {activeCity && directions && (
+      {activeCity && directions && directions.length > 0 && (
         <UpdatedInfo activeCity={activeCity} editSuccess={editSuccess} />
       )}
     </Form>

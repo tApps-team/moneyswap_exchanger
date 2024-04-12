@@ -55,14 +55,14 @@ export const AuthByUserNameForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="relative">
-                    <User className="absolute left-3 translate-y-2 " />
-                    <Input
-                      className="rounded-full pl-12"
-                      placeholder="Имя Фамилия"
-                      {...field}
-                    />
-                  </div>
+                  <Input
+                    startAdornment={
+                      <User className="absolute left-3 translate-y-2 " />
+                    }
+                    className="rounded-full pl-12 "
+                    placeholder="Имя Фамилия"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -76,7 +76,7 @@ export const AuthByUserNameForm = () => {
                 <FormControl>
                   <PasswordInput
                     type="password"
-                    className="rounded-full pl-12"
+                    className="rounded-full pl-12 bg-background"
                     placeholder="••••••••••••"
                     {...field}
                   />
