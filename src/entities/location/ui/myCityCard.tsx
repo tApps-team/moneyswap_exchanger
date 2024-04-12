@@ -25,7 +25,11 @@ export const MyCityCard: FC<MyCityCardProps> = ({
         <img src={city.country_flag} alt={`Иконка ${city.name}`} />
       </div>
       <p className={styles.name}>{city.name}</p>
-      <Link to={paths.locationEdit} className={styles.settings_btn}>
+      <Link
+        to={paths.locationEdit}
+        className={styles.settings_btn}
+        onClick={onClick}
+      >
         <SettingsIcon fill={"#F6FF5F"} />
       </Link>
     </div>
