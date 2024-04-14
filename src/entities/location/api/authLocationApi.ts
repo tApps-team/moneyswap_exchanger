@@ -1,6 +1,11 @@
 import { authApi } from "@/shared/api";
 import { ActiveCity } from "../model/types";
-import { AddPartnerCityDtoRequest, AddPartnerCityDtoResponse } from "./types";
+import {
+  AddPartnerCityDtoRequest,
+  AddPartnerCityDtoResponse,
+  EditPartnerCityDtoRequest,
+  EditPartnerCityDtoResponse,
+} from "./types";
 import { LOCATION } from "@/shared/api/tags";
 
 export const authLocationApi = authApi.injectEndpoints({
@@ -20,6 +25,21 @@ export const authLocationApi = authApi.injectEndpoints({
       }),
       invalidatesTags: [LOCATION],
     }),
+    editPartnerCity: build.mutation<
+      EditPartnerCityDtoResponse,
+      EditPartnerCityDtoRequest
+    >({
+      query: (body) => ({
+        url: "partner/edit_partner_city",
+        body: body,
+        method: "PATCH",
+      }),
+      invalidatesTags: [LOCATION],
+    }),
   }),
 });
-export const { useGetCitiesQuery, useAddPartnerCityMutation } = authLocationApi;
+export const {
+  useGetCitiesQuery,
+  useAddPartnerCityMutation,
+  useEditPartnerCityMutation,
+} = authLocationApi;
