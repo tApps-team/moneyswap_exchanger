@@ -102,7 +102,7 @@ export const DirectionAddForm = () => {
           name={"giveCurrency"}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{field.value?.name}</FormLabel>
+              <FormLabel className="text-mainColor text-xl">Отдаю</FormLabel>
               <FormControl>
                 <CurrencySelect
                   currencies={currectAllCurrencies}
@@ -123,7 +123,7 @@ export const DirectionAddForm = () => {
           name={"getCurrency"}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{field.value?.name}</FormLabel>
+              <FormLabel className="text-mainColor text-xl">Получаю</FormLabel>
               <FormControl>
                 <CurrencySelect
                   currencies={currectAvailableCurrncies}
@@ -163,7 +163,7 @@ export const DirectionAddForm = () => {
                           />
                         ) : undefined
                       }
-                      className="border-2  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="border border-white bg-darkGray text-white  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -171,6 +171,7 @@ export const DirectionAddForm = () => {
               </FormItem>
             )}
           />
+          <div className="text-white">=</div>
           <FormField
             control={form.control}
             name={"getCurrencyPrice"}
@@ -193,7 +194,7 @@ export const DirectionAddForm = () => {
                         ) : undefined
                       }
                       disabled={inputDisabled || inputOutCountValue}
-                      className="border-2  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="border border-white bg-darkGray text-white  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -203,7 +204,12 @@ export const DirectionAddForm = () => {
           />
         </div>
 
-        <Button type="submit">Добавить </Button>
+        <Button
+          className="rounded-full border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
+          type="submit"
+        >
+          Добавить
+        </Button>
       </form>
     </Form>
   );

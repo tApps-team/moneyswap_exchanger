@@ -20,7 +20,6 @@ import {
   Switch,
 } from "@/shared/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SquarePen } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -51,6 +50,7 @@ export const LocationAddForm = () => {
 
   const onSubmit = (data: LocationSchemaType) => {
     console.log(data);
+
     addPartnerCity({
       city: data.city?.code_name || "",
       delivery: data.deliviry,
@@ -83,17 +83,19 @@ export const LocationAddForm = () => {
           control={form.control}
           name={"country"}
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>{field.value?.name}</FormLabel>
+            <FormItem className="flex flex-col gap-3">
+              <FormLabel className="text-mainColor text-xl">Страна</FormLabel>
               <FormControl>
                 <LocationSelect
                   type="country"
                   country={countries}
+                  inputPlaceholderCountry="Поиск страны"
                   onClick={(e) => {
                     field.onChange(e);
                     form.resetField("city");
                   }}
                   label={field.value?.name}
+                  countryIcon={field.value?.country_flag}
                 />
               </FormControl>
               <FormMessage />
@@ -104,14 +106,15 @@ export const LocationAddForm = () => {
           control={form.control}
           name={"city"}
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>{field.value?.name}</FormLabel>
+            <FormItem className="flex flex-col gap-3">
+              <FormLabel className="text-mainColor text-xl">Город</FormLabel>
               <FormControl>
                 <LocationSelect
                   disabled={!form.getValues("country")}
                   type="city"
                   onClick={(e) => field.onChange(e)}
                   city={cities || []}
+                  inputPlaceholderCity="Поиск города"
                   label={field.value?.name}
                 />
               </FormControl>
@@ -124,18 +127,13 @@ export const LocationAddForm = () => {
           control={form.control}
           name={"deliviry"}
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex items-center justify-between">
+              <FormLabel className="text-white">Доставка</FormLabel>
               <FormControl>
-                <div className="flex justify-between">
-                  <div className="flex gap-6">
-                    <SquarePen />
-                    <div>Доставка</div>
-                  </div>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </div>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -145,18 +143,13 @@ export const LocationAddForm = () => {
           control={form.control}
           name={"office"}
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex items-center justify-between">
+              <FormLabel className="text-white">Есть офис</FormLabel>
               <FormControl>
-                <div className="flex justify-between">
-                  <div className="flex gap-6">
-                    <SquarePen />
-                    <div>Есть офис</div>
-                  </div>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </div>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -172,7 +165,7 @@ export const LocationAddForm = () => {
                 <FormControl>
                   <Input
                     type="time"
-                    className="w-[103px]  h-[38px] p-2 bg-white rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    className="w-[103px]  h-[38px] p-2 bg-darkGray text-white rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     {...field}
                   />
                 </FormControl>
@@ -188,7 +181,7 @@ export const LocationAddForm = () => {
                 <FormControl>
                   <Input
                     type="time"
-                    className=" w-[103px]  h-[38px] p-2 bg-white rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    className="w-[103px]  h-[38px] p-2 bg-darkGray text-white rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     {...field}
                   />
                 </FormControl>
@@ -197,34 +190,43 @@ export const LocationAddForm = () => {
             )}
           />
         </div>
-        <div className="flex">
-          {Object.keys(form.formState.defaultValues?.workDays || {}).map(
-            (day) => (
-              <FormField
-                key={day}
-                control={form.control}
-                name={`workDays.${day}`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="flex flex-col items-center gap-4">
-                        <Switch
-                          className="rotate-90"
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                        <div>{day}</div>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )
-          )}
+
+        <div className="flex flex-col gap-6 text-white">
+          <div className="text-xl text-white">Дни работы</div>
+          <div className="flex">
+            {Object.keys(form.formState.defaultValues?.workDays || {}).map(
+              (day) => (
+                <FormField
+                  key={day}
+                  control={form.control}
+                  name={`workDays.${day}`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="flex flex-col items-center gap-4">
+                          <Switch
+                            className="rotate-90 "
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                          <div>{day}</div>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )
+            )}
+          </div>
         </div>
 
-        <Button type="submit">Добавить </Button>
+        <Button
+          className="rounded-full border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
+          type="submit"
+        >
+          Добавить город
+        </Button>
       </form>
     </Form>
   );
