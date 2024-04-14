@@ -14,7 +14,7 @@ export const ActualCourse = (props: ActualCourseProps) => {
   const { actualCourse } = props;
 
   return (
-    <Card className="p-0 rounded-full">
+    <Card className="p-0 bg-mainColor text-darkGray rounded-full">
       <CardContent className="p-4 flex items-center gap-4 overflow-hidden">
         {actualCourse ? (
           <>
