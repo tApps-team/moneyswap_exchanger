@@ -6,6 +6,7 @@ import {
   useCitiesByCountryNameQuery,
 } from "@/entities/location";
 import { LocationSelect } from "@/features/location";
+import { LocationSelectRefatoring } from "@/features/location/locationSelect/ui/locationSelect";
 import { paths } from "@/shared/routing";
 
 import {
@@ -86,7 +87,7 @@ export const LocationAddForm = () => {
             <FormItem className="flex flex-col gap-3">
               <FormLabel className="text-mainColor text-xl">Страна</FormLabel>
               <FormControl>
-                <LocationSelect
+                {/* <LocationSelect
                   type="country"
                   country={countries}
                   inputPlaceholderCountry="Поиск страны"
@@ -96,6 +97,16 @@ export const LocationAddForm = () => {
                   }}
                   label={field.value?.name}
                   countryIcon={field.value?.country_flag}
+                /> */}
+                <LocationSelectRefatoring
+                  items={countries}
+                  emptyLabel="Выберите страну"
+                  locationIcon={field.value?.country_flag}
+                  onClick={(e) => {
+                    field.onChange(e);
+                    form.resetField("city");
+                  }}
+                  label={field.value?.name}
                 />
               </FormControl>
               <FormMessage />

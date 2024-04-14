@@ -1,3 +1,4 @@
+import { Currency } from "@/entities/direction";
 import { City, Country, LocationCard } from "@/entities/location";
 import {
   Button,
@@ -123,75 +124,95 @@ export const LocationSelect = (props: LocationSelectProps) => {
     </div>
   );
 };
-// type LocationSelectRefatoringProps = {
-//   locationItems: Partial<City | Country>[];
-//   label?: string;
-//   disabled?: boolean;
-//   emptyLabel?: string;
-//   locationIcon: string;
-//   onClick: (location: Partial<City & Country>) => void;
-// };
-// export const LocationSelectRefatoring = (
-//   props: LocationSelectRefatoringProps
-// ) => {
-//   const { locationItems, disabled, label, onClick, locationIcon, emptyLabel } =
-//     props;
-//   const [searchValue, setSearchValue] = useState<string>("");
-//   const filteredLocationItems = useMemo(
-//     () =>
-//       locationItems.filter((item) =>
-//         item.name?.toLowerCase().includes(searchValue.toLowerCase())
-//       ),
-//     []
-//   );
-//   return (
-//     <Drawer>
-//       <DrawerTrigger asChild>
-//         <Button
-//           disabled={disabled}
-//           className="w-full text-white hover:bg-mainColor disabled:pointer-events-none bg-darkGray h-14 disabled:bg-lightGray justify-between items-center rounded-full gap-2 select-none"
-//           variant={"outline"}
-//         >
-//           <div className="flex gap-2 items-center">
-//             {locationIcon && (
-//               <img
-//                 width={32}
-//                 height={32}
-//                 src={locationIcon}
-//                 alt={"country icon"}
-//               />
-//             )}
-//             <div>{label ? label : emptyLabel}</div>
-//           </div>
-//           <div className="flex ">
-//             <div>change</div>
-//             <ChevronDown />
-//           </div>
-//         </Button>
-//       </DrawerTrigger>
-//       <DrawerContent className="h-screen">
-//         <DrawerHeader>
-//           <Input
-//             value={searchValue}
-//             onChange={(e) => setSearchValue(e.target.value.trim())}
-//           />
-//         </DrawerHeader>
-//         <div className="p-4">
-//           <ScrollArea className="h-[420px] w-full ">
-//             <div className="flex flex-col gap-4">
-//               {filteredLocationItems.map((item) => (
-//                 <LocationCard
-//                   code_name={item.code_name}
-//                   country_flag={item.country_flag}
-//                   id={item.id}
-//                   name={item.name}
-//                   onClick={() => onClick(item)}
-//                 />
-//               ))}
-//             </div>
-//           </ScrollArea>
-//         </div>
-//       </DrawerContent>
-//     </Drawer>
-//   );
-// };
+type LocationSelectRefatoringProps<
+  T extends Partial<City & Country & Currency>
+> = {
+  items?: T[];
+  label?: string;
+  disabled?: boolean;
+  emptyLabel?: string;
+  inputPlaceholder?: string;
+  locationIcon?: string;
+  onClick: (location: T) => void;
+};
+export const LocationSelectRefatoring = <
+  T extends Partial<City & Country & Currency>
+>(
+  props: LocationSelectRefatoringProps<T>
+) => {
+  const {
+    items,
+    disabled,
+    label,
+    onClick,
+    locationIcon,
+    emptyLabel,
+    inputPlaceholder,
+  } = props;
+
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  const filtereditems = useMemo(
+    () =>
+      items?.filter((item) =>
+        item.name?.toLowerCase().includes(searchValue.toLowerCase())
+      ),
+    [items, searchValue]
+  );
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button
+          disabled={disabled}
+          className="w-full  text-white hover:bg-mainColor disabled:pointer-events-none bg-darkGray h-14 disabled:bg-lightGray justify-between items-center rounded-full gap-2 select-none"
+          variant={"outline"}
+        >
+          <div className="flex gap-2 items-center">
+            {locationIcon && (
+              <img
+                width={32}
+                height={32}
+                src={locationIcon}
+                alt={"country icon"}
+              />
+            )}
+            <div>{label ? label : emptyLabel}</div>
+          </div>
+          <div className="flex ">
+            <div>change</div>
+            <ChevronDown />
+          </div>
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent className="h-screen">
+        <DrawerHeader>
+          <Input
+            startAdornment={<Search className="translate-y-8 ml-2" />}
+            className="rounded-xl bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0"
+            value={searchValue}
+            placeholder={inputPlaceholder || ""}
+            onChange={(e) => setSearchValue(e.target.value.trim())}
+          />
+        </DrawerHeader>
+        <div className="p-4">
+          <ScrollArea className="h-[420px] w-full ">
+            <div className="flex flex-col gap-4">
+              {filtereditems?.map((item) => (
+                <DrawerClose key={item.id}>
+                  <LocationCard
+                    key={item.id}
+                    code_name={item.code_name}
+                    country_flag={item.country_flag}
+                    id={item.id}
+                    name={item.name}
+                    onClick={() => onClick(item)}
+                  />
+                </DrawerClose>
+              ))}
+            </div>
+          </ScrollArea>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  );
+};
