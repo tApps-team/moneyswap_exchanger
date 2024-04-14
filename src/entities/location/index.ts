@@ -11,9 +11,12 @@ export {
   useGetCitiesQuery,
   authLocationApi,
   useAddPartnerCityMutation,
+  useEditPartnerCityMutation as useEditPartnerCityMutationAuth,
 } from "./api/authLocationApi";
 export {
   type LocationSchemaType,
   locationSchema,
+  type LocationEditSchemaType,
+  locationEditSchema,
 } from "./model/locationSchema";
 export * from "./model/locationSlice";
