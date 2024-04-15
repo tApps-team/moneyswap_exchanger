@@ -4,3 +4,4 @@ export { NotificationIcon } from "./notifications";
 export { StatisticsIcon } from "./statistics";
 export { PlusIcon } from "./plusIcon";
 export { SettingsIcon } from "./settings";
+export { LogoButtonIcon } from "./logoButtonIcon";
