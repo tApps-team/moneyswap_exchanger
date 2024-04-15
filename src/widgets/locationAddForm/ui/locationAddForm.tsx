@@ -5,8 +5,7 @@ import {
   useAllCountriesQuery,
   useCitiesByCountryNameQuery,
 } from "@/entities/location";
-import { LocationSelect } from "@/features/location";
-import { LocationSelectRefatoring } from "@/features/location/locationSelect/ui/locationSelect";
+import { ItemSelect } from "@/features/itemSelect";
 import { paths } from "@/shared/routing";
 
 import {
@@ -87,26 +86,16 @@ export const LocationAddForm = () => {
             <FormItem className="flex flex-col gap-3">
               <FormLabel className="text-mainColor text-xl">Страна</FormLabel>
               <FormControl>
-                {/* <LocationSelect
-                  type="country"
-                  country={countries}
-                  inputPlaceholderCountry="Поиск страны"
+                <ItemSelect
                   onClick={(e) => {
                     field.onChange(e);
                     form.resetField("city");
                   }}
-                  label={field.value?.name}
-                  countryIcon={field.value?.country_flag}
-                /> */}
-                <LocationSelectRefatoring
                   items={countries}
                   emptyLabel="Выберите страну"
-                  locationIcon={field.value?.country_flag}
-                  onClick={(e) => {
-                    field.onChange(e);
-                    form.resetField("city");
-                  }}
                   label={field.value?.name}
+                  inputPlaceholder="Поиск страны"
+                  itemIcon={field.value?.country_flag}
                 />
               </FormControl>
               <FormMessage />
@@ -120,13 +109,13 @@ export const LocationAddForm = () => {
             <FormItem className="flex flex-col gap-3">
               <FormLabel className="text-mainColor text-xl">Город</FormLabel>
               <FormControl>
-                <LocationSelect
+                <ItemSelect
                   disabled={!form.getValues("country")}
-                  type="city"
                   onClick={(e) => field.onChange(e)}
-                  city={cities || []}
-                  inputPlaceholderCity="Поиск города"
+                  items={cities || []}
+                  inputPlaceholder="Поиск города"
                   label={field.value?.name}
+                  emptyLabel="Выберите город"
                 />
               </FormControl>
               <FormMessage />

@@ -124,9 +124,7 @@ export const LocationSelect = (props: LocationSelectProps) => {
     </div>
   );
 };
-type LocationSelectRefatoringProps<
-  T extends Partial<City & Country & Currency>
-> = {
+type LocationSelectRefatoringProps<T> = {
   items?: T[];
   label?: string;
   disabled?: boolean;

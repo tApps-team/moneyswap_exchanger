@@ -3,6 +3,7 @@ import {
   locationEditSchema,
   useEditPartnerCityMutationAuth,
 } from "@/entities/location";
+import { ItemSelect } from "@/features/itemSelect";
 import { LocationSelect } from "@/features/location";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
@@ -74,11 +75,7 @@ export const LocationEditForm = () => {
             <FormItem className="flex flex-col gap-3">
               <FormLabel className="text-mainColor text-xl">Страна</FormLabel>
               <FormControl>
-                <LocationSelect
-                  type="country"
-                  disabled={true}
-                  label={activeEditCity?.country}
-                />
+                <ItemSelect disabled={true} label={activeEditCity?.country} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -91,11 +88,7 @@ export const LocationEditForm = () => {
             <FormItem className="flex flex-col gap-3">
               <FormLabel className="text-mainColor text-xl">Город</FormLabel>
               <FormControl>
-                <LocationSelect
-                  disabled={true}
-                  type="city"
-                  label={activeEditCity?.name}
-                />
+                <ItemSelect disabled={true} label={activeEditCity?.name} />
               </FormControl>
               <FormMessage />
             </FormItem>
