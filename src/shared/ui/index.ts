@@ -25,3 +25,4 @@ export * from "./scroll-area";
 export * from "./switch";
 export { DirectionCardSwiper } from "./directionCardSwiper";
 export { CustomLoader } from "./customLoader";
+export * from "./skeleton";
