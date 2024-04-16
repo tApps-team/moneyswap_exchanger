@@ -7,7 +7,6 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className={styles.main__container}>
       <div className={styles.main__content}>{children}</div>
-      <Toaster />
       <footer className={styles.main__footer}>
         <PathFooter />
       </footer>
