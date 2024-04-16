@@ -21,6 +21,7 @@ import {
 } from "@/shared/ui";
 import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -28,8 +29,8 @@ export const LocationAddForm = () => {
   const form = useForm<LocationSchemaType>({
     resolver: zodResolver(locationSchema),
     defaultValues: {
-      city: {},
-      country: {},
+      city: undefined,
+      country: undefined,
       deliviry: false,
       office: false,
       timeEnd: "00:00",
@@ -56,7 +57,7 @@ export const LocationAddForm = () => {
     console.log(data);
 
     addPartnerCity({
-      city: data.city?.code_name || "",
+      city: data.city?.code_name,
       delivery: data.deliviry,
       office: data.office,
       time_from: data.timeStart,
@@ -72,10 +73,10 @@ export const LocationAddForm = () => {
         });
       })
       .catch((err) => {
-        if (err.status === "423") {
+        if (err.status === 423) {
           toast({
-            title: "Город уже существует!",
-            description: "Он появиться на главной странице",
+            title: "Такой город уже существует",
+            description: "Измените город!",
           });
         }
       });
