@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SquarePen } from "lucide-react";
 import { useChangePasswordMutation } from "@/entities/user/api/authService";
 import { CustomLoader } from "@/shared/ui";
+import { useToast } from "@/shared/ui/toast";
 
 export const ChangePasswordForm = () => {
   const changePasswordForm = useForm<ChangePasswordSchema>({
@@ -26,6 +27,7 @@ export const ChangePasswordForm = () => {
       confirmPassword: "",
     },
   });
+  const { toast } = useToast();
   const [changePassword, { isLoading, error }] = useChangePasswordMutation();
   const onSubmit = async (data: ChangePasswordSchema) => {
     const { currentPassword, newPassword, confirmPassword } = data;
@@ -33,17 +35,22 @@ export const ChangePasswordForm = () => {
       .unwrap()
       .then((data) => {
         changePasswordForm.reset();
-        alert("Пароль успешно изменен");
+        toast({
+          title: "Пароль успешно изменен!",
+          description: "Если забыли пароль, свяжитесь с нами",
+        });
       })
       .catch((error) => {
-        console.error("Ошибка", error);
+        toast({
+          title: "Ошибка",
+        });
       });
   };
   return (
-    <div className=" container ">
+    <div className="container">
       <Form {...changePasswordForm}>
         <form
-          className="grid  gap-6"
+          className="grid  gap-20"
           onSubmit={changePasswordForm.handleSubmit(onSubmit)}
         >
           <FormField
@@ -53,9 +60,10 @@ export const ChangePasswordForm = () => {
               <FormItem>
                 <FormControl>
                   <PasswordInput
+                    eyeIcon={true}
                     type="password"
-                    placeholder="*******"
-                    className="rounded-full "
+                    placeholder="••••••••••••••••"
+                    className="rounded-full h-14 placeholder:text-white placeholder:text-3xl bg-darkGray"
                     {...field}
                   />
                 </FormControl>
@@ -63,51 +71,48 @@ export const ChangePasswordForm = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={changePasswordForm.control}
-            name="newPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <PasswordInput
-                    type="password"
-                    placeholder="Новый пароль"
-                    className="rounded-full"
-                    {...field}
-                    endIcon={
-                      <SquarePen className="absolute right-2 -translate-y-8" />
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={changePasswordForm.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <PasswordInput
-                    type="password"
-                    className="rounded-full"
-                    placeholder="Одноразовый пароль"
-                    {...field}
-                    endIcon={
-                      <SquarePen className="absolute right-2 -translate-y-8" />
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex flex-col gap-10">
+            <FormField
+              control={changePasswordForm.control}
+              name="newPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <PasswordInput
+                      type="password"
+                      placeholder="Новый пароль"
+                      className="rounded-full h-14 text-center placeholder:text-white bg-darkGray"
+                      {...field}
+                      eyeIcon={false}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={changePasswordForm.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <PasswordInput
+                      type="password"
+                      className="rounded-full text-center h-14 placeholder:text-white bg-darkGray"
+                      placeholder="Одноразовый пароль"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <Button
             type="submit"
             className="rounded-full bg-[#F6FF5F]  text-black text-lg h-16 "
           >
-            {isLoading ? <CustomLoader /> : "Сохранить изменения"}
+            {isLoading ? <CustomLoader /> : "Сохранить"}
           </Button>
         </form>
       </Form>
