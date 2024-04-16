@@ -12,6 +12,7 @@ export {
   authLocationApi,
   useAddPartnerCityMutation,
   useEditPartnerCityMutation as useEditPartnerCityMutationAuth,
+  useDeletePartnerCityMutation,
 } from "./api/authLocationApi";
 export {
   type LocationSchemaType,
