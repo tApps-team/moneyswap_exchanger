@@ -19,6 +19,7 @@ import {
   Input,
   Switch,
 } from "@/shared/ui";
+import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -27,8 +28,8 @@ export const LocationAddForm = () => {
   const form = useForm<LocationSchemaType>({
     resolver: zodResolver(locationSchema),
     defaultValues: {
-      city: null,
-      country: null,
+      city: {},
+      country: {},
       deliviry: false,
       office: false,
       timeEnd: "00:00",
@@ -44,9 +45,12 @@ export const LocationAddForm = () => {
       },
     },
   });
+
   const navigate = useNavigate();
 
-  const [addPartnerCity] = useAddPartnerCityMutation();
+  const { toast } = useToast();
+
+  const [addPartnerCity, { status, error }] = useAddPartnerCityMutation();
 
   const onSubmit = (data: LocationSchemaType) => {
     console.log(data);
@@ -60,7 +64,21 @@ export const LocationAddForm = () => {
       working_days: data.workDays,
     })
       .unwrap()
-      .then(() => navigate(paths.home));
+      .then(() => {
+        navigate(paths.home);
+        toast({
+          title: "Город успешно добавлен!",
+          description: "Он появиться на главной странице",
+        });
+      })
+      .catch((err) => {
+        if (err.status === "423") {
+          toast({
+            title: "Город уже существует!",
+            description: "Он появиться на главной странице",
+          });
+        }
+      });
   };
 
   form.watch(["timeStart", "timeEnd", "country.name"]);
@@ -87,15 +105,15 @@ export const LocationAddForm = () => {
               <FormLabel className="text-mainColor text-xl">Страна</FormLabel>
               <FormControl>
                 <ItemSelect
+                  emptyLabel="Выберите страну"
+                  itemIcon={field.value?.country_flag}
+                  inputPlaceholder="Поиск страны"
+                  items={countries}
+                  label={field.value?.name}
                   onClick={(e) => {
                     field.onChange(e);
                     form.resetField("city");
                   }}
-                  items={countries}
-                  emptyLabel="Выберите страну"
-                  label={field.value?.name}
-                  inputPlaceholder="Поиск страны"
-                  itemIcon={field.value?.country_flag}
                 />
               </FormControl>
               <FormMessage />

@@ -7,6 +7,7 @@ import {
 } from "@/entities/direction";
 import { CurrencySelect } from "@/features/direction";
 import { ActualCourse } from "@/features/direction/actualCourse";
+import { ItemSelect } from "@/features/itemSelect";
 import { router } from "@/pages/router";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
@@ -104,9 +105,10 @@ export const DirectionAddForm = () => {
             <FormItem>
               <FormLabel className="text-mainColor text-xl">Отдаю</FormLabel>
               <FormControl>
-                <CurrencySelect
-                  currencies={currectAllCurrencies}
+                <ItemSelect
                   emptyLabel="Выберите что отдаете"
+                  itemIcon={field.value?.icon_url}
+                  items={currectAllCurrencies}
                   label={field.value?.name || ""}
                   onClick={(e) => {
                     field.onChange(e);
@@ -125,12 +127,12 @@ export const DirectionAddForm = () => {
             <FormItem>
               <FormLabel className="text-mainColor text-xl">Получаю</FormLabel>
               <FormControl>
-                <CurrencySelect
-                  currencies={currectAvailableCurrncies}
+                <ItemSelect
+                  items={currectAvailableCurrncies}
                   emptyLabel="Выберите что получаете"
                   label={field.value?.name || ""}
-                  onClick={(e) => field.onChange(e)}
                   disabled={!form.getValues("giveCurrency")}
+                  onClick={(e) => field.onChange(e)}
                 />
               </FormControl>
               <FormMessage />
