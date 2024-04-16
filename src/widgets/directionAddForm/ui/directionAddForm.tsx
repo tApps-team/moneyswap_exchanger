@@ -30,8 +30,8 @@ export const DirectionAddForm = () => {
   const form = useForm<DirectionAddSchemaType>({
     resolver: zodResolver(directionAddSchema),
     defaultValues: {
-      getCurrency: null,
-      giveCurrency: null,
+      getCurrency: {},
+      giveCurrency: {},
       getCurrencyPrice: 0,
       giveCurrencyPrice: 0,
     },
