@@ -10,22 +10,21 @@ const workDays = {
   Вс: false,
 };
 export const locationSchema = z.object({
-  city: z.object({
-    name: z.string(),
-    code_name: z.string(),
-    id: z.number(),
-  }),
-
+  city: z.object(
+    {
+      name: z.string(),
+      code_name: z.string(),
+      id: z.number(),
+    },
+    { required_error: "Это поле обязательно" }
+  ),
   country: z.object(
     {
       id: z.number(),
-      name: z.string(),
+      name: z.string().min(1, { message: "Ошибка" }),
       country_flag: z.string(),
     },
-    {
-      required_error: "Это поле обязательно",
-      description: "Это поле обязательно",
-    }
+    { required_error: "Это поле обязательно" }
   ),
   deliviry: z.boolean(),
   office: z.boolean(),
