@@ -27,3 +27,6 @@ export type AddPartnerCityDtoRequest = {
   time_to: string;
   working_days: Record<string, boolean>;
 };
+
+export type DeletePartnerCityDtoResponse = void;
+export type DeletePartnerCityDtoRequest = { id: number };
