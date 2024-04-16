@@ -1,5 +1,5 @@
 import { Currency } from "@/entities/direction";
-import { City, Country, LocationCard } from "@/entities/location";
+import { City, Country } from "@/entities/location";
 import { LogoButtonIcon } from "@/shared/assets/icons";
 import {
   Button,
@@ -13,6 +13,7 @@ import {
 } from "@/shared/ui";
 import { Search } from "lucide-react";
 import { useDeferredValue, useState } from "react";
+import { ItemCard } from "./itemCard";
 
 type ItemSelectProps<T> = {
   items?: T[];
@@ -35,8 +36,11 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
     items,
     label,
   } = props;
+
   const [searchValue, setSearchValue] = useState<string>("");
+
   const defferredSearchValue = useDeferredValue(searchValue);
+
   const filteredItems = items?.filter((item) =>
     item.name?.toLowerCase().includes(defferredSearchValue.toLowerCase())
   );
@@ -77,13 +81,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
             <div data-vaul-no-drag className="flex flex-col gap-4">
               {filteredItems?.map((item) => (
                 <DrawerClose key={item.id}>
-                  <LocationCard
-                    code_name={item.code_name}
-                    country_flag={item.country_flag}
-                    id={item.id}
-                    name={item.name}
-                    onClick={() => onClick?.(item)}
-                  />
+                  <ItemCard item={item} onClick={() => onClick?.(item)} />
                 </DrawerClose>
               ))}
             </div>
