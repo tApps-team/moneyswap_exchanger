@@ -1,3 +1,9 @@
+import { ProfileInfo } from "@/widgets/profileInfo";
+
 export const ProfileInfoPage = () => {
-  return <div>ProfileInfoPage</div>;
+  return (
+    <div>
+      <ProfileInfo />
+    </div>
+  );
 };
