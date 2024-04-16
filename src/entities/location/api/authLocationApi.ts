@@ -3,6 +3,8 @@ import { ActiveCity } from "../model/types";
 import {
   AddPartnerCityDtoRequest,
   AddPartnerCityDtoResponse,
+  DeletePartnerCityDtoRequest,
+  DeletePartnerCityDtoResponse,
   EditPartnerCityDtoRequest,
   EditPartnerCityDtoResponse,
 } from "./types";
@@ -36,10 +38,21 @@ export const authLocationApi = authApi.injectEndpoints({
       }),
       invalidatesTags: [LOCATION],
     }),
+    deletePartnerCity: build.mutation<
+      DeletePartnerCityDtoResponse,
+      DeletePartnerCityDtoRequest
+    >({
+      query: ({ id }) => ({
+        url: `partner/delete_partner_city?city_id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [LOCATION],
+    }),
   }),
 });
 export const {
   useGetCitiesQuery,
   useAddPartnerCityMutation,
   useEditPartnerCityMutation,
+  useDeletePartnerCityMutation,
 } = authLocationApi;
