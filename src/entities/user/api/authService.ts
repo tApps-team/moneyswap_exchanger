@@ -1,5 +1,6 @@
 import { Tokens } from "../model/types";
 import { authApi, baseApi } from "@/shared/api";
+import { ProfileInfoDtoRequest, ProfileInfoDtoResponse } from "./types";
 
 type AuthParams = {
   username: string;
@@ -41,3 +42,14 @@ export const changePasswordAPI = authApi.injectEndpoints({
   }),
 });
 export const { useChangePasswordMutation } = changePasswordAPI;
+export const profileInfoApi = authApi.injectEndpoints({
+  endpoints: (build) => ({
+    profileInfo: build.query<ProfileInfoDtoResponse, ProfileInfoDtoRequest>({
+      query: () => ({
+        url: `/partner/account_info`,
+        method: "GET",
+      }),
+    }),
+  }),
+});
+export const { useProfileInfoQuery } = profileInfoApi;
