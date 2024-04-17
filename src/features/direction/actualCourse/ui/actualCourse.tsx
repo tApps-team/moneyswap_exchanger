@@ -1,3 +1,4 @@
+import { LogoButtonIcon } from "@/shared/assets/icons";
 import { Card, CardContent } from "@/shared/ui";
 //refactoring
 type ActualCourseProps = {
@@ -14,8 +15,8 @@ export const ActualCourse = (props: ActualCourseProps) => {
   const { actualCourse } = props;
 
   return (
-    <Card className="p-0 bg-mainColor text-darkGray rounded-full">
-      <CardContent className="p-4 flex items-center gap-4 overflow-hidden">
+    <Card className="p-0 bg-mainColor text-darkGray overflow-hidden rounded-full">
+      <CardContent className="p-4 flex items-center gap-4 ">
         {actualCourse ? (
           <>
             <div className="flex items-center gap-1 ">
@@ -42,7 +43,10 @@ export const ActualCourse = (props: ActualCourseProps) => {
             </div>
           </>
         ) : (
-          <div>Актуальный курс</div>
+          <div className="flex justify-between w-full">
+            <div>Актуальный курс</div>
+            <LogoButtonIcon width={28} height={28} fill="#2D2D2D" />
+          </div>
         )}
       </CardContent>
     </Card>
