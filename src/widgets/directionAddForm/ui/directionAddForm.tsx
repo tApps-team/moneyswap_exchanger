@@ -104,7 +104,7 @@ export const DirectionAddForm = () => {
   return (
     <Form {...form}>
       <form
-        className="grid grid-row-5  gap-10"
+        className="grid grid-rows-5 grid-cols-1 gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -157,7 +157,7 @@ export const DirectionAddForm = () => {
 
         <ActualCourse actualCourse={actualCourse} />
 
-        <div className="grid grid-cols-3 grid-row-2">
+        <div className="grid grid-cols-3 items-center  grid-row-1">
           <FormField
             control={form.control}
             name={"giveCurrencyPrice"}
@@ -195,9 +195,10 @@ export const DirectionAddForm = () => {
               </FormItem>
             )}
           />
-          <div className="flex justify-center items-center">
-            <Equal className="text-white" />
+          <div className="flex items-center justify-center">
+            <Equal className="text-white " />
           </div>
+
           <FormField
             control={form.control}
             name={"getCurrencyPrice"}
