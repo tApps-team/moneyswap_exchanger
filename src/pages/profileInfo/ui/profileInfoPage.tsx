@@ -1,3 +1,9 @@
+import styles from "./profileInfoPage.module.scss";
+
 export const ProfileInfoPage = () => {
-  return <div>ProfileInfoPage</div>;
+  return (
+    <div>
+      <div className={styles.container}></div>ProfileInfoPage
+    </div>
+  );
 };

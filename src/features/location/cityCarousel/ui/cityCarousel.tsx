@@ -1,17 +1,26 @@
 import { ActiveCity, MyCityCard } from "@/entities/location";
-import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CitySkeleton,
+} from "@/shared/ui";
 import { FC } from "react";
 
 interface CityCarouselProps {
   cities: ActiveCity[];
   setActive: (city: ActiveCity) => void;
   activeCity: ActiveCity | null;
+  directionsLoading: boolean;
+  citiesLoading: boolean;
 }
 
 export const CityCarousel: FC<CityCarouselProps> = ({
   cities,
   setActive,
   activeCity,
+  directionsLoading,
+  citiesLoading,
 }) => {
   return (
     <Carousel
@@ -20,17 +29,28 @@ export const CityCarousel: FC<CityCarouselProps> = ({
       }}
     >
       <CarouselContent>
-        {cities?.map((city) => (
-          <CarouselItem key={city.id}>
-            <MyCityCard
-              city={city}
-              onClick={() => {
-                setActive(city);
-              }}
-              activeCity={activeCity?.id === city?.id}
-            />
-          </CarouselItem>
-        ))}
+        {directionsLoading || citiesLoading ? (
+          <>
+            <CarouselItem>
+              <CitySkeleton />
+            </CarouselItem>
+            <CarouselItem>
+              <CitySkeleton />
+            </CarouselItem>
+          </>
+        ) : (
+          cities?.map((city) => (
+            <CarouselItem key={city.id}>
+              <MyCityCard
+                city={city}
+                onClick={() => {
+                  setActive(city);
+                }}
+                activeCity={activeCity?.id === city?.id}
+              />
+            </CarouselItem>
+          ))
+        )}
       </CarouselContent>
     </Carousel>
   );

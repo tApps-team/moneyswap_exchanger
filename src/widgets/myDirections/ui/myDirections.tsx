@@ -7,10 +7,10 @@ import {
   directionSchema,
   directionSchemaType,
   useDirectionsByCityQuery,
+  useEditDirectionMutation,
 } from "@/entities/direction";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/shared/model";
-import { useEditDirectionMutation } from "@/entities/direction/api/directionService";
 import {
   ActiveCity,
   setActiveCity,
@@ -25,11 +25,7 @@ export const MyDirections = () => {
     dispatch(setActiveCity(city));
   };
 
-  const {
-    data: cities,
-    isLoading: citiesLoading,
-    error: citiesError,
-  } = useGetCitiesQuery();
+  const { data: cities, isLoading: citiesLoading } = useGetCitiesQuery();
 
   useEffect(() => {
     if (cities && !activeCity) {
@@ -45,13 +41,10 @@ export const MyDirections = () => {
   });
   form.watch(["directions"]);
 
-  const {
-    data: directions,
-    isLoading: directionsLoading,
-    error: directionsError,
-  } = useDirectionsByCityQuery(activeCity?.code_name || "", {
-    skip: !activeCity,
-  });
+  const { data: directions, isLoading: directionsLoading } =
+    useDirectionsByCityQuery(activeCity?.code_name || "", {
+      skip: !activeCity,
+    });
 
   useEffect(() => {
     if (directions) {
@@ -70,9 +63,11 @@ export const MyDirections = () => {
         city: activeCity?.code_name,
         directions: data.directions,
       };
-      console.log(data);
       editDireciton(formData)
         .unwrap()
+        .then(() => {
+          // toast
+        })
         .catch((error) => console.error("Ошибка...", error));
     }
   };
@@ -84,8 +79,15 @@ export const MyDirections = () => {
           cities={cities || []}
           setActive={setActive}
           activeCity={activeCity}
+          directionsLoading={directionsLoading}
+          citiesLoading={citiesLoading}
         />
-        <Directions directions={directions} form={form} />
+        <Directions
+          directions={directions || []}
+          form={form}
+          directionsLoading={directionsLoading}
+          citiesLoading={citiesLoading}
+        />
         {directions && directions?.length > 0 && (
           <EditDirection
             editError={editError && true}
@@ -94,9 +96,10 @@ export const MyDirections = () => {
           />
         )}
       </form>
-      {activeCity && directions && directions.length > 0 && (
-        <UpdatedInfo activeCity={activeCity} editSuccess={editSuccess} />
-      )}
+      {activeCity &&
+        directions &&
+        directions.length > 0 &&
+        activeCity.updated.date && <UpdatedInfo activeCity={activeCity} />}
     </Form>
   );
 };

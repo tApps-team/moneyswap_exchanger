@@ -18,14 +18,14 @@ export const PathFooter = () => {
               ? "var(--main-color)"
               : "var(--light-grey)"
           }
-          width={30}
-          height={30}
+          width={20}
+          height={20}
         />
       </Link>
       <Link to={paths.home} className="flex items-center justify-center">
         <HomeIcon
-          width={40}
-          height={40}
+          width={20}
+          height={20}
           fill={
             pathname === paths.home ? "var(--main-color)" : "var(--light-grey)"
           }
@@ -36,8 +36,8 @@ export const PathFooter = () => {
         className="flex items-center justify-center"
       >
         <NotificationIcon
-          width={35}
-          height={35}
+          width={20}
+          height={20}
           fill={
             pathname === paths.notifications
               ? "var(--main-color)"
@@ -47,8 +47,8 @@ export const PathFooter = () => {
       </Link>
       <Link to={paths.statistics} className="flex items-center justify-center">
         <StatisticsIcon
-          width={30}
-          height={30}
+          width={20}
+          height={20}
           fill={
             pathname === paths.statistics
               ? "var(--main-color)"

@@ -14,7 +14,6 @@ import { MainLayout, RootLayout } from "./layouts";
 import { LocationAddPage } from "./locationAdd";
 import { LocationEditPage } from "./locationEdit";
 import { DirectionAddPage } from "./directionAdd";
-import { DirectionEditPage } from "./directionEdit";
 import { SecondLayout } from "./layouts/secondPagesLayout";
 
 export const router = createBrowserRouter([
@@ -38,7 +37,9 @@ export const router = createBrowserRouter([
             path: paths.profile,
             element: (
               <MainLayout>
-                <ProfilePage />
+                <SecondLayout>
+                  <ProfilePage />
+                </SecondLayout>
               </MainLayout>
             ),
           },
@@ -91,14 +92,6 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: paths.directionEdit,
-            element: (
-              <SecondLayout>
-                <DirectionEditPage />
-              </SecondLayout>
-            ),
-          },
-          {
             path: `${paths.profile}${paths.profileSettings}`,
             element: (
               <SecondLayout>
@@ -126,7 +119,11 @@ export const router = createBrowserRouter([
       },
       {
         path: paths.login,
-        element: <LoginPage />,
+        element: (
+          <SecondLayout>
+            <LoginPage />
+          </SecondLayout>
+        ),
       },
     ],
   },

@@ -1,25 +1,19 @@
-.card__container {
-    position: relative;
-    height: 150px;
-    overflow: hidden;
-  }
-  
   .card {
-  }
-  
-  .icon {
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px;
-    height: 100%;
-    background-color: #f00;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
+    top: -2px;
+    left: -2px;
+    border-radius: var(--border-radius-l);
+    background: var(--main-color);
+    display: grid;
+    gap: 30px;
+    padding: var(--padding-l);
+    padding-bottom: var(--padding-m);
+    height: 150px;
+    width: calc(100% + 4px);
+    z-index: 2;
+
+    &.not_active {
+      background: var(--light-grey);
   }
-  
-  .editing .icon {
   }
   

@@ -7,7 +7,6 @@ import {
 } from "@/entities/direction";
 import { CurrencySelect } from "@/features/direction";
 import { ActualCourse } from "@/features/direction/actualCourse";
-import { router } from "@/pages/router";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
 import {
