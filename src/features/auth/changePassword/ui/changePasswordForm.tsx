@@ -1,3 +1,4 @@
+import { useChangePasswordMutation } from "@/entities/user/api/authService";
 import {
   Button,
   Form,
@@ -7,16 +8,14 @@ import {
   FormMessage,
   PasswordInput,
 } from "@/shared/ui";
+import { useToast } from "@/shared/ui/toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
 import {
   ChangePasswordSchema,
   changePasswordSchema,
 } from "../model/changePasswordSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { SquarePen } from "lucide-react";
-import { useChangePasswordMutation } from "@/entities/user/api/authService";
-import { CustomLoader } from "@/shared/ui";
-import { useToast } from "@/shared/ui/toast";
 
 export const ChangePasswordForm = () => {
   const changePasswordForm = useForm<ChangePasswordSchema>({
@@ -30,17 +29,17 @@ export const ChangePasswordForm = () => {
   const { toast } = useToast();
   const [changePassword, { isLoading, error }] = useChangePasswordMutation();
   const onSubmit = async (data: ChangePasswordSchema) => {
-    const { currentPassword, newPassword, confirmPassword } = data;
+    const { newPassword } = data;
     changePassword({ new_password: newPassword })
       .unwrap()
-      .then((data) => {
+      .then(() => {
         changePasswordForm.reset();
         toast({
           title: "Пароль успешно изменен!",
           description: "Если забыли пароль, свяжитесь с нами",
         });
       })
-      .catch((error) => {
+      .catch(() => {
         toast({
           title: "Ошибка",
         });
@@ -112,7 +111,7 @@ export const ChangePasswordForm = () => {
             type="submit"
             className="rounded-full bg-[#F6FF5F]  text-black text-lg h-16 "
           >
-            {isLoading ? <CustomLoader /> : "Сохранить"}
+            {isLoading ? <Loader className="animate-spin" /> : "Сохранить"}
           </Button>
         </form>
       </Form>
