@@ -15,11 +15,11 @@ export const ActualCourse = (props: ActualCourseProps) => {
   const { actualCourse } = props;
 
   return (
-    <Card className="p-0 bg-mainColor text-darkGray overflow-hidden rounded-full">
+    <Card className="p-0 bg-mainColor max-h-16 text-darkGray overflow-hidden rounded-full">
       <CardContent className="p-4 flex items-center gap-4 ">
         {actualCourse ? (
           <>
-            <div className="flex items-center gap-1 ">
+            <div className="flex items-center gap-1">
               <img
                 src={actualCourse?.icon_valute_from}
                 alt={`icon ${actualCourse?.valute_to}`}
