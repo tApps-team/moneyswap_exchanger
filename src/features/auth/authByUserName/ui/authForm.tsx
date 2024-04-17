@@ -1,3 +1,6 @@
+import { useLoginMutation, userSlice } from "@/entities/user";
+import { useAppDispatch } from "@/shared/model";
+import { paths } from "@/shared/routing";
 import {
   Button,
   Form,
@@ -8,15 +11,12 @@ import {
   Input,
 } from "@/shared/ui";
 import { PasswordInput } from "@/shared/ui/input";
+import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "lucide-react";
+import { Loader, Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { AuthFormSchema, authFormSchema } from "../model/authFormSchema";
-import { useAppDispatch } from "@/shared/model";
 import { useNavigate } from "react-router-dom";
-import { paths } from "@/shared/routing";
-import { useLoginMutation, userSlice } from "@/entities/user";
-import { CustomLoader } from "@/shared/ui";
+import { AuthFormSchema, authFormSchema } from "../model/authFormSchema";
 
 export const AuthByUserNameForm = () => {
   const authForm = useForm<AuthFormSchema>({
@@ -30,6 +30,7 @@ export const AuthByUserNameForm = () => {
   const [Login, { isLoading, error }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const onSubmit = async (data: AuthFormSchema) => {
     Login(data)
@@ -40,6 +41,10 @@ export const AuthByUserNameForm = () => {
       })
       .catch((error) => {
         console.error("Ошибка получения токена:", error);
+        toast({
+          title: "Ошбика",
+          variant: "destructive",
+        });
       });
   };
   return (
@@ -56,11 +61,15 @@ export const AuthByUserNameForm = () => {
               <FormItem>
                 <FormControl>
                   <Input
+                    type="text"
                     startAdornment={
-                      <User className="absolute left-3 translate-y-2 " />
+                      <Mail
+                        color="#F6FF5F"
+                        className="absolute left-3 translate-y-2 "
+                      />
                     }
-                    className="rounded-full pl-12 "
-                    placeholder="Имя Фамилия"
+                    className="text-white rounded-full pl-12 bg-darkGray"
+                    placeholder="E-MAIL"
                     {...field}
                   />
                 </FormControl>
@@ -76,7 +85,7 @@ export const AuthByUserNameForm = () => {
                 <FormControl>
                   <PasswordInput
                     type="password"
-                    className="rounded-full pl-12 bg-background"
+                    className="text-white rounded-full pl-12 bg-darkGray"
                     placeholder="••••••••••••"
                     {...field}
                   />
@@ -89,7 +98,7 @@ export const AuthByUserNameForm = () => {
             className="bg-[#F6FF5F] text-black  w-full rounded-full"
             type="submit"
           >
-            {isLoading ? <CustomLoader /> : "Войти"}
+            {isLoading ? <Loader className="animate-spin" /> : "ВОЙТИ"}
           </Button>
         </form>
       </Form>
