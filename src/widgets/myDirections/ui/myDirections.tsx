@@ -81,11 +81,16 @@ export const MyDirections = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Cities
+          isLoading={citiesLoading}
           cities={cities || []}
           setActive={setActive}
           activeCity={activeCity}
         />
-        <Directions directions={directions} form={form} />
+        <Directions
+          isLoading={directionsLoading}
+          directions={directions}
+          form={form}
+        />
         {directions && directions?.length > 0 && (
           <EditDirection
             editError={editError && true}
