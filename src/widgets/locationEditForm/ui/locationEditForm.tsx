@@ -5,6 +5,7 @@ import {
   useEditPartnerCityMutationAuth,
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
+import { LogoButtonIcon } from "@/shared/assets/icons";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
 
@@ -21,6 +22,7 @@ import {
 } from "@/shared/ui";
 import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader, Minus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -47,8 +49,10 @@ export const LocationEditForm = () => {
   });
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [editPartnerCity] = useEditPartnerCityMutationAuth();
-  const [deletePartnerCity] = useDeletePartnerCityMutation();
+  const [editPartnerCity, { isLoading: isLoadingEditPartnerCity }] =
+    useEditPartnerCityMutationAuth();
+  const [deletePartnerCity, { isLoading: isLoadingDeletePartnerCity }] =
+    useDeletePartnerCityMutation();
   const onSubmit = (data: LocationEditSchemaType) => {
     console.log(data);
     editPartnerCity({
@@ -93,7 +97,7 @@ export const LocationEditForm = () => {
             name={"country"}
             render={({ field }) => (
               <FormItem className="flex flex-col gap-3">
-                <FormLabel className="text-mainColor text-xl">Страна</FormLabel>
+                <FormLabel className="text-mainColor text-xl">СТРАНА</FormLabel>
                 <FormControl>
                   <ItemSelect disabled={true} label={activeEditCity?.country} />
                 </FormControl>
@@ -106,7 +110,7 @@ export const LocationEditForm = () => {
             name={"city"}
             render={({ field }) => (
               <FormItem className="flex flex-col gap-3">
-                <FormLabel className="text-mainColor text-xl">Город</FormLabel>
+                <FormLabel className="text-mainColor text-xl">ГОРОД</FormLabel>
                 <FormControl>
                   <ItemSelect disabled={true} label={activeEditCity?.name} />
                 </FormControl>
@@ -120,7 +124,7 @@ export const LocationEditForm = () => {
             name={"deliviry"}
             render={({ field }) => (
               <FormItem className="flex items-center justify-between">
-                <FormLabel className="text-white">Доставка</FormLabel>
+                <FormLabel className="text-white text-xl">ДОСТАВКА</FormLabel>
                 <FormControl>
                   <Switch
                     checked={field.value}
@@ -136,7 +140,7 @@ export const LocationEditForm = () => {
             name={"office"}
             render={({ field }) => (
               <FormItem className="flex items-center justify-between">
-                <FormLabel className="text-white">Есть офис</FormLabel>
+                <FormLabel className="text-white text-xl">ЕСТЬ ОФИС</FormLabel>
                 <FormControl>
                   <Switch
                     checked={field.value}
@@ -148,7 +152,8 @@ export const LocationEditForm = () => {
             )}
           />
 
-          <div className="flex gap-16">
+          <div className="grid grid-cols-3 grid-row-2 gap-4 justify-between items-center ">
+            <div className="col-span-3 text-white text-xl">ВРЕМЯ РАБОТЫ</div>
             <FormField
               control={form.control}
               name={"timeStart"}
@@ -157,14 +162,25 @@ export const LocationEditForm = () => {
                   <FormControl>
                     <Input
                       type="time"
-                      className="w-[103px]  h-[38px] p-2 bg-darkGray text-white rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="  h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
                       {...field}
+                      endAdornment={
+                        <LogoButtonIcon
+                          width={26}
+                          height={26}
+                          className="absolute -translate-y-8 right-2"
+                        />
+                      }
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            <div className="flex justify-center items-center">
+              <Minus color="white" />{" "}
+              {/* Знак минуса помещается в блок с выравниванием по центру */}
+            </div>
             <FormField
               control={form.control}
               name={"timeEnd"}
@@ -173,8 +189,15 @@ export const LocationEditForm = () => {
                   <FormControl>
                     <Input
                       type="time"
-                      className="w-[103px]  h-[38px] p-2 bg-darkGray text-white rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
                       {...field}
+                      endAdornment={
+                        <LogoButtonIcon
+                          width={26}
+                          height={26}
+                          className="absolute -translate-y-8 right-2"
+                        />
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -182,9 +205,9 @@ export const LocationEditForm = () => {
               )}
             />
           </div>
-          <div className="flex flex-col gap-6 text-white">
-            <div className="text-xl text-white">Дни работы</div>
-            <div className="flex">
+          <div className="grid  gap-6 text-white ">
+            <div className="text-xl text-white">ДНИ РАБОТЫ</div>
+            <div className="grid grid-flow-col  ">
               {Object.keys(form.formState.defaultValues?.workDays || {}).map(
                 (day) => (
                   <FormField
@@ -194,9 +217,9 @@ export const LocationEditForm = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <div className="flex flex-col items-center gap-4">
+                          <div className="flex flex-col items-center  gap-4 ">
                             <Switch
-                              className="rotate-90"
+                              className="rotate-90 "
                               checked={field.value}
                               onCheckedChange={field.onChange}
                               defaultChecked={
@@ -214,11 +237,16 @@ export const LocationEditForm = () => {
               )}
             </div>
           </div>
+
           <Button
             className="rounded-full border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
             type="submit"
           >
-            Сохранить
+            {isLoadingEditPartnerCity ? (
+              <Loader className="animate-spin" />
+            ) : (
+              "СОХРАНИТЬ"
+            )}
           </Button>
         </form>
       </Form>
@@ -227,7 +255,11 @@ export const LocationEditForm = () => {
         className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray h-14 disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
         onClick={() => activeEditCity && onHandleDelete(activeEditCity?.id)}
       >
-        Удалить
+        {isLoadingDeletePartnerCity ? (
+          <Loader className="animate-spin" />
+        ) : (
+          "УДАЛИТЬ"
+        )}
       </Button>
     </div>
   );
