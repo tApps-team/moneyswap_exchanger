@@ -86,165 +86,165 @@ export const LocationEditForm = () => {
   };
   console.log(activeEditCity?.info.time_from);
   return (
-    <div className="flex flex-col gap-5">
-      <Form {...form}>
-        <form
-          className="grid grid-row-7 gap-10"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <FormField
-            control={form.control}
-            name={"country"}
-            render={() => (
-              <FormItem className="flex flex-col gap-3">
-                <FormLabel className="text-mainColor text-xl">СТРАНА</FormLabel>
-                <FormControl>
-                  <ItemSelect
-                    itemIcon={activeEditCity?.country_flag || ""}
-                    disabled={true}
-                    label={activeEditCity?.country}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name={"city"}
-            render={() => (
-              <FormItem className="flex flex-col gap-3">
-                <FormLabel className="text-mainColor text-xl">ГОРОД</FormLabel>
-                <FormControl>
-                  <ItemSelect disabled={true} label={activeEditCity?.name} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <Form {...form}>
+      <form
+        className="grid grid-rows-5  gap-6"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <FormField
+          control={form.control}
+          name={"country"}
+          render={() => (
+            <FormItem className="flex flex-col gap-3">
+              <FormLabel className="text-mainColor text-xl">СТРАНА</FormLabel>
+              <FormControl>
+                <ItemSelect
+                  itemIcon={activeEditCity?.country_flag || ""}
+                  disabled={true}
+                  label={activeEditCity?.country}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name={"city"}
+          render={() => (
+            <FormItem className="flex flex-col gap-3">
+              <FormLabel className="text-mainColor text-xl">ГОРОД</FormLabel>
+              <FormControl>
+                <ItemSelect disabled={true} label={activeEditCity?.name} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
+        <FormField
+          control={form.control}
+          name={"deliviry"}
+          render={({ field }) => (
+            <FormItem className="flex items-center justify-between">
+              <FormLabel className="text-white text-xl">ДОСТАВКА</FormLabel>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name={"office"}
+          render={({ field }) => (
+            <FormItem className="flex items-center justify-between">
+              <FormLabel className="text-white text-xl">ЕСТЬ ОФИС</FormLabel>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="grid grid-cols-[1fr,40px,1fr] min-[320px]:grid-cols-3 grid-row-2 items-center ">
+          <div className="col-span-3 text-white text-xl">ВРЕМЯ РАБОТЫ</div>
           <FormField
             control={form.control}
-            name={"deliviry"}
+            name={"timeStart"}
             render={({ field }) => (
-              <FormItem className="flex items-center justify-between">
-                <FormLabel className="text-white text-xl">ДОСТАВКА</FormLabel>
+              <FormItem>
                 <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
+                  <Input
+                    type="time"
+                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    {...field}
+                    endAdornment={
+                      <LogoButtonIcon
+                        width={26}
+                        height={26}
+                        className="absolute -translate-y-8 right-2"
+                      />
+                    }
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="flex justify-center items-center">
+            <Minus color="white" />
+          </div>
           <FormField
             control={form.control}
-            name={"office"}
+            name={"timeEnd"}
             render={({ field }) => (
-              <FormItem className="flex items-center justify-between">
-                <FormLabel className="text-white text-xl">ЕСТЬ ОФИС</FormLabel>
+              <FormItem>
                 <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
+                  <Input
+                    type="time"
+                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    {...field}
+                    endAdornment={
+                      <LogoButtonIcon
+                        width={26}
+                        height={26}
+                        className="absolute -translate-y-8 right-2"
+                      />
+                    }
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+        </div>
 
-          <div className="grid grid-cols-[1fr,20px,1fr] grid-row-2 gap-4 justify-between items-center ">
-            <div className="col-span-3 text-white text-xl">ВРЕМЯ РАБОТЫ</div>
-            <FormField
-              control={form.control}
-              name={"timeStart"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      type="time"
-                      className="  h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                      {...field}
-                      endAdornment={
-                        <LogoButtonIcon
-                          width={26}
-                          height={26}
-                          className="absolute -translate-y-8 right-2"
-                        />
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex justify-center items-center">
-              <Minus color="white" />{" "}
-              {/* Знак минуса помещается в блок с выравниванием по центру */}
-            </div>
-            <FormField
-              control={form.control}
-              name={"timeEnd"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      type="time"
-                      className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                      {...field}
-                      endAdornment={
-                        <LogoButtonIcon
-                          width={26}
-                          height={26}
-                          className="absolute -translate-y-8 right-2"
-                        />
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <div className="grid grid-rows-2 gap-6 text-white ">
+          <div className="text-xl row-span-2 text-white">ДНИ РАБОТЫ</div>
+          <div className="grid grid-cols-7   ">
+            {Object.keys(form.formState.defaultValues?.workDays || {}).map(
+              (day) => (
+                <FormField
+                  key={day}
+                  control={form.control}
+                  name={`workDays.${day}`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="flex flex-col items-center gap-4 ">
+                          <Switch
+                            className="rotate-90 "
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            defaultChecked={
+                              activeEditCity?.info.working_days[day]
+                            }
+                          />
+                          <div>{day}</div>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )
+            )}
           </div>
-          <div className="grid  gap-6 text-white ">
-            <div className="text-xl text-white">ДНИ РАБОТЫ</div>
-            <div className="grid grid-flow-col  ">
-              {Object.keys(form.formState.defaultValues?.workDays || {}).map(
-                (day) => (
-                  <FormField
-                    key={day}
-                    control={form.control}
-                    name={`workDays.${day}`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <div className="flex flex-col items-center  gap-4 ">
-                            <Switch
-                              className="rotate-90 "
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                              defaultChecked={
-                                activeEditCity?.info.working_days[day]
-                              }
-                            />
-                            <div>{day}</div>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )
-              )}
-            </div>
-          </div>
-
+        </div>
+        <div className="flex flex-col gap-4">
           <Button
-            className="rounded-full border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
+            className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
             type="submit"
+            variant={"outline"}
           >
             {isLoadingEditPartnerCity ? (
               <Loader className="animate-spin" />
@@ -252,19 +252,19 @@ export const LocationEditForm = () => {
               "СОХРАНИТЬ"
             )}
           </Button>
-        </form>
-      </Form>
-      <Button
-        variant={"outline"}
-        className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray h-14 disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
-        onClick={() => activeEditCity && onHandleDelete(activeEditCity?.id)}
-      >
-        {isLoadingDeletePartnerCity ? (
-          <Loader className="animate-spin" />
-        ) : (
-          "УДАЛИТЬ"
-        )}
-      </Button>
-    </div>
+          <Button
+            variant={"outline"}
+            className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
+            onClick={() => activeEditCity && onHandleDelete(activeEditCity?.id)}
+          >
+            {isLoadingDeletePartnerCity ? (
+              <Loader className="animate-spin" />
+            ) : (
+              "УДАЛИТЬ"
+            )}
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };

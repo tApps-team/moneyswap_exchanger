@@ -263,7 +263,7 @@ export const LocationAddForm = () => {
         </div>
 
         <Button
-          className="rounded-full border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
+          className="rounded-full border-bg-darkGray  bg-darkGray text-mainColor text-xl"
           type="submit"
         >
           {isLoadingAddPartnerCity ? (
