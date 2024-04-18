@@ -96,8 +96,15 @@ export const DirectionAddForm = () => {
         navigate(paths.home);
         toast({
           title: "Направление успешно добаленно",
+          variant: "success",
         });
-      });
+      })
+      .catch(() =>
+        toast({
+          title: "ОШИБКА!",
+          variant: "destructive",
+        })
+      );
     console.log(data);
   };
 
