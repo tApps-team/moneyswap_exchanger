@@ -3,9 +3,9 @@ import {
   DirectionCard,
   directionSchemaType,
 } from "@/entities/direction";
-import { DirectionSkeleton } from "@/shared/ui";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
+import { DirectionSkeleton } from "./directionSkeleton";
 
 interface DirectionListProps {
   directions: Direction[];

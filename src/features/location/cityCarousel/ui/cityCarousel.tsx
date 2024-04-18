@@ -1,11 +1,7 @@
 import { ActiveCity, MyCityCard } from "@/entities/location";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CitySkeleton,
-} from "@/shared/ui";
+import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
 import { FC } from "react";
+import { CitySkeleton } from "./citySkeleton";
 
 interface CityCarouselProps {
   cities: ActiveCity[];

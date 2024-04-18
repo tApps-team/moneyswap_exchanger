@@ -7,22 +7,22 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  DirectionCardSwiper,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
   Switch,
 } from "@/shared/ui";
-import { Direction } from "../../../entities/direction/model/types";
 import { ChangeEvent, FC } from "react";
 import styles from "./directionCard.module.scss";
 import { UseFormReturn } from "react-hook-form";
 import {
+  Direction,
   directionSchemaType,
   useDeleteDirectionMutation,
 } from "@/entities/direction";
 import { DeleteIcon } from "@/shared/assets/icons";
+import { DirectionCardSwiper } from "./directionCardSwiper";
 
 interface DirectionCardProps {
   direction: Direction;

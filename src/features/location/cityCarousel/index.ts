@@ -1,2 +1,2 @@
 export { CityCarousel } from "./ui/cityCarousel";
-export { CityCarouselSkeleton } from "./ui/cityCarouselSkeleton";
+export { CitySkeleton } from "./ui/citySkeleton";

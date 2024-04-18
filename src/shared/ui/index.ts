@@ -23,7 +23,6 @@ export * from "./checkbox";
 export * from "./drawer";
 export * from "./scroll-area";
 export * from "./switch";
-export { DirectionCardSwiper } from "./directionCardSwiper";
 export { CustomLoader } from "./customLoader";
 export {
   AlertDialog,
@@ -32,12 +31,11 @@ export {
   AlertDialogTrigger,
   AlertDialogContent,
   AlertDialogHeader,
-  AlertDialogFooter,
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogAction,
   AlertDialogCancel,
+  AlertDialogFooter,
 } from "./alert-dialog";
-export { CitySkeleton } from "./citySkeleton";
-export { DirectionSkeleton } from "./directionSkeleton";
 export { Empty } from "./empty";
+export { Skeleton } from "./skeleton";
