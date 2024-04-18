@@ -63,7 +63,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
                 alt={`${label} icon`}
               />
             )}
-            <div>{label ? label : emptyLabel}</div>
+            <div>{label ? label.toUpperCase() : emptyLabel?.toUpperCase()}</div>
           </div>
           <LogoButtonIcon fill="#F6FF5F" width={28} height={28} />
         </Button>
@@ -80,7 +80,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           />
         </DrawerHeader>
         <div className="p-4">
-          <ScrollArea className="h-[80vh] w-full">
+          <ScrollArea className="h-[75vh] w-full">
             <div data-vaul-no-drag className="grid grid-rows-1 gap-2">
               {filteredItems?.map((item) => (
                 <DrawerClose key={item.id}>

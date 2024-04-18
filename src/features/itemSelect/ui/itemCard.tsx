@@ -15,7 +15,7 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
   return (
     <Card
       onClick={onClick}
-      className="p-4 cursor-pointer max-h-[70px] rounded-full border border-white bg-darkGray"
+      className="text-wrap p-4 cursor-pointer max-h-[70px] rounded-full border border-white bg-darkGray"
     >
       <CardContent className="p-0 flex gap-2 items-center  text-white">
         {item.country_flag || item.icon_url ? (
@@ -33,7 +33,7 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
             className="-rotate-90"
           />
         )}
-        <div className="text-nowrap">{item.name?.toUpperCase()}</div>
+        <div className="">{item.name?.toUpperCase()}</div>
       </CardContent>
     </Card>
   );

@@ -10,6 +10,14 @@ import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
 
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
   Button,
   Form,
   FormControl,
@@ -67,7 +75,6 @@ export const LocationEditForm = () => {
       .then(() => {
         toast({
           variant: "success",
-
           title: "Успешно обновленно!",
         });
         navigate(paths.home);
@@ -88,14 +95,14 @@ export const LocationEditForm = () => {
   return (
     <Form {...form}>
       <form
-        className="grid grid-rows-5  gap-6"
+        className="grid grid-rows-4 grid-cols-1 gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}
           name={"country"}
           render={() => (
-            <FormItem className="flex flex-col gap-3">
+            <FormItem className="flex flex-col gap-4">
               <FormLabel className="text-mainColor text-xl">СТРАНА</FormLabel>
               <FormControl>
                 <ItemSelect
@@ -112,7 +119,7 @@ export const LocationEditForm = () => {
           control={form.control}
           name={"city"}
           render={() => (
-            <FormItem className="flex flex-col gap-3">
+            <FormItem className="flex flex-col gap-4">
               <FormLabel className="text-mainColor text-xl">ГОРОД</FormLabel>
               <FormControl>
                 <ItemSelect disabled={true} label={activeEditCity?.name} />
@@ -155,8 +162,8 @@ export const LocationEditForm = () => {
           )}
         />
 
-        <div className="grid grid-cols-[1fr,40px,1fr] min-[320px]:grid-cols-3 grid-row-2 items-center ">
-          <div className="col-span-3 text-white text-xl">ВРЕМЯ РАБОТЫ</div>
+        <div className="text-white text-xl">ВРЕМЯ РАБОТЫ</div>
+        <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
           <FormField
             control={form.control}
             name={"timeStart"}
@@ -252,7 +259,37 @@ export const LocationEditForm = () => {
               "СОХРАНИТЬ"
             )}
           </Button>
-          <Button
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                type="button"
+                variant={"outline"}
+                className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
+              >
+                {isLoadingDeletePartnerCity ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  "УДАЛИТЬ"
+                )}
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Удалить направление?</AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Отменить</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() =>
+                    activeEditCity && onHandleDelete(activeEditCity?.id)
+                  }
+                >
+                  Удалить
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          {/* <Button
             variant={"outline"}
             className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
             onClick={() => activeEditCity && onHandleDelete(activeEditCity?.id)}
@@ -262,7 +299,7 @@ export const LocationEditForm = () => {
             ) : (
               "УДАЛИТЬ"
             )}
-          </Button>
+          </Button> */}
         </div>
       </form>
     </Form>
