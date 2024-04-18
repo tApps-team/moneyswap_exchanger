@@ -99,7 +99,11 @@ export const LocationEditForm = () => {
               <FormItem className="flex flex-col gap-3">
                 <FormLabel className="text-mainColor text-xl">СТРАНА</FormLabel>
                 <FormControl>
-                  <ItemSelect disabled={true} label={activeEditCity?.country} />
+                  <ItemSelect
+                    itemIcon={activeEditCity?.country_flag || ""}
+                    disabled={true}
+                    label={activeEditCity?.country}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -152,7 +156,7 @@ export const LocationEditForm = () => {
             )}
           />
 
-          <div className="grid grid-cols-3 grid-row-2 gap-4 justify-between items-center ">
+          <div className="grid grid-cols-[1fr,20px,1fr] grid-row-2 gap-4 justify-between items-center ">
             <div className="col-span-3 text-white text-xl">ВРЕМЯ РАБОТЫ</div>
             <FormField
               control={form.control}

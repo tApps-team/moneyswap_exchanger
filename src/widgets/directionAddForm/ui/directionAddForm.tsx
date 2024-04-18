@@ -157,7 +157,7 @@ export const DirectionAddForm = () => {
 
         <ActualCourse actualCourse={actualCourse} />
 
-        <div className="grid grid-cols-3 items-center  grid-row-1">
+        <div className="grid grid-cols-[1fr,50px,1fr] items-center  grid-row-1">
           <FormField
             control={form.control}
             name={"giveCurrencyPrice"}
