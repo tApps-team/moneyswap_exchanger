@@ -1,8 +1,7 @@
 import { Button } from "@/shared/ui";
-import { LogOut } from "lucide-react";
 import { useAppDispatch } from "@/shared/model";
 import { userSlice } from "@/entities/user";
-import { LogoButtonIcon } from "@/shared/assets/icons";
+import { LogoButtonIcon } from "@/shared/assets";
 
 export const Logout = () => {
   const dispatch = useAppDispatch();

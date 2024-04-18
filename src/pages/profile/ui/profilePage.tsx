@@ -4,7 +4,7 @@ import { Button } from "@/shared/ui";
 import { CircleHelp, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import styles from "./profilePage.module.scss";
-import { LogoButtonIcon } from "@/shared/assets/icons/logoButtonIcon";
+import { LogoButtonIcon } from "@/shared/assets";
 
 export const ProfilePage = () => {
   return (

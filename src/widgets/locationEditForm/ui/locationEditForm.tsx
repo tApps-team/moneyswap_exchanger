@@ -5,7 +5,7 @@ import {
   useEditPartnerCityMutationAuth,
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
-import { LogoButtonIcon } from "@/shared/assets/icons";
+import { LogoButtonIcon } from "@/shared/assets";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
 
@@ -95,7 +95,7 @@ export const LocationEditForm = () => {
           <FormField
             control={form.control}
             name={"country"}
-            render={({ field }) => (
+            render={() => (
               <FormItem className="flex flex-col gap-3">
                 <FormLabel className="text-mainColor text-xl">СТРАНА</FormLabel>
                 <FormControl>
@@ -108,7 +108,7 @@ export const LocationEditForm = () => {
           <FormField
             control={form.control}
             name={"city"}
-            render={({ field }) => (
+            render={() => (
               <FormItem className="flex flex-col gap-3">
                 <FormLabel className="text-mainColor text-xl">ГОРОД</FormLabel>
                 <FormControl>

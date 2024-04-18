@@ -1,6 +1,6 @@
 import { Currency } from "@/entities/direction";
 import { City, Country } from "@/entities/location";
-import { LogoButtonIcon } from "@/shared/assets/icons";
+import { LogoButtonIcon } from "@/shared/assets";
 import { Card, CardContent } from "@/shared/ui";
 
 type ItemCardProps<T> = {

@@ -6,7 +6,7 @@ import {
   useCitiesByCountryNameQuery,
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
-import { LogoButtonIcon } from "@/shared/assets/icons";
+import { LogoButtonIcon } from "@/shared/assets";
 import { paths } from "@/shared/routing";
 
 import {
@@ -22,7 +22,6 @@ import {
 } from "@/shared/ui";
 import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { Loader, Minus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -53,10 +52,8 @@ export const LocationAddForm = () => {
 
   const { toast } = useToast();
 
-  const [
-    addPartnerCity,
-    { status, error, isLoading: isLoadingAddPartnerCity },
-  ] = useAddPartnerCityMutation();
+  const [addPartnerCity, { isLoading: isLoadingAddPartnerCity }] =
+    useAddPartnerCityMutation();
 
   const onSubmit = (data: LocationSchemaType) => {
     console.log(data);

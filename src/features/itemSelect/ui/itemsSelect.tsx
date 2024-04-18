@@ -1,6 +1,5 @@
 import { Currency } from "@/entities/direction";
 import { City, Country } from "@/entities/location";
-import { LogoButtonIcon } from "@/shared/assets/icons";
 import {
   Button,
   Drawer,
@@ -15,6 +14,7 @@ import {
 import { Search } from "lucide-react";
 import { useDeferredValue, useState } from "react";
 import { ItemCard } from "./itemCard";
+import { LogoButtonIcon } from "@/shared/assets";
 
 type ItemSelectProps<T> = {
   items?: T[];
