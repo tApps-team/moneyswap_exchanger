@@ -1,0 +1,19 @@
+  .card {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    border-radius: var(--border-radius-l);
+    background: var(--main-color);
+    display: grid;
+    gap: 30px;
+    padding: var(--padding-l);
+    padding-bottom: var(--padding-m);
+    height: 150px;
+    width: calc(100% + 4px);
+    z-index: 2;
+
+    &.not_active {
+      background: var(--light-grey);
+  }
+  }
+  

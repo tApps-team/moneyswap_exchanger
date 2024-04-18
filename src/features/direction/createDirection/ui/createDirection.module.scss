@@ -1,10 +1,11 @@
 .create_btn {
+    height: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
     background: #2D2D2D;
-    color: #fff;
-    border: 2px solid #fff;
+    color: var(--white-color);
+    border: 2px solid var(--light-grey);
     padding: 25px;
     border-radius: var(--border-radius-xl);
 }

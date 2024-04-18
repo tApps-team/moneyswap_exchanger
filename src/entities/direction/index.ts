@@ -2,11 +2,13 @@ export { CurrencyCard } from "./ui/currencyCard";
 export { DirectionCard } from "./ui/directionCard";
 export type { Direction, Currency, CurrencyCategory } from "./model/types";
 export {
-  useDirectionsByCityQuery,
   directionAPI,
+  useDirectionsByCityQuery,
+  useEditDirectionMutation,
   useAvailableValutesQuery,
   useActualCourseQuery,
   useAddDirectionMutation,
+  useDeleteDirectionMutation,
 } from "./api/directionService";
 export {
   type DirectionSchemaType as directionSchemaType,

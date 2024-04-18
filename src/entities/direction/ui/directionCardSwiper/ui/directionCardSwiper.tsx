@@ -2,13 +2,13 @@ import React, { FC, ReactNode, TouchEvent, useState } from "react";
 import styles from "./directionCardSwiper.module.scss";
 
 interface DirectionCardSwiperProps {
-  onDelete?: () => void;
   children?: ReactNode;
+  isActive: boolean;
 }
 
 export const DirectionCardSwiper: FC<DirectionCardSwiperProps> = ({
-  onDelete,
   children,
+  isActive,
 }) => {
   const [startX, setStartX] = useState(0);
   const [offsetX, setOffsetX] = useState(0);
@@ -21,8 +21,7 @@ export const DirectionCardSwiper: FC<DirectionCardSwiperProps> = ({
     const currentX = e.touches[0].clientX;
     const deltaX = currentX - startX;
 
-    // Ограничение смещения карточки на 100px влево
-    const newOffsetX = Math.min(Math.max(deltaX, -100), 0);
+    const newOffsetX = Math.min(Math.max(deltaX, -70), 0);
     setOffsetX(newOffsetX);
   };
 
@@ -30,8 +29,8 @@ export const DirectionCardSwiper: FC<DirectionCardSwiperProps> = ({
     const currentX = e.changedTouches[0].clientX;
     const deltaX = currentX - startX;
 
-    if (deltaX < -100) {
-      setOffsetX(-100);
+    if (deltaX < -70) {
+      setOffsetX(-70);
     } else {
       setOffsetX(0);
     }
@@ -40,31 +39,21 @@ export const DirectionCardSwiper: FC<DirectionCardSwiperProps> = ({
   };
 
   const handleSwipeRight = () => {
-    if (offsetX === -100) {
+    if (offsetX === -70) {
       setOffsetX(0);
     }
   };
 
   return (
-    <div className={styles.card__container}>
-      <div
-        onTouchStart={handleSwipeStart}
-        onTouchMove={handleSwipeMove}
-        onTouchEnd={handleSwipeEnd}
-        onTouchCancel={handleSwipeRight}
-        className={styles.card}
-        style={{ transform: `translateX(${offsetX}px)` }}
-      >
-        {children}
-      </div>
-      <div
-        onClick={onDelete}
-        className={styles.icon}
-        // onTouchCancel={handleSwipeRight}
-        // style={{ right: `${-100 - offsetX}px` }}
-      >
-        Иконка
-      </div>
+    <div
+      className={`${styles.card} ${!isActive && styles.not_active}`}
+      onTouchStart={handleSwipeStart}
+      onTouchMove={handleSwipeMove}
+      onTouchEnd={handleSwipeEnd}
+      onTouchCancel={handleSwipeRight}
+      style={{ transform: `translateX(${offsetX}px)` }}
+    >
+      {children}
     </div>
   );
 };

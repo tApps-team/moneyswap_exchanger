@@ -1,0 +1,27 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    max-width: 500px;
+    transform: translate(-50%);
+    background: url("@/shared/assets/images/authBg.png") no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+
+.coming_soon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 52px);
+    opacity: 0.4;
+    animation: fadeIn 1.5s ease forwards;
+    transform: scale(1);
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0.4; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1);}
+  }
