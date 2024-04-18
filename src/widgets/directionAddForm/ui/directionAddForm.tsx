@@ -5,8 +5,8 @@ import {
   useAddDirectionMutation,
   useAvailableValutesQuery,
 } from "@/entities/direction";
-import { CurrencySelect } from "@/features/direction";
 import { ActualCourse } from "@/features/direction/actualCourse";
+import { ItemSelect } from "@/features/itemSelect";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
 import {
@@ -19,7 +19,9 @@ import {
   FormMessage,
   Input,
 } from "@/shared/ui";
+import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Circle, Equal, Loader } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -28,8 +30,8 @@ export const DirectionAddForm = () => {
   const form = useForm<DirectionAddSchemaType>({
     resolver: zodResolver(directionAddSchema),
     defaultValues: {
-      getCurrency: null,
-      giveCurrency: null,
+      getCurrency: undefined,
+      giveCurrency: undefined,
       getCurrencyPrice: 0,
       giveCurrencyPrice: 0,
     },
@@ -39,7 +41,11 @@ export const DirectionAddForm = () => {
     (state) => state.activeCity.activeCity?.code_name || ""
   );
   form.watch(["giveCurrency", "getCurrency"]);
-  const [addDirection] = useAddDirectionMutation();
+
+  const { toast } = useToast();
+
+  const [addDirection, { isLoading: isLoadingAddDirection }] =
+    useAddDirectionMutation();
   const { data: currencies } = useAvailableValutesQuery({ base: "all" });
 
   const { data: availableCurrncies } = useAvailableValutesQuery(
@@ -86,27 +92,38 @@ export const DirectionAddForm = () => {
       valute_to: data.getCurrency?.code_name || "",
     })
       .unwrap()
-      .then(() => navigate(paths.home));
+      .then(() => {
+        navigate(paths.home);
+        toast({
+          title: "Направление успешно добаленно",
+        });
+      });
     console.log(data);
   };
 
   return (
     <Form {...form}>
       <form
-        className="grid grid-row-7 gap-10"
+        className="grid grid-rows-5 grid-cols-1 gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}
           name={"giveCurrency"}
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>{field.value?.name}</FormLabel>
+            <FormItem className="flex flex-col gap-4">
+              <FormLabel className="text-mainColor text-xl">ОТДАЮ</FormLabel>
               <FormControl>
-                <CurrencySelect
-                  currencies={currectAllCurrencies}
+                <ItemSelect
+                  inputLabel="ОТДАЮ"
                   emptyLabel="Выберите что отдаете"
-                  label={field.value?.name || ""}
+                  itemIcon={field.value?.icon_url}
+                  items={currectAllCurrencies}
+                  label={
+                    field.value
+                      ? `${field.value?.code_name.toUpperCase()} (${field.value?.name.toUpperCase()})`
+                      : ""
+                  }
                   onClick={(e) => {
                     field.onChange(e);
                     form.resetField("getCurrency");
@@ -121,15 +138,16 @@ export const DirectionAddForm = () => {
           control={form.control}
           name={"getCurrency"}
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>{field.value?.name}</FormLabel>
+            <FormItem className="flex flex-col gap-4">
+              <FormLabel className="text-mainColor text-xl">ПОЛУЧАЮ</FormLabel>
               <FormControl>
-                <CurrencySelect
-                  currencies={currectAvailableCurrncies}
+                <ItemSelect
+                  inputLabel="ПОЛУЧАЮ"
+                  items={currectAvailableCurrncies}
                   emptyLabel="Выберите что получаете"
                   label={field.value?.name || ""}
-                  onClick={(e) => field.onChange(e)}
                   disabled={!form.getValues("giveCurrency")}
+                  onClick={(e) => field.onChange(e)}
                 />
               </FormControl>
               <FormMessage />
@@ -139,7 +157,7 @@ export const DirectionAddForm = () => {
 
         <ActualCourse actualCourse={actualCourse} />
 
-        <div className="flex items-center gap-10">
+        <div className="grid grid-cols-3 items-center  grid-row-1">
           <FormField
             control={form.control}
             name={"giveCurrencyPrice"}
@@ -160,9 +178,16 @@ export const DirectionAddForm = () => {
                             height={32}
                             className="absolute left-3 top-1/2 -translate-y-1/2  "
                           />
-                        ) : undefined
+                        ) : (
+                          <Circle
+                            width={32}
+                            height={32}
+                            color="white"
+                            className="absolute left-3 translate-y-2"
+                          />
+                        )
                       }
-                      className="border-2  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="border border-white bg-darkGray text-white  rounded-full pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -170,6 +195,10 @@ export const DirectionAddForm = () => {
               </FormItem>
             )}
           />
+          <div className="flex items-center justify-center">
+            <Equal className="text-white " />
+          </div>
+
           <FormField
             control={form.control}
             name={"getCurrencyPrice"}
@@ -189,10 +218,17 @@ export const DirectionAddForm = () => {
                             height={32}
                             className="absolute left-3 top-1/2 -translate-y-1/2  "
                           />
-                        ) : undefined
+                        ) : (
+                          <Circle
+                            width={32}
+                            height={32}
+                            color="white"
+                            className="absolute left-3 translate-y-2"
+                          />
+                        )
                       }
                       disabled={inputDisabled || inputOutCountValue}
-                      className="border-2  rounded-full pl-11 w-[110px] focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="border border-white bg-darkGray text-white  rounded-full pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -202,7 +238,16 @@ export const DirectionAddForm = () => {
           />
         </div>
 
-        <Button type="submit">Добавить </Button>
+        <Button
+          className="rounded-full border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
+          type="submit"
+        >
+          {isLoadingAddDirection ? (
+            <Loader className="animate-spin" />
+          ) : (
+            "ДОБАВИТЬ"
+          )}
+        </Button>
       </form>
     </Form>
   );

@@ -15,15 +15,7 @@ export type EditPartnerCityDtoRequest = Partial<{
   office: boolean;
   time_from: string;
   time_to: string;
-  working_days: {
-    Пн: boolean;
-    Вт: boolean;
-    Ср: boolean;
-    Чт: boolean;
-    Пт: boolean;
-    Сб: boolean;
-    Вс: boolean;
-  };
+  working_days: Record<string, boolean>;
 }>;
 
 export type AddPartnerCityDtoResponse = void;
@@ -35,3 +27,6 @@ export type AddPartnerCityDtoRequest = {
   time_to: string;
   working_days: Record<string, boolean>;
 };
+
+export type DeletePartnerCityDtoResponse = void;
+export type DeletePartnerCityDtoRequest = { id: number };

@@ -9,24 +9,30 @@ export const ProfileSettingsPage = () => {
     <div>
       <div className={styles.container}></div>
       <div className="flex flex-col gap-4">
-        <Button className="justify-start gap-4 cursor-pointer" asChild>
+        <Button
+          className="justify-start gap-4 bg-transparent cursor-pointer"
+          asChild
+        >
           <Link
             to={`${paths.profile}${paths.profileSettings}${paths.profileInfo}`}
           >
-            <User />
+            <User color="#F6FF5F" />
             <div className="flex flex-col">
-              <div>Информация аккаунта</div>
-              <div>Измените вашу информацию</div>
+              <div>ИНФОРМАЦИЯ АККАУНТА</div>
+              <div>Измените вагу информацию</div>
             </div>
           </Link>
         </Button>
-        <Button className="justify-start gap-4 cursor-pointer" asChild>
+        <Button
+          className="justify-start bg-transparent gap-4 cursor-pointer"
+          asChild
+        >
           <Link
             to={`${paths.profile}${paths.profileSettings}${paths.profilePassword}`}
           >
-            <Eye />
+            <Eye color="#F6FF5F" />
             <div className="flex flex-col">
-              <div>Пароль</div>
+              <div>ПАРОЛЬ</div>
               <div>Измените ваш пароль</div>
             </div>
           </Link>

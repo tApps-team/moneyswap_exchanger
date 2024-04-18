@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styles from "./rootLayout.module.scss";
+import { Toaster } from "@/shared/ui/toast";
 
 export const RootLayout = () => {
   return (
@@ -7,6 +8,7 @@ export const RootLayout = () => {
       <main className={styles.root__content}>
         <Outlet />
       </main>
+      <Toaster />
     </div>
   );
 };
