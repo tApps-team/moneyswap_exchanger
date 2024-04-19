@@ -23,6 +23,7 @@ import {
 } from "@/entities/direction";
 import { DeleteIcon } from "@/shared/assets/icons";
 import { DirectionCardSwiper } from "./directionCardSwiper";
+import { useToast } from "@/shared/ui/toast";
 
 interface DirectionCardProps {
   direction: Direction;
@@ -54,11 +55,16 @@ export const DirectionCard: FC<DirectionCardProps> = ({
 
   const [deleteDirection] = useDeleteDirectionMutation();
 
+  const { toast } = useToast();
+
   const handleDelete = () => {
     deleteDirection({ direction_id: direction.id })
       .unwrap()
       .then(() => {
-        console.log("success delete");
+        toast({
+          title: "Направления успешно удалено",
+          description: "",
+        });
       })
       .catch((error) => console.error("Ошибка...,", error));
   };
