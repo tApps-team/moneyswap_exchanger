@@ -11,7 +11,7 @@ export const Logout = () => {
 
   return (
     <Button
-      className="items-center justify-start bg-transparent"
+      className="items-center justify-start bg-transparent border-none"
       onClick={logout}
     >
       <div className="grid grid-cols-[auto,1fr,auto] gap-4 justify-between items-center">

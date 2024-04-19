@@ -61,8 +61,8 @@ export const ChangePasswordForm = () => {
                   <PasswordInput
                     eyeIcon={true}
                     type="password"
-                    placeholder="••••••••••••••••"
-                    className="rounded-full h-14 placeholder:text-white placeholder:text-3xl bg-darkGray"
+                    placeholder="*********"
+                    className="rounded-full h-14 text-center  placeholder:text-white  bg-darkGray"
                     {...field}
                   />
                 </FormControl>

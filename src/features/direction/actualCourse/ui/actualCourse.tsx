@@ -15,7 +15,7 @@ export const ActualCourse = (props: ActualCourseProps) => {
   const { actualCourse } = props;
 
   return (
-    <Card className="p-0 bg-mainColor max-h-16 text-darkGray overflow-hidden rounded-full">
+    <Card className="p-0 bg-mainColor h-[70px] text-darkGray overflow-hidden rounded-full">
       <CardContent className="p-4 flex items-center gap-4 ">
         {actualCourse ? (
           <>
@@ -43,7 +43,7 @@ export const ActualCourse = (props: ActualCourseProps) => {
             </div>
           </>
         ) : (
-          <div className="flex justify-between w-full">
+          <div className="flex items-center justify-between w-full">
             <div>Актуальный курс</div>
             <LogoButtonIcon width={28} height={28} fill="#2D2D2D" />
           </div>
