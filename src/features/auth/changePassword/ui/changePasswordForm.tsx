@@ -61,8 +61,8 @@ export const ChangePasswordForm = () => {
                   <PasswordInput
                     eyeIcon={true}
                     type="password"
-                    placeholder="••••••••••••••••"
-                    className="rounded-full h-14 placeholder:text-white placeholder:text-3xl bg-darkGray"
+                    placeholder="*********"
+                    className="rounded-full h-14 text-center  placeholder:text-white  bg-darkGray"
                     {...field}
                   />
                 </FormControl>
@@ -109,7 +109,7 @@ export const ChangePasswordForm = () => {
           </div>
           <Button
             type="submit"
-            className="rounded-full bg-[#F6FF5F]  text-black text-lg h-16 "
+            className="rounded-full bg-[#F6FF5F]  text-black text-lg h-16 uppercase text-semibold"
           >
             {isLoading ? <Loader className="animate-spin" /> : "Сохранить"}
           </Button>

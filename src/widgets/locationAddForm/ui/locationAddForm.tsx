@@ -72,6 +72,7 @@ export const LocationAddForm = () => {
         toast({
           title: "Город успешно добавлен!",
           description: "Он появиться на главной странице",
+          variant: "success",
         });
       })
       .catch((err) => {
@@ -79,6 +80,7 @@ export const LocationAddForm = () => {
           toast({
             title: "Такой город уже существует",
             description: "Измените город!",
+            variant: "destructive",
           });
         }
       });
@@ -97,23 +99,23 @@ export const LocationAddForm = () => {
   return (
     <Form {...form}>
       <form
-        className="grid grid-row-7 gap-10"
+        className="grid grid-rows-4 grid-cols-1 gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}
           name={"country"}
           render={({ field }) => (
-            <FormItem className="flex flex-col gap-3">
+            <FormItem className="flex flex-col gap-4">
               <FormLabel className="text-mainColor text-xl">Страна</FormLabel>
               <FormControl>
                 <ItemSelect
                   inputLabel="ВЫБОР СТРАНЫ"
-                  emptyLabel="Выберите страну"
+                  emptyLabel="ВЫБЕРИТЕ СТРАНУ"
                   itemIcon={field.value?.country_flag}
-                  inputPlaceholder="Поиск страны"
+                  inputPlaceholder="ПОИСК СТРАНЫ"
                   items={countries}
-                  label={field.value?.name}
+                  label={field.value?.name || ""}
                   onClick={(e) => {
                     field.onChange(e);
                     form.resetField("city");
@@ -128,7 +130,7 @@ export const LocationAddForm = () => {
           control={form.control}
           name={"city"}
           render={({ field }) => (
-            <FormItem className="flex flex-col gap-3">
+            <FormItem className="flex flex-col gap-4">
               <FormLabel className="text-mainColor text-xl">Город</FormLabel>
               <FormControl>
                 <ItemSelect
@@ -136,9 +138,9 @@ export const LocationAddForm = () => {
                   disabled={!form.getValues("country")}
                   onClick={(e) => field.onChange(e)}
                   items={cities || []}
-                  inputPlaceholder="Поиск города"
+                  inputPlaceholder="ПОИСК ГОРОДА"
                   label={field.value?.name}
-                  emptyLabel="Выберите город"
+                  emptyLabel="ВЫБЕРИТЕ ГОРОД"
                 />
               </FormControl>
               <FormMessage />
@@ -179,8 +181,8 @@ export const LocationAddForm = () => {
           )}
         />
 
-        <div className="grid grid-cols-3 grid-row-2 gap-4 justify-between items-center ">
-          <div className="col-span-3 text-white text-xl">ВРЕМЯ РАБОТЫ</div>
+        <div className="text-white text-xl">ВРЕМЯ РАБОТЫ</div>
+        <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
           <FormField
             control={form.control}
             name={"timeStart"}
@@ -189,7 +191,7 @@ export const LocationAddForm = () => {
                 <FormControl>
                   <Input
                     type="time"
-                    className="  h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    className="h-[38px] p-2  bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     {...field}
                     endAdornment={
                       <LogoButtonIcon
@@ -205,7 +207,7 @@ export const LocationAddForm = () => {
             )}
           />
           <div className="flex justify-center items-center">
-            <Minus color="white" />{" "}
+            <Minus color="white" />
           </div>
           <FormField
             control={form.control}
@@ -215,7 +217,7 @@ export const LocationAddForm = () => {
                 <FormControl>
                   <Input
                     type="time"
-                    className="  h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     {...field}
                     endAdornment={
                       <LogoButtonIcon
@@ -231,10 +233,9 @@ export const LocationAddForm = () => {
             )}
           />
         </div>
-
-        <div className="grid flex-col gap-6 text-white ">
-          <div className="text-xl text-white">ДНИ РАБОТЫ</div>
-          <div className="grid grid-flow-col ">
+        <div className="grid grid-rows-2 gap-6 text-white ">
+          <div className="text-xl text-white row-span-2">ДНИ РАБОТЫ</div>
+          <div className="grid grid-cols-7">
             {Object.keys(form.formState.defaultValues?.workDays || {}).map(
               (day) => (
                 <FormField
@@ -263,13 +264,14 @@ export const LocationAddForm = () => {
         </div>
 
         <Button
-          className="rounded-full border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
+          className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
           type="submit"
+          variant={"outline"}
         >
           {isLoadingAddPartnerCity ? (
             <Loader className="animate-spin" />
           ) : (
-            "ДОБАВИТЬ ГОРОД"
+            "ДОБАВИТЬ"
           )}
         </Button>
       </form>

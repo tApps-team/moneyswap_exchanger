@@ -51,7 +51,7 @@ export const AuthByUserNameForm = () => {
     <div className="container">
       <Form {...authForm}>
         <form
-          className="grid grid-cols-1 grid-rows-3 gap-6"
+          className="grid grid-cols-1 grid-rows-3 gap-10"
           onSubmit={authForm.handleSubmit(onSubmit)}
         >
           <FormField
@@ -68,7 +68,7 @@ export const AuthByUserNameForm = () => {
                         className="absolute left-3 translate-y-2 "
                       />
                     }
-                    className="text-white rounded-full pl-12 bg-darkGray"
+                    className="text-white placeholder:text-white rounded-full pl-12 bg-darkGray"
                     placeholder="E-MAIL"
                     {...field}
                   />
@@ -85,9 +85,10 @@ export const AuthByUserNameForm = () => {
                 <FormControl>
                   <PasswordInput
                     type="password"
-                    className="text-white rounded-full pl-12 bg-darkGray"
+                    className="text-white placeholder:text-white rounded-full pl-12 bg-darkGray"
                     placeholder="••••••••••••"
                     {...field}
+                    eyeIcon
                   />
                 </FormControl>
                 <FormMessage />
@@ -95,7 +96,7 @@ export const AuthByUserNameForm = () => {
             )}
           />
           <Button
-            className="bg-[#F6FF5F] text-black  w-full rounded-full"
+            className=" w-full rounded-full uppercase font-semibold text-xl text-mainColor bg-darkGray"
             type="submit"
           >
             {isLoading ? <Loader className="animate-spin" /> : "ВОЙТИ"}

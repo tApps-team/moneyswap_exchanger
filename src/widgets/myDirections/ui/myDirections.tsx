@@ -17,6 +17,7 @@ import {
   useGetCitiesQuery,
 } from "@/entities/location";
 import { EditDirection, UpdatedInfo } from "@/features/direction";
+import { useToast } from "@/shared/ui/toast";
 
 export const MyDirections = () => {
   const activeCity = useAppSelector((state) => state.activeCity.activeCity);
@@ -52,10 +53,10 @@ export const MyDirections = () => {
     }
   }, [directions]);
 
-  const [
-    editDireciton,
-    { isLoading: editLoading, error: editError, isSuccess: editSuccess },
-  ] = useEditDirectionMutation();
+  const [editDireciton, { isLoading: editLoading }] =
+    useEditDirectionMutation();
+
+  const { toast } = useToast();
 
   const onSubmit = (data: directionSchemaType) => {
     if (activeCity) {
@@ -66,9 +67,18 @@ export const MyDirections = () => {
       editDireciton(formData)
         .unwrap()
         .then(() => {
-          // toast
+          toast({
+            title: "Направления успешно обновлены",
+            description: "",
+          });
         })
-        .catch((error) => console.error("Ошибка...", error));
+        .catch((error) => {
+          console.error("Ошибка...", error);
+          toast({
+            title: "Что-то пошло не так...",
+            description: "При обновлении произошла ошибка",
+          });
+        });
     }
   };
 
@@ -89,11 +99,7 @@ export const MyDirections = () => {
           citiesLoading={citiesLoading}
         />
         {directions && directions?.length > 0 && (
-          <EditDirection
-            editError={editError && true}
-            editLoading={editLoading}
-            editSuccess={editSuccess}
-          />
+          <EditDirection editLoading={editLoading} />
         )}
       </form>
       {activeCity &&

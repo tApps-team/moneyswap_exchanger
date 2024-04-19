@@ -1,4 +1,4 @@
-export const PlusIcon = (props: any) => (
+export const PlusIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     data-name="\u0420\u0435\u0436\u0438\u043C \u0438\u0437\u043E\u043B\u044F\u0446\u0438\u0438"

@@ -11,12 +11,12 @@ export const Logout = () => {
 
   return (
     <Button
-      className="items-center justify-start bg-transparent"
+      className="items-center justify-start bg-transparent border-none mt-[15vh]"
       onClick={logout}
     >
       <div className="grid grid-cols-[auto,1fr,auto] gap-4 justify-between items-center">
-        <LogoButtonIcon width={20} height={20} className="rotate-90" />
-        <div>ВЫЙТИ</div>
+        <LogoButtonIcon width={26} height={26} className="rotate-90" />
+        <p className="text-xl">ВЫЙТИ</p>
       </div>
     </Button>
   );

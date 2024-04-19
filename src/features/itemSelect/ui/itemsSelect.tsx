@@ -51,9 +51,8 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
     <Drawer>
       <DrawerTrigger asChild>
         <Button
-          variant={"outline"}
           disabled={disabled}
-          className="w-full text-white disabled:pointer-events-none bg-darkGray h-14 disabled:bg-lightGray justify-between items-center rounded-full gap-2 select-none"
+          className="w-full text-white disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray justify-between items-center rounded-full gap-2 select-none"
         >
           <div className="flex items-center gap-2 ">
             {itemIcon && (
@@ -64,12 +63,12 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
                 alt={`${label} icon`}
               />
             )}
-            <div>{label ? label : emptyLabel}</div>
+            <div className="uppercase">{label ? label : emptyLabel}</div>
           </div>
           <LogoButtonIcon fill="#F6FF5F" width={28} height={28} />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="h-screen bg-transparent">
+      <DrawerContent className="h-screen bg-transparent border-none">
         <DrawerHeader>
           <Label className="text-mainColor text-start">{inputLabel}</Label>
           <Input
@@ -81,8 +80,8 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           />
         </DrawerHeader>
         <div className="p-4">
-          <ScrollArea className="h-[80vh] w-full">
-            <div data-vaul-no-drag className="flex flex-col gap-2">
+          <ScrollArea className="h-[75vh] w-full">
+            <div data-vaul-no-drag className="grid grid-rows-1 gap-2">
               {filteredItems?.map((item) => (
                 <DrawerClose key={item.id}>
                   <ItemCard item={item} onClick={() => onClick?.(item)} />
