@@ -13,14 +13,14 @@ export const ProfileInfo = () => {
         </div>
       ) : (
         <div>
-          <div>{profileInfo?.title.ru.toUpperCase()}</div>
-          <div>{profileInfo?.partner_link}</div>
+          <div className="text-xl uppercase">{profileInfo?.title?.ru}</div>
+          <div className="text-l font-light">{profileInfo?.partner_link}</div>
         </div>
       )}
       <div className="grid grid-rows-2">
         <div className="text-center">
-          <div>Свяжитесь с поддержкой</div>
-          <div>для изменений</div>
+          <p>Свяжитесь с поддержкой</p>
+          <p>для изменений</p>
         </div>
         <Button
           className="rounded-full  border-bg-darkGray  bg-darkGray text-mainColor text-xl"

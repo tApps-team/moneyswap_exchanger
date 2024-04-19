@@ -51,7 +51,7 @@ export const AuthByUserNameForm = () => {
     <div className="container">
       <Form {...authForm}>
         <form
-          className="grid grid-cols-1 grid-rows-3 gap-6"
+          className="grid grid-cols-1 grid-rows-3 gap-10"
           onSubmit={authForm.handleSubmit(onSubmit)}
         >
           <FormField
@@ -96,7 +96,7 @@ export const AuthByUserNameForm = () => {
             )}
           />
           <Button
-            className="bg-[#F6FF5F] text-black  w-full rounded-full"
+            className=" w-full rounded-full uppercase font-semibold text-xl text-mainColor bg-darkGray"
             type="submit"
           >
             {isLoading ? <Loader className="animate-spin" /> : "ВОЙТИ"}

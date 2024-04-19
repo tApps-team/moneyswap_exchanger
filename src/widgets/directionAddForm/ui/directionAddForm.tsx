@@ -128,7 +128,7 @@ export const DirectionAddForm = () => {
                   items={currectAllCurrencies}
                   label={
                     field.value
-                      ? `${field.value?.code_name.toUpperCase()} (${field.value?.name.toUpperCase()})`
+                      ? `${field.value?.code_name} (${field.value?.name})`
                       : ""
                   }
                   onClick={(e) => {

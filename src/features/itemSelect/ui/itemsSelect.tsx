@@ -63,7 +63,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
                 alt={`${label} icon`}
               />
             )}
-            <div>{label ? label.toUpperCase() : emptyLabel?.toUpperCase()}</div>
+            <div className="uppercase">{label ? label : emptyLabel}</div>
           </div>
           <LogoButtonIcon fill="#F6FF5F" width={28} height={28} />
         </Button>

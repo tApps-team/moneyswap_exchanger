@@ -1,4 +1,6 @@
-export const ComingSoonIcon = (props: React.SVGProps<SVGSVGElement>) => (
+// React.SVGProps<SVGSVGElement>
+
+export const ComingSoonIcon = (props: any) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"

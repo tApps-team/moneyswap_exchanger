@@ -33,7 +33,7 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
             className="-rotate-90"
           />
         )}
-        <div className="">{item.name?.toUpperCase()}</div>
+        <div className="uppercase">{item.name}</div>
       </CardContent>
     </Card>
   );

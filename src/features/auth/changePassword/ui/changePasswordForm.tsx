@@ -109,7 +109,7 @@ export const ChangePasswordForm = () => {
           </div>
           <Button
             type="submit"
-            className="rounded-full bg-[#F6FF5F]  text-black text-lg h-16 "
+            className="rounded-full bg-[#F6FF5F]  text-black text-lg h-16 uppercase text-semibold"
           >
             {isLoading ? <Loader className="animate-spin" /> : "Сохранить"}
           </Button>
