@@ -68,7 +68,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           <LogoButtonIcon fill="#F6FF5F" width={28} height={28} />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="h-screen bg-transparent border-none">
+      <DrawerContent className="h-screen  bg-transparent border-none">
         <DrawerHeader>
           <Label className="text-mainColor text-start">{inputLabel}</Label>
           <Input
