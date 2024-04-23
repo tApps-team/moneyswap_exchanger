@@ -19,7 +19,7 @@ export const ActualCourse = (props: ActualCourseProps) => {
       <CardContent className="p-4 flex items-center gap-4 ">
         {actualCourse ? (
           <>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center truncate gap-1">
               <img
                 src={actualCourse?.icon_valute_from}
                 alt={`icon ${actualCourse?.valute_to}`}
@@ -31,7 +31,7 @@ export const ActualCourse = (props: ActualCourseProps) => {
             </div>
             <div>=</div>
 
-            <div className="flex items-center gap-1 ">
+            <div className="flex items-center truncate gap-1 ">
               <img
                 src={actualCourse?.icon_valute_to}
                 alt={`icon ${actualCourse?.valute_to}`}
