@@ -173,6 +173,7 @@ export const DirectionAddForm = () => {
                 <ItemSelect
                   inputLabel="ПОЛУЧАЮ"
                   items={currectAvailableCurrncies}
+                  itemIcon={field.value?.icon_url}
                   emptyLabel="Выберите что получаете"
                   label={field.value?.name || ""}
                   disabled={!form.getValues("giveCurrency")}
