@@ -1,3 +1,5 @@
+import { CurrencyType } from "@/shared/types";
+
 export type Direction = {
   id: number;
   valute_from: string;
@@ -13,6 +15,7 @@ export type Currency = {
   name: string;
   code_name: string;
   icon_url: string;
+  type_valute: CurrencyType;
 };
 export type CurrencyCategory = {
   [key: string]: Currency[];
