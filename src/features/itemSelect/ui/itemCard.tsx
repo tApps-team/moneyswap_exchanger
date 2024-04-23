@@ -15,25 +15,32 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
   return (
     <Card
       onClick={onClick}
-      className="text-wrap p-4 cursor-pointer max-h-[70px] rounded-full border border-white bg-darkGray"
+      className="cursor-pointer h-[70px] truncate rounded-full border-2 border-lightGray bg-darkGray"
     >
-      <CardContent className="p-0 flex gap-2 items-center  text-white">
+      <CardContent className="grid grid-flow-col p-3.5 justify-start gap-5 items-center    text-white">
         {item.country_flag || item.icon_url ? (
           <img
-            width={42}
-            height={42}
+            width={40}
+            height={40}
             src={item.country_flag || item.icon_url}
             alt={`country flag ${item.name}`}
           />
         ) : (
           <LogoButtonIcon
             fill="white"
-            width={42}
-            height={42}
+            width={40}
+            height={40}
             className="-rotate-90"
           />
         )}
-        <div className="uppercase">{item.name}</div>
+
+        {item.code_name ? (
+          <div>
+            <div className="uppercase">{item.name}</div>
+          </div>
+        ) : (
+          <div className="uppercase">{item.name}</div>
+        )}
       </CardContent>
     </Card>
   );

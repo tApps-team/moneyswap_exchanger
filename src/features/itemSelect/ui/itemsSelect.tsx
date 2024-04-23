@@ -1,5 +1,6 @@
 import { Currency } from "@/entities/direction";
 import { City, Country } from "@/entities/location";
+import { LogoButtonIcon } from "@/shared/assets";
 import {
   Button,
   Drawer,
@@ -10,12 +11,10 @@ import {
   Input,
   Label,
   ScrollArea,
-  ScrollBar,
 } from "@/shared/ui";
 import { Search } from "lucide-react";
 import { useDeferredValue, useState } from "react";
 import { ItemCard } from "./itemCard";
-import { LogoButtonIcon } from "@/shared/assets";
 
 type ItemSelectProps<T> = {
   items?: T[];
@@ -53,7 +52,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
       <DrawerTrigger asChild>
         <Button
           disabled={disabled}
-          className="w-full truncate text-white disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray justify-between items-center rounded-full gap-2 select-none"
+          className="w-full truncate text-white disabled:pointer-events-none bg-darkGray   disabled:bg-lightGray disabled:opacity-80  justify-between items-center rounded-full gap-2 select-none"
         >
           <div className="flex items-center gap-2 ">
             {itemIcon && (
@@ -87,7 +86,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
         </DrawerHeader>
 
         <ScrollArea data-vaul-no-drag className="h-screen p-4 w-full">
-          <div className="grid grid-rows-1 gap-2">
+          <div className="grid grid-rows-1 items gap-2">
             {filteredItems?.map((item) => (
               <DrawerClose key={item.id} asChild>
                 <ItemCard item={item} onClick={() => onClick?.(item)} />
