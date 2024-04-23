@@ -191,7 +191,7 @@ export const LocationAddForm = () => {
                 <FormControl>
                   <Input
                     type="time"
-                    className="h-[38px] p-2  bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    className="h-[38px] p-2 border-none bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     {...field}
                     endAdornment={
                       <LogoButtonIcon
@@ -217,7 +217,7 @@ export const LocationAddForm = () => {
                 <FormControl>
                   <Input
                     type="time"
-                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    className="h-[38px] p-2 border-none bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     {...field}
                     endAdornment={
                       <LogoButtonIcon

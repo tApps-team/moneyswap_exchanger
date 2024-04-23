@@ -172,7 +172,7 @@ export const LocationEditForm = () => {
                 <FormControl>
                   <Input
                     type="time"
-                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    className="h-[38px] p-2 border-none bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     {...field}
                     endAdornment={
                       <LogoButtonIcon
@@ -198,7 +198,7 @@ export const LocationEditForm = () => {
                 <FormControl>
                   <Input
                     type="time"
-                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                    className="h-[38px] p-2 border-none bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     {...field}
                     endAdornment={
                       <LogoButtonIcon
@@ -289,17 +289,6 @@ export const LocationEditForm = () => {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-          {/* <Button
-            variant={"outline"}
-            className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
-            onClick={() => activeEditCity && onHandleDelete(activeEditCity?.id)}
-          >
-            {isLoadingDeletePartnerCity ? (
-              <Loader className="animate-spin" />
-            ) : (
-              "УДАЛИТЬ"
-            )}
-          </Button> */}
         </div>
       </form>
     </Form>
