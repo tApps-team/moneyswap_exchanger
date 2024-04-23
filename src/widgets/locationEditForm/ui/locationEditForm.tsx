@@ -95,7 +95,7 @@ export const LocationEditForm = () => {
   return (
     <Form {...form}>
       <form
-        className="grid grid-rows-4 grid-cols-1 gap-10"
+        className="grid grid-flow-row grid-cols-1 gap-8"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -162,59 +162,63 @@ export const LocationEditForm = () => {
           )}
         />
 
-        <div className="text-white text-xl">ВРЕМЯ РАБОТЫ</div>
-        <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
-          <FormField
-            control={form.control}
-            name={"timeStart"}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="time"
-                    className="h-[38px] p-2 border-none bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                    {...field}
-                    endAdornment={
-                      <LogoButtonIcon
-                        width={26}
-                        height={26}
-                        className="absolute -translate-y-8 right-2"
-                      />
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex justify-center items-center">
-            <Minus color="white" />
+        <div className="flex flex-col gap-4">
+          <div>
+            <div className="text-white text-xl">ВРЕМЯ РАБОТЫ</div>
+            <div className="text-white ">по местному времени</div>
           </div>
-          <FormField
-            control={form.control}
-            name={"timeEnd"}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="time"
-                    className="h-[38px] p-2 border-none bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                    {...field}
-                    endAdornment={
-                      <LogoButtonIcon
-                        width={26}
-                        height={26}
-                        className="absolute -translate-y-8 right-2"
-                      />
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
+            <FormField
+              control={form.control}
+              name={"timeStart"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="time"
+                      className="h-[38px] p-2 border-none bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      {...field}
+                      endAdornment={
+                        <LogoButtonIcon
+                          width={26}
+                          height={26}
+                          className="absolute -translate-y-8 right-2"
+                        />
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex justify-center items-center">
+              <Minus color="white" />
+            </div>
+            <FormField
+              control={form.control}
+              name={"timeEnd"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="time"
+                      className="h-[38px] p-2 border-none bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      {...field}
+                      endAdornment={
+                        <LogoButtonIcon
+                          width={26}
+                          height={26}
+                          className="absolute -translate-y-8 right-2"
+                        />
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
-
         <div className="grid grid-rows-2 gap-6 text-white ">
           <div className="text-xl row-span-2 text-white">ДНИ РАБОТЫ</div>
           <div className="grid grid-cols-7   ">

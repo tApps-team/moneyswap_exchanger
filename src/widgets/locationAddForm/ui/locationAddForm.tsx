@@ -183,7 +183,7 @@ export const LocationAddForm = () => {
         <div className="flex flex-col gap-4">
           <div>
             <div className="text-white text-xl">ВРЕМЯ РАБОТЫ</div>
-            <div>по местному времени</div>
+            <div className="text-white ">по местному времени</div>
           </div>
           <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
             <FormField
