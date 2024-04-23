@@ -9,14 +9,13 @@ export const ProfileSettingsPage = () => {
   return (
     <div>
       <div className={styles.container}></div>
-      <div className="flex flex-col gap-4">
+      <div className="grid grid-rows-2 gap-4">
         <Button
           className="border-none justify-start gap-4 bg-transparent cursor-pointer"
           asChild
         >
           <Link
             to={`${paths.profile}${paths.profileSettings}${paths.profileInfo}`}
-            className="flex"
           >
             <ProfileIcon width={24} height={24} />
             <div className="flex flex-col">
