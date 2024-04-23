@@ -1,4 +1,4 @@
-export const LogoBig = (props: any) => (
+export const LogoBig = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     id="_\u0421\u043B\u043E\u0439_1"
