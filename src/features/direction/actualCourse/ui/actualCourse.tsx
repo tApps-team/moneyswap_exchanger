@@ -16,7 +16,7 @@ export const ActualCourse = (props: ActualCourseProps) => {
 
   return (
     <Card className="p-0 bg-mainColor h-[70px] text-darkGray overflow-hidden rounded-full">
-      <CardContent className="p-4 flex items-center gap-4 ">
+      <CardContent className="p-4 grid grid-flow-col items-center gap-4 ">
         {actualCourse ? (
           <>
             <div className="flex items-center truncate gap-1">
