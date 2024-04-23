@@ -10,6 +10,10 @@ import { LogoButtonIcon } from "@/shared/assets";
 import { paths } from "@/shared/routing";
 
 import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogTrigger,
   Button,
   Form,
   FormControl,
@@ -17,8 +21,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
   Switch,
+  TimePicker,
 } from "@/shared/ui";
 import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -189,18 +193,20 @@ export const LocationAddForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    type="time"
-                    className="h-[38px] p-2  bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                    {...field}
-                    endAdornment={
+                  <AlertDialog>
+                    <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                      {field.value}
                       <LogoButtonIcon
                         width={26}
                         height={26}
-                        className="absolute -translate-y-8 right-2"
+                        className="absolute -translate-y-[50%] top-[50%] right-3"
                       />
-                    }
-                  />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="grid gap-0">
+                      <TimePicker setTime={field.onChange} time={field.value} />
+                      <AlertDialogCancel>Подтвердить</AlertDialogCancel>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -215,18 +221,20 @@ export const LocationAddForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    type="time"
-                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                    {...field}
-                    endAdornment={
+                  <AlertDialog>
+                    <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                      {field.value}
                       <LogoButtonIcon
                         width={26}
                         height={26}
-                        className="absolute -translate-y-8 right-2"
+                        className="absolute -translate-y-[50%] top-[50%] right-3"
                       />
-                    }
-                  />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="grid gap-0">
+                      <TimePicker setTime={field.onChange} time={field.value} />
+                      <AlertDialogCancel>Подтвердить</AlertDialogCancel>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </FormControl>
                 <FormMessage />
               </FormItem>

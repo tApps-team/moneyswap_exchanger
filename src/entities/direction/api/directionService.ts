@@ -54,7 +54,7 @@ export const directionAPI = authApi.injectEndpoints({
     }),
     deleteDirection: build.mutation<void, { direction_id: number }>({
       query: (params) => ({
-        url: "/partner/delete_partner_directions",
+        url: "/partner/delete_partner_direction",
         method: "DELETE",
         params: params,
       }),

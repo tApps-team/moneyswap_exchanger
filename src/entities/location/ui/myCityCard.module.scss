@@ -21,7 +21,8 @@
     .name {
         font-size: 16px;
         white-space: nowrap;
-        width: 100px;
+        width: 20vw;
+        max-width: 100px;
         overflow: hidden;
         text-overflow: ellipsis; 
         text-transform: uppercase;

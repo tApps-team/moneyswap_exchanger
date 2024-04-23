@@ -64,6 +64,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
         toast({
           title: "Направления успешно удалено",
           description: "",
+          variant: "success",
         });
       })
       .catch((error) => console.error("Ошибка...,", error));
@@ -122,6 +123,9 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                     <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      className={
+                        isActive ? "border-mainColor" : "border-lightGray"
+                      }
                     />
                   </FormControl>
                   <FormMessage />

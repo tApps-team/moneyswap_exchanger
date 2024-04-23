@@ -38,3 +38,4 @@ export {
 } from "./alert-dialog";
 export { Empty } from "./empty";
 export { Skeleton } from "./skeleton";
+export { TimePicker } from "./timepicker";

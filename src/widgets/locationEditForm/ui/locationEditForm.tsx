@@ -25,8 +25,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
   Switch,
+  TimePicker,
 } from "@/shared/ui";
 import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -170,18 +170,20 @@ export const LocationEditForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    type="time"
-                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                    {...field}
-                    endAdornment={
+                  <AlertDialog>
+                    <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                      {field.value}
                       <LogoButtonIcon
                         width={26}
                         height={26}
-                        className="absolute -translate-y-8 right-2"
+                        className="absolute -translate-y-[50%] top-[50%] right-3"
                       />
-                    }
-                  />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="grid gap-0">
+                      <TimePicker setTime={field.onChange} time={field.value} />
+                      <AlertDialogCancel>Подтвердить</AlertDialogCancel>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -196,18 +198,20 @@ export const LocationEditForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    type="time"
-                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                    {...field}
-                    endAdornment={
+                  <AlertDialog>
+                    <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                      {field.value}
                       <LogoButtonIcon
                         width={26}
                         height={26}
-                        className="absolute -translate-y-8 right-2"
+                        className="absolute -translate-y-[50%] top-[50%] right-3"
                       />
-                    }
-                  />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="grid gap-0">
+                      <TimePicker setTime={field.onChange} time={field.value} />
+                      <AlertDialogCancel>Подтвердить</AlertDialogCancel>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -289,17 +293,6 @@ export const LocationEditForm = () => {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-          {/* <Button
-            variant={"outline"}
-            className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
-            onClick={() => activeEditCity && onHandleDelete(activeEditCity?.id)}
-          >
-            {isLoadingDeletePartnerCity ? (
-              <Loader className="animate-spin" />
-            ) : (
-              "УДАЛИТЬ"
-            )}
-          </Button> */}
         </div>
       </form>
     </Form>

@@ -1,6 +1,11 @@
 import { ActiveCity, MyCityCard } from "@/entities/location";
-import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui";
-import { FC } from "react";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from "@/shared/ui";
+import { FC, useEffect, useRef, useState } from "react";
 import { CitySkeleton } from "./citySkeleton";
 
 interface CityCarouselProps {
@@ -18,11 +23,23 @@ export const CityCarousel: FC<CityCarouselProps> = ({
   directionsLoading,
   citiesLoading,
 }) => {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [api, setApi] = useState<CarouselApi | null>(null);
+
+  useEffect(() => {
+    if (!api || !activeCity) return;
+    if (cities.length > 0) {
+      const index = cities.findIndex((city) => city.id === activeCity.id);
+      api.scrollTo(index);
+    }
+  }, [api, activeCity, cities]);
   return (
     <Carousel
+      ref={carouselRef}
       opts={{
         align: "start",
       }}
+      setApi={setApi}
     >
       <CarouselContent>
         {directionsLoading || citiesLoading ? (
