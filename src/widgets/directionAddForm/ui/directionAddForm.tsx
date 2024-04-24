@@ -217,7 +217,7 @@ export const DirectionAddForm = () => {
                           />
                         )
                       }
-                      className=" bg-darkGray text-white  rounded-full pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className=" bg-darkGray text-white  rounded-[35px] pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -258,7 +258,7 @@ export const DirectionAddForm = () => {
                         )
                       }
                       disabled={inputDisabled || inputOutCountValue}
-                      className="border border-white bg-darkGray text-white  rounded-full pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="border border-white bg-darkGray text-white  rounded-[35px] pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -269,7 +269,7 @@ export const DirectionAddForm = () => {
         </div>
 
         <Button
-          className="rounded-full border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
+          className="rounded-[35px] border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
           type="submit"
         >
           {isLoadingAddDirection ? (

@@ -27,7 +27,7 @@ export const CurrencySelect = (props: CurrencySelectProps) => {
       <DrawerTrigger asChild>
         <Button
           disabled={disabled}
-          className="w-full bg-darkGray border border-white text-white hover:bg-mainColor justify-between items-center rounded-full gap-2 select-none"
+          className="w-full bg-darkGray border border-white text-white hover:bg-mainColor justify-between items-center rounded-[35px] gap-2 select-none"
           variant={"outline"}
         >
           <div className="flex gap-2 items-center">

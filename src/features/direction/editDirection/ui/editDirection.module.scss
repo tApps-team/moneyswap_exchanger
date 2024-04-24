@@ -1,16 +1,16 @@
 .submit_btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    font-weight: 500;
-    text-transform: uppercase;
-    text-align: center;
-    background: var(--dark-grey);
-    color: var(--main-color);
-    border: 2px solid var(--light-grey);
-    padding: 25px;
-    border-radius: 50px;
-    height: 70px;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+  background: var(--dark-grey);
+  color: var(--main-color);
+  border: var(--border-width-main) solid var(--light-grey);
+  padding: 25px;
+  border-radius: var(--border-radius-xl);
+  height: var(--height-main);
+  width: 100%;
 }

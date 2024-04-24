@@ -268,7 +268,7 @@ export const LocationAddForm = () => {
         </div>
 
         <Button
-          className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
+          className="w-full border-2 text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
           type="submit"
           variant={"outline"}
         >
