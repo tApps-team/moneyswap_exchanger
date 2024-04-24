@@ -10,3 +10,4 @@ export { BackIcon } from "./back";
 export { ComingSoonIcon } from "./comingSoon";
 export { EmptyIcon } from "./empty";
 export { LogoButtonIcon } from "./logoButtonIcon";
+export { LockIcon } from "./lockIcon";
