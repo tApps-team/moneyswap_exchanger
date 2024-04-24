@@ -52,7 +52,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
       <DrawerTrigger asChild>
         <Button
           disabled={disabled}
-          className="w-full truncate text-white disabled:pointer-events-none bg-darkGray   disabled:bg-lightGray disabled:opacity-80  justify-between items-center rounded-full gap-2 select-none"
+          className="w-full truncate  text-white disabled:pointer-events-none bg-darkGray disabled:bg-lightGray disabled:opacity-80  justify-between items-center rounded-full gap-2 select-none"
         >
           <div className="flex items-center gap-2 ">
             {itemIcon && (
@@ -68,8 +68,8 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           <LogoButtonIcon fill="#F6FF5F" width={28} height={28} />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="h-screen  bg-transparent border-none">
-        <DrawerHeader>
+      <DrawerContent className="h-screen bg-transparent border-none">
+        <DrawerHeader className="gap-0">
           <div className="flex items-center justify-between">
             <Label className="text-mainColor text-start">{inputLabel}</Label>
             <DrawerClose>

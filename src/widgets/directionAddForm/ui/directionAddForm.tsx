@@ -132,7 +132,7 @@ export const DirectionAddForm = () => {
   return (
     <Form {...form}>
       <form
-        className="grid grid-rows-5 grid-cols-1 gap-10"
+        className="grid grid-flow-row grid-cols-1 gap-12"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField

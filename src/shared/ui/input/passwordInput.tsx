@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib";
-import { Eye, EyeOff, Lock } from "lucide-react";
+
 import * as React from "react";
 import {
   Tooltip,
@@ -7,6 +7,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../tooltip";
+import { LockIcon } from "@/shared/assets";
+import { Eye, EyeOff } from "lucide-react";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -26,14 +28,16 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
 
     return (
       <div className="relative">
-        <Lock
+        <LockIcon
+          width={20}
+          height={20}
           color="#F6FF5F"
-          className="absolute left-3 top-1/2 -translate-y-1/2 "
+          className="absolute left-6 top-1/2 -translate-y-1/2 "
         />
         <input
           type={inputType}
           className={cn(
-            "flex placeholder:text-white text-white   h-10 w-full rounded-md border border-input bg-transparent px-12 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex placeholder:text-white text-white   h-[70px] w-full rounded-md border border-input bg-transparent px-12 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none  disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
           ref={ref}
@@ -42,14 +46,19 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
         {!endIcon && eyeIcon && type === "password" && (
           <button
             type="button"
-            className="absolute  right-4 top-1/2 -translate-y-1/2"
+            className="absolute  right-6 top-1/2 -translate-y-1/2"
             onClick={togglePasswordVisibility}
           >
             {showPassword ? (
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Eye color="#F6FF5F" className="h-4 w-4 cursor-pointer" />
+                    <Eye
+                      width={20}
+                      height={20}
+                      color="#F6FF5F"
+                      className="h-4 w-4 cursor-pointer"
+                    />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Спрятать пароль</p>
@@ -61,7 +70,12 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <EyeOff color="#F6FF5F" className="h-4 w-4 text-gray-500" />
+                    <EyeOff
+                      width={20}
+                      height={20}
+                      color="#F6FF5F"
+                      className="h-4 w-4 text-gray-500"
+                    />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Показать пароль</p>

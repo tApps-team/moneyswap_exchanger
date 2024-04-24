@@ -23,8 +23,8 @@ export const ActualCourse = (props: ActualCourseProps) => {
               <img
                 src={actualCourse?.icon_valute_from}
                 alt={`icon ${actualCourse?.valute_to}`}
-                width={32}
-                height={32}
+                width={34}
+                height={34}
               />
               <div>{actualCourse?.in_count}</div>
               <div>{actualCourse?.valute_from}</div>
@@ -35,16 +35,16 @@ export const ActualCourse = (props: ActualCourseProps) => {
               <img
                 src={actualCourse?.icon_valute_to}
                 alt={`icon ${actualCourse?.valute_to}`}
-                width={32}
-                height={32}
+                width={34}
+                height={34}
               />
               <div>{actualCourse?.out_count}</div>
               <div>{actualCourse?.valute_to}</div>
             </div>
           </>
         ) : (
-          <div className="flex items-center justify-between w-full">
-            <div>Актуальный курс</div>
+          <div className="flex items-center  justify-between w-full">
+            <div className="">Актуальный курс</div>
             <LogoButtonIcon width={28} height={28} fill="#2D2D2D" />
           </div>
         )}
