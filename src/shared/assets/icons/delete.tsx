@@ -1,4 +1,4 @@
-export const DeleteIcon = (props: any) => (
+export const DeleteIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="icon"

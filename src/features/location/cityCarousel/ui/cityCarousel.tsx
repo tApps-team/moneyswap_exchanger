@@ -24,15 +24,20 @@ export const CityCarousel: FC<CityCarouselProps> = ({
   citiesLoading,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [api, setApi] = useState<CarouselApi | null>(null);
+  const [api, setApi] = useState<CarouselApi>();
 
-  useEffect(() => {
-    if (!api || !activeCity) return;
-    if (cities.length > 0) {
+  const scrollToActiveCity = async () => {
+    if (cities.length > 0 && api && activeCity) {
       const index = cities.findIndex((city) => city.id === activeCity.id);
+      await new Promise((resolve) => setTimeout(resolve, 0));
       api.scrollTo(index);
     }
+  };
+
+  useEffect(() => {
+    scrollToActiveCity();
   }, [api, activeCity, cities]);
+
   return (
     <Carousel
       ref={carouselRef}

@@ -108,7 +108,7 @@ export const DirectionAddForm = () => {
       city: activeCity,
       in_count: data.giveCurrencyPrice,
       out_count: data.getCurrencyPrice,
-      is_active: false,
+      is_active: true,
       valute_from: data.giveCurrency?.code_name || "",
       valute_to: data.getCurrency?.code_name || "",
     })
@@ -132,7 +132,7 @@ export const DirectionAddForm = () => {
   return (
     <Form {...form}>
       <form
-        className="grid grid-rows-5 grid-cols-1 gap-10"
+        className="grid grid-rows-[1fr,1fr,70px,1fr,1fr] grid-cols-1 gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -173,6 +173,7 @@ export const DirectionAddForm = () => {
                 <ItemSelect
                   inputLabel="ПОЛУЧАЮ"
                   items={currectAvailableCurrncies}
+                  itemIcon={field.value?.icon_url}
                   emptyLabel="Выберите что получаете"
                   label={field.value?.name || ""}
                   disabled={!form.getValues("giveCurrency")}
@@ -216,7 +217,7 @@ export const DirectionAddForm = () => {
                           />
                         )
                       }
-                      className=" bg-darkGray text-white  rounded-full pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className=" bg-darkGray text-white  rounded-full pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -257,7 +258,7 @@ export const DirectionAddForm = () => {
                         )
                       }
                       disabled={inputDisabled || inputOutCountValue}
-                      className="border border-white bg-darkGray text-white  rounded-full pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="border border-white bg-darkGray text-white  rounded-full pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -268,7 +269,7 @@ export const DirectionAddForm = () => {
         </div>
 
         <Button
-          className="rounded-full border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
+          className="rounded-full border border-bg-darkGray h-[70px] bg-darkGray text-mainColor text-xl"
           type="submit"
         >
           {isLoadingAddDirection ? (

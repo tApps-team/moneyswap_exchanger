@@ -41,13 +41,13 @@ export const LocationAddForm = () => {
       timeEnd: "00:00",
       timeStart: "00:00",
       workDays: {
-        ПН: false,
-        ВТ: false,
-        СР: false,
-        ЧТ: false,
-        ПТ: false,
-        СБ: false,
-        ВС: false,
+        ПН: true,
+        ВТ: true,
+        СР: true,
+        ЧТ: true,
+        ПТ: true,
+        СБ: true,
+        ВС: true,
       },
     },
   });
@@ -187,7 +187,7 @@ export const LocationAddForm = () => {
         <div className="flex flex-col gap-4">
           <div>
             <div className="text-white text-xl">ВРЕМЯ РАБОТЫ</div>
-            <div>по местному времени</div>
+            <div className="text-white font-light">По местному времени</div>
           </div>
           <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
             <FormField

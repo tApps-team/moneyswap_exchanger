@@ -1,4 +1,3 @@
-import { LogoButtonIcon } from "@/shared/assets";
 import { Card, CardContent } from "@/shared/ui";
 //refactoring
 type ActualCourseProps = {
@@ -15,37 +14,48 @@ export const ActualCourse = (props: ActualCourseProps) => {
   const { actualCourse } = props;
 
   return (
-    <Card className="p-0 bg-mainColor h-[70px] text-darkGray overflow-hidden rounded-full">
-      <CardContent className="p-4 flex items-center gap-4 ">
+    <Card className="p-0 bg-mainColor h-[70px] text-darkGray overflow-hidden rounded-full border-none">
+      <CardContent className="p-4 h-full grid grid-cols-[1fr,10px,1fr] items-center gap-4 ">
         {actualCourse ? (
           <>
-            <div className="flex items-center truncate gap-1">
+            <div className="flex items-center truncate gap-2">
               <img
                 src={actualCourse?.icon_valute_from}
                 alt={`icon ${actualCourse?.valute_to}`}
                 width={32}
                 height={32}
               />
-              <div>{actualCourse?.in_count}</div>
-              <div>{actualCourse?.valute_from}</div>
+              <div className="flex flex-wrap items-center leading-0 truncate">
+                <div className="mr-1 font-semibold text-[14px] truncate">
+                  {actualCourse?.in_count}
+                </div>
+                <div className="font-normal text-[14px] truncate">
+                  {actualCourse?.valute_from}
+                </div>
+              </div>
             </div>
             <div>=</div>
 
-            <div className="flex items-center truncate gap-1 ">
+            <div className="flex items-center truncate gap-2">
               <img
                 src={actualCourse?.icon_valute_to}
                 alt={`icon ${actualCourse?.valute_to}`}
                 width={32}
                 height={32}
               />
-              <div>{actualCourse?.out_count}</div>
-              <div>{actualCourse?.valute_to}</div>
+              <div className="flex flex-wrap items-center leading-0 truncate">
+                <div className="mr-1 font-semibold text-[14px] truncate">
+                  {actualCourse?.out_count}
+                </div>
+                <div className="font-normal text-[14px] truncate">
+                  {actualCourse?.valute_to}
+                </div>
+              </div>
             </div>
           </>
         ) : (
-          <div className="flex items-center justify-between w-full">
-            <div>Актуальный курс</div>
-            <LogoButtonIcon width={28} height={28} fill="#2D2D2D" />
+          <div className="w-full text-center uppercase text-[14px]">
+            Актуальный курс
           </div>
         )}
       </CardContent>
