@@ -16,6 +16,7 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    // border - radius
     extend: {
       colors: {
         mainColor: "#F6FF5F",

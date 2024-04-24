@@ -11,7 +11,7 @@ export const ProfilePage = () => {
     <div>
       <div className={styles.container}></div>
       <div className="grid justify-between">
-        <div className="grid grid-row-2 gap-6">
+        <div className="grid grid-row-2 gap-0">
           <Button className="items-center justify-start border-none" asChild>
             <Link
               className="flex gap-4 bg-transparent"

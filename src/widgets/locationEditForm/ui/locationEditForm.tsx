@@ -91,7 +91,6 @@ export const LocationEditForm = () => {
         navigate(paths.home);
       });
   };
-  console.log(activeEditCity?.info.time_from);
   return (
     <Form {...form}>
       <form
@@ -181,7 +180,7 @@ export const LocationEditForm = () => {
                     </AlertDialogTrigger>
                     <AlertDialogContent className="grid gap-0">
                       <TimePicker setTime={field.onChange} time={field.value} />
-                      <AlertDialogCancel>Подтвердить</AlertDialogCancel>
+                      <AlertDialogAction>Сохранить</AlertDialogAction>
                     </AlertDialogContent>
                   </AlertDialog>
                 </FormControl>
@@ -209,7 +208,7 @@ export const LocationEditForm = () => {
                     </AlertDialogTrigger>
                     <AlertDialogContent className="grid gap-0">
                       <TimePicker setTime={field.onChange} time={field.value} />
-                      <AlertDialogCancel>Подтвердить</AlertDialogCancel>
+                      <AlertDialogAction>Сохранить</AlertDialogAction>
                     </AlertDialogContent>
                   </AlertDialog>
                 </FormControl>

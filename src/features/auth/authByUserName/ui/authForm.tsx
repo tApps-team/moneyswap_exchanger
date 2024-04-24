@@ -65,10 +65,10 @@ export const AuthByUserNameForm = () => {
                     startAdornment={
                       <Mail
                         color="#F6FF5F"
-                        className="absolute left-3 translate-y-2 "
+                        className="absolute left-3 translate-y-6 "
                       />
                     }
-                    className="text-white placeholder:text-white rounded-full pl-12 bg-darkGray"
+                    className="text-white h-[70px] border-2 font-normal uppercase placeholder:text-white rounded-full pl-12 bg-darkGray"
                     placeholder="E-MAIL"
                     {...field}
                   />
@@ -85,7 +85,7 @@ export const AuthByUserNameForm = () => {
                 <FormControl>
                   <PasswordInput
                     type="password"
-                    className="text-white placeholder:text-white rounded-full pl-12 bg-darkGray"
+                    className="text-white h-[70px] border-2 font-normal uppercase placeholder:text-white rounded-full pl-12 bg-darkGray"
                     placeholder="••••••••••••"
                     {...field}
                     eyeIcon

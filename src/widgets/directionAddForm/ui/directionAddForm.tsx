@@ -9,6 +9,7 @@ import { ActualCourse } from "@/features/direction/actualCourse";
 import { ItemSelect } from "@/features/itemSelect";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
+import { CurrencyType } from "@/shared/types";
 import {
   Button,
   Form,
@@ -37,15 +38,18 @@ export const DirectionAddForm = () => {
     },
   });
   const navigate = useNavigate();
+
   const activeCity = useAppSelector(
     (state) => state.activeCity.activeCity?.code_name || ""
   );
+
   form.watch(["giveCurrency", "getCurrency"]);
 
   const { toast } = useToast();
 
   const [addDirection, { isLoading: isLoadingAddDirection }] =
     useAddDirectionMutation();
+
   const { data: currencies } = useAvailableValutesQuery({ base: "all" });
 
   const { data: availableCurrncies } = useAvailableValutesQuery(
@@ -70,14 +74,31 @@ export const DirectionAddForm = () => {
     }
   );
 
-  const inputInCountValue = actualCourse?.in_count === 1;
-  const inputOutCountValue = actualCourse?.out_count === 1;
+  const inputInCountValue =
+    form.getValues("giveCurrency")?.type_valute === CurrencyType.Cryptocurrency;
+
+  const inputOutCountValue =
+    form.getValues("getCurrency")?.type_valute === CurrencyType.Cryptocurrency;
+
+  // const inputInCountValue = actualCourse?.in_count === 1;
+  // const inputOutCountValue = actualCourse?.out_count === 1;
 
   //refactoring
   useEffect(() => {
     inputInCountValue && form.setValue("giveCurrencyPrice", 1);
     inputOutCountValue && form.setValue("getCurrencyPrice", 1);
-  }, [form, inputInCountValue, inputOutCountValue]);
+
+    inputInCountValue &&
+      form.setValue("getCurrencyPrice", actualCourse?.out_count || 0);
+    inputOutCountValue &&
+      form.setValue("giveCurrencyPrice", actualCourse?.in_count || 0);
+  }, [
+    actualCourse?.in_count,
+    actualCourse?.out_count,
+    form,
+    inputInCountValue,
+    inputOutCountValue,
+  ]);
 
   const inputDisabled =
     !form.getValues("getCurrency") || !form.getValues("giveCurrency");
@@ -134,6 +155,7 @@ export const DirectionAddForm = () => {
                   onClick={(e) => {
                     field.onChange(e);
                     form.resetField("getCurrency");
+                    form.resetField("getCurrencyPrice");
                   }}
                 />
               </FormControl>
@@ -194,7 +216,7 @@ export const DirectionAddForm = () => {
                           />
                         )
                       }
-                      className="border border-white bg-darkGray text-white  rounded-full pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className=" bg-darkGray text-white  rounded-full pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
