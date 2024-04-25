@@ -1,3 +1,6 @@
+import { useLoginMutation, userSlice } from "@/entities/user";
+import { useAppDispatch } from "@/shared/model";
+import { paths } from "@/shared/routing";
 import {
   Button,
   Form,
@@ -8,15 +11,13 @@ import {
   Input,
 } from "@/shared/ui";
 import { PasswordInput } from "@/shared/ui/input";
+import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { AuthFormSchema, authFormSchema } from "../model/authFormSchema";
-import { useAppDispatch } from "@/shared/model";
 import { useNavigate } from "react-router-dom";
-import { paths } from "@/shared/routing";
-import { useLoginMutation, userSlice } from "@/entities/user";
-import { CustomLoader } from "@/shared/ui";
+import { AuthFormSchema, authFormSchema } from "../model/authFormSchema";
+import { EmailIcon } from "@/shared/assets";
 
 export const AuthByUserNameForm = () => {
   const authForm = useForm<AuthFormSchema>({
@@ -30,6 +31,7 @@ export const AuthByUserNameForm = () => {
   const [Login, { isLoading, error }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const onSubmit = async (data: AuthFormSchema) => {
     Login(data)
@@ -40,13 +42,17 @@ export const AuthByUserNameForm = () => {
       })
       .catch((error) => {
         console.error("Ошибка получения токена:", error);
+        toast({
+          title: "Ошбика",
+          variant: "destructive",
+        });
       });
   };
   return (
     <div className="container">
       <Form {...authForm}>
         <form
-          className="grid grid-cols-1 grid-rows-3 gap-6"
+          className="grid grid-cols-1 grid-rows-3 gap-10"
           onSubmit={authForm.handleSubmit(onSubmit)}
         >
           <FormField
@@ -55,14 +61,20 @@ export const AuthByUserNameForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="relative">
-                    <User className="absolute left-3 translate-y-2 " />
-                    <Input
-                      className="rounded-full pl-12"
-                      placeholder="Имя Фамилия"
-                      {...field}
-                    />
-                  </div>
+                  <Input
+                    type="text"
+                    startAdornment={
+                      <EmailIcon
+                        width={22}
+                        height={22}
+                        color="#F6FF5F"
+                        className="absolute left-5 translate-y-6 "
+                      />
+                    }
+                    className="text-white h-mainHeight border-2 font-normal uppercase placeholder:text-white rounded-[35px] pl-14 bg-darkGray"
+                    placeholder="E-MAIL"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -76,9 +88,10 @@ export const AuthByUserNameForm = () => {
                 <FormControl>
                   <PasswordInput
                     type="password"
-                    className="rounded-full pl-12"
+                    className="text-white h-mainHeight border-2 font-normal uppercase placeholder:text-white rounded-[35px] pl-12 bg-darkGray"
                     placeholder="••••••••••••"
                     {...field}
+                    eyeIcon
                   />
                 </FormControl>
                 <FormMessage />
@@ -86,10 +99,10 @@ export const AuthByUserNameForm = () => {
             )}
           />
           <Button
-            className="bg-[#F6FF5F] text-black  w-full rounded-full"
+            className=" w-full rounded-[35px] uppercase font-semibold text-xl text-mainColor bg-darkGray"
             type="submit"
           >
-            {isLoading ? <CustomLoader /> : "Войти"}
+            {isLoading ? <Loader className="animate-spin" /> : "ВОЙТИ"}
           </Button>
         </form>
       </Form>

@@ -1,15 +1,18 @@
-import * as React from "react";
-export const ProfileIcon = (props: any) => (
+export const ProfileIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
+    id="_\u0421\u043B\u043E\u0439_1"
+    data-name="\u0421\u043B\u043E\u0439 1"
+    viewBox="0 0 54.02 61.19"
     width={props.width}
     height={props.height}
     fill="none"
-    viewBox="0 0 24 24"
     {...props}
   >
-    <g fill={props?.fill} fillRule="evenodd" clipRule="evenodd">
-      <path d="M6.75 6.5a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0ZM4.25 18.571a5.321 5.321 0 0 1 5.321-5.321h4.858a5.321 5.321 0 0 1 5.321 5.321 4.179 4.179 0 0 1-4.179 4.179H8.43a4.179 4.179 0 0 1-4.179-4.179Z" />
-    </g>
+    <path
+      fill={props?.fill}
+      d="M27.01 28.94c7.99 0 14.47-6.48 14.47-14.47S35 0 27.01 0 12.54 6.48 12.54 14.47s6.48 14.47 14.47 14.47ZM27.01 34.19C12.19 34.19 0 46.38 0 61.19h54.02c0-14.82-12.19-27.01-27.01-27.01Z"
+      className="cls-1"
+    />
   </svg>
 );

@@ -1,33 +1,51 @@
 import { Logout } from "@/features/auth";
 import { paths } from "@/shared/routing";
 import { Button } from "@/shared/ui";
-import { ChevronRight, CircleHelp, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
+import styles from "./profilePage.module.scss";
+import { LogoButtonIcon, QuestionIcon, SettingsIcon } from "@/shared/assets";
 
 export const ProfilePage = () => {
   return (
-    <div className="grid gap-4">
-      <Button className="items-center justify-start " asChild>
-        <Link
-          className="grid grid-cols-[auto,1fr,auto] gap-6 justify-between"
-          to={`${paths.profile}${paths.profileSettings}`}
-        >
-          <Settings />
-          <div>Параметры</div>
-          <ChevronRight />
-        </Link>
-      </Button>
-      <Button className="items-center justify-start " asChild>
-        <Link
-          className="grid grid-cols-[auto,1fr,auto] gap-6 justify-between"
-          to={`${paths.profile}${paths.profileSettings}`}
-        >
-          <CircleHelp />
-          <div>Служба поддержки</div>
-          <ChevronRight />
-        </Link>
-      </Button>
-      <Logout />
+    <div>
+      <div className={styles.container}></div>
+      <div className="grid justify-between">
+        <div className="grid grid-row-2 gap-0">
+          <Button
+            className="items-center justify-start border-none px-0"
+            asChild
+          >
+            <Link
+              className="flex gap-4 bg-transparent"
+              to={`${paths.profile}${paths.profileSettings}`}
+            >
+              <SettingsIcon color="#F6FF5F" />
+              <p className="text-[16px] font-normal">ПАРАМЕТРЫ</p>
+              <LogoButtonIcon width={26} height={26} className="-rotate-90" />
+            </Link>
+          </Button>
+          <Button
+            className="items-center justify-start border-none px-0"
+            asChild
+          >
+            <Link
+              className="flex gap-4 bg-transparent"
+              to={`${paths.profile}${paths.profileSettings}`}
+            >
+              <div className="w-[25px] h-[25px]">
+                <QuestionIcon fill="#F6FF5F" />
+              </div>
+              <p className="text-[16px] font-normal text-mainColor">
+                СЛУЖБА ПОДДЕРЖКИ
+              </p>
+              <div className="w-[26px] h-[26px]">
+                <LogoButtonIcon width={26} height={26} className="-rotate-90" />
+              </div>
+            </Link>
+          </Button>
+        </div>
+        <Logout />
+      </div>
     </div>
   );
 };

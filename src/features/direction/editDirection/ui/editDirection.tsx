@@ -1,25 +1,15 @@
-import { CustomLoader } from "@/shared/ui";
 import { FC } from "react";
 import styles from "./editDirection.module.scss";
+import { Loader } from "lucide-react";
 
 interface EditDirectionProps {
-  editError?: boolean;
-  editSuccess: boolean;
   editLoading: boolean;
 }
 
-export const EditDirection: FC<EditDirectionProps> = ({
-  editError,
-  editSuccess,
-  editLoading,
-}) => {
+export const EditDirection: FC<EditDirectionProps> = ({ editLoading }) => {
   return (
-    <button
-      className={`${styles.submit_btn} ${editError && styles.error} ${
-        editSuccess && styles.success
-      }`}
-    >
-      {editLoading ? <CustomLoader /> : "Обновить"}
+    <button className={styles.submit_btn}>
+      {editLoading ? <Loader className="animate-spin" /> : "Обновить"}
     </button>
   );
 };

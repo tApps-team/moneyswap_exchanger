@@ -11,5 +11,39 @@ export enum paths {
   locationAdd = "/add_location",
   directionAdd = "/add_direction",
   locationEdit = "/edit_location",
-  directionEdit = "/adit_direciton",
 }
+
+export const Pathnames = [
+  {
+    path: paths.login,
+    title: "Авторизация",
+  },
+  {
+    path: paths.profile,
+    title: null,
+  },
+  {
+    path: `${paths.profile}${paths.profileSettings}`,
+    title: "Параметры",
+  },
+  {
+    path: `${paths.profile}${paths.profileSettings}${paths.profilePassword}`,
+    title: "Пароль",
+  },
+  {
+    path: `${paths.profile}${paths.profileSettings}${paths.profileInfo}`,
+    title: "Информация аккаунта",
+  },
+  {
+    path: paths.directionAdd,
+    title: null,
+  },
+  {
+    path: paths.locationAdd,
+    title: null,
+  },
+  {
+    path: paths.locationEdit,
+    title: null,
+  },
+];

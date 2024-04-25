@@ -1,0 +1,12 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    max-width: 500px;
+    transform: translate(-50%);
+    background: url("@/shared/assets/images/authBg.png") no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}

@@ -7,16 +7,17 @@ import {
   directionSchema,
   directionSchemaType,
   useDirectionsByCityQuery,
+  useEditDirectionMutation,
 } from "@/entities/direction";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/shared/model";
-import { useEditDirectionMutation } from "@/entities/direction/api/directionService";
 import {
   ActiveCity,
   setActiveCity,
   useGetCitiesQuery,
 } from "@/entities/location";
 import { EditDirection, UpdatedInfo } from "@/features/direction";
+import { useToast } from "@/shared/ui/toast";
 
 export const MyDirections = () => {
   const activeCity = useAppSelector((state) => state.activeCity.activeCity);
@@ -25,14 +26,10 @@ export const MyDirections = () => {
     dispatch(setActiveCity(city));
   };
 
-  const {
-    data: cities,
-    isLoading: citiesLoading,
-    error: citiesError,
-  } = useGetCitiesQuery();
+  const { data: cities, isLoading: citiesLoading } = useGetCitiesQuery();
 
   useEffect(() => {
-    if (cities) {
+    if (cities && !activeCity) {
       setActive(cities[0]);
     }
   }, [cities]);
@@ -48,7 +45,7 @@ export const MyDirections = () => {
   const {
     data: directions,
     isLoading: directionsLoading,
-    error: directionsError,
+    isFetching: directionsFetching,
   } = useDirectionsByCityQuery(activeCity?.code_name || "", {
     skip: !activeCity,
   });
@@ -59,10 +56,10 @@ export const MyDirections = () => {
     }
   }, [directions]);
 
-  const [
-    editDireciton,
-    { isLoading: editLoading, error: editError, isSuccess: editSuccess },
-  ] = useEditDirectionMutation();
+  const [editDireciton, { isLoading: editLoading }] =
+    useEditDirectionMutation();
+
+  const { toast } = useToast();
 
   const onSubmit = (data: directionSchemaType) => {
     if (activeCity) {
@@ -70,10 +67,23 @@ export const MyDirections = () => {
         city: activeCity?.code_name,
         directions: data.directions,
       };
-      console.log(data);
       editDireciton(formData)
         .unwrap()
-        .catch((error) => console.error("Ошибка...", error));
+        .then(() => {
+          toast({
+            title: "Направления успешно обновлены",
+            description: "",
+            variant: "success",
+          });
+        })
+        .catch((error) => {
+          console.error("Ошибка...", error);
+          toast({
+            title: "Что-то пошло не так...",
+            description: "При обновлении произошла ошибка",
+            variant: "destructive",
+          });
+        });
     }
   };
 
@@ -84,19 +94,23 @@ export const MyDirections = () => {
           cities={cities || []}
           setActive={setActive}
           activeCity={activeCity}
+          directionsLoading={directionsLoading}
+          citiesLoading={citiesLoading}
         />
-        <Directions directions={directions} form={form} />
-        {directions && (
-          <EditDirection
-            editError={editError && true}
-            editLoading={editLoading}
-            editSuccess={editSuccess}
-          />
+        <Directions
+          directions={directions || []}
+          form={form}
+          directionsLoading={directionsFetching}
+          citiesLoading={citiesLoading}
+        />
+        {directions && directions?.length > 0 && (
+          <EditDirection editLoading={editLoading} />
         )}
       </form>
-      {activeCity && directions && (
-        <UpdatedInfo activeCity={activeCity} editSuccess={editSuccess} />
-      )}
+      {activeCity &&
+        directions &&
+        directions.length > 0 &&
+        activeCity.updated.date && <UpdatedInfo activeCity={activeCity} />}
     </Form>
   );
 };

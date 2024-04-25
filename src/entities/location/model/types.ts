@@ -17,15 +17,7 @@ export type ActiveCity = {
   info: {
     delivery: boolean;
     office: boolean;
-    working_days: {
-      ПН: boolean;
-      ВТ: boolean;
-      СР: boolean;
-      ЧТ: boolean;
-      ПТ: boolean;
-      СБ: boolean;
-      ВС: boolean;
-    };
+    working_days: Record<string, boolean>;
     time_from: string;
     time_to: string;
   };

@@ -7,9 +7,17 @@ interface CitiesProps {
   cities: ActiveCity[];
   setActive: (city: ActiveCity) => void;
   activeCity: ActiveCity | null;
+  directionsLoading: boolean;
+  citiesLoading: boolean;
 }
 
-export const Cities: FC<CitiesProps> = ({ cities, setActive, activeCity }) => {
+export const Cities: FC<CitiesProps> = ({
+  cities,
+  setActive,
+  activeCity,
+  directionsLoading,
+  citiesLoading,
+}) => {
   return (
     <div className={styles.cities}>
       <h2 className={styles.cities__title}>Мои города</h2>
@@ -17,6 +25,8 @@ export const Cities: FC<CitiesProps> = ({ cities, setActive, activeCity }) => {
         <AddCityButton />
         <div className={styles.carousel}>
           <CityCarousel
+            directionsLoading={directionsLoading}
+            citiesLoading={citiesLoading}
             cities={cities || []}
             setActive={setActive}
             activeCity={activeCity}

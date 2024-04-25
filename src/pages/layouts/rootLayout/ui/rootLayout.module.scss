@@ -1,9 +1,12 @@
 .root__container {
   min-height: 100vh;
-  background: var(--dark-grey);
   max-width: var(--container-width);
   margin: 0 auto;
   padding: var(--padding-xl);
+
+  @media (max-width: 380px) {
+    padding: var(--padding-l);
+  }
 
   .root__content {
     // overflow-y: auto;

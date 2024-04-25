@@ -14,7 +14,7 @@ const InputWitchIcon = React.forwardRef<HTMLInputElement, InputProps>(
       <>
         {hasAdornment ? (
           <div
-            className="flex items-center justify-center gap-2 px-3 h-10 rounded-full border border-input bg-transparent ring-offset-background focus-within:ring-1 focus-within:ring-ring focus-within:ring-offset-2 data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50"
+            className="flex items-center justify-center gap-2 px-3 h-10 rounded-[35px] border border-input bg-transparent ring-offset-background focus-within:ring-1 focus-within:ring-ring focus-within:ring-offset-2 data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50"
             data-disabled={props.disabled}
           >
             {startAdornment && (

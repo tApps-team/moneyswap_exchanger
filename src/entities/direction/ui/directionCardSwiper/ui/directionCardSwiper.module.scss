@@ -1,0 +1,22 @@
+.card {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  border-radius: var(--border-radius-l);
+  background: var(--main-color);
+  display: grid;
+  gap: 30px;
+  padding: var(--padding-l);
+  padding-bottom: var(--padding-xs);
+  height: 150px;
+  width: calc(100% + 4px);
+  z-index: 2;
+
+  @media (max-width: 380px) {
+    padding: var(--padding-m);
+  }
+
+  &.not_active {
+    background: var(--light-grey);
+  }
+}

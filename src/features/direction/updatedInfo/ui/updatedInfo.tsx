@@ -4,15 +4,11 @@ import styles from "./updatedInfo.module.scss";
 
 interface UpdatedInfoProps {
   activeCity: ActiveCity;
-  editSuccess: boolean;
 }
 
-export const UpdatedInfo: FC<UpdatedInfoProps> = ({
-  activeCity,
-  editSuccess,
-}) => {
+export const UpdatedInfo: FC<UpdatedInfoProps> = ({ activeCity }) => {
   return (
-    <p className={`${styles.updated} ${editSuccess && styles.success}`}>
+    <p className={styles.updated}>
       Updated {activeCity?.updated.date} at {activeCity?.updated.time} from
       xe.com
     </p>

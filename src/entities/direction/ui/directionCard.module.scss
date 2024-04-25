@@ -1,10 +1,27 @@
-.card {
-    border-radius: var(--border-radius-l);
-    background: var(--main-color);
-    display: grid;
-    gap: 30px;
-    padding: var(--padding-l);
+.card__container {
+    position: relative;
     height: 150px;
+    width: calc(100% - 4px);
+    background: var(--dark-grey);
+    border-radius: var(--border-radius-l);
+    border: 2px solid var(--light-grey);
+
+    .delete {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 70px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+
+        svg {
+            width: 35px;
+            height: 35px;
+        }
+    }
 
     .inputs {
         display: grid;
@@ -13,9 +30,11 @@
         justify-content: space-between;
         gap: 20px;
 
+        @media (max-width: 380px) {
+            gap: 10px
+        }
 
         .input__block {
-
             display: grid;
             grid-template: 1fr / 40px 1fr;
             gap: 10px;
@@ -30,6 +49,7 @@
                 border: none;
                 padding: var(--padding-xs);
                 max-width: 100px;
+                width: 100%;
                 height: 40px;
                 font-size: 14px;
                 text-align: center;
@@ -47,6 +67,7 @@
             .code {
                 position: absolute;
                 left: 0;
+                font-size: 16px;
                 bottom: -25px;
 
                 max-width: 60px;
@@ -69,12 +90,8 @@
 
         .text {
             text-transform: uppercase;
-            font-size: 14px;
+            font-size: 12px;
+            font-weight: 400;
         }
     }
-}
-
-
-.is_active {
-    background: var(--light-grey);
 }

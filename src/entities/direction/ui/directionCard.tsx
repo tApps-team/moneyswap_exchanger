@@ -1,15 +1,31 @@
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
+  Input,
   Switch,
 } from "@/shared/ui";
-import { Direction } from "../../../entities/direction/model/types";
-import { ChangeEvent, FC } from "react";
+import { FC } from "react";
 import styles from "./directionCard.module.scss";
 import { UseFormReturn } from "react-hook-form";
-import { directionSchemaType } from "@/entities/direction";
+import {
+  Direction,
+  directionSchemaType,
+  useDeleteDirectionMutation,
+} from "@/entities/direction";
+import { DeleteIcon } from "@/shared/assets/icons";
+import { DirectionCardSwiper } from "./directionCardSwiper";
+import { useToast } from "@/shared/ui/toast";
+import { CurrencyType } from "@/shared/types";
 
 interface DirectionCardProps {
   direction: Direction;
@@ -23,81 +39,129 @@ export const DirectionCard: FC<DirectionCardProps> = ({
   index,
 }) => {
   const isActive = form.watch(`directions.${index}.is_active`);
-  const inCount = form.watch(`directions.${index}.in_count`);
-  const outCount = form.watch(`directions.${index}.out_count`);
 
-  const handleChangeInCount = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = Number(e.target.value);
-    if (inputValue > 0 && inputValue !== 1) {
-      form.setValue(`directions.${index}.in_count`, inputValue);
-    }
-  };
-  const handleChangeOutCount = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = Number(e.target.value);
-    if (inputValue > 0 && inputValue !== 1) {
-      form.setValue(`directions.${index}.out_count`, inputValue);
-    }
+  const [deleteDirection] = useDeleteDirectionMutation();
+  const { toast } = useToast();
+  const handleDelete = () => {
+    deleteDirection({ direction_id: direction.id })
+      .unwrap()
+      .then(() => {
+        toast({
+          title: "Направления успешно удалено",
+          description: "",
+          variant: "success",
+        });
+      })
+      .catch((error) => console.error("Ошибка...,", error));
   };
 
   return (
-    <div className={`${styles.card} ${!isActive && styles.is_active}`}>
-      <div className={styles.inputs}>
-        <div className={styles.input__block}>
-          <div className={styles.icon}>
-            <img
-              src={direction.icon_valute_from}
-              className="w-[40px] h-[40px]"
+    <div className={styles.card__container}>
+      <DirectionCardSwiper isActive={isActive}>
+        <div className={styles.inputs}>
+          <div className={styles.input__block}>
+            <div className={styles.icon}>
+              <img
+                src={direction.icon_valute_from}
+                className="w-[40px] h-[40px]"
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name={`directions.${index}.in_count`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value || ""}
+                      type="number"
+                      disabled={
+                        direction.in_count_type === CurrencyType.Cryptocurrency
+                      }
+                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <p className={styles.code}>{direction.valute_from}</p>
+          </div>
+          <span className="text-2xl">=</span>
+          <div className={styles.input__block}>
+            <div className={styles.icon}>
+              <img
+                src={direction.icon_valute_to}
+                className="w-[40px] h-[40px]"
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name={`directions.${index}.out_count`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value || ""}
+                      type="number"
+                      disabled={
+                        direction.out_count_type === CurrencyType.Cryptocurrency
+                      }
+                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <p className={styles.code}>{direction.valute_to}</p>
+          </div>
+        </div>
+        <div className={styles.card__active}>
+          <div className={styles.switcher}>
+            <FormField
+              control={form.control}
+              name={`directions.${index}.is_active`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className={
+                        isActive ? "border-mainColor" : "border-lightGray"
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </div>
-          <input
-            type="number"
-            value={inCount || 2}
-            onChange={handleChangeInCount}
-            className={`${styles.input} ${
-              inCount === 1 && styles.input_disable
-            }`}
-            disabled={inCount === 1}
-          />
-          <p className={styles.code}>{direction.valute_from}</p>
+          <p className={styles.text}>
+            {isActive ? "деактивировать пару" : "активировать пару"}
+          </p>
         </div>
-        <span className="text-3xl">=</span>
-        <div className={styles.input__block}>
-          <div className={styles.icon}>
-            <img src={direction.icon_valute_to} className="w-[40px] h-[40px]" />
-          </div>
-          <input
-            type="number"
-            value={outCount || 2}
-            onChange={handleChangeOutCount}
-            className={`${styles.input} ${
-              outCount === 1 && styles.input_disable
-            }`}
-            disabled={outCount === 1}
-          />
-          <p className={styles.code}>{direction.valute_to}</p>
-        </div>
-      </div>
-      <div className={styles.card__active}>
-        <div className={styles.switcher}>
-          <FormField
-            control={form.control}
-            name={`directions.${index}.is_active`}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <p className={styles.text}>
-          {isActive ? "деактивировать пару" : "активировать пару"}
-        </p>
+      </DirectionCardSwiper>
+      <div className={styles.delete}>
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <DeleteIcon />
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Удалить направление?</AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Отменить</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDelete}>
+                Удалить
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ export const directionAPI = authApi.injectEndpoints({
     editDirection: build.mutation<void, EditDirecitonRequest>({
       query: (BodyParams) => ({
         url: `/partner/edit_partner_directions`,
-        method: `POST`,
+        method: `PATCH`,
         body: BodyParams,
       }),
       invalidatesTags: [DIRECTION, LOCATION],
@@ -50,6 +50,14 @@ export const directionAPI = authApi.injectEndpoints({
         method: "POST",
         body: body,
       }),
+      invalidatesTags: [DIRECTION, LOCATION],
+    }),
+    deleteDirection: build.mutation<void, { direction_id: number }>({
+      query: (params) => ({
+        url: "/partner/delete_partner_direction",
+        method: "DELETE",
+        params: params,
+      }),
       invalidatesTags: [DIRECTION],
     }),
   }),
@@ -60,4 +68,5 @@ export const {
   useAvailableValutesQuery,
   useActualCourseQuery,
   useAddDirectionMutation,
+  useDeleteDirectionMutation,
 } = directionAPI;

@@ -1,33 +1,44 @@
 import { paths } from "@/shared/routing";
 import { Button } from "@/shared/ui";
-import { Eye, User } from "lucide-react";
+import { Eye } from "lucide-react";
 import { Link } from "react-router-dom";
+import styles from "./profileSettingsPage.module.scss";
+import { ProfileIcon } from "@/shared/assets";
 
 export const ProfileSettingsPage = () => {
   return (
-    <div className="flex flex-col gap-4">
-      <Button className="justify-start gap-4 cursor-pointer" asChild>
-        <Link
-          to={`${paths.profile}${paths.profileSettings}${paths.profileInfo}`}
+    <div>
+      <div className={styles.container}></div>
+      <div className="grid grid-rows-2 gap-4">
+        <Button
+          className="border-none justify-start gap-4 px-0 bg-transparent cursor-pointer"
+          asChild
         >
-          <User />
-          <div className="flex flex-col">
-            <div>Информация аккаунта</div>
-            <div>Измените вашу информацию</div>
-          </div>
-        </Link>
-      </Button>
-      <Button className="justify-start gap-4 cursor-pointer" asChild>
-        <Link
-          to={`${paths.profile}${paths.profileSettings}${paths.profilePassword}`}
+          <Link
+            to={`${paths.profile}${paths.profileSettings}${paths.profileInfo}`}
+          >
+            <ProfileIcon width={22} height={22} />
+            <div className="flex flex-col">
+              <p className="text-[16px] font-normal">ИНФОРМАЦИЯ АККАУНТА</p>
+              <p className="text-[12px] font-light">Измените вашу информацию</p>
+            </div>
+          </Link>
+        </Button>
+        <Button
+          className="border-none justify-start bg-transparent gap-4 px-0 cursor-pointer"
+          asChild
         >
-          <Eye />
-          <div className="flex flex-col">
-            <div>Пароль</div>
-            <div>Измените ваш пароль</div>
-          </div>
-        </Link>
-      </Button>
+          <Link
+            to={`${paths.profile}${paths.profileSettings}${paths.profilePassword}`}
+          >
+            <Eye color="#F6FF5F" />
+            <div className="flex flex-col">
+              <p className="text-[16px] font-normal">ПАРОЛЬ</p>
+              <p className="text-[12px] font-light">Измените ваш пароль</p>
+            </div>
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 };
