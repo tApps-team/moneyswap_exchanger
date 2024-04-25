@@ -102,7 +102,9 @@ export const LocationEditForm = () => {
           name={"country"}
           render={() => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-xl">СТРАНА</FormLabel>
+              <FormLabel className="text-mainColor text-lg font-light sm:text-xl">
+                СТРАНА
+              </FormLabel>
               <FormControl>
                 <ItemSelect
                   itemIcon={activeEditCity?.country_flag || ""}
@@ -119,7 +121,9 @@ export const LocationEditForm = () => {
           name={"city"}
           render={() => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-xl">ГОРОД</FormLabel>
+              <FormLabel className="text-mainColor font-light text-lg  sm:text-xl">
+                ГОРОД
+              </FormLabel>
               <FormControl>
                 <ItemSelect disabled={true} label={activeEditCity?.name} />
               </FormControl>
@@ -133,7 +137,9 @@ export const LocationEditForm = () => {
           name={"deliviry"}
           render={({ field }) => (
             <FormItem className="flex items-center justify-between">
-              <FormLabel className="text-white text-xl">ДОСТАВКА</FormLabel>
+              <FormLabel className="text-white text-lg  sm:text-xl">
+                ДОСТАВКА
+              </FormLabel>
               <FormControl>
                 <Switch
                   checked={field.value}
@@ -149,7 +155,9 @@ export const LocationEditForm = () => {
           name={"office"}
           render={({ field }) => (
             <FormItem className="flex items-center justify-between">
-              <FormLabel className="text-white text-xl">ЕСТЬ ОФИС</FormLabel>
+              <FormLabel className="text-white text-lg  sm:text-xl">
+                ЕСТЬ ОФИС
+              </FormLabel>
               <FormControl>
                 <Switch
                   checked={field.value}
@@ -163,7 +171,7 @@ export const LocationEditForm = () => {
 
         <div className="flex flex-col gap-4">
           <div>
-            <div className="text-white text-xl">ВРЕМЯ РАБОТЫ</div>
+            <div className="text-white text-lg  sm:text-xl">ВРЕМЯ РАБОТЫ</div>
             <div className="text-white font-light">По местному времени</div>
           </div>
           <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
@@ -187,7 +195,7 @@ export const LocationEditForm = () => {
                           setTime={field.onChange}
                           time={field.value}
                         />
-                        <AlertDialogAction>Сохранить</AlertDialogAction>
+                        <AlertDialogAction>СОХРАНИТЬ</AlertDialogAction>
                       </AlertDialogContent>
                     </AlertDialog>
                   </FormControl>
@@ -218,7 +226,7 @@ export const LocationEditForm = () => {
                           setTime={field.onChange}
                           time={field.value}
                         />
-                        <AlertDialogAction>Сохранить</AlertDialogAction>
+                        <AlertDialogAction>СОХРАНИТЬ</AlertDialogAction>
                       </AlertDialogContent>
                     </AlertDialog>
                   </FormControl>
@@ -229,7 +237,9 @@ export const LocationEditForm = () => {
           </div>
         </div>
         <div className="grid grid-rows-2 gap-6 text-white ">
-          <div className="text-xl row-span-2 text-white">ДНИ РАБОТЫ</div>
+          <div className="text-lg  sm:text-xl row-span-2 text-white">
+            ДНИ РАБОТЫ
+          </div>
           <div className="grid grid-cols-7   ">
             {Object.keys(form.formState.defaultValues?.workDays || {}).map(
               (day) => (
@@ -262,7 +272,7 @@ export const LocationEditForm = () => {
         </div>
         <div className="flex flex-col gap-4">
           <Button
-            className="w-full border-2 text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
+            className="w-full border-2 text-mainColor text-lg  sm:text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
             type="submit"
             variant={"outline"}
           >
@@ -277,7 +287,7 @@ export const LocationEditForm = () => {
               <Button
                 type="button"
                 variant={"outline"}
-                className="w-full border-2 text-darkGray text-xl disabled:pointer-events-none bg-mainColor  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
+                className="w-full border-2 text-darkGray text-lg  sm:text-xl disabled:pointer-events-none bg-mainColor  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
               >
                 {isLoadingDeletePartnerCity ? (
                   <Loader className="animate-spin" />

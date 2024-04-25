@@ -23,16 +23,25 @@ export const Logout = () => {
       <AlertDialogTrigger className="grid justify-start">
         <div className="grid grid-cols-[auto,1fr] gap-4 items-center bg-transparent border-none mt-[15vh] text-start text-whiteColor">
           <LogoButtonIcon width={26} height={26} className="rotate-90" />
-          <p className="text-[16px] start">ВЫЙТИ</p>
+          <p className="text-sm sm:text-base start">ВЫЙТИ</p>
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Выйти из аккаунта?</AlertDialogTitle>
+          <AlertDialogTitle className="text-sm sm:text-base">
+            Выйти из аккаунта?
+          </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Назад</AlertDialogCancel>
-          <AlertDialogAction onClick={logout}>Выйти</AlertDialogAction>
+          <AlertDialogCancel className="text-sm sm:text-base rounded-3xl sm:rounded-full">
+            Назад
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={logout}
+            className="text-sm sm:text-base rounded-3xl  sm:rounded-full"
+          >
+            Выйти
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
