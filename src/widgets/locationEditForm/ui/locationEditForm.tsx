@@ -25,8 +25,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
   Switch,
+  TimePicker,
 } from "@/shared/ui";
 import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -91,11 +91,10 @@ export const LocationEditForm = () => {
         navigate(paths.home);
       });
   };
-  console.log(activeEditCity?.info.time_from);
   return (
     <Form {...form}>
       <form
-        className="grid grid-rows-4 grid-cols-1 gap-10"
+        className="grid grid-flow-row grid-cols-1 gap-8"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -162,59 +161,73 @@ export const LocationEditForm = () => {
           )}
         />
 
-        <div className="text-white text-xl">ВРЕМЯ РАБОТЫ</div>
-        <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
-          <FormField
-            control={form.control}
-            name={"timeStart"}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="time"
-                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                    {...field}
-                    endAdornment={
-                      <LogoButtonIcon
-                        width={26}
-                        height={26}
-                        className="absolute -translate-y-8 right-2"
-                      />
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex justify-center items-center">
-            <Minus color="white" />
+        <div className="flex flex-col gap-4">
+          <div>
+            <div className="text-white text-xl">ВРЕМЯ РАБОТЫ</div>
+            <div className="text-white font-light">По местному времени</div>
           </div>
-          <FormField
-            control={form.control}
-            name={"timeEnd"}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="time"
-                    className="h-[38px] p-2 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                    {...field}
-                    endAdornment={
-                      <LogoButtonIcon
-                        width={26}
-                        height={26}
-                        className="absolute -translate-y-8 right-2"
-                      />
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
+            <FormField
+              control={form.control}
+              name={"timeStart"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <AlertDialog>
+                      <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                        {field.value}
+                        <LogoButtonIcon
+                          width={26}
+                          height={26}
+                          className="absolute -translate-y-[50%] top-[50%] right-3"
+                        />
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="grid gap-0">
+                        <TimePicker
+                          setTime={field.onChange}
+                          time={field.value}
+                        />
+                        <AlertDialogAction>Сохранить</AlertDialogAction>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex justify-center items-center">
+              <Minus color="white" />
+            </div>
+            <FormField
+              control={form.control}
+              name={"timeEnd"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <AlertDialog>
+                      <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                        {field.value}
+                        <LogoButtonIcon
+                          width={26}
+                          height={26}
+                          className="absolute -translate-y-[50%] top-[50%] right-3"
+                        />
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="grid gap-0">
+                        <TimePicker
+                          setTime={field.onChange}
+                          time={field.value}
+                        />
+                        <AlertDialogAction>Сохранить</AlertDialogAction>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
-
         <div className="grid grid-rows-2 gap-6 text-white ">
           <div className="text-xl row-span-2 text-white">ДНИ РАБОТЫ</div>
           <div className="grid grid-cols-7   ">
@@ -249,7 +262,7 @@ export const LocationEditForm = () => {
         </div>
         <div className="flex flex-col gap-4">
           <Button
-            className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
+            className="w-full border-2 text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
             type="submit"
             variant={"outline"}
           >
@@ -264,7 +277,7 @@ export const LocationEditForm = () => {
               <Button
                 type="button"
                 variant={"outline"}
-                className="w-full text-darkGray text-xl disabled:pointer-events-none bg-mainColor  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
+                className="w-full border-2 text-darkGray text-xl disabled:pointer-events-none bg-mainColor  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
               >
                 {isLoadingDeletePartnerCity ? (
                   <Loader className="animate-spin" />
@@ -289,17 +302,6 @@ export const LocationEditForm = () => {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-          {/* <Button
-            variant={"outline"}
-            className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
-            onClick={() => activeEditCity && onHandleDelete(activeEditCity?.id)}
-          >
-            {isLoadingDeletePartnerCity ? (
-              <Loader className="animate-spin" />
-            ) : (
-              "УДАЛИТЬ"
-            )}
-          </Button> */}
         </div>
       </form>
     </Form>

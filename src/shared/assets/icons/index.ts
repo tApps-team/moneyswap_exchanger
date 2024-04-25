@@ -10,3 +10,6 @@ export { BackIcon } from "./back";
 export { ComingSoonIcon } from "./comingSoon";
 export { EmptyIcon } from "./empty";
 export { LogoButtonIcon } from "./logoButtonIcon";
+export { QuestionIcon } from "./question";
+export { EmailIcon } from "./email";
+export { LockIcon } from "./lockIcon";

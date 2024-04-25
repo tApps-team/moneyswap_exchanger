@@ -6,6 +6,7 @@ import {
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { DirectionSkeleton } from "./directionSkeleton";
+import { Empty } from "@/shared/ui";
 
 interface DirectionListProps {
   directions: Direction[];
@@ -21,7 +22,7 @@ export const DirectionList: FC<DirectionListProps> = ({
   citiesLoading,
 }) => {
   return (
-    <div className="mt-2 grid gap-3 overflow-auto max-h-[35vh]">
+    <div className="mt-2 grid gap-3 overflow-auto h-[35vh]">
       {directionsLoading || citiesLoading ? (
         <>
           <DirectionSkeleton />
@@ -38,6 +39,8 @@ export const DirectionList: FC<DirectionListProps> = ({
           />
         ))
       )}
+
+      {!directions.length && <Empty text="Список пуст..." />}
     </div>
   );
 };

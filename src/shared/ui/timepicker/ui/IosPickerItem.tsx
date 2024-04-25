@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useCallback, useRef } from "react";
 import { EmblaCarouselType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
-import styles from "./timePicker.module.scss";
-import clsx from "clsx";
+
 const CIRCLE_DEGREES = 360;
 const WHEEL_ITEM_SIZE = 32;
 const WHEEL_ITEM_COUNT = 18;
@@ -20,6 +19,7 @@ const isInView = (wheelLocation: number, slidePosition: number): boolean =>
 const setSlideStyles = (
   emblaApi: EmblaCarouselType,
   index: number,
+  // label: string,
   loop: boolean,
   slideCount: number,
   totalRadius: number
@@ -67,13 +67,30 @@ export const setContainerStyles = (
 
 type PropType = {
   loop?: boolean;
-  label: string;
   slideCount: number;
+  // label,
   perspective: "left" | "right";
+  type: "hours" | "minutes";
+  setHours?: (hour: string) => void;
+  setMinutes?: (minutes: string) => void;
+  minutes?: number;
+  hours?: number;
 };
 
 export const IosPickerItem: React.FC<PropType> = (props) => {
-  const { slideCount, perspective, label, loop = false } = props;
+  const {
+    slideCount,
+    perspective,
+    loop = true,
+    type,
+    setHours,
+    setMinutes,
+    minutes,
+    hours,
+  } = props;
+  const addLeadingZero = (num: number) => {
+    return num < 10 ? `0${num}` : num.toString();
+  };
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop,
     axis: "y",
@@ -85,7 +102,7 @@ export const IosPickerItem: React.FC<PropType> = (props) => {
   const totalRadius = slideCount * WHEEL_ITEM_RADIUS;
   const rotationOffset = loop ? 0 : WHEEL_ITEM_RADIUS;
   const slides = Array.from(Array(slideCount).keys());
-  const [selectedValue, setSelectedValue] = useState<number | null>(null);
+
   const inactivateEmblaTransform = useCallback(
     (emblaApi: EmblaCarouselType) => {
       if (!emblaApi) return;
@@ -109,9 +126,9 @@ export const IosPickerItem: React.FC<PropType> = (props) => {
         setSlideStyles(emblaApi, index, loop, slideCount, totalRadius);
       });
     },
-    [slideCount, rotationOffset, loop, totalRadius]
+    [slideCount, rotationOffset, totalRadius]
   );
-  console.log(selectedValue);
+
   useEffect(() => {
     if (!emblaApi) return;
 
@@ -122,10 +139,7 @@ export const IosPickerItem: React.FC<PropType> = (props) => {
       const distance = diffToTarget * factor;
       scrollTo.distance(distance, true);
     });
-    emblaApi.on("select", () => {
-      const currentIndex = emblaApi.selectedScrollSnap();
-      setSelectedValue(currentIndex);
-    });
+
     emblaApi.on("scroll", rotateWheel);
 
     emblaApi.on("reInit", (emblaApi) => {
@@ -133,35 +147,42 @@ export const IosPickerItem: React.FC<PropType> = (props) => {
       rotateWheel(emblaApi);
     });
 
+    if (type === "hours" && hours) {
+      emblaApi.scrollTo(hours);
+    } else if (type === "minutes" && minutes) {
+      emblaApi.scrollTo(minutes);
+    }
+
+    emblaApi.on("select", () => {
+      if (type === "hours" && setHours) {
+        setHours(addLeadingZero(emblaApi.selectedScrollSnap()));
+      } else if (type === "minutes" && setMinutes) {
+        setMinutes(addLeadingZero(emblaApi.selectedScrollSnap()));
+      }
+    });
+
     inactivateEmblaTransform(emblaApi);
     rotateWheel(emblaApi);
-    console.log(slideCount);
+    emblaApi;
   }, [emblaApi, inactivateEmblaTransform, rotateWheel]);
 
   return (
-    <div className={styles.embla__ios_picker}>
-      <div className={styles.embla__ios_picker__scene} ref={rootNodeRef}>
+    <div className="embla__ios-picker">
+      <div className="embla__ios-picker__scene" ref={rootNodeRef}>
         <div
-          className={clsx(
-            styles.embla__ios_picker__viewport,
-            `embla__ios_picker__viewport__perspective_${perspective}`
-          )}
+          className={`embla__ios-picker__viewport embla__ios-picker__viewport--perspective-${perspective}`}
           ref={emblaRef}
         >
-          <div className={styles.embla__ios_picker__container}>
+          <div className="embla__ios-picker__container">
             {slides.map((_, index) => (
-              <div
-                data-vaul-no-drag
-                className={styles.embla__ios_picker__slide}
-                key={index}
-              >
-                {index}
+              <div className="embla__ios-picker__slide" key={index}>
+                {addLeadingZero(index)}
               </div>
             ))}
           </div>
         </div>
       </div>
-      {/* <div className={styles.embla__ios_picker__label}>{label}</div> */}
+      {/* <div className="embla__ios-picker__label">{label}</div> */}
     </div>
   );
 };

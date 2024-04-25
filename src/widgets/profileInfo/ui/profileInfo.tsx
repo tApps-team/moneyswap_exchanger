@@ -23,7 +23,7 @@ export const ProfileInfo = () => {
           <p>для изменений</p>
         </div>
         <Button
-          className="rounded-full  border-bg-darkGray  bg-darkGray text-mainColor text-xl"
+          className="rounded-[35px]  border-bg-darkGray  bg-darkGray text-mainColor text-xl"
           asChild
         >
           <Link target="_blank" to={"https://www.google.com/"}>

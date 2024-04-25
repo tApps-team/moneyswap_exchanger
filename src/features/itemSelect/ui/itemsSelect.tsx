@@ -1,5 +1,6 @@
 import { Currency } from "@/entities/direction";
 import { City, Country } from "@/entities/location";
+import { LogoButtonIcon } from "@/shared/assets";
 import {
   Button,
   Drawer,
@@ -14,7 +15,6 @@ import {
 import { Search } from "lucide-react";
 import { useDeferredValue, useState } from "react";
 import { ItemCard } from "./itemCard";
-import { LogoButtonIcon } from "@/shared/assets";
 
 type ItemSelectProps<T> = {
   items?: T[];
@@ -52,7 +52,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
       <DrawerTrigger asChild>
         <Button
           disabled={disabled}
-          className="w-full text-white disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray justify-between items-center rounded-full gap-2 select-none"
+          className="rounded-[35px] w-full truncate  text-white disabled:pointer-events-none bg-darkGray disabled:bg-lightGray disabled:opacity-80  justify-between items-center  gap-2 select-none"
         >
           <div className="flex items-center gap-2 ">
             {itemIcon && (
@@ -69,8 +69,13 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
         </Button>
       </DrawerTrigger>
       <DrawerContent className="h-screen bg-transparent border-none">
-        <DrawerHeader>
-          <Label className="text-mainColor text-start">{inputLabel}</Label>
+        <DrawerHeader className="gap-0">
+          <div className="flex items-center justify-between">
+            <Label className="text-mainColor text-start">{inputLabel}</Label>
+            <DrawerClose>
+              <LogoButtonIcon width={26} height={26} />
+            </DrawerClose>
+          </div>
           <Input
             startAdornment={<Search className="translate-y-8 ml-2" />}
             className="rounded-xl bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0"
@@ -79,17 +84,16 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
             onChange={(e) => setSearchValue(e.target.value.trim())}
           />
         </DrawerHeader>
-        <div className="p-4">
-          <ScrollArea className="h-[75vh] w-full">
-            <div data-vaul-no-drag className="grid grid-rows-1 gap-2">
-              {filteredItems?.map((item) => (
-                <DrawerClose key={item.id}>
-                  <ItemCard item={item} onClick={() => onClick?.(item)} />
-                </DrawerClose>
-              ))}
-            </div>
-          </ScrollArea>
-        </div>
+
+        <ScrollArea data-vaul-no-drag className="h-screen p-4 w-full">
+          <div className="grid grid-rows-1 items gap-2">
+            {filteredItems?.map((item) => (
+              <DrawerClose key={item.id} asChild>
+                <ItemCard item={item} onClick={() => onClick?.(item)} />
+              </DrawerClose>
+            ))}
+          </div>
+        </ScrollArea>
       </DrawerContent>
     </Drawer>
   );

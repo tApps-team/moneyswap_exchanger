@@ -49,7 +49,7 @@ export const ChangePasswordForm = () => {
     <div className="container">
       <Form {...changePasswordForm}>
         <form
-          className="grid  gap-20"
+          className="grid grid-rows-3 items-center"
           onSubmit={changePasswordForm.handleSubmit(onSubmit)}
         >
           <FormField
@@ -62,7 +62,7 @@ export const ChangePasswordForm = () => {
                     eyeIcon={true}
                     type="password"
                     placeholder="*********"
-                    className="rounded-full h-14 text-center  placeholder:text-white  bg-darkGray"
+                    className="rounded-[35px]   text-center  placeholder:text-white  bg-darkGray"
                     {...field}
                   />
                 </FormControl>
@@ -70,7 +70,7 @@ export const ChangePasswordForm = () => {
               </FormItem>
             )}
           />
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-6">
             <FormField
               control={changePasswordForm.control}
               name="newPassword"
@@ -80,7 +80,7 @@ export const ChangePasswordForm = () => {
                     <PasswordInput
                       type="password"
                       placeholder="Новый пароль"
-                      className="rounded-full h-14 text-center placeholder:text-white bg-darkGray"
+                      className="rounded-[35px]  text-center placeholder:text-white bg-darkGray"
                       {...field}
                       eyeIcon={false}
                     />
@@ -97,8 +97,8 @@ export const ChangePasswordForm = () => {
                   <FormControl>
                     <PasswordInput
                       type="password"
-                      className="rounded-full text-center h-14 placeholder:text-white bg-darkGray"
-                      placeholder="Одноразовый пароль"
+                      className="rounded-[35px] text-center   placeholder:text-white bg-darkGray"
+                      placeholder="Повторите пароль"
                       {...field}
                     />
                   </FormControl>
@@ -109,7 +109,7 @@ export const ChangePasswordForm = () => {
           </div>
           <Button
             type="submit"
-            className="rounded-full bg-[#F6FF5F]  text-black text-lg h-16 uppercase text-semibold"
+            className="rounded-[35px] bg-[#F6FF5F]  text-black text-lg uppercase text-semibold  border-none"
           >
             {isLoading ? <Loader className="animate-spin" /> : "Сохранить"}
           </Button>

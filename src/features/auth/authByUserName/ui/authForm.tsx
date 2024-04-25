@@ -13,10 +13,11 @@ import {
 import { PasswordInput } from "@/shared/ui/input";
 import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader, Mail } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AuthFormSchema, authFormSchema } from "../model/authFormSchema";
+import { EmailIcon } from "@/shared/assets";
 
 export const AuthByUserNameForm = () => {
   const authForm = useForm<AuthFormSchema>({
@@ -63,12 +64,14 @@ export const AuthByUserNameForm = () => {
                   <Input
                     type="text"
                     startAdornment={
-                      <Mail
+                      <EmailIcon
+                        width={22}
+                        height={22}
                         color="#F6FF5F"
-                        className="absolute left-3 translate-y-2 "
+                        className="absolute left-5 translate-y-6 "
                       />
                     }
-                    className="text-white placeholder:text-white rounded-full pl-12 bg-darkGray"
+                    className="text-white h-mainHeight border-2 font-normal uppercase placeholder:text-white rounded-[35px] pl-14 bg-darkGray"
                     placeholder="E-MAIL"
                     {...field}
                   />
@@ -85,7 +88,7 @@ export const AuthByUserNameForm = () => {
                 <FormControl>
                   <PasswordInput
                     type="password"
-                    className="text-white placeholder:text-white rounded-full pl-12 bg-darkGray"
+                    className="text-white h-mainHeight border-2 font-normal uppercase placeholder:text-white rounded-[35px] pl-12 bg-darkGray"
                     placeholder="••••••••••••"
                     {...field}
                     eyeIcon
@@ -96,7 +99,7 @@ export const AuthByUserNameForm = () => {
             )}
           />
           <Button
-            className=" w-full rounded-full uppercase font-semibold text-xl text-mainColor bg-darkGray"
+            className=" w-full rounded-[35px] uppercase font-semibold text-xl text-mainColor bg-darkGray"
             type="submit"
           >
             {isLoading ? <Loader className="animate-spin" /> : "ВОЙТИ"}

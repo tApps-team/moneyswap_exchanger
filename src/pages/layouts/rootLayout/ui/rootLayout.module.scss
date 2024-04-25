@@ -4,6 +4,10 @@
   margin: 0 auto;
   padding: var(--padding-xl);
 
+  @media (max-width: 380px) {
+    padding: var(--padding-l);
+  }
+
   .root__content {
     // overflow-y: auto;
     // height: 100vh;

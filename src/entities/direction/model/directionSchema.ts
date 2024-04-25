@@ -1,3 +1,4 @@
+import { CurrencyType } from "@/shared/types";
 import { z } from "zod";
 
 export const directionSchema = z.object({
@@ -23,6 +24,7 @@ export const directionAddSchema = z.object({
       name: z.string(),
       code_name: z.string(),
       icon_url: z.string(),
+      type_valute: z.nativeEnum(CurrencyType),
     },
     {
       required_error: "Это поле обязательно",
@@ -34,6 +36,7 @@ export const directionAddSchema = z.object({
     name: z.string(),
     code_name: z.string(),
     icon_url: z.string(),
+    type_valute: z.nativeEnum(CurrencyType),
   }),
   giveCurrencyPrice: z.coerce.number().positive().min(1),
   getCurrencyPrice: z.coerce.number().positive().min(1),

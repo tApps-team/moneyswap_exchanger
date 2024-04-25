@@ -42,10 +42,13 @@ export const MyDirections = () => {
   });
   form.watch(["directions"]);
 
-  const { data: directions, isLoading: directionsLoading } =
-    useDirectionsByCityQuery(activeCity?.code_name || "", {
-      skip: !activeCity,
-    });
+  const {
+    data: directions,
+    isLoading: directionsLoading,
+    isFetching: directionsFetching,
+  } = useDirectionsByCityQuery(activeCity?.code_name || "", {
+    skip: !activeCity,
+  });
 
   useEffect(() => {
     if (directions) {
@@ -70,6 +73,7 @@ export const MyDirections = () => {
           toast({
             title: "Направления успешно обновлены",
             description: "",
+            variant: "success",
           });
         })
         .catch((error) => {
@@ -77,6 +81,7 @@ export const MyDirections = () => {
           toast({
             title: "Что-то пошло не так...",
             description: "При обновлении произошла ошибка",
+            variant: "destructive",
           });
         });
     }
@@ -95,7 +100,7 @@ export const MyDirections = () => {
         <Directions
           directions={directions || []}
           form={form}
-          directionsLoading={directionsLoading}
+          directionsLoading={directionsFetching}
           citiesLoading={citiesLoading}
         />
         {directions && directions?.length > 0 && (

@@ -11,9 +11,10 @@ import {
   FormField,
   FormItem,
   FormMessage,
+  Input,
   Switch,
 } from "@/shared/ui";
-import { ChangeEvent, FC } from "react";
+import { FC } from "react";
 import styles from "./directionCard.module.scss";
 import { UseFormReturn } from "react-hook-form";
 import {
@@ -24,6 +25,7 @@ import {
 import { DeleteIcon } from "@/shared/assets/icons";
 import { DirectionCardSwiper } from "./directionCardSwiper";
 import { useToast } from "@/shared/ui/toast";
+import { CurrencyType } from "@/shared/types";
 
 interface DirectionCardProps {
   direction: Direction;
@@ -37,26 +39,9 @@ export const DirectionCard: FC<DirectionCardProps> = ({
   index,
 }) => {
   const isActive = form.watch(`directions.${index}.is_active`);
-  const inCount = form.watch(`directions.${index}.in_count`);
-  const outCount = form.watch(`directions.${index}.out_count`);
-
-  const handleChangeInCount = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = Number(e.target.value);
-    if (inputValue >= 0) {
-      form.setValue(`directions.${index}.in_count`, inputValue);
-    }
-  };
-  const handleChangeOutCount = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = Number(e.target.value);
-    if (inputValue >= 0) {
-      form.setValue(`directions.${index}.out_count`, inputValue);
-    }
-  };
 
   const [deleteDirection] = useDeleteDirectionMutation();
-
   const { toast } = useToast();
-
   const handleDelete = () => {
     deleteDirection({ direction_id: direction.id })
       .unwrap()
@@ -64,6 +49,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
         toast({
           title: "Направления успешно удалено",
           description: "",
+          variant: "success",
         });
       })
       .catch((error) => console.error("Ошибка...,", error));
@@ -80,14 +66,25 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                 className="w-[40px] h-[40px]"
               />
             </div>
-            <input
-              type="number"
-              value={inCount || 0}
-              onChange={handleChangeInCount}
-              className={`${styles.input} ${
-                direction.in_count === 1 && styles.input_disable
-              }`}
-              disabled={direction.in_count === 1}
+            <FormField
+              control={form.control}
+              name={`directions.${index}.in_count`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value || ""}
+                      type="number"
+                      disabled={
+                        direction.in_count_type === CurrencyType.Cryptocurrency
+                      }
+                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <p className={styles.code}>{direction.valute_from}</p>
           </div>
@@ -99,14 +96,25 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                 className="w-[40px] h-[40px]"
               />
             </div>
-            <input
-              type="number"
-              value={outCount || 0}
-              onChange={handleChangeOutCount}
-              className={`${styles.input} ${
-                direction.out_count === 1 && styles.input_disable
-              }`}
-              disabled={direction.out_count === 1}
+            <FormField
+              control={form.control}
+              name={`directions.${index}.out_count`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      value={field.value || ""}
+                      type="number"
+                      disabled={
+                        direction.out_count_type === CurrencyType.Cryptocurrency
+                      }
+                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <p className={styles.code}>{direction.valute_to}</p>
           </div>
@@ -122,6 +130,9 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                     <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      className={
+                        isActive ? "border-mainColor" : "border-lightGray"
+                      }
                     />
                   </FormControl>
                   <FormMessage />

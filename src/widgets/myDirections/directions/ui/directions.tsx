@@ -3,7 +3,6 @@ import { CreateDirection, DirectionList } from "@/features/direction";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import styles from "./directions.module.scss";
-import { Empty } from "@/shared/ui";
 
 interface DirectionsProps {
   form: UseFormReturn<directionSchemaType>;
@@ -28,7 +27,6 @@ export const Directions: FC<DirectionsProps> = ({
         form={form}
         directions={directions}
       />
-      {/* <Empty text="Список пуст..." /> */}
     </div>
   );
 };

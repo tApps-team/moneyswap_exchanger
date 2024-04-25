@@ -10,7 +10,7 @@ export const CurrencyCard = (props: CurrencyCardProps) => {
   return (
     <Card
       onClick={onClick}
-      className="p-4 cursor-pointer rounded-full border-2 border-white bg-gray-600"
+      className="p-4 cursor-pointer rounded-[35px] border-2 border-white bg-gray-600"
     >
       <CardContent className="p-0 flex gap-2 items-center  text-white">
         <img

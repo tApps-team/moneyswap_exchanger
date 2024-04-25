@@ -9,6 +9,7 @@ import { ActualCourse } from "@/features/direction/actualCourse";
 import { ItemSelect } from "@/features/itemSelect";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
+import { CurrencyType } from "@/shared/types";
 import {
   Button,
   Form,
@@ -37,15 +38,18 @@ export const DirectionAddForm = () => {
     },
   });
   const navigate = useNavigate();
+
   const activeCity = useAppSelector(
     (state) => state.activeCity.activeCity?.code_name || ""
   );
+
   form.watch(["giveCurrency", "getCurrency"]);
 
   const { toast } = useToast();
 
   const [addDirection, { isLoading: isLoadingAddDirection }] =
     useAddDirectionMutation();
+
   const { data: currencies } = useAvailableValutesQuery({ base: "all" });
 
   const { data: availableCurrncies } = useAvailableValutesQuery(
@@ -70,14 +74,31 @@ export const DirectionAddForm = () => {
     }
   );
 
-  const inputInCountValue = actualCourse?.in_count === 1;
-  const inputOutCountValue = actualCourse?.out_count === 1;
+  const inputInCountValue =
+    form.getValues("giveCurrency")?.type_valute === CurrencyType.Cryptocurrency;
+
+  const inputOutCountValue =
+    form.getValues("getCurrency")?.type_valute === CurrencyType.Cryptocurrency;
+
+  // const inputInCountValue = actualCourse?.in_count === 1;
+  // const inputOutCountValue = actualCourse?.out_count === 1;
 
   //refactoring
   useEffect(() => {
     inputInCountValue && form.setValue("giveCurrencyPrice", 1);
     inputOutCountValue && form.setValue("getCurrencyPrice", 1);
-  }, [form, inputInCountValue, inputOutCountValue]);
+
+    inputInCountValue &&
+      form.setValue("getCurrencyPrice", actualCourse?.out_count || 0);
+    inputOutCountValue &&
+      form.setValue("giveCurrencyPrice", actualCourse?.in_count || 0);
+  }, [
+    actualCourse?.in_count,
+    actualCourse?.out_count,
+    form,
+    inputInCountValue,
+    inputOutCountValue,
+  ]);
 
   const inputDisabled =
     !form.getValues("getCurrency") || !form.getValues("giveCurrency");
@@ -87,7 +108,7 @@ export const DirectionAddForm = () => {
       city: activeCity,
       in_count: data.giveCurrencyPrice,
       out_count: data.getCurrencyPrice,
-      is_active: false,
+      is_active: true,
       valute_from: data.giveCurrency?.code_name || "",
       valute_to: data.getCurrency?.code_name || "",
     })
@@ -111,7 +132,7 @@ export const DirectionAddForm = () => {
   return (
     <Form {...form}>
       <form
-        className="grid grid-rows-5 grid-cols-1 gap-10"
+        className="grid grid-rows-[1fr,1fr,70px,1fr,1fr] grid-cols-1 gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -134,6 +155,7 @@ export const DirectionAddForm = () => {
                   onClick={(e) => {
                     field.onChange(e);
                     form.resetField("getCurrency");
+                    form.resetField("getCurrencyPrice");
                   }}
                 />
               </FormControl>
@@ -151,6 +173,7 @@ export const DirectionAddForm = () => {
                 <ItemSelect
                   inputLabel="ПОЛУЧАЮ"
                   items={currectAvailableCurrncies}
+                  itemIcon={field.value?.icon_url}
                   emptyLabel="Выберите что получаете"
                   label={field.value?.name || ""}
                   disabled={!form.getValues("giveCurrency")}
@@ -194,7 +217,7 @@ export const DirectionAddForm = () => {
                           />
                         )
                       }
-                      className="border border-white bg-darkGray text-white  rounded-full pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className=" bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -235,7 +258,7 @@ export const DirectionAddForm = () => {
                         )
                       }
                       disabled={inputDisabled || inputOutCountValue}
-                      className="border border-white bg-darkGray text-white  rounded-full pl-11 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="border border-white bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -246,7 +269,7 @@ export const DirectionAddForm = () => {
         </div>
 
         <Button
-          className="rounded-full border border-bg-darkGray h-14 bg-darkGray text-mainColor text-xl"
+          className="rounded-[35px] border border-bg-darkGray h-[70px] bg-darkGray text-mainColor text-xl"
           type="submit"
         >
           {isLoadingAddDirection ? (
