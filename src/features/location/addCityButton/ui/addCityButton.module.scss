@@ -2,9 +2,14 @@
   border-radius: var(--border-radius-xl);
   height: var(--height-main);
   border: var(--border-width-main) solid var(--light-grey);
-  width: 70px;
+  width: var(--height-main);
   background: var(--dark-grey);
   display: flex;
   justify-content: center;
   align-items: center;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 }

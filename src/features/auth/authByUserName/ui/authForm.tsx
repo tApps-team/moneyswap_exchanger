@@ -88,7 +88,7 @@ export const AuthByUserNameForm = () => {
                 <FormControl>
                   <PasswordInput
                     type="password"
-                    className="text-white h-mainHeight border-2 font-normal uppercase placeholder:text-white rounded-[35px] pl-12 bg-darkGray"
+                    className="text-white h-mainHeight border-2 font-normal uppercase placeholder:text-white rounded-[35px] pl-14 bg-darkGray"
                     placeholder="••••••••••••"
                     {...field}
                     eyeIcon
