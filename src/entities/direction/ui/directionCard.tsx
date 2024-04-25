@@ -79,7 +79,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                       disabled={
                         direction.in_count_type === CurrencyType.Cryptocurrency
                       }
-                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] font-xs"
+                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
                     />
                   </FormControl>
                   <FormMessage />
@@ -106,7 +106,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                       disabled={
                         direction.out_count_type === CurrencyType.Cryptocurrency
                       }
-                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] font-xs"
+                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
                     />
                   </FormControl>
                   <FormMessage />

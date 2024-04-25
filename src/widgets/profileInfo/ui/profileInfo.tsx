@@ -6,7 +6,7 @@ export const ProfileInfo = () => {
   const { data: profileInfo, isLoading: isLoadingProfileInfo } =
     useProfileInfoQuery();
   return (
-    <div className="text-white grid grid-rows-2 grid-cols-1 h-[60vh] ">
+    <div className="text-white grid grid-rows-2 grid-cols-1 h-[50vh] ">
       {isLoadingProfileInfo ? (
         <div>
           <Skeleton className="w-full h-12 sm:h-16 rounded-xl" />

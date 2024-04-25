@@ -146,7 +146,8 @@ export const DirectionAddForm = () => {
               <FormControl>
                 <ItemSelect
                   inputLabel="ОТДАЮ"
-                  emptyLabel="Выберите что отдаете"
+                  inputPlaceholder="ПОИСК ВАЛЮТЫ"
+                  emptyLabel="выберите валюту"
                   itemIcon={field.value?.icon_url}
                   items={currectAllCurrencies}
                   label={
@@ -176,9 +177,10 @@ export const DirectionAddForm = () => {
               <FormControl>
                 <ItemSelect
                   inputLabel="ПОЛУЧАЮ"
+                  inputPlaceholder="ПОИСК ВАЛЮТЫ"
                   items={currectAvailableCurrncies}
                   itemIcon={field.value?.icon_url}
-                  emptyLabel="Выберите что получаете"
+                  emptyLabel="выберите валюту"
                   label={field.value?.name || ""}
                   disabled={!form.getValues("giveCurrency")}
                   onClick={(e) => field.onChange(e)}
@@ -221,7 +223,7 @@ export const DirectionAddForm = () => {
                           />
                         )
                       }
-                      className=" bg-darkGray text-white text-xs sm:text-sm   rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className=" bg-darkGray text-white text-base rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -262,7 +264,7 @@ export const DirectionAddForm = () => {
                         )
                       }
                       disabled={inputDisabled || inputOutCountValue}
-                      className="border text-xs sm:text-sm border-white bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="border text-base border-white bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
                     />
                   </div>
                 </FormControl>

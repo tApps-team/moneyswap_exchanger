@@ -6,8 +6,18 @@
 // @import "reset.scss";
 @import "variables.scss";
 
+* {
+  margin: 0;
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+.html.fixed {
+  max-height: 100vh;
+  max-height: 100svh;
+  overflow: hidden;
 }
 
 @layer base {

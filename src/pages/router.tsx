@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import { paths } from "@/shared/routing";
 import ProtectedRoutes from "./ProtectedRoutes";
 import { LoginPage } from "./login";
@@ -9,7 +9,6 @@ import { ProfileSettingsPage } from "./profileSettings";
 import { ProfileInfoPage } from "./profileInfo";
 import { ProfilePasswordPage } from "./profilePassword";
 import { StatisticsPage } from "./statistics";
-import { NotFoundPage } from "./notFound";
 import { MainLayout, RootLayout } from "./layouts";
 import { LocationAddPage } from "./locationAdd";
 import { LocationEditPage } from "./locationEdit";
@@ -61,11 +60,7 @@ export const router = createBrowserRouter([
           },
           {
             path: paths.notFound,
-            element: (
-              <MainLayout>
-                <NotFoundPage />
-              </MainLayout>
-            ),
+            element: <Navigate to={paths.home} replace />,
           },
           {
             path: paths.locationAdd,

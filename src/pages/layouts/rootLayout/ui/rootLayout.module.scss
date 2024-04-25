@@ -1,5 +1,6 @@
 .root__container {
-  min-height: 100vh;
+  height: 100vh;
+  height: 100svh;
   max-width: var(--container-width);
   margin: 0 auto;
   padding: var(--padding-xl);
@@ -10,6 +11,8 @@
 
   .root__content {
     // overflow-y: auto;
-    // height: 100vh;
+    height: calc(100vh - 100px);
+    height: calc(100svh - 100px);
+    // overflow: hidden;
   }
 }
