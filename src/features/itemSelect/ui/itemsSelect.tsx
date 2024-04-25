@@ -80,7 +80,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           </div>
           <Input
             startAdornment={<Search className="translate-y-8 ml-2" />}
-            className="rounded-xl bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0"
+            className="rounded-xl text-base bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0"
             value={searchValue}
             placeholder={inputPlaceholder || ""}
             onChange={(e) => setSearchValue(e.target.value.trim())}

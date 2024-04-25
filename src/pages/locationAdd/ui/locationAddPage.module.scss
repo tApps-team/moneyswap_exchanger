@@ -4,9 +4,10 @@
     left: 50%;
     max-width: 500px;
     transform: translate(-50%);
-    background: url("@/shared/assets/images/locationAdd.png") no-repeat;
+    background: url("@/shared/assets/images/profileSettingBg.png") no-repeat;
     background-size: cover;
-    height: 100%;
+    height: 100vh;
+    height: 100svh;
     width: 100%;
     z-index: -1;
 }
