@@ -1,6 +1,10 @@
 .title {
     color: var(--main-color);
-    font-size: 22px;
+    font-size: var(--text-xl);
     font-weight: 400;
     text-transform: uppercase;
+
+    @media (max-width: 380px) {
+        font-size: var(--text-lg);
+    }
 }

@@ -2,13 +2,18 @@
 
     &__title {
         color: var(--main-color);
-        font-size: 22px;
+        font-size: var(--text-xl);
         font-weight: 400;
         text-transform: uppercase;
         margin-bottom: var(--padding-l);
+
+        @media (max-width: 380px) {
+            font-size: var(--text-lg);
+        }
     }
 
     .carousel {
         width: calc(100% - 92px);
+        flex: 1 1;
     }
 }

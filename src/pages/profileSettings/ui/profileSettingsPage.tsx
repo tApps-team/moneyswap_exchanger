@@ -19,8 +19,12 @@ export const ProfileSettingsPage = () => {
           >
             <ProfileIcon width={22} height={22} />
             <div className="flex flex-col">
-              <p className="text-[16px] font-normal">ИНФОРМАЦИЯ АККАУНТА</p>
-              <p className="text-[12px] font-light">Измените вашу информацию</p>
+              <p className="text-sm sm:text-base font-normal">
+                ИНФОРМАЦИЯ АККАУНТА
+              </p>
+              <p className="text-xs sm:text-sm font-light">
+                Измените вашу информацию
+              </p>
             </div>
           </Link>
         </Button>
@@ -33,8 +37,10 @@ export const ProfileSettingsPage = () => {
           >
             <Eye color="#F6FF5F" />
             <div className="flex flex-col">
-              <p className="text-[16px] font-normal">ПАРОЛЬ</p>
-              <p className="text-[12px] font-light">Измените ваш пароль</p>
+              <p className="text-sm sm:text-base font-normal">ПАРОЛЬ</p>
+              <p className="text-xs sm:text-sm font-light">
+                Измените ваш пароль
+              </p>
             </div>
           </Link>
         </Button>

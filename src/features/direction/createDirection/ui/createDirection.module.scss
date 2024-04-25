@@ -5,7 +5,7 @@
   align-items: center;
   background: #2d2d2d;
   color: var(--white-color);
-  border: 2px solid var(--light-grey);
+  border: var(--border-width-main) solid var(--light-grey);
   padding: 25px;
   border-radius: var(--border-radius-xl);
 }

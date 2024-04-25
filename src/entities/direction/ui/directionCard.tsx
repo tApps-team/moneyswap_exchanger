@@ -47,7 +47,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
       .unwrap()
       .then(() => {
         toast({
-          title: "Направления успешно удалено",
+          title: "Направлениe успешно удалено",
           description: "",
           variant: "success",
         });
@@ -79,7 +79,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                       disabled={
                         direction.in_count_type === CurrencyType.Cryptocurrency
                       }
-                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center"
+                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] font-xs"
                     />
                   </FormControl>
                   <FormMessage />
@@ -88,13 +88,10 @@ export const DirectionCard: FC<DirectionCardProps> = ({
             />
             <p className={styles.code}>{direction.valute_from}</p>
           </div>
-          <span className="text-2xl">=</span>
+          <span className="text-xl">=</span>
           <div className={styles.input__block}>
             <div className={styles.icon}>
-              <img
-                src={direction.icon_valute_to}
-                className="w-[40px] h-[40px]"
-              />
+              <img src={direction.icon_valute_to} />
             </div>
             <FormField
               control={form.control}
@@ -109,7 +106,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                       disabled={
                         direction.out_count_type === CurrencyType.Cryptocurrency
                       }
-                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center"
+                      className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] font-xs"
                     />
                   </FormControl>
                   <FormMessage />

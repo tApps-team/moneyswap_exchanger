@@ -47,11 +47,11 @@
             }
 
             p {
-                font-size: 24px;
+                font-size: var(--text-xl);
                 color: var(--main-color);
                 font-weight: 500;
+                max-width: 80%;
                 text-transform: uppercase;
-                max-width: 60%;
                 text-align: center;
                 line-height: 1.1;
             }

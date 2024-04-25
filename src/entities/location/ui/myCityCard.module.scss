@@ -1,16 +1,16 @@
 .card {
   display: grid;
-  grid-template: 1fr / 0.5fr 1fr 0.5fr;
+  grid-template: 1fr / 35px 1fr 70px;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
   background: var(--light-grey);
-  height: 70px;
+  height: var(--height-main);
   border-radius: var(--border-radius-xl);
   padding-left: var(--padding-m);
 
   .icon {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     position: relative;
 
     img {
@@ -19,24 +19,24 @@
   }
 
   .name {
-    font-size: 16px;
+    font-size: var(--text-sm);
     white-space: nowrap;
-    width: 100px;
+    width: 90px;
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
     text-transform: uppercase;
     font-weight: 400;
-}
+  }
 
   .settings_btn {
     background: var(--dark-grey);
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 70px;
+    width: var(--height-main);
     height: var(--height-main);
     border-radius: var(--border-radius-xl);
-    border: 2px solid var(--light-grey);
+    border: var(--border-width-main) solid var(--light-grey);
   }
 }
 

@@ -1,10 +1,15 @@
 .add_city_btn {
   border-radius: var(--border-radius-xl);
-  height: var(--height-main);
   border: var(--border-width-main) solid var(--light-grey);
-  width: 70px;
   background: var(--dark-grey);
   display: flex;
   justify-content: center;
   align-items: center;
+  height: var(--height-main);
+  width: var(--height-main);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 }

@@ -28,7 +28,7 @@ export const AuthByUserNameForm = () => {
     },
   });
 
-  const [Login, { isLoading, error }] = useLoginMutation();
+  const [Login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -43,7 +43,7 @@ export const AuthByUserNameForm = () => {
       .catch((error) => {
         console.error("Ошибка получения токена:", error);
         toast({
-          title: "Ошбика",
+          title: "Неверный логин или пароль",
           variant: "destructive",
         });
       });
@@ -71,7 +71,7 @@ export const AuthByUserNameForm = () => {
                         className="absolute left-5 translate-y-6 "
                       />
                     }
-                    className="text-white h-mainHeight border-2 font-normal uppercase placeholder:text-white rounded-[35px] pl-14 bg-darkGray"
+                    className="text-white   text-xs sm:text-sm h-mainHeight border-2 font-normal  placeholder:text-white rounded-[35px] pl-14 bg-darkGray"
                     placeholder="E-MAIL"
                     {...field}
                   />
@@ -88,7 +88,7 @@ export const AuthByUserNameForm = () => {
                 <FormControl>
                   <PasswordInput
                     type="password"
-                    className="text-white h-mainHeight border-2 font-normal uppercase placeholder:text-white rounded-[35px] pl-12 bg-darkGray"
+                    className="text-white text-xs sm:text-sm h-mainHeight border-2 font-normal  placeholder:text-white rounded-[35px] pl-14 bg-darkGray"
                     placeholder="••••••••••••"
                     {...field}
                     eyeIcon
@@ -99,18 +99,13 @@ export const AuthByUserNameForm = () => {
             )}
           />
           <Button
-            className=" w-full rounded-[35px] uppercase font-semibold text-xl text-mainColor bg-darkGray"
+            className=" w-full rounded-[35px] text-lg sm:text-xl uppercase font-semibold  text-mainColor bg-darkGray"
             type="submit"
           >
             {isLoading ? <Loader className="animate-spin" /> : "ВОЙТИ"}
           </Button>
         </form>
       </Form>
-      {error && (
-        <h1 className="text-red-500 font-medium text-center mt-5">
-          Неверный логин или пароль
-        </h1>
-      )}
     </div>
   );
 };

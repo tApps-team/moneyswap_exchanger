@@ -140,7 +140,9 @@ export const DirectionAddForm = () => {
           name={"giveCurrency"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-xl">ОТДАЮ</FormLabel>
+              <FormLabel className="text-mainColor text-lg font-light sm:text-xl">
+                ОТДАЮ
+              </FormLabel>
               <FormControl>
                 <ItemSelect
                   inputLabel="ОТДАЮ"
@@ -168,7 +170,9 @@ export const DirectionAddForm = () => {
           name={"getCurrency"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-xl">ПОЛУЧАЮ</FormLabel>
+              <FormLabel className="text-mainColor text-lg font-light sm:text-xl">
+                ПОЛУЧАЮ
+              </FormLabel>
               <FormControl>
                 <ItemSelect
                   inputLabel="ПОЛУЧАЮ"
@@ -217,7 +221,7 @@ export const DirectionAddForm = () => {
                           />
                         )
                       }
-                      className=" bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className=" bg-darkGray text-white text-xs sm:text-sm   rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -258,7 +262,7 @@ export const DirectionAddForm = () => {
                         )
                       }
                       disabled={inputDisabled || inputOutCountValue}
-                      className="border border-white bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      className="border text-xs sm:text-sm border-white bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
                     />
                   </div>
                 </FormControl>
@@ -269,7 +273,7 @@ export const DirectionAddForm = () => {
         </div>
 
         <Button
-          className="rounded-[35px] border border-bg-darkGray h-[70px] bg-darkGray text-mainColor text-xl"
+          className="rounded-[35px] border border-bg-darkGray text-lg  sm:text-xl h-[70px] bg-darkGray text-mainColor"
           type="submit"
         >
           {isLoadingAddDirection ? (
