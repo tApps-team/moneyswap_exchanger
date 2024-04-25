@@ -4,7 +4,7 @@ export enum paths {
   profile = "/profile",
   statistics = "/statistics",
   notifications = "/notifications",
-  notFound = "/*",
+  notFound = "*",
   profileSettings = "/settings",
   profilePassword = "/password",
   profileInfo = "/info",

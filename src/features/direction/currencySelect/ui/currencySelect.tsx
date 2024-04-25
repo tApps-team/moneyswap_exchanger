@@ -46,7 +46,7 @@ export const CurrencySelect = (props: CurrencySelectProps) => {
             startAdornment={<Search className="translate-y-8 ml-2" />}
             value={searchValue}
             placeholder="Поиск валюты"
-            className="rounded-xl bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0"
+            className="text-sm rounded-xl bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0"
             onChange={(e) => setSearchValue(e.target.value.trim())}
           />
         </DrawerHeader>

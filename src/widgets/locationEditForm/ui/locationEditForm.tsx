@@ -85,8 +85,8 @@ export const LocationEditForm = () => {
       .unwrap()
       .then(() => {
         toast({
-          variant: "destructive",
-          title: "Delete",
+          variant: "success",
+          title: "Город успешно удален",
         });
         navigate(paths.home);
       });
@@ -155,7 +155,7 @@ export const LocationEditForm = () => {
           name={"office"}
           render={({ field }) => (
             <FormItem className="flex items-center justify-between">
-              <FormLabel className="text-white text-lg  sm:text-xl">
+              <FormLabel className="text-white text-lg sm:text-xl">
                 ЕСТЬ ОФИС
               </FormLabel>
               <FormControl>
@@ -237,7 +237,7 @@ export const LocationEditForm = () => {
           </div>
         </div>
         <div className="grid grid-rows-2 gap-6 text-white ">
-          <div className="text-lg  sm:text-xl row-span-2 text-white">
+          <div className="text-lg sm:text-xl row-span-2 text-white">
             ДНИ РАБОТЫ
           </div>
           <div className="grid grid-cols-7   ">
