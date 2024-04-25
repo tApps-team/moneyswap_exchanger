@@ -259,7 +259,7 @@ export const LocationEditForm = () => {
                               activeEditCity?.info.working_days[day]
                             }
                           />
-                          <div>{day}</div>
+                          <div className="font-light uppercase">{day}</div>
                         </div>
                       </FormControl>
                       <FormMessage />

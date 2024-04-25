@@ -279,7 +279,7 @@ export const LocationAddForm = () => {
                             checked={field.value}
                             onCheckedChange={field.onChange}
                           />
-                          <div className="font-light">{day}</div>
+                          <div className="font-light uppercase">{day}</div>
                         </div>
                       </FormControl>
                       <FormMessage />
