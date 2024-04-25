@@ -4,7 +4,7 @@
     width: calc(100% - 4px);
     background: var(--dark-grey);
     border-radius: var(--border-radius-l);
-    border: 2px solid var(--light-grey);
+    border: var(--border-width-main) solid var(--light-grey);
 
     .delete {
         position: absolute;
@@ -54,7 +54,7 @@
                 font-size: var(--text-sm);
                 bottom: -25px;
 
-                max-width: 100px;
+                max-width: 100%;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;

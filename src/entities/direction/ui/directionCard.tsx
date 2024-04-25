@@ -47,7 +47,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
       .unwrap()
       .then(() => {
         toast({
-          title: "Направления успешно удалено",
+          title: "Направлениe успешно удалено",
           description: "",
           variant: "success",
         });

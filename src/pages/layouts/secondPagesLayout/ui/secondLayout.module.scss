@@ -44,26 +44,16 @@
                 position: absolute;
                 left: 0;
                 top: 0;
-
-               @media (max-width: 380px) {
-                   svg {
-                 width: 22px;
-                 height: 22px;
-             }
-            } 
             }
 
             p {
-                font-size: 22px;
+                font-size: var(--text-xl);
                 color: var(--main-color);
                 font-weight: 500;
+                max-width: 80%;
                 text-transform: uppercase;
                 text-align: center;
                 line-height: 1.1;
-
-                @media (max-width: 380px) {
-                    font-size: 20px;
-                }
             }
         }
     }

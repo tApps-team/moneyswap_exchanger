@@ -1,6 +1,6 @@
 .card {
   display: grid;
-  grid-template: 1fr / 0.5fr 1fr 0.5fr;
+  grid-template: 1fr / 35px 1fr 70px;
   align-items: center;
   gap: 10px;
   background: var(--light-grey);
@@ -21,7 +21,7 @@
   .name {
     font-size: var(--text-sm);
     white-space: nowrap;
-    width: 100px;
+    width: 90px;
     overflow: hidden;
     text-overflow: ellipsis; 
     text-transform: uppercase;
@@ -36,7 +36,7 @@
     width: var(--height-main);
     height: var(--height-main);
     border-radius: var(--border-radius-xl);
-    border: 2px solid var(--light-grey);
+    border: var(--border-width-main) solid var(--light-grey);
   }
 }
 

@@ -13,8 +13,12 @@ export const ProfileInfo = () => {
         </div>
       ) : (
         <div>
-          <div className="text-xl uppercase">{profileInfo?.title?.ru}</div>
-          <div className="text-l font-light">{profileInfo?.partner_link}</div>
+          <div className="text-lg sm:text-xl uppercase">
+            {profileInfo?.title?.ru}
+          </div>
+          <div className="text-xs sm:text-sm font-light">
+            {profileInfo?.partner_link}
+          </div>
         </div>
       )}
       <div className="grid grid-rows-2">
@@ -23,7 +27,7 @@ export const ProfileInfo = () => {
           <p>для изменений</p>
         </div>
         <Button
-          className="rounded-[35px]  border-bg-darkGray  bg-darkGray text-mainColor text-xl"
+          className="rounded-[35px]  border-bg-darkGray  bg-darkGray text-mainColor text-lg sm:text-xl"
           asChild
         >
           <Link target="_blank" to={"https://www.google.com/"}>

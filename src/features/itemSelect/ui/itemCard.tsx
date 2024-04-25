@@ -36,13 +36,15 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
 
         {item.code_name ? (
           <div>
-            <div className="uppercase truncate font-semibold">{item.name}</div>
+            <div className="uppercase truncate font-semibold text-sm sm:text-lg">
+              {item.name}
+            </div>
             <div className="uppercase truncate font-light">
               {item.code_name}
             </div>
           </div>
         ) : (
-          <div className="uppercase truncate">{item.name}</div>
+          <div className="uppercase truncate font-light">{item.name}</div>
         )}
       </CardContent>
     </Card>

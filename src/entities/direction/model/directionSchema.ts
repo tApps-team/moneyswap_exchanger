@@ -9,8 +9,8 @@ export const directionSchema = z.object({
       // icon_valute_from: z.string(),
       // valute_to: z.string(),
       // icon_valute_to: z.string(),
-      in_count: z.coerce.number().positive().min(1),
-      out_count: z.coerce.number().positive().min(1),
+      in_count: z.coerce.number().positive().min(0.00000001),
+      out_count: z.coerce.number().positive().min(0.00000001),
       is_active: z.boolean(),
     })
   ),
@@ -38,7 +38,7 @@ export const directionAddSchema = z.object({
     icon_url: z.string(),
     type_valute: z.nativeEnum(CurrencyType),
   }),
-  giveCurrencyPrice: z.coerce.number().positive().min(1),
-  getCurrencyPrice: z.coerce.number().positive().min(1),
+  giveCurrencyPrice: z.coerce.number().positive().min(0.00000001),
+  getCurrencyPrice: z.coerce.number().positive().min(0.00000001),
 });
 export type DirectionAddSchemaType = z.infer<typeof directionAddSchema>;

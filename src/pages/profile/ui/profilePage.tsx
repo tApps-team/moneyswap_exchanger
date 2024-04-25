@@ -20,7 +20,7 @@ export const ProfilePage = () => {
               to={`${paths.profile}${paths.profileSettings}`}
             >
               <SettingsIcon color="#F6FF5F" />
-              <p className="text-[16px] font-normal">ПАРАМЕТРЫ</p>
+              <p className="text-sm sm:text-base font-normal">ПАРАМЕТРЫ</p>
               <LogoButtonIcon width={26} height={26} className="-rotate-90" />
             </Link>
           </Button>
@@ -35,7 +35,7 @@ export const ProfilePage = () => {
               <div className="w-[25px] h-[25px]">
                 <QuestionIcon fill="#F6FF5F" />
               </div>
-              <p className="text-[16px] font-normal text-mainColor">
+              <p className="text-sm sm:text-base font-normal text-mainColor">
                 СЛУЖБА ПОДДЕРЖКИ
               </p>
               <div className="w-[26px] h-[26px]">

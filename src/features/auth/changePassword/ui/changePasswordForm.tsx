@@ -62,7 +62,7 @@ export const ChangePasswordForm = () => {
                     eyeIcon={true}
                     type="password"
                     placeholder="*********"
-                    className="rounded-[35px]   text-center  placeholder:text-white  bg-darkGray"
+                    className="rounded-[35px]  text-xs sm:text-sm  text-center  placeholder:text-white  bg-darkGray"
                     {...field}
                   />
                 </FormControl>
@@ -80,7 +80,7 @@ export const ChangePasswordForm = () => {
                     <PasswordInput
                       type="password"
                       placeholder="Новый пароль"
-                      className="rounded-[35px]  text-center placeholder:text-white bg-darkGray"
+                      className="rounded-[35px]  text-xs sm:text-sm  text-center placeholder:text-white bg-darkGray"
                       {...field}
                       eyeIcon={false}
                     />
@@ -97,7 +97,7 @@ export const ChangePasswordForm = () => {
                   <FormControl>
                     <PasswordInput
                       type="password"
-                      className="rounded-[35px] text-center   placeholder:text-white bg-darkGray"
+                      className="rounded-[35px] text-center  text-xs sm:text-sm  placeholder:text-white bg-darkGray"
                       placeholder="Повторите пароль"
                       {...field}
                     />
@@ -109,7 +109,7 @@ export const ChangePasswordForm = () => {
           </div>
           <Button
             type="submit"
-            className="rounded-[35px] bg-[#F6FF5F]  text-black text-lg uppercase text-semibold  border-none"
+            className="rounded-[35px] bg-[#F6FF5F]  text-black text-lg sm:text-xl uppercase text-semibold  border-none"
           >
             {isLoading ? <Loader className="animate-spin" /> : "Сохранить"}
           </Button>

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 22px;
+  font-size: var(---text-xl);
   font-weight: 500;
   text-transform: uppercase;
   text-align: center;
@@ -13,4 +13,8 @@
   border-radius: var(--border-radius-xl);
   height: var(--height-main);
   width: 100%;
+
+  @media (max-width: 380px) {
+    font-size: var(---text-lg);
+  }
 }
