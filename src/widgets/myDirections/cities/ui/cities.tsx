@@ -21,7 +21,7 @@ export const Cities: FC<CitiesProps> = ({
   return (
     <div className={styles.cities}>
       <h2 className={styles.cities__title}>Мои города</h2>
-      <div className="flex gap-3">
+      <div className="flex">
         <AddCityButton />
         <div className={styles.carousel}>
           <CityCarousel

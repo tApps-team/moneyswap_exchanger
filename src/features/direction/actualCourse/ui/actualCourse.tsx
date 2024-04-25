@@ -26,15 +26,15 @@ export const ActualCourse = (props: ActualCourseProps) => {
                 height={34}
               />
               <div className="flex flex-wrap items-center leading-0 truncate">
-                <div className="mr-1 font-semibold text-[14px] truncate">
+                <div className="mr-1 font-semibold text-xs sm:text-sm truncate">
                   {actualCourse?.in_count}
                 </div>
-                <div className="font-normal text-[14px] truncate">
+                <div className="font-normal text-[14px] text-xs sm:text-sm truncate">
                   {actualCourse?.valute_from}
                 </div>
               </div>
             </div>
-            <div>=</div>
+            <div className="text-sm sm:text-lg">=</div>
             <div className="flex items-center truncate gap-2">
               <img
                 src={actualCourse?.icon_valute_to}
@@ -43,17 +43,17 @@ export const ActualCourse = (props: ActualCourseProps) => {
                 height={34}
               />
               <div className="flex flex-wrap items-center leading-0 truncate">
-                <div className="mr-1 font-semibold text-[14px] truncate">
+                <div className="mr-1 font-semibold text-xs sm:text-sm truncate">
                   {actualCourse?.out_count}
                 </div>
-                <div className="font-normal text-[14px] truncate">
+                <div className="font-normal text-xs sm:text-sm truncate">
                   {actualCourse?.valute_to}
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="w-full text-center uppercase text-[14px]">
+          <div className="w-full text-center uppercase text-sm sm:text-base font-semibold">
             Актуальный курс
           </div>
         )}

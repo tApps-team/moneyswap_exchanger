@@ -111,7 +111,9 @@ export const LocationAddForm = () => {
           name={"country"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-xl">Страна</FormLabel>
+              <FormLabel className="text-mainColor text-lg font-light sm:text-xl">
+                СТРАНА
+              </FormLabel>
               <FormControl>
                 <ItemSelect
                   inputLabel="ВЫБОР СТРАНЫ"
@@ -135,7 +137,9 @@ export const LocationAddForm = () => {
           name={"city"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-xl">Город</FormLabel>
+              <FormLabel className="text-mainColor font-light text-lg sm:text-xl">
+                ГОРОД
+              </FormLabel>
               <FormControl>
                 <ItemSelect
                   inputLabel="ВЫБОР ГОРОДА"
@@ -157,7 +161,9 @@ export const LocationAddForm = () => {
           name={"deliviry"}
           render={({ field }) => (
             <FormItem className="flex items-center justify-between">
-              <FormLabel className="text-white text-xl">ДОСТАВКА</FormLabel>
+              <FormLabel className="text-white text-lg sm:text-xl ">
+                ДОСТАВКА
+              </FormLabel>
               <FormControl>
                 <Switch
                   checked={field.value}
@@ -173,7 +179,9 @@ export const LocationAddForm = () => {
           name={"office"}
           render={({ field }) => (
             <FormItem className="flex items-center justify-between">
-              <FormLabel className="text-white text-xl">ЕСТЬ ОФИС</FormLabel>
+              <FormLabel className="text-white text-lg sm:text-xl">
+                ЕСТЬ ОФИС
+              </FormLabel>
               <FormControl>
                 <Switch
                   checked={field.value}
@@ -186,7 +194,7 @@ export const LocationAddForm = () => {
         />
         <div className="flex flex-col gap-4">
           <div>
-            <div className="text-white text-xl">ВРЕМЯ РАБОТЫ</div>
+            <div className="text-white text-lg sm:text-xl">ВРЕМЯ РАБОТЫ</div>
             <div className="text-white font-light">По местному времени</div>
           </div>
           <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
@@ -241,7 +249,7 @@ export const LocationAddForm = () => {
                           setTime={field.onChange}
                           time={field.value}
                         />
-                        <AlertDialogAction>Сохранить</AlertDialogAction>
+                        <AlertDialogAction>СОХРАНИТЬ</AlertDialogAction>
                       </AlertDialogContent>
                     </AlertDialog>
                   </FormControl>
@@ -252,7 +260,9 @@ export const LocationAddForm = () => {
           </div>
         </div>
         <div className="grid grid-rows-2 gap-6 text-white ">
-          <div className="text-xl text-white row-span-2">ДНИ РАБОТЫ</div>
+          <div className="text-lg sm:text-xl text-white row-span-2">
+            ДНИ РАБОТЫ
+          </div>
           <div className="grid grid-cols-7">
             {Object.keys(form.formState.defaultValues?.workDays || {}).map(
               (day) => (
@@ -269,7 +279,7 @@ export const LocationAddForm = () => {
                             checked={field.value}
                             onCheckedChange={field.onChange}
                           />
-                          <div>{day}</div>
+                          <div className="font-light uppercase">{day}</div>
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -281,7 +291,7 @@ export const LocationAddForm = () => {
           </div>
         </div>
         <Button
-          className="w-full border-2 text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
+          className="w-full border-2 text-mainColor text-lg  sm:text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
           type="submit"
           variant={"outline"}
         >

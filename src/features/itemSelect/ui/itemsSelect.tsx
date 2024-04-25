@@ -52,18 +52,20 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
       <DrawerTrigger asChild>
         <Button
           disabled={disabled}
-          className="rounded-[35px] w-full truncate  text-white disabled:pointer-events-none bg-darkGray disabled:bg-lightGray disabled:opacity-80  justify-between items-center  gap-2 select-none"
+          className="rounded-[35px] w-full truncate font-light  text-white disabled:pointer-events-none bg-darkGray disabled:bg-lightGray disabled:opacity-80  justify-between items-center  gap-2 select-none"
         >
           <div className="flex items-center gap-2 ">
             {itemIcon && (
               <img
-                width={40}
-                height={40}
+                width={34}
+                height={34}
                 src={itemIcon}
                 alt={`${label} icon`}
               />
             )}
-            <div className="uppercase">{label ? label : emptyLabel}</div>
+            <div className="uppercase text-sm sm:text-base">
+              {label ? label : emptyLabel}
+            </div>
           </div>
           <LogoButtonIcon fill="#F6FF5F" width={28} height={28} />
         </Button>

@@ -14,6 +14,7 @@
 
   @media (max-width: 380px) {
     padding: var(--padding-m);
+    padding-bottom: var(--padding-xs);
   }
 
   &.not_active {

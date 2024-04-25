@@ -16,12 +16,12 @@ export const ProfilePage = () => {
             asChild
           >
             <Link
-              className="flex gap-4 bg-transparent"
+              className="flex gap-3 sm:gap-4 bg-transparent"
               to={`${paths.profile}${paths.profileSettings}`}
             >
               <SettingsIcon color="#F6FF5F" />
-              <p className="text-[16px] font-normal">ПАРАМЕТРЫ</p>
-              <LogoButtonIcon width={26} height={26} className="-rotate-90" />
+              <p className="sm:text-base text-sm font-normal">ПАРАМЕТРЫ</p>
+              <LogoButtonIcon className="-rotate-90 w-[22px] h-[22px] sm:h-[26px] sm:w-[26px]" />
             </Link>
           </Button>
           <Button
@@ -29,17 +29,17 @@ export const ProfilePage = () => {
             asChild
           >
             <Link
-              className="flex gap-4 bg-transparent"
+              className="flex gap-3 sm:gap-4 bg-transparent"
               to={`${paths.profile}${paths.profileSettings}`}
             >
               <div className="w-[25px] h-[25px]">
                 <QuestionIcon fill="#F6FF5F" />
               </div>
-              <p className="text-[16px] font-normal text-mainColor">
+              <p className="sm:text-base text-sm font-normal text-mainColor">
                 СЛУЖБА ПОДДЕРЖКИ
               </p>
               <div className="w-[26px] h-[26px]">
-                <LogoButtonIcon width={26} height={26} className="-rotate-90" />
+                <LogoButtonIcon className="-rotate-90 w-[22px] h-[22px] sm:h-[26px] sm:w-[26px]" />
               </div>
             </Link>
           </Button>
