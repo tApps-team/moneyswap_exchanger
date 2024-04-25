@@ -14,7 +14,7 @@ export const ActualCourse = (props: ActualCourseProps) => {
   const { actualCourse } = props;
 
   return (
-    <Card className="p-0 bg-mainColor h-[70px] text-darkGray overflow-hidden rounded-full border-none">
+    <Card className="p-0 bg-mainColor h-mainHeight text-darkGray overflow-hidden rounded-[35px] border-none">
       <CardContent className="p-4 h-full flex items-center">
         {actualCourse ? (
           <div className="grid grid-cols-[auto,10px,auto] justify-between items-center gap-4">
@@ -22,8 +22,8 @@ export const ActualCourse = (props: ActualCourseProps) => {
               <img
                 src={actualCourse?.icon_valute_from}
                 alt={`icon ${actualCourse?.valute_to}`}
-                width={32}
-                height={32}
+                width={34}
+                height={34}
               />
               <div className="flex flex-wrap items-center leading-0 truncate">
                 <div className="mr-1 font-semibold text-[14px] truncate">
@@ -39,8 +39,8 @@ export const ActualCourse = (props: ActualCourseProps) => {
               <img
                 src={actualCourse?.icon_valute_to}
                 alt={`icon ${actualCourse?.valute_to}`}
-                width={32}
-                height={32}
+                width={34}
+                height={34}
               />
               <div className="flex flex-wrap items-center leading-0 truncate">
                 <div className="mr-1 font-semibold text-[14px] truncate">

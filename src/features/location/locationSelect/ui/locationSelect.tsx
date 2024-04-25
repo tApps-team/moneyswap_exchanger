@@ -84,7 +84,7 @@ export const LocationSelect = (props: LocationSelectProps) => {
         <DrawerTrigger asChild>
           <Button
             disabled={disabled}
-            className="w-full  text-white hover:bg-mainColor disabled:pointer-events-none bg-darkGray h-14 disabled:bg-lightGray justify-between items-center rounded-full gap-2 select-none"
+            className="w-full  text-white hover:bg-mainColor disabled:pointer-events-none bg-darkGray h-14 disabled:bg-lightGray justify-between items-center rounded-[35px] gap-2 select-none"
             variant={"outline"}
           >
             <div className="flex gap-2 items-center">
@@ -162,7 +162,7 @@ export const LocationSelectRefatoring = <
       <DrawerTrigger asChild>
         <Button
           disabled={disabled}
-          className="w-full  text-white hover:bg-mainColor disabled:pointer-events-none bg-darkGray h-14 disabled:bg-lightGray justify-between items-center rounded-full gap-2 select-none"
+          className="w-full  text-white hover:bg-mainColor disabled:pointer-events-none bg-darkGray h-14 disabled:bg-lightGray justify-between items-center rounded-[35px] gap-2 select-none"
           variant={"outline"}
         >
           <div className="flex gap-2 items-center">

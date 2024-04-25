@@ -16,6 +16,7 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+
     // border - radius
     extend: {
       colors: {
@@ -61,6 +62,17 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        baseRadius: "35px",
+        secondRadius: "16px",
+      },
+      gap: {
+        itemSelect: "8px",
+      },
+      height: {
+        mainHeight: "70px",
+      },
+      borderWidth: {
+        mainBorderWidth: "4px",
       },
       keyframes: {
         "accordion-down": {

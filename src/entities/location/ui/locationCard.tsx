@@ -12,7 +12,7 @@ export const LocationCard = (props: LocationCardProps) => {
   return (
     <Card
       onClick={onClick}
-      className="p-4 cursor-pointer rounded-full border border-white bg-darkGray"
+      className="p-4 cursor-pointer rounded-[35px] border border-white bg-darkGray"
     >
       <CardContent className="p-0 flex gap-2 items-center  text-white">
         {country_flag && (

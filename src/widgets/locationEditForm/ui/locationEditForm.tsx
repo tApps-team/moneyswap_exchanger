@@ -262,7 +262,7 @@ export const LocationEditForm = () => {
         </div>
         <div className="flex flex-col gap-4">
           <Button
-            className="w-full text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
+            className="w-full border-2 text-mainColor text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
             type="submit"
             variant={"outline"}
           >
@@ -277,7 +277,7 @@ export const LocationEditForm = () => {
               <Button
                 type="button"
                 variant={"outline"}
-                className="w-full text-darkGray text-xl disabled:pointer-events-none bg-mainColor  disabled:bg-lightGray  items-center rounded-full gap-2 select-none"
+                className="w-full border-2 text-darkGray text-xl disabled:pointer-events-none bg-mainColor  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
               >
                 {isLoadingDeletePartnerCity ? (
                   <Loader className="animate-spin" />
