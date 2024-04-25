@@ -9,7 +9,7 @@ export const ProfileInfo = () => {
     <div className="text-white grid grid-rows-2 grid-cols-1 h-[60vh] ">
       {isLoadingProfileInfo ? (
         <div>
-          <Skeleton className="w-full h-16 rounded-xl" />
+          <Skeleton className="w-full h-12 sm:h-16 rounded-xl" />
         </div>
       ) : (
         <div>
@@ -27,7 +27,7 @@ export const ProfileInfo = () => {
           <p>для изменений</p>
         </div>
         <Button
-          className="rounded-[35px]  border-bg-darkGray  bg-darkGray text-mainColor text-lg sm:text-xl"
+          className="rounded-[35px] text-lg sm:text-xl border-bg-darkGray  bg-darkGray text-mainColor "
           asChild
         >
           <Link target="_blank" to={"https://www.google.com/"}>
