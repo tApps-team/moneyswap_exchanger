@@ -11,7 +11,7 @@ export const ProfileSettingsPage = () => {
       <div className={styles.container}></div>
       <div className="grid grid-rows-2 gap-4">
         <Button
-          className="border-none justify-start gap-4 bg-transparent cursor-pointer"
+          className="border-none justify-start gap-4 px-0 bg-transparent cursor-pointer"
           asChild
         >
           <Link
@@ -19,13 +19,13 @@ export const ProfileSettingsPage = () => {
           >
             <ProfileIcon width={22} height={22} />
             <div className="flex flex-col">
-              <p className="text-xl font-normal">ИНФОРМАЦИЯ АККАУНТА</p>
-              <p className="text-l font-light">Измените вашу информацию</p>
+              <p className="text-[16px] font-normal">ИНФОРМАЦИЯ АККАУНТА</p>
+              <p className="text-[12px] font-light">Измените вашу информацию</p>
             </div>
           </Link>
         </Button>
         <Button
-          className="border-none justify-start bg-transparent gap-4 cursor-pointer"
+          className="border-none justify-start bg-transparent gap-4 px-0 cursor-pointer"
           asChild
         >
           <Link
@@ -33,8 +33,8 @@ export const ProfileSettingsPage = () => {
           >
             <Eye color="#F6FF5F" />
             <div className="flex flex-col">
-              <p className="text-xl font-normal">ПАРОЛЬ</p>
-              <p className="text-l font-light">Измените ваш пароль</p>
+              <p className="text-[16px] font-normal">ПАРОЛЬ</p>
+              <p className="text-[12px] font-light">Измените ваш пароль</p>
             </div>
           </Link>
         </Button>

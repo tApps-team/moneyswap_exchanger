@@ -7,7 +7,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  Button,
 } from "@/shared/ui";
 import { useAppDispatch } from "@/shared/model";
 import { userSlice } from "@/entities/user";
@@ -22,12 +21,10 @@ export const Logout = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger className="grid justify-start">
-        <Button className="bg-transparent border-none mt-[15vh] text-start">
-          <div className="grid grid-cols-[auto,1fr] gap-4 items-center">
-            <LogoButtonIcon width={26} height={26} className="rotate-90" />
-            <p className="text-xl start">ВЫЙТИ</p>
-          </div>
-        </Button>
+        <div className="grid grid-cols-[auto,1fr] gap-4 items-center bg-transparent border-none mt-[15vh] text-start text-whiteColor">
+          <LogoButtonIcon width={26} height={26} className="rotate-90" />
+          <p className="text-[16px] start">ВЫЙТИ</p>
+        </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

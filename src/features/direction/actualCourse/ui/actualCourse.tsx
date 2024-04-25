@@ -15,9 +15,9 @@ export const ActualCourse = (props: ActualCourseProps) => {
 
   return (
     <Card className="p-0 bg-mainColor h-[70px] text-darkGray overflow-hidden rounded-full border-none">
-      <CardContent className="p-4 h-full grid grid-cols-[1fr,10px,1fr] items-center gap-4 ">
+      <CardContent className="p-4 h-full flex items-center">
         {actualCourse ? (
-          <>
+          <div className="grid grid-cols-[auto,10px,auto] justify-between items-center gap-4">
             <div className="flex items-center truncate gap-2">
               <img
                 src={actualCourse?.icon_valute_from}
@@ -35,7 +35,6 @@ export const ActualCourse = (props: ActualCourseProps) => {
               </div>
             </div>
             <div>=</div>
-
             <div className="flex items-center truncate gap-2">
               <img
                 src={actualCourse?.icon_valute_to}
@@ -52,7 +51,7 @@ export const ActualCourse = (props: ActualCourseProps) => {
                 </div>
               </div>
             </div>
-          </>
+          </div>
         ) : (
           <div className="w-full text-center uppercase text-[14px]">
             Актуальный курс
