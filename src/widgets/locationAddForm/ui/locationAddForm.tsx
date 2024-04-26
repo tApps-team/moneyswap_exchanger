@@ -260,7 +260,7 @@ export const LocationAddForm = () => {
           </div>
         </div>
         <div className="grid grid-rows-2 gap-6 text-white ">
-          <div className="text-lg sm:text-xl text-white row-span-2">
+          <div className="text-lg sm:text-xl row-span-2 text-white">
             ДНИ РАБОТЫ
           </div>
           <div className="grid grid-cols-7">
@@ -290,19 +290,18 @@ export const LocationAddForm = () => {
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-4">
-          <Button
-            className="w-full border-2 text-mainColor text-lg  sm:text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
-            type="submit"
-            variant={"outline"}
-          >
-            {isLoadingAddPartnerCity ? (
-              <Loader className="animate-spin" />
-            ) : (
-              "ДОБАВИТЬ"
-            )}
-          </Button>
-        </div>
+        <Button
+          className="w-full border-2  text-mainColor text-lg  sm:text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none"
+          type="submit"
+          variant={"outline"}
+        >
+          {isLoadingAddPartnerCity ? (
+            <Loader className="animate-spin" />
+          ) : (
+            "ДОБАВИТЬ"
+          )}
+        </Button>
+        <div></div>
       </form>
     </Form>
   );

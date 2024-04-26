@@ -240,7 +240,7 @@ export const LocationEditForm = () => {
           <div className="text-lg sm:text-xl row-span-2 text-white">
             ДНИ РАБОТЫ
           </div>
-          <div className="grid grid-cols-7   ">
+          <div className="grid grid-cols-7">
             {Object.keys(form.formState.defaultValues?.workDays || {}).map(
               (day) => (
                 <FormField
@@ -313,6 +313,7 @@ export const LocationEditForm = () => {
             </AlertDialogContent>
           </AlertDialog>
         </div>
+        <div></div>
       </form>
     </Form>
   );
