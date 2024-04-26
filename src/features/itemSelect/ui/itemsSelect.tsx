@@ -25,6 +25,7 @@ type ItemSelectProps<T> = {
   itemIcon?: string;
   onClick?: (item: T) => void;
   inputLabel?: string;
+  scrollRestore?: () => void;
 };
 export const ItemSelect = <T extends Partial<City & Country & Currency>>(
   props: ItemSelectProps<T>
@@ -41,15 +42,21 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
   } = props;
 
   const [searchValue, setSearchValue] = useState<string>("");
-
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const defferredSearchValue = useDeferredValue(searchValue);
 
   const filteredItems = items?.filter((item) =>
     item.name?.toLowerCase().includes(defferredSearchValue.toLowerCase())
   );
+  const handleScrollToTop = () => {
+    window.scrollTo({ left: 0, top: 0 });
+  };
+  // useLayoutEffect(() => {
+  //   window.scrollTo({ left: 0, top: 0 });
+  // }, [drawerOpen]);
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
+    <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+      <DrawerTrigger onClick={handleScrollToTop} asChild>
         <Button
           disabled={disabled}
           className="rounded-[35px] w-full truncate font-light  text-white disabled:pointer-events-none bg-darkGray disabled:bg-lightGray disabled:opacity-80  justify-between items-center  gap-2 select-none"
