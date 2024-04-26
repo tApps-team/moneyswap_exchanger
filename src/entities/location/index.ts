@@ -1,5 +1,5 @@
 export type { City, Country, ActiveCity } from "./model/types";
-export { LocationCard } from "./ui/locationCard";
+
 export { MyCityCard } from "./ui/myCityCard";
 export {
   locationApi,
