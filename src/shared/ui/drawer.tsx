@@ -47,7 +47,7 @@ const DrawerContent = React.forwardRef<
       )}
       {...props}
     >
-      <div className="flex items-center justify-center mt-14">
+      <div className="flex items-center justify-center mt-[40px]">
         <LogoIcon width={88} height={88} />
       </div>
 
