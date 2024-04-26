@@ -54,7 +54,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           disabled={disabled}
           className="rounded-[35px] w-full truncate font-light  text-white disabled:pointer-events-none bg-darkGray disabled:bg-lightGray disabled:opacity-80  justify-between items-center  gap-2 select-none"
         >
-          <div className="flex items-center gap-2 ">
+          <div className="flex items-center gap-2 truncate">
             {itemIcon && (
               <img
                 width={34}
@@ -63,14 +63,16 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
                 alt={`${label} icon`}
               />
             )}
-            <div className="uppercase text-sm sm:text-base">
+            <div className="uppercase truncate text-sm sm:text-base">
               {label ? label : emptyLabel}
             </div>
           </div>
-          <LogoButtonIcon fill="#F6FF5F" width={28} height={28} />
+          <div className="w-[28px] h-[28px]">
+            <LogoButtonIcon fill="#F6FF5F" width={28} height={28} />
+          </div>
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="h-screen bg-transparent border-none">
+      <DrawerContent className="h-[100svh] bg-transparent border-none">
         <DrawerHeader className="gap-0">
           <div className="flex items-center justify-between">
             <Label className="text-mainColor text-start">{inputLabel}</Label>
@@ -87,7 +89,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           />
         </DrawerHeader>
 
-        <ScrollArea data-vaul-no-drag className="h-screen p-4 w-full">
+        <ScrollArea data-vaul-no-drag className="h-[100%] p-4 w-full">
           <div className="grid grid-rows-1 items gap-2">
             {filteredItems?.map((item) => (
               <DrawerClose key={item.id} asChild>
