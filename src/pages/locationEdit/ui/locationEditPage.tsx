@@ -5,7 +5,7 @@ export const LocationEditPage = () => {
   return (
     <div>
       <div className={styles.container}></div>
-      <LocationEditForm />;
+      <LocationEditForm />
     </div>
   );
 };
