@@ -20,6 +20,28 @@ html {
   overflow: hidden;
 }
 
+/* Scroll bar stylings */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--main-color);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -120,4 +142,10 @@ body {
 
 .container {
   padding: var(--container-padding-all);
+}
+
+
+.noscroll {
+  overflow: hidden;
+  // position: fixed;
 }

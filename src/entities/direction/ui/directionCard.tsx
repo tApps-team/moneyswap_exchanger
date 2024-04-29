@@ -57,7 +57,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
 
   return (
     <div className={styles.card__container}>
-      <DirectionCardSwiper isActive={isActive}>
+      <DirectionCardSwiper isActive={isActive} cardId={direction.id}>
         <div className={styles.inputs}>
           <div className={styles.input__block}>
             <div className={styles.icon}>

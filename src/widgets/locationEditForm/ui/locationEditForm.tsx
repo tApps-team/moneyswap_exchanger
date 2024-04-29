@@ -89,6 +89,12 @@ export const LocationEditForm = () => {
           title: "Город успешно удален",
         });
         navigate(paths.home);
+      })
+      .catch(() => {
+        toast({
+          title: "Произошла ошибка на сервере, попробуйте позже...",
+          variant: "destructive",
+        });
       });
   };
   return (

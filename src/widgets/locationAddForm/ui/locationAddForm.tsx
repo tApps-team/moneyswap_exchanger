@@ -75,7 +75,7 @@ export const LocationAddForm = () => {
         navigate(paths.home);
         toast({
           title: "Город успешно добавлен!",
-          description: "Он появиться на главной странице",
+          description: "Он появится на главной странице",
           variant: "success",
         });
       })
@@ -84,6 +84,11 @@ export const LocationAddForm = () => {
           toast({
             title: "Такой город уже существует",
             description: "Измените город!",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Произошла ошибка на сервере, попробуйте позже...",
             variant: "destructive",
           });
         }

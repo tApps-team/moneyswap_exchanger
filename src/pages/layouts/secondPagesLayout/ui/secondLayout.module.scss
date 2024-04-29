@@ -1,5 +1,12 @@
 .second__container {
     padding-top: 20px;
+    padding-left: var(--padding-m);
+    padding-right: var(--padding-m);
+
+    @media (max-width: 380px) {
+      padding-left: var(--padding-xs);
+      padding-right: var(--padding-xs);
+    }
     // overflow: auto;
 
     .second__header {
