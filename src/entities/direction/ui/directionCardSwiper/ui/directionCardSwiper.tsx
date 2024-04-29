@@ -49,26 +49,28 @@ export const DirectionCardSwiper: FC<DirectionCardSwiperProps> = ({
   };
 
   const handleClickOutside = (e: MouseEvent) => {
+    e.stopPropagation();
     const cardElement = e.target as HTMLElement;
     const isOutsideCard = !cardElement.classList.contains(`card-${cardId}`);
     if (isOutsideCard) {
       setOffsetX(0);
     }
   };
-  const handleTouchStart = (e: any) => {
-    const cardElement = e.target as HTMLElement;
-    const isOutsideCard = !cardElement.classList.contains(`card-${cardId}`);
-    if (isOutsideCard) {
-      setOffsetX(0);
-    }
-  };
+  // const handleTouchStart = (e: any) => {
+  //   e.stopPropagation();
+  //   const cardElement = e.target as HTMLElement;
+  //   const isOutsideCard = !cardElement.classList.contains(`card-${cardId}`);
+  //   if (isOutsideCard) {
+  //     setOffsetX(0);
+  //   }
+  // };
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
-    document.addEventListener("touchstart", handleTouchStart);
+    // document.addEventListener("touchstart", handleTouchStart);
     return () => {
       document.removeEventListener("click", handleClickOutside);
-      document.removeEventListener("touchstart", handleTouchStart);
+      // document.removeEventListener("touchstart", handleTouchStart);
     };
   }, []);
 
