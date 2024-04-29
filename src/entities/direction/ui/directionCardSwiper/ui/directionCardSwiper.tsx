@@ -1,17 +1,21 @@
-import React, { FC, ReactNode, TouchEvent, useState } from "react";
+import React, { FC, ReactNode, TouchEvent, useEffect, useState } from "react";
 import styles from "./directionCardSwiper.module.scss";
 
 interface DirectionCardSwiperProps {
   children?: ReactNode;
   isActive: boolean;
+  cardId: number;
 }
 
 export const DirectionCardSwiper: FC<DirectionCardSwiperProps> = ({
   children,
   isActive,
+  cardId,
 }) => {
   const [startX, setStartX] = useState(0);
   const [offsetX, setOffsetX] = useState(0);
+
+  // const mainContentElement = document.querySelector(`.main-content`);
 
   const handleSwipeStart = (e: TouchEvent) => {
     setStartX(e.touches[0].clientX);
@@ -44,9 +48,35 @@ export const DirectionCardSwiper: FC<DirectionCardSwiperProps> = ({
     }
   };
 
+  const handleClickOutside = (e: MouseEvent) => {
+    const cardElement = e.target as HTMLElement;
+    const isOutsideCard = !cardElement.classList.contains(`card-${cardId}`);
+    if (isOutsideCard) {
+      setOffsetX(0);
+    }
+  };
+  const handleTouchStart = (e: any) => {
+    const cardElement = e.target as HTMLElement;
+    const isOutsideCard = !cardElement.classList.contains(`card-${cardId}`);
+    if (isOutsideCard) {
+      setOffsetX(0);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("touchstart", handleTouchStart);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("touchstart", handleTouchStart);
+    };
+  }, []);
+
   return (
     <div
-      className={`${styles.card} ${!isActive && styles.not_active}`}
+      className={`${styles.card} card-${cardId} ${
+        !isActive && styles.not_active
+      }`}
       onTouchStart={handleSwipeStart}
       onTouchMove={handleSwipeMove}
       onTouchEnd={handleSwipeEnd}

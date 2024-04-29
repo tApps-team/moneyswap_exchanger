@@ -3,10 +3,10 @@
   height: 100svh;
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: var(--padding-xl);
+  padding: var(--padding-m);
 
   @media (max-width: 380px) {
-    padding: var(--padding-l);
+    padding: var(--padding-xs);
   }
 
   .root__content {
@@ -15,4 +15,26 @@
     height: calc(100svh - 100px);
     // overflow: hidden;
   }
+}
+
+/* Scroll bar stylings */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--main-color);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--main-color);
 }

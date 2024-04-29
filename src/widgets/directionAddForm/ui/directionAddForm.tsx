@@ -116,16 +116,23 @@ export const DirectionAddForm = () => {
       .then(() => {
         navigate(paths.home);
         toast({
-          title: "Направление успешно добаленно",
+          title: "Направление успешно добалено",
           variant: "success",
         });
       })
-      .catch(() =>
-        toast({
-          title: "ОШИБКА!",
-          variant: "destructive",
-        })
-      );
+      .catch((error) => {
+        if (error.status === 423) {
+          toast({
+            title: "Такое направление уже добавлено!",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Произошла ошибка на сервере, попробуйте позже...",
+            variant: "destructive",
+          });
+        }
+      });
     console.log(data);
   };
 
