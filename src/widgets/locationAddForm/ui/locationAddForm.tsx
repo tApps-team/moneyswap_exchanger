@@ -60,8 +60,6 @@ export const LocationAddForm = () => {
     useAddPartnerCityMutation();
 
   const onSubmit = (data: LocationSchemaType) => {
-    console.log(data);
-
     addPartnerCity({
       city: data.city?.code_name,
       delivery: data.deliviry,

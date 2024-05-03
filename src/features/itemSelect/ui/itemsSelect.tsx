@@ -96,7 +96,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           />
         </DrawerHeader>
 
-        <ScrollArea data-vaul-no-drag className="h-[100%] p-4 w-full">
+        <ScrollArea data-vaul-no-drag className="h-full p-4 w-full ">
           <div className="grid grid-rows-1 items gap-2">
             {filteredItems?.map((item) => (
               <DrawerClose key={item.id} asChild>

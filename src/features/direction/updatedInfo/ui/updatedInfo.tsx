@@ -9,8 +9,7 @@ interface UpdatedInfoProps {
 export const UpdatedInfo: FC<UpdatedInfoProps> = ({ activeCity }) => {
   return (
     <p className={styles.updated}>
-      Updated {activeCity?.updated.date} at {activeCity?.updated.time} from
-      xe.com
+      Обновлено {activeCity?.updated.date} в {activeCity?.updated.time}
     </p>
   );
 };
