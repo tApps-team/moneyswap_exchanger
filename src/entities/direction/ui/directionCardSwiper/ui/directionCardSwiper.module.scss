@@ -11,7 +11,7 @@
   height: 150px;
   width: calc(100% + 4px);
   z-index: 2;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 
   @media (max-width: 380px) {
     padding: var(--padding-m);

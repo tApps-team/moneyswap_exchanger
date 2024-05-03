@@ -89,10 +89,7 @@ export const MyDirections = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        // className="px-[30px] mx-[-30px] z-99"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <Cities
           cities={cities || []}
           setActive={setActive}

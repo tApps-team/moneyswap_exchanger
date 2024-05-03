@@ -21,19 +21,18 @@ export const userSlice = createSlice({
         secure: true,
         httpOnly: false,
         sameSite: "None",
-        // expires: 7,
       });
       Cookies.set("refreshToken", action.payload.refresh_token, {
         secure: true,
         httpOnly: false,
         sameSite: "None",
-        // expires: 7,
       });
     },
     logout: (state) => {
       Cookies.remove("accessToken");
       Cookies.remove("refreshToken");
       Cookies.set("isAuth", "false");
+      localStorage.removeItem("persist:root");
       state.isAuth = false;
     },
     setAuth: (state, action: PayloadAction<boolean>) => {
