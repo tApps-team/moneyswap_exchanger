@@ -8,6 +8,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerTrigger,
+  Empty,
   Input,
   Label,
   ScrollArea,
@@ -59,7 +60,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
       <DrawerTrigger onClick={handleScrollToTop} asChild>
         <Button
           disabled={disabled}
-          className="rounded-[35px] w-full truncate font-light  text-white disabled:pointer-events-none bg-darkGray disabled:bg-lightGray disabled:opacity-80  justify-between items-center  gap-2 select-none"
+          className="rounded-[35px] w-full truncate font-light  text-white disabled:pointer-events-none bg-darkGray disabled:bg-[#606060] disabled:opacity-100  justify-between items-center  gap-2 select-none"
         >
           <div className="flex items-center gap-2 truncate">
             {itemIcon && (
@@ -98,11 +99,15 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
 
         <ScrollArea data-vaul-no-drag className="h-full p-4 w-full ">
           <div className="grid grid-rows-1 items gap-2">
-            {filteredItems?.map((item) => (
-              <DrawerClose key={item.id} asChild>
-                <ItemCard item={item} onClick={() => onClick?.(item)} />
-              </DrawerClose>
-            ))}
+            {filteredItems?.length ? (
+              filteredItems?.map((item) => (
+                <DrawerClose key={item.id} asChild>
+                  <ItemCard item={item} onClick={() => onClick?.(item)} />
+                </DrawerClose>
+              ))
+            ) : (
+              <Empty text="Список пуст..." />
+            )}
           </div>
         </ScrollArea>
       </DrawerContent>
