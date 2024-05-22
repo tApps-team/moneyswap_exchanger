@@ -189,7 +189,7 @@ export const LocationEditForm = () => {
                   <FormControl>
                     <AlertDialog>
                       <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
-                        {field.value}
+                        {field?.value || "00:00"}
                         <LogoButtonIcon
                           width={26}
                           height={26}
@@ -199,7 +199,7 @@ export const LocationEditForm = () => {
                       <AlertDialogContent className="grid gap-0">
                         <TimePicker
                           setTime={field.onChange}
-                          time={field.value}
+                          time={field?.value || "00:00"}
                         />
                         <AlertDialogAction>СОХРАНИТЬ</AlertDialogAction>
                       </AlertDialogContent>
@@ -220,7 +220,7 @@ export const LocationEditForm = () => {
                   <FormControl>
                     <AlertDialog>
                       <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
-                        {field.value}
+                        {field?.value || "00:00"}
                         <LogoButtonIcon
                           width={26}
                           height={26}
@@ -230,7 +230,7 @@ export const LocationEditForm = () => {
                       <AlertDialogContent className="grid gap-0">
                         <TimePicker
                           setTime={field.onChange}
-                          time={field.value}
+                          time={field?.value || "00:00"}
                         />
                         <AlertDialogAction>СОХРАНИТЬ</AlertDialogAction>
                       </AlertDialogContent>
