@@ -8,7 +8,7 @@ interface EditDirectionProps {
 
 export const EditDirection: FC<EditDirectionProps> = ({ editLoading }) => {
   return (
-    <button className={styles.submit_btn}>
+    <button type="submit" className={styles.submit_btn}>
       {editLoading ? <Loader className="animate-spin" /> : "Обновить"}
     </button>
   );
