@@ -18,6 +18,7 @@ import {
 } from "@/entities/location";
 import { EditDirection, UpdatedInfo } from "@/features/direction";
 import { useToast } from "@/shared/ui/toast";
+import { formattedDate, formattedTime } from "@/shared/lib";
 
 export const MyDirections = () => {
   const activeCity = useAppSelector((state) => state.activeCity.activeCity);
@@ -70,6 +71,22 @@ export const MyDirections = () => {
       editDireciton(formData)
         .unwrap()
         .then(() => {
+          const date = new Date();
+          const currentDate = formattedDate(date);
+          const currentTime = formattedTime(date);
+          setActive({
+            code_name: activeCity.code_name,
+            country: activeCity.country,
+            country_flag: activeCity.country_flag,
+            id: activeCity.id,
+            info: activeCity.info,
+            name: activeCity.name,
+            updated: {
+              date: currentDate,
+              time: currentTime,
+            },
+          });
+
           toast({
             title: "Направления успешно обновлены",
             description: "",
@@ -86,7 +103,7 @@ export const MyDirections = () => {
         });
     }
   };
-
+  console.log(activeCity);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
