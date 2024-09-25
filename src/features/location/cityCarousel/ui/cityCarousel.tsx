@@ -46,7 +46,7 @@ export const CityCarousel: FC<CityCarouselProps> = ({
       }}
       setApi={setApi}
     >
-      <CarouselContent>
+      <CarouselContent className="">
         {directionsLoading || citiesLoading ? (
           <>
             <CarouselItem>
@@ -58,7 +58,7 @@ export const CityCarousel: FC<CityCarouselProps> = ({
           </>
         ) : (
           cities?.map((city) => (
-            <CarouselItem key={city.id}>
+            <CarouselItem key={city.id} className="">
               <MyCityCard
                 city={city}
                 onClick={() => {

@@ -1,6 +1,6 @@
 .root__container {
   height: 100vh;
-  height: 100svh;
+  height: 100dvh;
   max-width: var(--container-width);
   margin: 0 auto;
   padding: var(--padding-m);
@@ -17,24 +17,24 @@
   }
 }
 
-/* Scroll bar stylings */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
+// /* Scroll bar stylings */
+// ::-webkit-scrollbar {
+//   width: 2px;
+//   height: 2px;
+// }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   background: transparent;
+// }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: var(--main-color);
-  border-radius: 5px;
-}
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   background: var(--main-color);
+//   border-radius: 2px;
+// }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: var(--main-color);
-}
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   background: var(--main-color);
+// }

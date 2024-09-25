@@ -90,15 +90,15 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           </div>
           <Input
             startAdornment={<Search className="translate-y-8 ml-2" />}
-            className="rounded-xl text-base bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0"
+            className="rounded-xl text-base bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0 placeholder:text-darkGray placeholder:text-opacity-50"
             value={searchValue}
             placeholder={inputPlaceholder || ""}
             onChange={(e) => setSearchValue(e.target.value.trim())}
           />
         </DrawerHeader>
 
-        <ScrollArea data-vaul-no-drag className="h-full p-4 w-full ">
-          <div className="grid grid-rows-1 items gap-2">
+        <ScrollArea data-vaul-no-drag className="h-full p-4 w-full">
+          <div className="grid grid-rows-1 items gap-2 p-2">
             {filteredItems?.length ? (
               filteredItems?.map((item) => (
                 <DrawerClose key={item.id} asChild>

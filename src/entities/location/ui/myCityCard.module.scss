@@ -1,12 +1,26 @@
 .card {
   display: grid;
-  grid-template: 1fr / 35px auto 70px;
+  grid-template: 1fr / 35px 160px 70px;
   align-items: center;
   gap: 10px;
   background: var(--light-grey);
   height: var(--height-main);
   border-radius: var(--border-radius-xl);
   padding-left: var(--padding-m);
+  cursor: pointer;
+
+  @media (max-width: 470px) {
+    grid-template: 1fr / 35px 110px 70px;
+    margin-left: -6px;
+  }
+
+  @media (max-width: 420px) {
+    grid-template: 1fr / 35px 80px 70px;
+  }
+
+  @media (max-width: 375px) {
+    grid-template: 1fr / 35px 60px 70px;
+  }
 
   .icon {
     width: 34px;
@@ -25,7 +39,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: uppercase;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   .settings_btn {

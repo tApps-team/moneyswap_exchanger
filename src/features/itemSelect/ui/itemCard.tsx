@@ -15,9 +15,9 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
   return (
     <Card
       onClick={onClick}
-      className="cursor-pointer  h-mainHeight rounded-[35px] border-2 border-lightGray bg-darkGray"
+      className="cursor-pointer  h-mainHeight rounded-[35px] border-0 border-lightGray bg-darkGray shadow-[1px_2px_8px_1px_rgba(0,0,0,0.6)]"
     >
-      <CardContent className="grid h-full   grid-flow-col px-4 py-2 justify-start  gap-3 items-center    text-white">
+      <CardContent className="grid h-full   grid-flow-col px-4 py-2 justify-start  gap-3 items-center text-white">
         {item.country_flag || item.icon_url ? (
           <img
             width={34}
@@ -36,7 +36,7 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
 
         {item.code_name ? (
           <div>
-            <div className="uppercase truncate font-semibold text-sm sm:text-lg">
+            <div className="uppercase truncate font-medium text-sm sm:text-lg">
               {item.name}
             </div>
             <div className="uppercase truncate font-light">
@@ -44,7 +44,7 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
             </div>
           </div>
         ) : (
-          <div className="uppercase truncate font-light">{item.name}</div>
+          <div className="uppercase truncate font-medium">{item.name}</div>
         )}
       </CardContent>
     </Card>

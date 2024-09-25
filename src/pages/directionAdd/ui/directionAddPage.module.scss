@@ -2,11 +2,16 @@
     position: fixed;
     top: 0;
     left: 50%;
-    max-width: 500px;
     transform: translate(-50%);
-    background: url("@/shared/assets/images/changePassword.png") no-repeat;
+    background: url("@/shared/assets/images/changePassword.png") center;
     background-size: cover;
     height: 100%;
     width: 100%;
     z-index: -1;
+
+    @media (max-width: 500px) {
+        background: url("@/shared/assets/images/profileSettingBg.png") no-repeat bottom;
+        background-size: cover;
+        max-width: 500px;
+    }
 }

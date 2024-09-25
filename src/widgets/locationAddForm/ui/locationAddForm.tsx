@@ -114,7 +114,7 @@ export const LocationAddForm = () => {
           name={"country"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-lg font-light sm:text-xl">
+              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl">
                 СТРАНА
               </FormLabel>
               <FormControl>
@@ -140,7 +140,7 @@ export const LocationAddForm = () => {
           name={"city"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor font-light text-lg sm:text-xl">
+              <FormLabel className="text-mainColor font-medium text-lg sm:text-xl">
                 ГОРОД
               </FormLabel>
               <FormControl>

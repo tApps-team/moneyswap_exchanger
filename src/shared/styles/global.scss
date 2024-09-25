@@ -5,9 +5,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap');
 // @import "reset.scss";
 @import "variables.scss";
+@import "./fonts.scss";
 
 * {
   margin: 0;
+  font-family: var(--font-family-regular);
 }
 
 html {
@@ -20,27 +22,27 @@ html {
   overflow: hidden;
 }
 
-/* Scroll bar stylings */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
+// /* Scroll bar stylings */
+// ::-webkit-scrollbar {
+//   width: 5px;
+//   height: 5px;
+// }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   background: transparent;
+// }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: var(--main-color);
-  border-radius: 5px;
-}
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   background: var(--main-color);
+//   border-radius: 5px;
+// }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: var(--main-color);
-}
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   background: var(--main-color);
+// }
 
 @layer base {
   :root {
