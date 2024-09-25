@@ -26,6 +26,7 @@ import { DeleteIcon } from "@/shared/assets/icons";
 import { DirectionCardSwiper } from "./directionCardSwiper";
 import { useToast } from "@/shared/ui/toast";
 import { CurrencyType } from "@/shared/types";
+import { Trash2 } from "lucide-react";
 
 interface DirectionCardProps {
   direction: Direction;
@@ -140,6 +141,24 @@ export const DirectionCard: FC<DirectionCardProps> = ({
           <p className={styles.text}>
             {isActive ? "деактивировать пару" : "активировать пару"}
           </p>
+          <div className={styles.delete_desktop}>
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <Trash2 />
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Удалить направление?</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Отменить</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDelete}>
+                    Удалить
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         </div>
       </DirectionCardSwiper>
       <div className={styles.delete}>

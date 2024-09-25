@@ -15,8 +15,6 @@ export const DirectionCardSwiper: FC<DirectionCardSwiperProps> = ({
   const [startX, setStartX] = useState(0);
   const [offsetX, setOffsetX] = useState(0);
 
-  // const mainContentElement = document.querySelector(`.main-content`);
-
   const handleSwipeStart = (e: TouchEvent) => {
     setStartX(e.touches[0].clientX);
   };

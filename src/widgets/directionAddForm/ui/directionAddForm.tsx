@@ -147,7 +147,7 @@ export const DirectionAddForm = () => {
           name={"giveCurrency"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-lg font-light sm:text-xl">
+              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl">
                 ОТДАЮ
               </FormLabel>
               <FormControl>
@@ -178,7 +178,7 @@ export const DirectionAddForm = () => {
           name={"getCurrency"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-lg font-light sm:text-xl">
+              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl">
                 ПОЛУЧАЮ
               </FormLabel>
               <FormControl>

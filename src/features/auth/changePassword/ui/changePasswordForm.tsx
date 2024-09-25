@@ -46,10 +46,10 @@ export const ChangePasswordForm = () => {
       });
   };
   return (
-    <div className="container">
+    <div className="container h-[calc(100dvh_-_230px)]">
       <Form {...changePasswordForm}>
         <form
-          className="grid grid-rows-[70px,1fr,70px] items-center"
+          className="grid grid-rows-[70px,1fr,70px] items-center h-full"
           onSubmit={changePasswordForm.handleSubmit(onSubmit)}
         >
           <FormField
@@ -70,7 +70,7 @@ export const ChangePasswordForm = () => {
               </FormItem>
             )}
           />
-          <div className="flex flex-col gap-6 my-[15vw]">
+          <div className="flex flex-col gap-6">
             <FormField
               control={changePasswordForm.control}
               name="newPassword"

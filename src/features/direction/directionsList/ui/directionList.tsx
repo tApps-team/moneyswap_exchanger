@@ -22,7 +22,6 @@ export const DirectionList: FC<DirectionListProps> = ({
   citiesLoading,
 }) => {
   return (
-    // <div className="mt-2 grid gap-3 overflow-auto max-h-[35vh]">
     <div className="mt-2 grid gap-3 overflow-auto">
       {directionsLoading || citiesLoading ? (
         <>

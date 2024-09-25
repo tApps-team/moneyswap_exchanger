@@ -71,7 +71,7 @@ export const AuthByUserNameForm = () => {
                         className="absolute left-5 translate-y-6 "
                       />
                     }
-                    className="text-white text-base h-mainHeight border-2 font-normal placeholder:text-white rounded-[35px] pl-14 bg-darkGray"
+                    className="text-white text-base h-mainHeight border-2 font-normal placeholder:text-white rounded-[35px] pl-14 bg-darkGray placeholder:opacity-50"
                     placeholder="E-MAIL"
                     {...field}
                   />
@@ -88,7 +88,7 @@ export const AuthByUserNameForm = () => {
                 <FormControl>
                   <PasswordInput
                     type="password"
-                    className="text-white text-base h-mainHeight border-2 font-normal  placeholder:text-white rounded-[35px] pl-14 bg-darkGray"
+                    className="text-white text-base h-mainHeight border-2 font-normal  placeholder:text-white rounded-[35px] pl-14 bg-darkGray placeholder:opacity-50"
                     placeholder="••••••••••••"
                     {...field}
                     eyeIcon
