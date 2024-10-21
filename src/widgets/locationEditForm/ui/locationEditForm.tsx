@@ -50,8 +50,8 @@ export const LocationEditForm = () => {
       },
       deliviry: activeEditCity?.info.delivery,
       office: activeEditCity?.info.office,
-      timeEnd: activeEditCity?.info.time_from,
-      timeStart: activeEditCity?.info.time_to,
+      timeStart: activeEditCity?.info.time_from,
+      timeEnd: activeEditCity?.info.time_to,
       workDays: activeEditCity?.info.working_days,
     },
   });

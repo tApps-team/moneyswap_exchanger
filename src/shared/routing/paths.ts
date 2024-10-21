@@ -47,3 +47,8 @@ export const Pathnames = [
     title: null,
   },
 ];
+
+export enum support {
+  support = "https://t.me/MoneySwap_support",
+  admin = "https://t.me/moneyswap_admin",
+}

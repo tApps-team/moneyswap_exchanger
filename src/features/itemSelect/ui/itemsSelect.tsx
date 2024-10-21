@@ -69,6 +69,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
                 height={34}
                 src={itemIcon}
                 alt={`${label} icon`}
+                className="rounded-full overflow-hidden"
               />
             )}
             <div className="uppercase truncate text-sm sm:text-base">

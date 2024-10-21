@@ -175,14 +175,16 @@ export const IosPickerItem: React.FC<PropType> = (props) => {
         >
           <div className="embla__ios-picker__container">
             {slides.map((_, index) => (
-              <div className="embla__ios-picker__slide" key={index}>
+              <div
+                className="embla__ios-picker__slide cursor-pointer"
+                key={index}
+              >
                 {addLeadingZero(index)}
               </div>
             ))}
           </div>
         </div>
       </div>
-      {/* <div className="embla__ios-picker__label">{label}</div> */}
     </div>
   );
 };
