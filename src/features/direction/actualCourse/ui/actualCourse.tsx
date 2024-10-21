@@ -24,6 +24,7 @@ export const ActualCourse = (props: ActualCourseProps) => {
                 alt={`icon ${actualCourse?.valute_to}`}
                 width={34}
                 height={34}
+                className="rounded-full overflow-hidden"
               />
               <div className="flex flex-wrap items-center leading-0 truncate">
                 <div className="mr-1 font-semibold text-xs sm:text-sm truncate">
@@ -41,6 +42,7 @@ export const ActualCourse = (props: ActualCourseProps) => {
                 alt={`icon ${actualCourse?.valute_to}`}
                 width={34}
                 height={34}
+                className="rounded-full overflow-hidden"
               />
               <div className="flex flex-wrap items-center leading-0 truncate">
                 <div className="mr-1 font-semibold text-xs sm:text-sm truncate">

@@ -8,6 +8,7 @@
   border-radius: var(--border-radius-xl);
   padding-left: var(--padding-m);
   cursor: pointer;
+  width: auto;
 
   @media (max-width: 470px) {
     grid-template: 1fr / 35px 110px 70px;
@@ -26,6 +27,8 @@
     width: 34px;
     height: 34px;
     position: relative;
+    border-radius: 999px;
+    overflow: hidden;
 
     img {
       position: absolute;

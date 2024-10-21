@@ -200,85 +200,96 @@ export const DirectionAddForm = () => {
 
         <ActualCourse actualCourse={actualCourse} />
 
-        <div className="grid grid-cols-[1fr,50px,1fr] items-center  grid-row-1">
-          <FormField
-            control={form.control}
-            name={"giveCurrencyPrice"}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div className="relative">
-                    <Input
-                      {...field}
-                      type="number"
-                      disabled={inputDisabled || inputInCountValue}
-                      startAdornment={
-                        form.getValues("giveCurrency") ? (
-                          <img
-                            src={form.getValues("giveCurrency.icon_url")}
-                            alt={`image ${form.getValues("giveCurrency.name")}`}
-                            width={32}
-                            height={32}
-                            className="absolute left-3 top-1/2 -translate-y-1/2  "
-                          />
-                        ) : (
-                          <Circle
-                            width={32}
-                            height={32}
-                            color="white"
-                            className="absolute left-3 translate-y-2"
-                          />
-                        )
-                      }
-                      className=" bg-darkGray text-white text-base rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex items-center justify-center">
-            <Equal className="text-white " />
+        <div>
+          <div className="grid justify-center items-center py-4 px-2">
+            <p className="font-semibold uppercase text-[#fff] text-xs text-center">
+              Укажите свой курс в поле ниже
+            </p>
           </div>
+          <div className="grid grid-cols-[1fr,50px,1fr] items-center  grid-row-1">
+            <FormField
+              control={form.control}
+              name={"giveCurrencyPrice"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        type="number"
+                        disabled={inputDisabled || inputInCountValue}
+                        startAdornment={
+                          form.getValues("giveCurrency") ? (
+                            <img
+                              src={form.getValues("giveCurrency.icon_url")}
+                              alt={`image ${form.getValues(
+                                "giveCurrency.name"
+                              )}`}
+                              width={32}
+                              height={32}
+                              className="absolute left-3 top-1/2 -translate-y-1/2  rounded-full overflow-hidden"
+                            />
+                          ) : (
+                            <Circle
+                              width={32}
+                              height={32}
+                              color="white"
+                              className="absolute left-3 translate-y-2"
+                            />
+                          )
+                        }
+                        className=" bg-darkGray text-white text-base rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex items-center justify-center">
+              <Equal className="text-white " />
+            </div>
 
-          <FormField
-            control={form.control}
-            name={"getCurrencyPrice"}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div className="relative">
-                    <Input
-                      {...field}
-                      type="number"
-                      startAdornment={
-                        form.getValues("getCurrency") ? (
-                          <img
-                            src={form.getValues("getCurrency.icon_url")}
-                            alt={`image ${form.getValues("getCurrency.name")}`}
-                            width={32}
-                            height={32}
-                            className="absolute left-3 top-1/2 -translate-y-1/2  "
-                          />
-                        ) : (
-                          <Circle
-                            width={32}
-                            height={32}
-                            color="white"
-                            className="absolute left-3 translate-y-2"
-                          />
-                        )
-                      }
-                      disabled={inputDisabled || inputOutCountValue}
-                      className="border text-base border-white bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name={"getCurrencyPrice"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        type="number"
+                        startAdornment={
+                          form.getValues("getCurrency") ? (
+                            <img
+                              src={form.getValues("getCurrency.icon_url")}
+                              alt={`image ${form.getValues(
+                                "getCurrency.name"
+                              )}`}
+                              width={32}
+                              height={32}
+                              className="absolute left-3 top-1/2 -translate-y-1/2  rounded-full overflow-hidden"
+                            />
+                          ) : (
+                            <Circle
+                              width={32}
+                              height={32}
+                              color="white"
+                              className="absolute left-3 translate-y-2"
+                            />
+                          )
+                        }
+                        disabled={inputDisabled || inputOutCountValue}
+                        className="border text-base border-white bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
 
         <Button

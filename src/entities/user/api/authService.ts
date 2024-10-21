@@ -42,6 +42,7 @@ export const changePasswordAPI = authApi.injectEndpoints({
   }),
 });
 export const { useChangePasswordMutation } = changePasswordAPI;
+
 export const profileInfoApi = authApi.injectEndpoints({
   endpoints: (build) => ({
     profileInfo: build.query<ProfileInfoDtoResponse, ProfileInfoDtoRequest>({

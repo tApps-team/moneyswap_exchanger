@@ -1,5 +1,15 @@
 import { useProfileInfoQuery } from "@/entities/user";
-import { Button, Skeleton } from "@/shared/ui";
+import { support } from "@/shared/routing";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogTrigger,
+  Skeleton,
+} from "@/shared/ui";
+import { X } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const ProfileInfo = () => {
@@ -16,9 +26,13 @@ export const ProfileInfo = () => {
           <div className="text-lg sm:text-xl uppercase">
             {profileInfo?.title?.ru}
           </div>
-          <div className="text-xs sm:text-sm font-light">
+          <Link
+            className="text-xs sm:text-sm font-light underline"
+            to={profileInfo?.partner_link || ""}
+            target="_blank"
+          >
             {profileInfo?.partner_link}
-          </div>
+          </Link>
         </div>
       )}
       <div className="grid grid-rows-2">
@@ -26,14 +40,33 @@ export const ProfileInfo = () => {
           <p>Свяжитесь с поддержкой</p>
           <p>для изменений</p>
         </div>
-        <Button
-          className="rounded-[35px] text-lg sm:text-xl border-bg-darkGray  bg-darkGray text-mainColor "
-          asChild
-        >
-          <Link target="_blank" to={"https://www.google.com/"}>
+        <AlertDialog>
+          <AlertDialogTrigger className="h-[70px] rounded-[50px] border-2 border-lightGray text-lg sm:text-xl border-bg-darkGray  bg-darkGray text-white ">
             СВЯЗАТЬСЯ
-          </Link>
-        </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent className="rounded-2xl w-[90vw]">
+            <div className="relative">
+              <AlertDialogCancel className="absolute -right-4 -top-3 p-0 border-0 h-[10px] hover:bg-red flex items-start justify-start">
+                <X width={20} height={20} stroke="#2d2d2d" />
+              </AlertDialogCancel>
+              <p className="font-semibold uppercase text-md text-center">
+                Служба поддержки
+              </p>
+            </div>
+            <AlertDialogFooter className="sm:grid-rows-2 grid-rows-2 sm:grid-cols-1">
+              <Link to={support.support} target="_blank">
+                <AlertDialogAction className="w-full">
+                  Support
+                </AlertDialogAction>
+              </Link>
+              <Link to={support.admin} target="_blank">
+                <AlertDialogAction className="bg-[#2d2d2d] border-[#2d2d2d] text-[#fff] w-full">
+                  Admin
+                </AlertDialogAction>
+              </Link>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

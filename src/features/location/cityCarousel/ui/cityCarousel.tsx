@@ -57,17 +57,31 @@ export const CityCarousel: FC<CityCarouselProps> = ({
             </CarouselItem>
           </>
         ) : (
-          cities?.map((city) => (
-            <CarouselItem key={city.id} className="">
-              <MyCityCard
-                city={city}
-                onClick={() => {
-                  setActive(city);
-                }}
-                activeCity={activeCity?.id === city?.id}
-              />
-            </CarouselItem>
-          ))
+          <>
+            {cities?.map((city) => (
+              <CarouselItem key={city.id} className="">
+                <MyCityCard
+                  city={city}
+                  onClick={() => {
+                    setActive(city);
+                  }}
+                  activeCity={activeCity?.id === city?.id}
+                />
+              </CarouselItem>
+            ))}
+            {cities?.length === 1 && (
+              <CarouselItem className="">
+                <div className="w-full bg-black"></div>
+              </CarouselItem>
+            )}
+            {cities?.length === 0 && (
+              <CarouselItem className="h-[70px] grid justify-start items-center">
+                <p className="uppercase text-white font-medium text-sm">
+                  Нужно добавить город...
+                </p>
+              </CarouselItem>
+            )}
+          </>
         )}
       </CarouselContent>
     </Carousel>

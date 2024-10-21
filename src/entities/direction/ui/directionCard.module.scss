@@ -41,6 +41,8 @@
             position: relative;
 
             .icon {
+                border-radius: 999px;
+                overflow: hidden;
 
                 img {
                     width: 34px;
