@@ -7,6 +7,7 @@ import {
 } from "@/entities/direction";
 import { ActualCourse } from "@/features/direction/actualCourse";
 import { ItemSelect } from "@/features/itemSelect";
+import { Lang } from "@/shared/config";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
 import { CurrencyType } from "@/shared/types";
@@ -25,9 +26,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Circle, Equal, Loader } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 export const DirectionAddForm = () => {
+  const { i18n, t } = useTranslation();
+
   const form = useForm<DirectionAddSchemaType>({
     resolver: zodResolver(directionAddSchema),
     defaultValues: {
@@ -52,14 +56,14 @@ export const DirectionAddForm = () => {
 
   const { data: currencies } = useAvailableValutesQuery({ base: "all" });
 
-  const { data: availableCurrncies } = useAvailableValutesQuery(
+  const { data: availableCurrencies } = useAvailableValutesQuery(
     { base: form.getValues("giveCurrency.code_name") },
     { skip: !form.getValues("giveCurrency.code_name") }
   );
 
   const currectAllCurrencies = Object.values(currencies || {}).flat();
-  const currectAvailableCurrncies = Object.values(
-    availableCurrncies || {}
+  const currectAvailableCurrencies = Object.values(
+    availableCurrencies || {}
   ).flat();
 
   const { data: actualCourse } = useActualCourseQuery(
@@ -104,36 +108,52 @@ export const DirectionAddForm = () => {
     !form.getValues("getCurrency") || !form.getValues("giveCurrency");
 
   const onSubmit = (data: DirectionAddSchemaType) => {
-    addDirection({
-      city: activeCity,
-      in_count: data.giveCurrencyPrice,
-      out_count: data.getCurrencyPrice,
-      is_active: true,
-      valute_from: data.giveCurrency?.code_name || "",
-      valute_to: data.getCurrency?.code_name || "",
-    })
-      .unwrap()
-      .then(() => {
-        navigate(paths.home);
-        toast({
-          title: "Направление успешно добалено",
-          variant: "success",
-        });
-      })
-      .catch((error) => {
-        if (error.status === 423) {
-          toast({
-            title: "Такое направление уже добавлено!",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Произошла ошибка на сервере, попробуйте позже...",
-            variant: "destructive",
-          });
-        }
+    if (data.giveCurrencyPrice === data.getCurrencyPrice) {
+      toast({
+        title: t("Курсы не могут быть равны"),
+        variant: "destructive",
       });
-    console.log(data);
+    } else {
+      let in_count: number;
+      let out_count: number;
+
+      if (data.giveCurrencyPrice > data.getCurrencyPrice) {
+        in_count = data.giveCurrencyPrice / data.getCurrencyPrice;
+        out_count = 1;
+      } else {
+        in_count = 1;
+        out_count = data.getCurrencyPrice / data.giveCurrencyPrice;
+      }
+      addDirection({
+        city: activeCity,
+        in_count: in_count,
+        out_count: out_count,
+        is_active: true,
+        valute_from: data.giveCurrency?.code_name || "",
+        valute_to: data.getCurrency?.code_name || "",
+      })
+        .unwrap()
+        .then(() => {
+          navigate(paths.home);
+          toast({
+            title: t("Направление успешно добалено"),
+            variant: "success",
+          });
+        })
+        .catch((error) => {
+          if (error.status === 423) {
+            toast({
+              title: t("Такое направление уже добавлено!"),
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: t("Произошла ошибка на сервере, попробуйте позже..."),
+              variant: "destructive",
+            });
+          }
+        });
+    }
   };
 
   return (
@@ -147,19 +167,23 @@ export const DirectionAddForm = () => {
           name={"giveCurrency"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl">
-                ОТДАЮ
+              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl uppercase">
+                {t("Отдаю")}
               </FormLabel>
               <FormControl>
                 <ItemSelect
-                  inputLabel="ОТДАЮ"
-                  inputPlaceholder="ПОИСК ВАЛЮТЫ"
-                  emptyLabel="выберите валюту"
+                  inputLabel={t("Отдаю")}
+                  inputPlaceholder={t("Поиск валюты")}
+                  emptyLabel={t("Выберите валюту")}
                   itemIcon={field.value?.icon_url}
                   items={currectAllCurrencies}
                   label={
                     field.value
-                      ? `${field.value?.code_name} (${field.value?.name})`
+                      ? `${field.value?.code_name} (${
+                          field.value?.name?.[
+                            i18n.language === Lang.ru ? Lang.ru : Lang.en
+                          ]
+                        })`
                       : ""
                   }
                   onClick={(e) => {
@@ -178,17 +202,21 @@ export const DirectionAddForm = () => {
           name={"getCurrency"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl">
-                ПОЛУЧАЮ
+              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl uppercase">
+                {t("Получаю")}
               </FormLabel>
               <FormControl>
                 <ItemSelect
-                  inputLabel="ПОЛУЧАЮ"
-                  inputPlaceholder="ПОИСК ВАЛЮТЫ"
-                  items={currectAvailableCurrncies}
+                  inputLabel={t("Получаю")}
+                  inputPlaceholder={t("Поиск валюты")}
+                  items={currectAvailableCurrencies}
                   itemIcon={field.value?.icon_url}
-                  emptyLabel="выберите валюту"
-                  label={field.value?.name || ""}
+                  emptyLabel={t("Выберите валюту")}
+                  label={
+                    field.value?.name?.[
+                      i18n.language === Lang.ru ? Lang.ru : Lang.en
+                    ] || ""
+                  }
                   disabled={!form.getValues("giveCurrency")}
                   onClick={(e) => field.onChange(e)}
                 />
@@ -203,7 +231,7 @@ export const DirectionAddForm = () => {
         <div>
           <div className="grid justify-center items-center py-4 px-2">
             <p className="font-semibold uppercase text-[#fff] text-xs text-center">
-              Укажите свой курс в поле ниже
+              {t("Укажите свой курс в поле ниже")}
             </p>
           </div>
           <div className="grid grid-cols-[1fr,50px,1fr] items-center  grid-row-1">
@@ -299,7 +327,7 @@ export const DirectionAddForm = () => {
           {isLoadingAddDirection ? (
             <Loader className="animate-spin" />
           ) : (
-            "ДОБАВИТЬ"
+            t("Добавить")
           )}
         </Button>
       </form>

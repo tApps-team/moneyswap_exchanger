@@ -7,6 +7,7 @@ import {
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
 import { LogoButtonIcon } from "@/shared/assets";
+import { Lang } from "@/shared/config";
 import { paths } from "@/shared/routing";
 
 import {
@@ -28,9 +29,11 @@ import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader, Minus } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 export const LocationAddForm = () => {
+  const { i18n, t } = useTranslation();
   const form = useForm<LocationSchemaType>({
     resolver: zodResolver(locationSchema),
     defaultValues: {
@@ -38,8 +41,14 @@ export const LocationAddForm = () => {
       country: undefined,
       deliviry: false,
       office: false,
-      timeEnd: "00:00",
-      timeStart: "00:00",
+      weekdays: {
+        time_from: "00:00",
+        time_to: "00:00",
+      },
+      weekends: {
+        time_from: "00:00",
+        time_to: "00:00",
+      },
       workDays: {
         ПН: true,
         ВТ: true,
@@ -61,46 +70,52 @@ export const LocationAddForm = () => {
 
   const onSubmit = (data: LocationSchemaType) => {
     addPartnerCity({
-      city: data.city?.code_name,
-      delivery: data.deliviry,
-      office: data.office,
-      time_from: data.timeStart,
-      time_to: data.timeEnd,
-      working_days: data.workDays,
+      city: data?.city?.code_name,
+      delivery: data?.deliviry,
+      office: data?.office,
+      weekdays: {
+        time_from: data?.weekdays?.time_from,
+        time_to: data?.weekdays?.time_to,
+      },
+      weekends: {
+        time_from: data?.weekends.time_from,
+        time_to: data?.weekends.time_to,
+      },
+      working_days: data?.workDays,
     })
       .unwrap()
       .then(() => {
         navigate(paths.home);
         toast({
-          title: "Город успешно добавлен!",
-          description: "Он появится на главной странице",
+          title: t("Город успешно добавлен!"),
+          description: t("Он появится на главной странице"),
           variant: "success",
         });
       })
       .catch((err) => {
         if (err.status === 423) {
           toast({
-            title: "Такой город уже существует",
-            description: "Измените город!",
+            title: t("Такой город уже существует"),
+            description: t("Измените город!"),
             variant: "destructive",
           });
         } else {
           toast({
-            title: "Произошла ошибка на сервере, попробуйте позже...",
+            title: t("Произошла ошибка на сервере, попробуйте позже..."),
             variant: "destructive",
           });
         }
       });
   };
 
-  form.watch(["timeStart", "timeEnd", "country.name"]);
+  form.watch(["weekdays", "weekends", "country.name"]);
 
   const { data: countries } = useAllCountriesQuery();
   const { data: cities } = useCitiesByCountryNameQuery(
     {
-      country_name: form.getValues("country.name"),
+      country_name: form.getValues("country.name.ru"),
     },
-    { skip: !form.getValues("country.name") }
+    { skip: !form.getValues("country.name.ru") }
   );
 
   return (
@@ -114,17 +129,21 @@ export const LocationAddForm = () => {
           name={"country"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl">
-                СТРАНА
+              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl uppercase">
+                {t("Страна")}
               </FormLabel>
               <FormControl>
                 <ItemSelect
-                  inputLabel="ВЫБОР СТРАНЫ"
-                  emptyLabel="ВЫБЕРИТЕ СТРАНУ"
+                  inputLabel={t("Выбор страны")}
+                  emptyLabel={t("Выберите страну")}
                   itemIcon={field.value?.country_flag}
-                  inputPlaceholder="ПОИСК СТРАНЫ"
+                  inputPlaceholder={t("Поиск страны")}
                   items={countries}
-                  label={field.value?.name || ""}
+                  label={
+                    field.value?.name?.[
+                      i18n.language === Lang.ru ? Lang.ru : Lang.en
+                    ] || ""
+                  }
                   onClick={(e) => {
                     field.onChange(e);
                     form.resetField("city");
@@ -140,18 +159,22 @@ export const LocationAddForm = () => {
           name={"city"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor font-medium text-lg sm:text-xl">
-                ГОРОД
+              <FormLabel className="text-mainColor font-medium text-lg sm:text-xl uppercase">
+                {t("Город")}
               </FormLabel>
               <FormControl>
                 <ItemSelect
-                  inputLabel="ВЫБОР ГОРОДА"
+                  inputLabel={t("Выбор города")}
                   disabled={!form.getValues("country")}
                   onClick={(e) => field.onChange(e)}
                   items={cities || []}
-                  inputPlaceholder="ПОИСК ГОРОДА"
-                  label={field.value?.name}
-                  emptyLabel="ВЫБЕРИТЕ ГОРОД"
+                  inputPlaceholder={t("Поиск города")}
+                  label={
+                    field.value?.name?.[
+                      i18n.language === Lang.ru ? Lang.ru : Lang.en
+                    ]
+                  }
+                  emptyLabel={t("Выберите город")}
                 />
               </FormControl>
               <FormMessage />
@@ -164,8 +187,8 @@ export const LocationAddForm = () => {
           name={"deliviry"}
           render={({ field }) => (
             <FormItem className="flex items-center justify-between">
-              <FormLabel className="text-white text-lg sm:text-xl ">
-                ДОСТАВКА
+              <FormLabel className="text-white text-lg sm:text-xl uppercase">
+                {t("Доставка")}
               </FormLabel>
               <FormControl>
                 <Switch
@@ -182,8 +205,8 @@ export const LocationAddForm = () => {
           name={"office"}
           render={({ field }) => (
             <FormItem className="flex items-center justify-between">
-              <FormLabel className="text-white text-lg sm:text-xl">
-                ЕСТЬ ОФИС
+              <FormLabel className="text-white text-lg sm:text-xl uppercase">
+                {t("Есть офис")}
               </FormLabel>
               <FormControl>
                 <Switch
@@ -195,21 +218,28 @@ export const LocationAddForm = () => {
             </FormItem>
           )}
         />
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           <div>
-            <div className="text-white text-lg sm:text-xl">ВРЕМЯ РАБОТЫ</div>
-            <div className="text-white font-light">По местному времени</div>
+            <div className="text-white text-lg sm:text-xl uppercase">
+              {t("Время работы")}
+            </div>
+            <div className="text-white font-light">
+              {t("По местному времени")}
+            </div>
+          </div>
+          <div className="text-md uppercase text-white text-center">
+            {t("Будние дни")}
           </div>
           <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
             <FormField
               control={form.control}
-              name={"timeStart"}
+              name={"weekdays.time_from"}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <AlertDialog>
                       <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
-                        {field.value}
+                        {field.value || "00:00"}
                         <LogoButtonIcon
                           width={26}
                           height={26}
@@ -219,9 +249,9 @@ export const LocationAddForm = () => {
                       <AlertDialogContent className="grid gap-0">
                         <TimePicker
                           setTime={field.onChange}
-                          time={field.value}
+                          time={field.value || "00:00"}
                         />
-                        <AlertDialogAction>Сохранить</AlertDialogAction>
+                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
                       </AlertDialogContent>
                     </AlertDialog>
                   </FormControl>
@@ -234,13 +264,13 @@ export const LocationAddForm = () => {
             </div>
             <FormField
               control={form.control}
-              name={"timeEnd"}
+              name={"weekdays.time_to"}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <AlertDialog>
                       <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
-                        {field.value}
+                        {field.value || "00:00"}
                         <LogoButtonIcon
                           width={26}
                           height={26}
@@ -250,9 +280,73 @@ export const LocationAddForm = () => {
                       <AlertDialogContent className="grid gap-0">
                         <TimePicker
                           setTime={field.onChange}
-                          time={field.value}
+                          time={field.value || "00:00"}
                         />
-                        <AlertDialogAction>СОХРАНИТЬ</AlertDialogAction>
+                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="text-md uppercase text-white text-center">
+            {t("Выходные дни")}
+          </div>
+          <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
+            <FormField
+              control={form.control}
+              name={"weekends.time_from"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <AlertDialog>
+                      <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                        {field.value || "00:00"}
+                        <LogoButtonIcon
+                          width={26}
+                          height={26}
+                          className="absolute -translate-y-[50%] top-[50%] right-3"
+                        />
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="grid gap-0">
+                        <TimePicker
+                          setTime={field.onChange}
+                          time={field.value || "00:00"}
+                        />
+                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex justify-center items-center">
+              <Minus color="white" />
+            </div>
+            <FormField
+              control={form.control}
+              name={"weekends.time_to"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <AlertDialog>
+                      <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                        {field.value || "00:00"}
+                        <LogoButtonIcon
+                          width={26}
+                          height={26}
+                          className="absolute -translate-y-[50%] top-[50%] right-3"
+                        />
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="grid gap-0">
+                        <TimePicker
+                          setTime={field.onChange}
+                          time={field.value || "00:00"}
+                        />
+                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
                       </AlertDialogContent>
                     </AlertDialog>
                   </FormControl>
@@ -263,8 +357,8 @@ export const LocationAddForm = () => {
           </div>
         </div>
         <div className="grid grid-rows-2 gap-6 text-white ">
-          <div className="text-lg sm:text-xl row-span-2 text-white">
-            ДНИ РАБОТЫ
+          <div className="text-lg sm:text-xl row-span-2 text-white uppercase">
+            {t("Дни работы")}
           </div>
           <div className="grid grid-cols-7">
             {Object.keys(form.formState.defaultValues?.workDays || {}).map(
@@ -282,7 +376,9 @@ export const LocationAddForm = () => {
                             checked={field.value}
                             onCheckedChange={field.onChange}
                           />
-                          <div className="font-light uppercase">{day}</div>
+                          <div className="font-light uppercase">
+                            {t(`${day}`)}
+                          </div>
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -301,7 +397,7 @@ export const LocationAddForm = () => {
           {isLoadingAddPartnerCity ? (
             <Loader className="animate-spin" />
           ) : (
-            "ДОБАВИТЬ"
+            t("Добавить")
           )}
         </Button>
         <div></div>

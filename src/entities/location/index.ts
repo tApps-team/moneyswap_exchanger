@@ -5,7 +5,6 @@ export {
   locationApi,
   useAllCountriesQuery,
   useCitiesByCountryNameQuery,
-  useEditPartnerCityMutation,
 } from "./api/locationApi";
 export {
   useGetCitiesQuery,

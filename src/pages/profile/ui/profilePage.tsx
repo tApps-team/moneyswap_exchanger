@@ -13,8 +13,10 @@ import { Link } from "react-router-dom";
 import styles from "./profilePage.module.scss";
 import { LogoButtonIcon, QuestionIcon, SettingsIcon } from "@/shared/assets";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const ProfilePage = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <div className={styles.container}></div>
@@ -29,7 +31,9 @@ export const ProfilePage = () => {
               to={`${paths.profile}${paths.profileSettings}`}
             >
               <SettingsIcon color="#F6FF5F" />
-              <p className="sm:text-base text-sm font-normal">ПАРАМЕТРЫ</p>
+              <p className="sm:text-base text-sm font-normal uppercase">
+                {t("Параметры")}
+              </p>
               <LogoButtonIcon className="-rotate-90 w-[22px] h-[22px] sm:h-[26px] sm:w-[26px]" />
             </Link>
           </Button>
@@ -43,8 +47,8 @@ export const ProfilePage = () => {
               </div>
               <AlertDialog>
                 <AlertDialogTrigger className="grid justify-start">
-                  <p className="sm:text-base text-sm font-normal text-mainColor">
-                    СЛУЖБА ПОДДЕРЖКИ
+                  <p className="sm:text-base text-sm font-normal text-mainColor uppercase">
+                    {t("Служба поддержки")}
                   </p>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="rounded-2xl w-[90vw]">
@@ -53,7 +57,7 @@ export const ProfilePage = () => {
                       <X width={20} height={20} stroke="#2d2d2d" />
                     </AlertDialogCancel>
                     <p className="font-semibold uppercase text-md text-center">
-                      Служба поддержки
+                      {t("Служба поддержки")}
                     </p>
                   </div>
                   <AlertDialogFooter className="sm:grid-rows-2 grid-rows-2 sm:grid-cols-1">

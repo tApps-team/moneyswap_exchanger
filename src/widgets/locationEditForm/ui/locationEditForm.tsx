@@ -6,6 +6,7 @@ import {
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
 import { LogoButtonIcon } from "@/shared/assets";
+import { Lang } from "@/shared/config";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
 
@@ -32,9 +33,12 @@ import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader, Minus } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 export const LocationEditForm = () => {
+  const { i18n, t } = useTranslation();
+
   const activeEditCity = useAppSelector((state) => state.activeCity.activeCity);
 
   const form = useForm<LocationEditSchemaType>({
@@ -42,17 +46,29 @@ export const LocationEditForm = () => {
     defaultValues: {
       city: {
         code_name: activeEditCity?.code_name,
-        name: activeEditCity?.name,
+        name: {
+          ru: activeEditCity?.name?.ru,
+          en: activeEditCity?.name?.en,
+        },
       },
       country: {
-        country_flag: activeEditCity?.country,
-        name: activeEditCity?.country,
+        country_flag: activeEditCity?.country_flag,
+        name: {
+          ru: activeEditCity?.country?.ru,
+          en: activeEditCity?.country?.en,
+        },
       },
-      deliviry: activeEditCity?.info.delivery,
-      office: activeEditCity?.info.office,
-      timeStart: activeEditCity?.info.time_from,
-      timeEnd: activeEditCity?.info.time_to,
-      workDays: activeEditCity?.info.working_days,
+      deliviry: activeEditCity?.info?.delivery,
+      office: activeEditCity?.info?.office,
+      weekdays: {
+        time_from: activeEditCity?.info?.weekdays?.time_from,
+        time_to: activeEditCity?.info?.weekdays?.time_to,
+      },
+      weekends: {
+        time_from: activeEditCity?.info?.weekends?.time_from,
+        time_to: activeEditCity?.info?.weekends?.time_to,
+      },
+      workDays: activeEditCity?.info?.working_days,
     },
   });
   const navigate = useNavigate();
@@ -62,20 +78,25 @@ export const LocationEditForm = () => {
   const [deletePartnerCity, { isLoading: isLoadingDeletePartnerCity }] =
     useDeletePartnerCityMutation();
   const onSubmit = (data: LocationEditSchemaType) => {
-    console.log(data);
     editPartnerCity({
       city: activeEditCity?.code_name,
-      delivery: data.deliviry,
-      office: data.office,
-      time_from: data.timeStart,
-      time_to: data.timeEnd,
-      working_days: data.workDays,
+      delivery: data?.deliviry,
+      office: data?.office,
+      weekdays: {
+        time_from: data?.weekdays?.time_from,
+        time_to: data?.weekdays?.time_to,
+      },
+      weekends: {
+        time_from: data?.weekends.time_from,
+        time_to: data?.weekends.time_to,
+      },
+      working_days: data?.workDays,
     })
       .unwrap()
       .then(() => {
         toast({
           variant: "success",
-          title: "Успешно обновленно!",
+          title: t("Успешно обновленно!"),
         });
         navigate(paths.home);
       });
@@ -86,13 +107,13 @@ export const LocationEditForm = () => {
       .then(() => {
         toast({
           variant: "success",
-          title: "Город успешно удален",
+          title: t("Город успешно удален"),
         });
         navigate(paths.home);
       })
       .catch(() => {
         toast({
-          title: "Произошла ошибка на сервере, попробуйте позже...",
+          title: t("Произошла ошибка на сервере, попробуйте позже..."),
           variant: "destructive",
         });
       });
@@ -108,14 +129,18 @@ export const LocationEditForm = () => {
           name={"country"}
           render={() => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl">
-                СТРАНА
+              <FormLabel className="text-mainColor text-lg font-medium sm:text-xl uppercase">
+                {t("Страна")}
               </FormLabel>
               <FormControl>
                 <ItemSelect
                   itemIcon={activeEditCity?.country_flag || ""}
                   disabled={true}
-                  label={activeEditCity?.country}
+                  label={
+                    activeEditCity?.country?.[
+                      i18n.language === Lang.ru ? Lang.ru : Lang.en
+                    ]
+                  }
                 />
               </FormControl>
               <FormMessage />
@@ -127,11 +152,18 @@ export const LocationEditForm = () => {
           name={"city"}
           render={() => (
             <FormItem className="flex flex-col gap-4">
-              <FormLabel className="text-mainColor font-medium text-lg  sm:text-xl">
-                ГОРОД
+              <FormLabel className="text-mainColor font-medium text-lg  sm:text-xl uppercase">
+                {t("Город")}
               </FormLabel>
               <FormControl>
-                <ItemSelect disabled={true} label={activeEditCity?.name} />
+                <ItemSelect
+                  disabled={true}
+                  label={
+                    activeEditCity?.name?.[
+                      i18n.language === Lang.ru ? Lang.ru : Lang.en
+                    ]
+                  }
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -143,8 +175,8 @@ export const LocationEditForm = () => {
           name={"deliviry"}
           render={({ field }) => (
             <FormItem className="flex items-center justify-between">
-              <FormLabel className="text-white text-lg  sm:text-xl">
-                ДОСТАВКА
+              <FormLabel className="text-white text-lg  sm:text-xl uppercase">
+                {t("Доставка")}
               </FormLabel>
               <FormControl>
                 <Switch
@@ -161,8 +193,8 @@ export const LocationEditForm = () => {
           name={"office"}
           render={({ field }) => (
             <FormItem className="flex items-center justify-between">
-              <FormLabel className="text-white text-lg sm:text-xl">
-                ЕСТЬ ОФИС
+              <FormLabel className="text-white text-lg sm:text-xl uppercase">
+                {t("Есть офис")}
               </FormLabel>
               <FormControl>
                 <Switch
@@ -175,15 +207,22 @@ export const LocationEditForm = () => {
           )}
         />
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           <div>
-            <div className="text-white text-lg  sm:text-xl">ВРЕМЯ РАБОТЫ</div>
-            <div className="text-white font-light">По местному времени</div>
+            <div className="text-white text-lg sm:text-xl uppercase">
+              {t("Время работы")}
+            </div>
+            <div className="text-white font-light">
+              {t("По местному времени")}
+            </div>
+          </div>
+          <div className="text-md uppercase text-white text-center">
+            {t("Будние дни")}
           </div>
           <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
             <FormField
               control={form.control}
-              name={"timeStart"}
+              name={"weekdays.time_from"}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -201,7 +240,7 @@ export const LocationEditForm = () => {
                           setTime={field.onChange}
                           time={field?.value || "00:00"}
                         />
-                        <AlertDialogAction>СОХРАНИТЬ</AlertDialogAction>
+                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
                       </AlertDialogContent>
                     </AlertDialog>
                   </FormControl>
@@ -214,7 +253,7 @@ export const LocationEditForm = () => {
             </div>
             <FormField
               control={form.control}
-              name={"timeEnd"}
+              name={"weekdays.time_to"}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -232,7 +271,71 @@ export const LocationEditForm = () => {
                           setTime={field.onChange}
                           time={field?.value || "00:00"}
                         />
-                        <AlertDialogAction>СОХРАНИТЬ</AlertDialogAction>
+                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="text-md uppercase text-white text-center">
+            {t("Выходные дни")}
+          </div>
+          <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
+            <FormField
+              control={form.control}
+              name={"weekends.time_from"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <AlertDialog>
+                      <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                        {field?.value || "00:00"}
+                        <LogoButtonIcon
+                          width={26}
+                          height={26}
+                          className="absolute -translate-y-[50%] top-[50%] right-3"
+                        />
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="grid gap-0">
+                        <TimePicker
+                          setTime={field.onChange}
+                          time={field?.value || "00:00"}
+                        />
+                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex justify-center items-center">
+              <Minus color="white" />
+            </div>
+            <FormField
+              control={form.control}
+              name={"weekends.time_to"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <AlertDialog>
+                      <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                        {field?.value || "00:00"}
+                        <LogoButtonIcon
+                          width={26}
+                          height={26}
+                          className="absolute -translate-y-[50%] top-[50%] right-3"
+                        />
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="grid gap-0">
+                        <TimePicker
+                          setTime={field.onChange}
+                          time={field?.value || "00:00"}
+                        />
+                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
                       </AlertDialogContent>
                     </AlertDialog>
                   </FormControl>
@@ -243,8 +346,8 @@ export const LocationEditForm = () => {
           </div>
         </div>
         <div className="grid grid-rows-2 gap-6 text-white ">
-          <div className="text-lg sm:text-xl row-span-2 text-white">
-            ДНИ РАБОТЫ
+          <div className="text-lg sm:text-xl row-span-2 text-white uppercase">
+            {t("Дни работы")}
           </div>
           <div className="grid grid-cols-7">
             {Object.keys(form.formState.defaultValues?.workDays || {}).map(
@@ -265,7 +368,9 @@ export const LocationEditForm = () => {
                               activeEditCity?.info.working_days[day]
                             }
                           />
-                          <div className="font-light uppercase">{day}</div>
+                          <div className="font-light uppercase">
+                            {t(`${day}`)}
+                          </div>
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -285,7 +390,7 @@ export const LocationEditForm = () => {
             {isLoadingEditPartnerCity ? (
               <Loader className="animate-spin" />
             ) : (
-              "СОХРАНИТЬ"
+              t("Сохранить")
             )}
           </Button>
           <AlertDialog>
@@ -298,22 +403,22 @@ export const LocationEditForm = () => {
                 {isLoadingDeletePartnerCity ? (
                   <Loader className="animate-spin" />
                 ) : (
-                  "УДАЛИТЬ"
+                  t("Удалить")
                 )}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Удалить направление?</AlertDialogTitle>
+                <AlertDialogTitle>{t("Удалить направление?")}</AlertDialogTitle>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Отменить</AlertDialogCancel>
+                <AlertDialogCancel>{t("Отменить")}</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() =>
                     activeEditCity && onHandleDelete(activeEditCity?.id)
                   }
                 >
-                  Удалить
+                  {t("Удалить")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

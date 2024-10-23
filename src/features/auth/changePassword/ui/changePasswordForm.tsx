@@ -16,8 +16,10 @@ import {
   ChangePasswordSchema,
   changePasswordSchema,
 } from "../model/changePasswordSchema";
+import { useTranslation } from "react-i18next";
 
 export const ChangePasswordForm = () => {
+  const { t } = useTranslation();
   const changePasswordForm = useForm<ChangePasswordSchema>({
     resolver: zodResolver(changePasswordSchema),
     defaultValues: {
@@ -35,13 +37,13 @@ export const ChangePasswordForm = () => {
       .then(() => {
         changePasswordForm.reset();
         toast({
-          title: "Пароль успешно изменен!",
-          description: "Если забыли пароль, свяжитесь с нами",
+          title: t("Пароль успешно изменен!"),
+          description: t("Если забыли пароль, свяжитесь с нами"),
         });
       })
       .catch(() => {
         toast({
-          title: "Ошибка",
+          title: t("Ошибка"),
         });
       });
   };
@@ -79,7 +81,7 @@ export const ChangePasswordForm = () => {
                   <FormControl>
                     <PasswordInput
                       type="password"
-                      placeholder="Новый пароль"
+                      placeholder={t("Новый пароль")}
                       className="rounded-[35px] font-sm text-center placeholder:text-white bg-darkGray"
                       {...field}
                       eyeIcon={false}
@@ -98,7 +100,7 @@ export const ChangePasswordForm = () => {
                     <PasswordInput
                       type="password"
                       className="rounded-[35px] text-center font-sm placeholder:text-white bg-darkGray"
-                      placeholder="Повторите пароль"
+                      placeholder={t("Повторите пароль")}
                       {...field}
                     />
                   </FormControl>
@@ -111,13 +113,13 @@ export const ChangePasswordForm = () => {
             type="submit"
             className="rounded-[35px] bg-[#F6FF5F]  text-black text-lg sm:text-xl uppercase text-semibold  border-none"
           >
-            {isLoading ? <Loader className="animate-spin" /> : "Сохранить"}
+            {isLoading ? <Loader className="animate-spin" /> : t("Сохранить")}
           </Button>
         </form>
       </Form>
       {error && (
         <h1 className="text-red-500 font-medium text-center mt-5">
-          Аккаунт не найден...
+          {t("Аккаунт не найден...")}
         </h1>
       )}
     </div>

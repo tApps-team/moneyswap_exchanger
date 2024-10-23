@@ -7,6 +7,7 @@ import {
 } from "@/shared/ui";
 import { FC, useEffect, useRef, useState } from "react";
 import { CitySkeleton } from "./citySkeleton";
+import { useTranslation } from "react-i18next";
 
 interface CityCarouselProps {
   cities: ActiveCity[];
@@ -23,6 +24,7 @@ export const CityCarousel: FC<CityCarouselProps> = ({
   directionsLoading,
   citiesLoading,
 }) => {
+  const { t } = useTranslation();
   const carouselRef = useRef<HTMLDivElement>(null);
   const [api, setApi] = useState<CarouselApi>();
 
@@ -77,7 +79,7 @@ export const CityCarousel: FC<CityCarouselProps> = ({
             {cities?.length === 0 && (
               <CarouselItem className="h-[70px] grid justify-start items-center">
                 <p className="uppercase text-white font-medium text-sm">
-                  Нужно добавить город...
+                  {t("Нужно добавить город...")}
                 </p>
               </CarouselItem>
             )}

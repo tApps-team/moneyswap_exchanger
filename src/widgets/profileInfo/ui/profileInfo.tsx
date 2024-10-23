@@ -1,4 +1,5 @@
 import { useProfileInfoQuery } from "@/entities/user";
+import { Lang } from "@/shared/config";
 import { support } from "@/shared/routing";
 import {
   AlertDialog,
@@ -10,11 +11,15 @@ import {
   Skeleton,
 } from "@/shared/ui";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export const ProfileInfo = () => {
+  const { i18n, t } = useTranslation();
   const { data: profileInfo, isLoading: isLoadingProfileInfo } =
     useProfileInfoQuery();
+  const title =
+    i18n.language === Lang.ru ? profileInfo?.title?.ru : profileInfo?.title?.en;
   return (
     <div className="text-white grid grid-rows-2 grid-cols-1 h-[50vh] ">
       {isLoadingProfileInfo ? (
@@ -23,9 +28,7 @@ export const ProfileInfo = () => {
         </div>
       ) : (
         <div>
-          <div className="text-lg sm:text-xl uppercase">
-            {profileInfo?.title?.ru}
-          </div>
+          <div className="text-lg sm:text-xl uppercase">{title}</div>
           <Link
             className="text-xs sm:text-sm font-light underline"
             to={profileInfo?.partner_link || ""}
@@ -37,12 +40,12 @@ export const ProfileInfo = () => {
       )}
       <div className="grid grid-rows-2">
         <div className="text-center">
-          <p>Свяжитесь с поддержкой</p>
-          <p>для изменений</p>
+          <p>{t("Свяжитесь с поддержкой")}</p>
+          <p>{t("для изменений")}</p>
         </div>
         <AlertDialog>
-          <AlertDialogTrigger className="h-[70px] rounded-[50px] border-2 border-lightGray text-lg sm:text-xl border-bg-darkGray  bg-darkGray text-white ">
-            СВЯЗАТЬСЯ
+          <AlertDialogTrigger className="h-[70px] rounded-[50px] border-2 border-lightGray text-lg sm:text-xl border-bg-darkGray  bg-darkGray text-white uppercase">
+            {t("Связаться")}
           </AlertDialogTrigger>
           <AlertDialogContent className="rounded-2xl w-[90vw]">
             <div className="relative">
@@ -50,7 +53,7 @@ export const ProfileInfo = () => {
                 <X width={20} height={20} stroke="#2d2d2d" />
               </AlertDialogCancel>
               <p className="font-semibold uppercase text-md text-center">
-                Служба поддержки
+                {t("Служба поддержки")}
               </p>
             </div>
             <AlertDialogFooter className="sm:grid-rows-2 grid-rows-2 sm:grid-cols-1">

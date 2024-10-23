@@ -3,6 +3,7 @@ import { CreateDirection, DirectionList } from "@/features/direction";
 import { FC } from "react";
 import { UseFormReturn } from "react-hook-form";
 import styles from "./directions.module.scss";
+import { useTranslation } from "react-i18next";
 
 interface DirectionsProps {
   form: UseFormReturn<directionSchemaType>;
@@ -17,9 +18,10 @@ export const Directions: FC<DirectionsProps> = ({
   directionsLoading,
   citiesLoading,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className="mt-8 mb-8 grid grid-flow-row gap-5">
-      <h2 className={styles.title}>Мои направления</h2>
+      <h2 className={styles.title}>{t("Мои направления")}</h2>
       <CreateDirection />
       <DirectionList
         directionsLoading={directionsLoading}

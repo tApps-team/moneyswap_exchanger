@@ -4,6 +4,7 @@
   max-width: var(--container-width);
   margin: 0 auto;
   padding: var(--padding-m);
+  position: relative;
 
   @media (max-width: 380px) {
     padding: var(--padding-xs);

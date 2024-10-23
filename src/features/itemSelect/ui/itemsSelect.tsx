@@ -16,6 +16,8 @@ import {
 import { Search } from "lucide-react";
 import { useDeferredValue, useState } from "react";
 import { ItemCard } from "./itemCard";
+import { useTranslation } from "react-i18next";
+import { Lang } from "@/shared/config";
 
 type ItemSelectProps<T> = {
   items?: T[];
@@ -42,19 +44,22 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
     inputLabel,
   } = props;
 
+  const { i18n, t } = useTranslation();
+
   const [searchValue, setSearchValue] = useState<string>("");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const defferredSearchValue = useDeferredValue(searchValue);
 
   const filteredItems = items?.filter((item) =>
-    item.name?.toLowerCase().includes(defferredSearchValue.toLowerCase())
+    item.name?.[i18n.language === Lang.ru ? Lang.ru : Lang.en]
+      ?.toLowerCase()
+      .includes(defferredSearchValue.toLowerCase())
   );
+
   const handleScrollToTop = () => {
     window.scrollTo({ left: 0, top: 0 });
   };
-  // useLayoutEffect(() => {
-  //   window.scrollTo({ left: 0, top: 0 });
-  // }, [drawerOpen]);
+
   return (
     <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
       <DrawerTrigger onClick={handleScrollToTop} asChild>
@@ -84,14 +89,16 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
       <DrawerContent className="h-[100svh] bg-transparent border-none">
         <DrawerHeader className="gap-0">
           <div className="flex items-center justify-between">
-            <Label className="text-mainColor text-start">{inputLabel}</Label>
+            <Label className="text-mainColor text-start uppercase">
+              {inputLabel}
+            </Label>
             <DrawerClose>
               <LogoButtonIcon width={26} height={26} />
             </DrawerClose>
           </div>
           <Input
             startAdornment={<Search className="translate-y-8 ml-2" />}
-            className="rounded-xl text-base bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0 placeholder:text-darkGray placeholder:text-opacity-50"
+            className="rounded-xl text-base bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0 placeholder:text-darkGray placeholder:text-opacity-50 placeholder:uppercase"
             value={searchValue}
             placeholder={inputPlaceholder || ""}
             onChange={(e) => setSearchValue(e.target.value.trim())}
@@ -107,7 +114,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
                 </DrawerClose>
               ))
             ) : (
-              <Empty text="Список пуст..." />
+              <Empty text={t("Список пуст")} />
             )}
           </div>
         </ScrollArea>

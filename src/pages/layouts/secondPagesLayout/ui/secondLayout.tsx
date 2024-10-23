@@ -4,8 +4,10 @@ import { BackButton } from "@/features/backButton";
 import { LogoBig, LogoIcon } from "@/shared/assets";
 import { useLocation } from "react-router-dom";
 import { Pathnames, paths } from "@/shared/routing";
+import { useTranslation } from "react-i18next";
 
 export const SecondLayout = ({ children }: { children: ReactNode }) => {
+  const { t } = useTranslation();
   const location = useLocation();
   const currentPathname = Pathnames.find(
     (item) => item.path === location.pathname
@@ -34,7 +36,7 @@ export const SecondLayout = ({ children }: { children: ReactNode }) => {
                 <BackButton />
               </div>
             )}
-          <p>{currentPathname?.title}</p>
+          <p>{currentPathname?.title && t(`${currentPathname?.title}`)}</p>
         </div>
       </header>
       {children}
