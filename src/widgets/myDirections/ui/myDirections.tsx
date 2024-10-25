@@ -66,71 +66,65 @@ export const MyDirections = () => {
 
   const onSubmit = (data: directionSchemaType) => {
     if (activeCity) {
-      const hasEqualCounts = data.directions.some(
-        (direction) => direction.in_count === direction.out_count
-      );
-      if (hasEqualCounts) {
-        toast({
-          title: t("Курсы не могут быть равны"),
-          variant: "destructive",
-        });
-      } else {
-        const updatedDirections = data.directions.map((direction) => {
-          let in_count = direction.in_count;
-          let out_count = direction.out_count;
+      const updatedDirections = data.directions.map((direction) => {
+        let { in_count, out_count } = direction;
 
-          if (in_count > out_count) {
-            out_count = 1;
-            in_count = direction.in_count / direction.out_count;
-          } else {
-            in_count = 1;
-            out_count = direction.out_count / direction.in_count;
-          }
+        if (in_count === out_count) {
+          in_count = 1;
+          out_count = 1;
+        } else if (in_count > out_count) {
+          out_count = 1;
+          in_count = direction.in_count / direction.out_count;
+        } else {
+          in_count = 1;
+          out_count = direction.out_count / direction.in_count;
+        }
 
-          return {
-            ...direction,
-            in_count,
-            out_count,
-          };
-        });
-        const formData = {
-          city: activeCity?.code_name,
-          directions: updatedDirections,
+        return {
+          ...direction,
+          in_count,
+          out_count,
         };
-        editDirection(formData)
-          .unwrap()
-          .then(() => {
-            const date = new Date();
-            const currentDate = formattedDate(date);
-            const currentTime = formattedTime(date);
-            setActive({
-              code_name: activeCity.code_name,
-              country: activeCity.country,
-              country_flag: activeCity.country_flag,
-              id: activeCity.id,
-              info: activeCity.info,
-              name: activeCity.name,
-              updated: {
-                date: currentDate,
-                time: currentTime,
-              },
-            });
+      });
 
-            toast({
-              title: t("Направления успешно обновлены"),
-              description: "",
-              variant: "success",
-            });
-          })
-          .catch((error) => {
-            console.error("Ошибка...", error);
-            toast({
-              title: t("Что-то пошло не так..."),
-              description: t("При обновлении произошла ошибка"),
-              variant: "destructive",
-            });
+      const formData = {
+        city: activeCity?.code_name,
+        directions: updatedDirections,
+      };
+
+      editDirection(formData)
+        .unwrap()
+        .then(() => {
+          const date = new Date();
+          const currentDate = formattedDate(date);
+          const currentTime = formattedTime(date);
+          setActive({
+            code_name: activeCity.code_name,
+            country: activeCity.country,
+            country_flag: activeCity.country_flag,
+            id: activeCity.id,
+            info: activeCity.info,
+            name: activeCity.name,
+            updated: {
+              date: currentDate,
+              time: currentTime,
+            },
           });
-      }
+
+          toast({
+            title: t("Направления успешно обновлены"),
+            description: "",
+            variant: "success",
+          });
+        })
+        .catch((error) => {
+          console.error("Ошибка...", error);
+          toast({
+            title: t("Что-то пошло не так..."),
+            description: t("При обновлении произошла ошибка"),
+            variant: "destructive",
+          });
+        });
     }
   };
 

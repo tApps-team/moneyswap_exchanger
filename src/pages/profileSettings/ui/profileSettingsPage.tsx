@@ -20,7 +20,7 @@ export const ProfileSettingsPage = () => {
           <Link
             to={`${paths.profile}${paths.profileSettings}${paths.profileInfo}`}
           >
-            <ProfileIcon width={22} height={22} />
+            <ProfileIcon width={22} height={22} fill="#f6ff5f" />
             <div className="flex flex-col">
               <p className="text-sm sm:text-base font-normal uppercase">
                 {t("Информация аккаунта")}

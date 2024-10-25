@@ -30,7 +30,7 @@ export const directionAPI = authApi.injectEndpoints({
       AvailableValutesDtoRequest
     >({
       query: ({ base = "all" }) => ({
-        url: `partner/available_valutes?base=${base}`,
+        url: `test/partner/available_valutes?base=${base}`,
         method: "GET",
       }),
       // transformResponse: (response:AvailableValutesDtoResponse ) => response
@@ -46,7 +46,7 @@ export const directionAPI = authApi.injectEndpoints({
       AddDirectionDtoRequest
     >({
       query: (body) => ({
-        url: `partner/add_partner_direction`,
+        url: `test/partner/add_partner_direction`,
         method: "POST",
         body: body,
       }),

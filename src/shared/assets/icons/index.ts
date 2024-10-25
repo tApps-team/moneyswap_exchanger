@@ -13,3 +13,4 @@ export { LogoButtonIcon } from "./logoButtonIcon";
 export { QuestionIcon } from "./question";
 export { EmailIcon } from "./email";
 export { LockIcon } from "./lockIcon";
+export { LogoArrowIcon } from "./logo_arrow";

@@ -12,7 +12,6 @@ export const ProfileIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path
       fill={props?.fill}
       d="M27.01 28.94c7.99 0 14.47-6.48 14.47-14.47S35 0 27.01 0 12.54 6.48 12.54 14.47s6.48 14.47 14.47 14.47ZM27.01 34.19C12.19 34.19 0 46.38 0 61.19h54.02c0-14.82-12.19-27.01-27.01-27.01Z"
-      className="cls-1"
     />
   </svg>
 );

@@ -1,4 +1,3 @@
-import { CurrencyType } from "@/shared/types";
 import { z } from "zod";
 
 export const directionSchema = z.object({
@@ -29,7 +28,6 @@ export const directionAddSchema = z.object({
       }),
       code_name: z.string(),
       icon_url: z.string(),
-      type_valute: z.nativeEnum(CurrencyType),
     },
     {
       required_error: "required...",
@@ -44,7 +42,6 @@ export const directionAddSchema = z.object({
     }),
     code_name: z.string(),
     icon_url: z.string(),
-    type_valute: z.nativeEnum(CurrencyType),
   }),
   giveCurrencyPrice: z.coerce
     .number()
@@ -54,5 +51,7 @@ export const directionAddSchema = z.object({
     .number()
     .positive({ message: "> 0" })
     .min(0.00000001),
+  min_amount: z.coerce.number().positive({ message: "> 0" }).min(0.00000001),
+  max_amount: z.coerce.number().positive({ message: "> 0" }).min(0.00000001),
 });
 export type DirectionAddSchemaType = z.infer<typeof directionAddSchema>;

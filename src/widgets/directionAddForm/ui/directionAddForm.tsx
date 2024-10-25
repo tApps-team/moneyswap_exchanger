@@ -7,10 +7,10 @@ import {
 } from "@/entities/direction";
 import { ActualCourse } from "@/features/direction/actualCourse";
 import { ItemSelect } from "@/features/itemSelect";
+import { LogoArrowIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
-import { CurrencyType } from "@/shared/types";
 import {
   Button,
   Form,
@@ -24,7 +24,6 @@ import {
 import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Circle, Equal, Loader } from "lucide-react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -39,6 +38,8 @@ export const DirectionAddForm = () => {
       giveCurrency: undefined,
       getCurrencyPrice: 0,
       giveCurrencyPrice: 0,
+      min_amount: 0,
+      max_amount: 0,
     },
   });
   const navigate = useNavigate();
@@ -78,88 +79,68 @@ export const DirectionAddForm = () => {
     }
   );
 
-  const inputInCountValue =
-    form.getValues("giveCurrency")?.type_valute === CurrencyType.Cryptocurrency;
-
-  const inputOutCountValue =
-    form.getValues("getCurrency")?.type_valute === CurrencyType.Cryptocurrency;
-
-  // const inputInCountValue = actualCourse?.in_count === 1;
-  // const inputOutCountValue = actualCourse?.out_count === 1;
-
-  //refactoring
-  useEffect(() => {
-    inputInCountValue && form.setValue("giveCurrencyPrice", 1);
-    inputOutCountValue && form.setValue("getCurrencyPrice", 1);
-
-    inputInCountValue &&
-      form.setValue("getCurrencyPrice", actualCourse?.out_count || 0);
-    inputOutCountValue &&
-      form.setValue("giveCurrencyPrice", actualCourse?.in_count || 0);
-  }, [
-    actualCourse?.in_count,
-    actualCourse?.out_count,
-    form,
-    inputInCountValue,
-    inputOutCountValue,
-  ]);
-
-  const inputDisabled =
-    !form.getValues("getCurrency") || !form.getValues("giveCurrency");
+  const handleAddDirection = (
+    in_count: number,
+    out_count: number,
+    data: DirectionAddSchemaType
+  ) => {
+    addDirection({
+      city: activeCity,
+      in_count,
+      out_count,
+      is_active: true,
+      valute_from: data.giveCurrency?.code_name || "",
+      valute_to: data.getCurrency?.code_name || "",
+      min_amount: data.min_amount,
+      max_amount: data.max_amount,
+    })
+      .unwrap()
+      .then(() => {
+        navigate(paths.home);
+        toast({
+          title: t("Направление успешно добалено"),
+          variant: "success",
+        });
+      })
+      .catch((error) => {
+        if (error.status === 423) {
+          toast({
+            title: t("Такое направление уже добавлено!"),
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: t("Произошла ошибка на сервере, попробуйте позже..."),
+            variant: "destructive",
+          });
+        }
+      });
+  };
 
   const onSubmit = (data: DirectionAddSchemaType) => {
     if (data.giveCurrencyPrice === data.getCurrencyPrice) {
-      toast({
-        title: t("Курсы не могут быть равны"),
-        variant: "destructive",
-      });
+      handleAddDirection(1, 1, data);
     } else {
-      let in_count: number;
-      let out_count: number;
+      {
+        const in_count =
+          data.giveCurrencyPrice > data.getCurrencyPrice
+            ? data.giveCurrencyPrice / data.getCurrencyPrice
+            : 1;
 
-      if (data.giveCurrencyPrice > data.getCurrencyPrice) {
-        in_count = data.giveCurrencyPrice / data.getCurrencyPrice;
-        out_count = 1;
-      } else {
-        in_count = 1;
-        out_count = data.getCurrencyPrice / data.giveCurrencyPrice;
+        const out_count =
+          data.giveCurrencyPrice > data.getCurrencyPrice
+            ? 1
+            : data.getCurrencyPrice / data.giveCurrencyPrice;
+
+        handleAddDirection(in_count, out_count, data);
       }
-      addDirection({
-        city: activeCity,
-        in_count: in_count,
-        out_count: out_count,
-        is_active: true,
-        valute_from: data.giveCurrency?.code_name || "",
-        valute_to: data.getCurrency?.code_name || "",
-      })
-        .unwrap()
-        .then(() => {
-          navigate(paths.home);
-          toast({
-            title: t("Направление успешно добалено"),
-            variant: "success",
-          });
-        })
-        .catch((error) => {
-          if (error.status === 423) {
-            toast({
-              title: t("Такое направление уже добавлено!"),
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: t("Произошла ошибка на сервере, попробуйте позже..."),
-              variant: "destructive",
-            });
-          }
-        });
     }
   };
 
   return (
     <Form {...form}>
       <form
-        className="grid grid-rows-[1fr,1fr,70px,1fr,1fr] grid-cols-1 gap-10"
+        className="grid grid-flow-row grid-cols-1 gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -227,101 +208,164 @@ export const DirectionAddForm = () => {
         />
 
         <ActualCourse actualCourse={actualCourse} />
-
-        <div>
-          <div className="grid justify-center items-center py-4 px-2">
-            <p className="font-semibold uppercase text-[#fff] text-xs text-center">
-              {t("Укажите свой курс в поле ниже")}
-            </p>
-          </div>
-          <div className="grid grid-cols-[1fr,50px,1fr] items-center  grid-row-1">
-            <FormField
-              control={form.control}
-              name={"giveCurrencyPrice"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        {...field}
-                        type="number"
-                        disabled={inputDisabled || inputInCountValue}
-                        startAdornment={
-                          form.getValues("giveCurrency") ? (
-                            <img
-                              src={form.getValues("giveCurrency.icon_url")}
-                              alt={`image ${form.getValues(
-                                "giveCurrency.name"
-                              )}`}
-                              width={32}
-                              height={32}
-                              className="absolute left-3 top-1/2 -translate-y-1/2  rounded-full overflow-hidden"
-                            />
-                          ) : (
-                            <Circle
-                              width={32}
-                              height={32}
-                              color="white"
-                              className="absolute left-3 translate-y-2"
-                            />
-                          )
-                        }
-                        className=" bg-darkGray text-white text-base rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex items-center justify-center">
-              <Equal className="text-white " />
+        <div className="grid grid-flow-row gap-10">
+          <div>
+            <div className="grid justify-center items-center pb-4 px-2">
+              <p className="font-semibold uppercase text-[#fff] text-xs text-center">
+                {t("Укажите свой курс в поле ниже")}
+              </p>
             </div>
+            <div className="grid grid-cols-[1fr,50px,1fr] items-center  grid-row-1">
+              <FormField
+                control={form.control}
+                name={"giveCurrencyPrice"}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          {...field}
+                          type="number"
+                          disabled={
+                            !form.getValues("giveCurrency") ||
+                            !form.getValues("getCurrency")
+                          }
+                          startAdornment={
+                            form.getValues("giveCurrency") ? (
+                              <img
+                                src={form.getValues("giveCurrency.icon_url")}
+                                alt={`image ${form.getValues(
+                                  "giveCurrency.name"
+                                )}`}
+                                width={32}
+                                height={32}
+                                className="absolute left-3 top-1/2 -translate-y-1/2  rounded-full overflow-hidden"
+                              />
+                            ) : (
+                              <Circle
+                                width={32}
+                                height={32}
+                                color="white"
+                                className="absolute left-3 translate-y-2"
+                              />
+                            )
+                          }
+                          className=" bg-darkGray text-white text-base rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0 "
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex items-center justify-center">
+                <Equal className="text-white " />
+              </div>
 
-            <FormField
-              control={form.control}
-              name={"getCurrencyPrice"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        {...field}
-                        type="number"
-                        startAdornment={
-                          form.getValues("getCurrency") ? (
-                            <img
-                              src={form.getValues("getCurrency.icon_url")}
-                              alt={`image ${form.getValues(
-                                "getCurrency.name"
-                              )}`}
-                              width={32}
-                              height={32}
-                              className="absolute left-3 top-1/2 -translate-y-1/2  rounded-full overflow-hidden"
-                            />
-                          ) : (
-                            <Circle
-                              width={32}
-                              height={32}
-                              color="white"
-                              className="absolute left-3 translate-y-2"
-                            />
-                          )
-                        }
-                        disabled={inputDisabled || inputOutCountValue}
-                        className="border text-base border-white bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name={"getCurrencyPrice"}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          {...field}
+                          type="number"
+                          disabled={
+                            !form.getValues("giveCurrency") ||
+                            !form.getValues("getCurrency")
+                          }
+                          startAdornment={
+                            form.getValues("getCurrency") ? (
+                              <img
+                                src={form.getValues("getCurrency.icon_url")}
+                                alt={`image ${form.getValues(
+                                  "getCurrency.name"
+                                )}`}
+                                width={32}
+                                height={32}
+                                className="absolute left-3 top-1/2 -translate-y-1/2  rounded-full overflow-hidden"
+                              />
+                            ) : (
+                              <Circle
+                                width={32}
+                                height={32}
+                                color="white"
+                                className="absolute left-3 translate-y-2"
+                              />
+                            )
+                          }
+                          className="border text-base border-white bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <div>
+            <div className="grid justify-center items-center pb-4 px-2">
+              <p className="font-semibold uppercase text-[#fff] text-xs text-center">
+                {t("Минимальная и максимальная сумма")}
+              </p>
+            </div>
+            <div className="grid grid-cols-[1fr,50px,1fr] items-center  grid-row-1">
+              <FormField
+                control={form.control}
+                name={"min_amount"}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          {...field}
+                          type="number"
+                          className=" bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                          disabled={
+                            !form.getValues("giveCurrency") ||
+                            !form.getValues("getCurrency")
+                          }
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex items-center justify-center text-white font-extrabold">
+                <LogoArrowIcon className="rotate-180" />
+              </div>
+
+              <FormField
+                control={form.control}
+                name={"max_amount"}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          {...field}
+                          type="number"
+                          disabled={
+                            !form.getValues("giveCurrency") ||
+                            !form.getValues("getCurrency")
+                          }
+                          className="border text-base border-white bg-darkGray text-white rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
         </div>
-
         <Button
-          className="rounded-[35px] border border-bg-darkGray text-lg  sm:text-xl h-[70px] bg-darkGray text-mainColor"
+          className="rounded-[35px] border border-bg-darkGray text-lg  sm:text-xl h-[70px] bg-darkGray text-mainColor uppercase"
           type="submit"
         >
           {isLoadingAddDirection ? (
@@ -330,6 +374,7 @@ export const DirectionAddForm = () => {
             t("Добавить")
           )}
         </Button>
+        <div></div>
       </form>
     </Form>
   );

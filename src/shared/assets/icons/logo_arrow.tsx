@@ -1,4 +1,4 @@
-export const BackIcon = (props: React.SVGProps<SVGSVGElement>) => (
+export const LogoArrowIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     id="_\u0421\u043B\u043E\u0439_1"
@@ -6,7 +6,7 @@ export const BackIcon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 59.77 74.77"
     width={26}
     height={26}
-    fill="#f6ff5f"
+    fill="#ddd"
     strokeWidth="0"
     {...props}
   >

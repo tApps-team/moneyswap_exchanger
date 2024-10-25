@@ -25,7 +25,6 @@ import {
 import { DeleteIcon } from "@/shared/assets/icons";
 import { DirectionCardSwiper } from "./directionCardSwiper";
 import { useToast } from "@/shared/ui/toast";
-import { CurrencyType } from "@/shared/types";
 import { Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -79,9 +78,6 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                       {...field}
                       value={field.value || ""}
                       type="number"
-                      disabled={
-                        direction.in_count_type === CurrencyType.Cryptocurrency
-                      }
                       className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
                     />
                   </FormControl>
@@ -106,10 +102,6 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                       {...field}
                       value={field.value || ""}
                       type="number"
-                      disabled={
-                        direction?.out_count_type ===
-                        CurrencyType.Cryptocurrency
-                      }
                       className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
                     />
                   </FormControl>

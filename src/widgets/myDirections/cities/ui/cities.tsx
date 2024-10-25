@@ -3,6 +3,7 @@ import styles from "./cities.module.scss";
 import { FC } from "react";
 import { ActiveCity } from "@/entities/location";
 import { useTranslation } from "react-i18next";
+import { LanguageSwitcherSmall } from "@/features/languageSwitchSmall";
 
 interface CitiesProps {
   cities: ActiveCity[];
@@ -22,7 +23,10 @@ export const Cities: FC<CitiesProps> = ({
   const { t } = useTranslation();
   return (
     <div className={styles.cities}>
-      <h2 className={styles.cities__title}>{t("Мои города")}</h2>
+      <div className="flex items-center justify-between gap-2 mb-[20px]">
+        <h2 className={styles.cities__title}>{t("Мои города")}</h2>
+        <LanguageSwitcherSmall />
+      </div>
       <div className="flex">
         <AddCityButton />
         <div className={styles.carousel}>
