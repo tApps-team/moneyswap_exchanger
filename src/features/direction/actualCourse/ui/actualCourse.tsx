@@ -17,7 +17,12 @@ export const ActualCourse = (props: ActualCourseProps) => {
   const { t } = useTranslation();
 
   return (
-    <Card className="p-0 bg-mainColor h-mainHeight text-darkGray overflow-hidden rounded-[35px] border-none">
+    <Card
+      className={`p-0 bg-mainColor h-mainHeight text-darkGray overflow-hidden rounded-[35px] border-none ${
+        (actualCourse?.in_count === 0 || actualCourse?.out_count === 0) &&
+        "bg-darkGray text-lightGray opacity-70"
+      }`}
+    >
       <CardContent className="p-4 h-full flex items-center">
         {actualCourse &&
         (actualCourse?.in_count !== 0 || actualCourse?.out_count !== 0) ? (
@@ -61,10 +66,10 @@ export const ActualCourse = (props: ActualCourseProps) => {
         ) : (
           <div className="grid grid-flow-row gap-0 justify-center items-center w-full text-center uppercase text-sm sm:text-base font-semibold">
             <p>{t("Актуальный курс")}</p>
-            <span className="text-[10px] text-medium leading-3 text-[#2d2d2d]">
+            <span className="text-[10px] text-medium leading-3 text-lightGray">
               {(actualCourse?.in_count === 0 ||
                 actualCourse?.out_count === 0) &&
-                t("нет данных")}
+                t("Нет данных")}
             </span>
           </div>
         )}
