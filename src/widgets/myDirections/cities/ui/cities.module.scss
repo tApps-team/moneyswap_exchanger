@@ -2,12 +2,12 @@
 
     &__title {
         color: var(--main-color);
-        font-size: var(--text-xl);
-        font-weight: 400;
+        font-size: 18px;
+        font-weight: 500;
         text-transform: uppercase;
 
         @media (max-width: 380px) {
-            font-size: var(--text-lg);
+            font-size: 16px;
         }
     }
 
