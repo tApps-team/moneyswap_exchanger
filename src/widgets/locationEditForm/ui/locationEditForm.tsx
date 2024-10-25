@@ -61,12 +61,12 @@ export const LocationEditForm = () => {
       deliviry: activeEditCity?.info?.delivery,
       office: activeEditCity?.info?.office,
       weekdays: {
-        time_from: activeEditCity?.info?.weekdays?.time_from,
-        time_to: activeEditCity?.info?.weekdays?.time_to,
+        time_from: activeEditCity?.info?.weekdays?.time_from || "00:00",
+        time_to: activeEditCity?.info?.weekdays?.time_to || "00:00",
       },
       weekends: {
-        time_from: activeEditCity?.info?.weekends?.time_from,
-        time_to: activeEditCity?.info?.weekends?.time_to,
+        time_from: activeEditCity?.info?.weekends?.time_from || "00:00",
+        time_to: activeEditCity?.info?.weekends?.time_to || "00:00",
       },
       workDays: activeEditCity?.info?.working_days,
     },
