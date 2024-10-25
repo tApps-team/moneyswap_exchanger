@@ -3,14 +3,14 @@ import { z } from "zod";
 export const changePasswordSchema = z
   .object({
     currentPassword: z
-      .string({ required_error: "Это обязательое поле" })
-      .min(1, { message: "Это обязательое поле" }),
+      .string({ required_error: "required..." })
+      .min(1, { message: "required..." }),
     newPassword: z
-      .string({ required_error: "Это обязательое поле" })
-      .min(1, { message: "Это обязательое поле" }),
+      .string({ required_error: "required..." })
+      .min(1, { message: "required..." }),
     confirmPassword: z
-      .string({ required_error: "Это обязательое поле" })
-      .min(1, { message: "Это обязательое поле" }),
+      .string({ required_error: "required..." })
+      .min(1, { message: "required..." }),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords don't match",

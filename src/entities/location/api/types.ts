@@ -13,8 +13,8 @@ export type EditPartnerCityDtoRequest = Partial<{
   city: string;
   delivery: boolean;
   office: boolean;
-  time_from: string;
-  time_to: string;
+  weekdays: { time_from: string; time_to: string };
+  weekends: { time_from: string; time_to: string };
   working_days: Record<string, boolean>;
 }>;
 
@@ -23,8 +23,8 @@ export type AddPartnerCityDtoRequest = {
   city: string;
   delivery: boolean;
   office: boolean;
-  time_from: string;
-  time_to: string;
+  weekdays: { time_from: string; time_to: string };
+  weekends: { time_from: string; time_to: string };
   working_days: Record<string, boolean>;
 };
 

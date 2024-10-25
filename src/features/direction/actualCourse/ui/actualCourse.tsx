@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/shared/ui";
+import { useTranslation } from "react-i18next";
 //refactoring
 type ActualCourseProps = {
   actualCourse?: {
@@ -13,10 +14,13 @@ type ActualCourseProps = {
 export const ActualCourse = (props: ActualCourseProps) => {
   const { actualCourse } = props;
 
+  const { t } = useTranslation();
+
   return (
     <Card className="p-0 bg-mainColor h-mainHeight text-darkGray overflow-hidden rounded-[35px] border-none">
       <CardContent className="p-4 h-full flex items-center">
-        {actualCourse ? (
+        {actualCourse &&
+        (actualCourse?.in_count !== 0 || actualCourse?.out_count !== 0) ? (
           <div className="grid grid-cols-[auto,10px,auto] justify-between items-center gap-4">
             <div className="flex items-center truncate gap-2">
               <img
@@ -55,8 +59,13 @@ export const ActualCourse = (props: ActualCourseProps) => {
             </div>
           </div>
         ) : (
-          <div className="w-full text-center uppercase text-sm sm:text-base font-semibold">
-            Актуальный курс
+          <div className="grid grid-flow-row gap-0 justify-center items-center w-full text-center uppercase text-sm sm:text-base font-semibold">
+            <p>{t("Актуальный курс")}</p>
+            <span className="text-[10px] text-medium leading-3 text-[#2d2d2d]">
+              {(actualCourse?.in_count === 0 ||
+                actualCourse?.out_count === 0) &&
+                t("нет данных")}
+            </span>
           </div>
         )}
       </CardContent>

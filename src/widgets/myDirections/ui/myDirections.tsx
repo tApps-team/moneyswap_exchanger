@@ -19,8 +19,10 @@ import {
 import { EditDirection, UpdatedInfo } from "@/features/direction";
 import { useToast } from "@/shared/ui/toast";
 import { formattedDate, formattedTime } from "@/shared/lib";
+import { useTranslation } from "react-i18next";
 
 export const MyDirections = () => {
+  const { t } = useTranslation();
   const activeCity = useAppSelector((state) => state.activeCity.activeCity);
   const dispatch = useAppDispatch();
   const setActive = (city: ActiveCity) => {
@@ -57,18 +59,40 @@ export const MyDirections = () => {
     }
   }, [directions]);
 
-  const [editDireciton, { isLoading: editLoading }] =
+  const [editDirection, { isLoading: editLoading }] =
     useEditDirectionMutation();
 
   const { toast } = useToast();
 
   const onSubmit = (data: directionSchemaType) => {
     if (activeCity) {
+      const updatedDirections = data.directions.map((direction) => {
+        let { in_count, out_count } = direction;
+
+        if (in_count === out_count) {
+          in_count = 1;
+          out_count = 1;
+        } else if (in_count > out_count) {
+          out_count = 1;
+          in_count = direction.in_count / direction.out_count;
+        } else {
+          in_count = 1;
+          out_count = direction.out_count / direction.in_count;
+        }
+
+        return {
+          ...direction,
+          in_count,
+          out_count,
+        };
+      });
+
       const formData = {
         city: activeCity?.code_name,
-        directions: data.directions,
+        directions: updatedDirections,
       };
-      editDireciton(formData)
+
+      editDirection(formData)
         .unwrap()
         .then(() => {
           const date = new Date();
@@ -88,7 +112,7 @@ export const MyDirections = () => {
           });
 
           toast({
-            title: "Направления успешно обновлены",
+            title: t("Направления успешно обновлены"),
             description: "",
             variant: "success",
           });
@@ -96,14 +120,14 @@ export const MyDirections = () => {
         .catch((error) => {
           console.error("Ошибка...", error);
           toast({
-            title: "Что-то пошло не так...",
-            description: "При обновлении произошла ошибка",
+            title: t("Что-то пошло не так..."),
+            description: t("При обновлении произошла ошибка"),
             variant: "destructive",
           });
         });
     }
   };
-  console.log(activeCity);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>

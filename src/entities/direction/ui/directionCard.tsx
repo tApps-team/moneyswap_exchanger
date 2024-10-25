@@ -25,8 +25,8 @@ import {
 import { DeleteIcon } from "@/shared/assets/icons";
 import { DirectionCardSwiper } from "./directionCardSwiper";
 import { useToast } from "@/shared/ui/toast";
-import { CurrencyType } from "@/shared/types";
 import { Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface DirectionCardProps {
   direction: Direction;
@@ -39,6 +39,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
   form,
   index,
 }) => {
+  const { t } = useTranslation();
   const isActive = form.watch(`directions.${index}.is_active`);
 
   const [deleteDirection] = useDeleteDirectionMutation();
@@ -48,7 +49,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
       .unwrap()
       .then(() => {
         toast({
-          title: "Направлениe успешно удалено",
+          title: t("Направлениe успешно удалено"),
           description: "",
           variant: "success",
         });
@@ -77,9 +78,6 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                       {...field}
                       value={field.value || ""}
                       type="number"
-                      disabled={
-                        direction.in_count_type === CurrencyType.Cryptocurrency
-                      }
                       className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
                     />
                   </FormControl>
@@ -87,12 +85,12 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                 </FormItem>
               )}
             />
-            <p className={styles.code}>{direction.valute_from}</p>
+            <p className={styles.code}>{direction?.valute_from}</p>
           </div>
           <span className="text-xl">=</span>
           <div className={styles.input__block}>
             <div className={styles.icon}>
-              <img src={direction.icon_valute_to} />
+              <img src={direction?.icon_valute_to} />
             </div>
             <FormField
               control={form.control}
@@ -104,9 +102,6 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                       {...field}
                       value={field.value || ""}
                       type="number"
-                      disabled={
-                        direction.out_count_type === CurrencyType.Cryptocurrency
-                      }
                       className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
                     />
                   </FormControl>
@@ -114,7 +109,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                 </FormItem>
               )}
             />
-            <p className={styles.code}>{direction.valute_to}</p>
+            <p className={styles.code}>{direction?.valute_to}</p>
           </div>
         </div>
         <div className={styles.card__active}>
@@ -139,7 +134,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
             />
           </div>
           <p className={styles.text}>
-            {isActive ? "деактивировать пару" : "активировать пару"}
+            {isActive ? t("деактивировать пару") : t("активировать пару")}
           </p>
           <div className={styles.delete_desktop}>
             <AlertDialog>
@@ -148,12 +143,14 @@ export const DirectionCard: FC<DirectionCardProps> = ({
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Удалить направление?</AlertDialogTitle>
+                  <AlertDialogTitle>
+                    {t("Удалить направление?")}
+                  </AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Отменить</AlertDialogCancel>
+                  <AlertDialogCancel>{t("Отменить")}</AlertDialogCancel>
                   <AlertDialogAction onClick={handleDelete}>
-                    Удалить
+                    {t("Удалить")}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -168,12 +165,12 @@ export const DirectionCard: FC<DirectionCardProps> = ({
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Удалить направление?</AlertDialogTitle>
+              <AlertDialogTitle>{t("Удалить направление?")}</AlertDialogTitle>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Отменить</AlertDialogCancel>
+              <AlertDialogCancel>{t("Отменить")}</AlertDialogCancel>
               <AlertDialogAction onClick={handleDelete}>
-                Удалить
+                {t("Удалить")}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

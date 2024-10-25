@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AuthFormSchema, authFormSchema } from "../model/authFormSchema";
 import { EmailIcon } from "@/shared/assets";
+import { useTranslation } from "react-i18next";
 
 export const AuthByUserNameForm = () => {
   const authForm = useForm<AuthFormSchema>({
@@ -27,6 +28,8 @@ export const AuthByUserNameForm = () => {
       password: "",
     },
   });
+
+  const { t } = useTranslation();
 
   const [Login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
@@ -43,7 +46,7 @@ export const AuthByUserNameForm = () => {
       .catch((error) => {
         console.error("Ошибка получения токена:", error);
         toast({
-          title: "Неверный логин или пароль",
+          title: t("Неверный логин или пароль"),
           variant: "destructive",
         });
       });

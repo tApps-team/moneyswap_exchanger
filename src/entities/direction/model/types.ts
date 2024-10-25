@@ -14,7 +14,10 @@ export type Direction = {
 };
 export type Currency = {
   id: number;
-  name: string;
+  name: {
+    ru: string;
+    en: string;
+  };
   code_name: string;
   icon_url: string;
   type_valute: CurrencyType;
