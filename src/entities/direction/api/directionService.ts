@@ -46,7 +46,7 @@ export const directionAPI = authApi.injectEndpoints({
       AddDirectionDtoRequest
     >({
       query: (body) => ({
-        url: `test/partner/add_partner_direction`,
+        url: `partner/add_partner_direction`,
         method: "POST",
         body: body,
       }),
