@@ -26,8 +26,6 @@ export type AddDirectionDtoRequest = {
   city: string;
   valute_from: string;
   valute_to: string;
-  min_amount: number;
-  max_amount: number;
 };
 export type EditDirecitonRequest = {
   city: string;

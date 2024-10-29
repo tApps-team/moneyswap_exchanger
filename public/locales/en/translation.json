@@ -60,10 +60,10 @@
   "Актуальный курс": "Current rate",
   "Нет данных": "Not found...",
   "Укажите свой курс в поле ниже": "Enter your course in the field below",
-  "Минимальная и максимальная сумма": "Minimum and maximum amount",
+  "Минимальная и максимальная сумма": "Enter the minimum and maximum exchange amount in dollars ($)",
   "Добавить": "Add",
 
-  "Переключить язык": "Переключить на русский",
+  "Переключить язык": "русский",
 
   "Направлениe успешно удалено": "Pair successfully deleted",
   "Неверный логин или пароль": "Incorrect login or password",

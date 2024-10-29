@@ -1,15 +1,5 @@
 import { z } from "zod";
 
-const workDays = {
-  Пн: false,
-  Вт: false,
-  Ср: false,
-  Чт: false,
-  Пт: false,
-  Сб: false,
-  Вс: false,
-};
-
 export const locationSchema = z.object({
   city: z.object(
     {
@@ -38,6 +28,18 @@ export const locationSchema = z.object({
   weekdays: z.object({ time_from: z.string(), time_to: z.string() }),
   weekends: z.object({ time_from: z.string(), time_to: z.string() }),
   workDays: z.record(z.string(), z.boolean()),
+  min_amount: z
+    .number()
+    .positive({ message: "> 0" })
+    .min(0.00000001)
+    .nullable()
+    .optional(),
+  max_amount: z
+    .number()
+    .positive({ message: "> 0" })
+    .min(0.00000001)
+    .nullable()
+    .optional(),
 });
 
 export type LocationSchemaType = z.infer<typeof locationSchema>;
@@ -62,6 +64,18 @@ export const locationEditSchema = z.object({
   weekdays: z.object({ time_from: z.string(), time_to: z.string() }),
   weekends: z.object({ time_from: z.string(), time_to: z.string() }),
   workDays: z.record(z.string(), z.boolean()),
+  min_amount: z
+    .number()
+    .positive({ message: "> 0" })
+    .min(0.00000001)
+    .nullable()
+    .optional(),
+  max_amount: z
+    .number()
+    .positive({ message: "> 0" })
+    .min(0.00000001)
+    .nullable()
+    .optional(),
 });
 
 export type LocationEditSchemaType = z.infer<typeof locationEditSchema>;

@@ -7,7 +7,6 @@ import {
 } from "@/entities/direction";
 import { ActualCourse } from "@/features/direction/actualCourse";
 import { ItemSelect } from "@/features/itemSelect";
-import { LogoArrowIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
@@ -38,8 +37,6 @@ export const DirectionAddForm = () => {
       giveCurrency: undefined,
       getCurrencyPrice: 0,
       giveCurrencyPrice: 0,
-      min_amount: 0,
-      max_amount: 0,
     },
   });
   const navigate = useNavigate();
@@ -91,8 +88,6 @@ export const DirectionAddForm = () => {
       is_active: true,
       valute_from: data.giveCurrency?.code_name || "",
       valute_to: data.getCurrency?.code_name || "",
-      min_amount: data.min_amount,
-      max_amount: data.max_amount,
     })
       .unwrap()
       .then(() => {
@@ -120,7 +115,9 @@ export const DirectionAddForm = () => {
   const onSubmit = (data: DirectionAddSchemaType) => {
     if (data.giveCurrencyPrice === data.getCurrencyPrice) {
       handleAddDirection(1, 1, data);
-    } else {
+    } else if (data?.giveCurrencyPrice === 1 || data?.getCurrencyPrice === 1) {
+      handleAddDirection(data?.giveCurrencyPrice, data?.getCurrencyPrice, data);
+    } else if (data?.giveCurrencyPrice !== 1 || data?.getCurrencyPrice !== 1) {
       {
         const in_count =
           data.giveCurrencyPrice > data.getCurrencyPrice
@@ -297,63 +294,6 @@ export const DirectionAddForm = () => {
                             )
                           }
                           className="border text-base border-white bg-darkGray text-white  rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div>
-            <div className="grid justify-center items-center pb-4 px-2">
-              <p className="font-semibold uppercase text-[#fff] text-xs text-center">
-                {t("Минимальная и максимальная сумма")}
-              </p>
-            </div>
-            <div className="grid grid-cols-[1fr,50px,1fr] items-center  grid-row-1">
-              <FormField
-                control={form.control}
-                name={"min_amount"}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          type="number"
-                          className=" bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                          disabled={
-                            !form.getValues("giveCurrency") ||
-                            !form.getValues("getCurrency")
-                          }
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="flex items-center justify-center text-white font-extrabold">
-                <LogoArrowIcon className="rotate-180" />
-              </div>
-
-              <FormField
-                control={form.control}
-                name={"max_amount"}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          type="number"
-                          disabled={
-                            !form.getValues("giveCurrency") ||
-                            !form.getValues("getCurrency")
-                          }
-                          className="border text-base border-white bg-darkGray text-white rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
                         />
                       </div>
                     </FormControl>

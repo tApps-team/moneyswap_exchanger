@@ -6,7 +6,7 @@ import {
   useCitiesByCountryNameQuery,
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
-import { LogoButtonIcon } from "@/shared/assets";
+import { LogoArrowIcon, LogoButtonIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
 import { paths } from "@/shared/routing";
 
@@ -22,6 +22,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  Input,
   Switch,
   TimePicker,
 } from "@/shared/ui";
@@ -58,6 +59,8 @@ export const LocationAddForm = () => {
         СБ: true,
         ВС: true,
       },
+      min_amount: null,
+      max_amount: null,
     },
   });
 
@@ -82,6 +85,8 @@ export const LocationAddForm = () => {
         time_to: data?.weekends.time_to,
       },
       working_days: data?.workDays,
+      min_amount: data?.min_amount || null,
+      max_amount: data?.max_amount || null,
     })
       .unwrap()
       .then(() => {
@@ -387,6 +392,73 @@ export const LocationAddForm = () => {
                 />
               )
             )}
+          </div>
+        </div>
+        <div>
+          <div className="grid justify-center items-center pb-4 px-2">
+            <p className="font-semibold uppercase text-[#fff] text-xs text-center">
+              {t("Минимальная и максимальная сумма")}
+            </p>
+          </div>
+          <div className="grid grid-cols-[1fr,50px,1fr] items-center  grid-row-1">
+            <FormField
+              control={form.control}
+              name={"min_amount"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        type="number"
+                        className="bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                        disabled={!form.getValues("city.code_name")}
+                        value={field.value === null ? "" : field.value}
+                        onChange={(e) =>
+                          field.onChange(
+                            e.target.value === ""
+                              ? null
+                              : Number(e.target.value)
+                          )
+                        }
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex items-center justify-center text-white font-extrabold">
+              <LogoArrowIcon className="rotate-180" />
+            </div>
+
+            <FormField
+              control={form.control}
+              name={"max_amount"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        type="number"
+                        className="bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                        disabled={!form.getValues("city.code_name")}
+                        value={field.value === null ? "" : field.value}
+                        onChange={(e) =>
+                          field.onChange(
+                            e.target.value === ""
+                              ? null
+                              : Number(e.target.value)
+                          )
+                        }
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
         </div>
         <Button

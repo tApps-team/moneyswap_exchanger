@@ -51,7 +51,5 @@ export const directionAddSchema = z.object({
     .number()
     .positive({ message: "> 0" })
     .min(0.00000001),
-  min_amount: z.coerce.number().positive({ message: "> 0" }).min(0.00000001),
-  max_amount: z.coerce.number().positive({ message: "> 0" }).min(0.00000001),
 });
 export type DirectionAddSchemaType = z.infer<typeof directionAddSchema>;
