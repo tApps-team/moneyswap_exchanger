@@ -72,10 +72,13 @@ export const MyDirections = () => {
         if (in_count === out_count) {
           in_count = 1;
           out_count = 1;
-        } else if (in_count > out_count) {
+        } else if (in_count > out_count && in_count !== 1 && out_count !== 1) {
           out_count = 1;
           in_count = direction.in_count / direction.out_count;
-        } else {
+        } else if (in_count === 1 || out_count === 1) {
+          in_count = direction.in_count;
+          out_count = direction.out_count;
+        } else if (in_count < out_count && in_count !== 1 && out_count !== 1) {
           in_count = 1;
           out_count = direction.out_count / direction.in_count;
         }
@@ -91,7 +94,6 @@ export const MyDirections = () => {
         city: activeCity?.code_name,
         directions: updatedDirections,
       };
-
       editDirection(formData)
         .unwrap()
         .then(() => {
@@ -109,6 +111,8 @@ export const MyDirections = () => {
               date: currentDate,
               time: currentTime,
             },
+            min_amount: activeCity?.min_amount,
+            max_amount: activeCity?.max_amount,
           });
 
           toast({

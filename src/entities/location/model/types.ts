@@ -37,4 +37,6 @@ export type ActiveCity = {
     date: string;
     time: string;
   };
+  min_amount: number | null;
+  max_amount: number | null;
 };
