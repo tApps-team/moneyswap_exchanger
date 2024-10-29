@@ -1,13 +1,14 @@
 import {
   LocationEditSchemaType,
   locationEditSchema,
+  setActiveCity,
   useDeletePartnerCityMutation,
   useEditPartnerCityMutationAuth,
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
 import { LogoArrowIcon, LogoButtonIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
-import { useAppSelector } from "@/shared/model";
+import { useAppDispatch, useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
 
 import {
@@ -39,6 +40,7 @@ import { useNavigate } from "react-router-dom";
 
 export const LocationEditForm = () => {
   const { i18n, t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const activeEditCity = useAppSelector((state) => state.activeCity.activeCity);
 
@@ -114,6 +116,7 @@ export const LocationEditForm = () => {
           variant: "success",
           title: t("Город успешно удален"),
         });
+        dispatch(setActiveCity(null));
         navigate(paths.home);
       })
       .catch(() => {
