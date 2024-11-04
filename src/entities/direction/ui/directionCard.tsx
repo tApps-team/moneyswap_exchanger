@@ -79,6 +79,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                       value={field.value || ""}
                       type="number"
                       className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
+                      onWheel={(e) => (e.target as HTMLInputElement).blur()}
                     />
                   </FormControl>
                   <FormMessage />
@@ -103,6 +104,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                       value={field.value || ""}
                       type="number"
                       className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
+                      onWheel={(e) => (e.target as HTMLInputElement).blur()}
                     />
                   </FormControl>
                   <FormMessage />

@@ -222,6 +222,7 @@ export const DirectionAddForm = () => {
                       <div className="relative">
                         <Input
                           {...field}
+                          onWheel={(e) => (e.target as HTMLInputElement).blur()}
                           type="number"
                           disabled={
                             !form.getValues("giveCurrency") ||
@@ -268,6 +269,7 @@ export const DirectionAddForm = () => {
                       <div className="relative">
                         <Input
                           {...field}
+                          onWheel={(e) => (e.target as HTMLInputElement).blur()}
                           type="number"
                           disabled={
                             !form.getValues("giveCurrency") ||
