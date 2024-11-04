@@ -406,6 +406,7 @@ export const LocationEditForm = () => {
                       <Input
                         {...field}
                         type="number"
+                        onWheel={(e) => (e.target as HTMLInputElement).blur()}
                         className="bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
                         disabled={!form.getValues("city.code_name")}
                         value={field.value === null ? "" : field.value}
@@ -437,6 +438,7 @@ export const LocationEditForm = () => {
                       <Input
                         {...field}
                         type="number"
+                        onWheel={(e) => (e.target as HTMLInputElement).blur()}
                         className="bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
                         disabled={!form.getValues("city.code_name")}
                         value={field.value === null ? "" : field.value}
