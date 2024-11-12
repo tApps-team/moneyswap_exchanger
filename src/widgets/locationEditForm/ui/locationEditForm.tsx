@@ -21,7 +21,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   Button,
-  DesktopTimepicker,
   Form,
   FormControl,
   FormField,
@@ -29,6 +28,7 @@ import {
   FormLabel,
   FormMessage,
   Input,
+  OptionsTimepicker,
   Switch,
   TimePicker,
 } from "@/shared/ui";
@@ -258,7 +258,7 @@ export const LocationEditForm = () => {
                         </AlertDialog>
                       </div>
                       <div className="mobile:block hidden">
-                        <DesktopTimepicker
+                        <OptionsTimepicker
                           setTime={field.onChange}
                           time={field?.value || "00:00"}
                         />
@@ -301,7 +301,7 @@ export const LocationEditForm = () => {
                         </AlertDialog>
                       </div>
                       <div className="mobile:block hidden">
-                        <DesktopTimepicker
+                        <OptionsTimepicker
                           setTime={field.onChange}
                           time={field?.value || "00:00"}
                         />
@@ -346,7 +346,7 @@ export const LocationEditForm = () => {
                         </AlertDialog>
                       </div>
                       <div className="mobile:block hidden">
-                        <DesktopTimepicker
+                        <OptionsTimepicker
                           setTime={field.onChange}
                           time={field?.value || "00:00"}
                         />
@@ -389,7 +389,7 @@ export const LocationEditForm = () => {
                         </AlertDialog>
                       </div>
                       <div className="mobile:block hidden">
-                        <DesktopTimepicker
+                        <OptionsTimepicker
                           setTime={field.onChange}
                           time={field?.value || "00:00"}
                         />
