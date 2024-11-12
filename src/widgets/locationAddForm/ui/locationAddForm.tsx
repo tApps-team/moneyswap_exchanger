@@ -16,7 +16,7 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
   Button,
-  DesktopTimepicker,
+  OptionsTimepicker,
   Form,
   FormControl,
   FormField,
@@ -266,7 +266,7 @@ export const LocationAddForm = () => {
                         </AlertDialog>
                       </div>
                       <div className="mobile:block hidden">
-                        <DesktopTimepicker
+                        <OptionsTimepicker
                           setTime={field.onChange}
                           time={field?.value || "00:00"}
                         />
@@ -309,7 +309,7 @@ export const LocationAddForm = () => {
                         </AlertDialog>
                       </div>
                       <div className="mobile:block hidden">
-                        <DesktopTimepicker
+                        <OptionsTimepicker
                           setTime={field.onChange}
                           time={field?.value || "00:00"}
                         />
@@ -354,7 +354,7 @@ export const LocationAddForm = () => {
                         </AlertDialog>
                       </div>
                       <div className="mobile:block hidden">
-                        <DesktopTimepicker
+                        <OptionsTimepicker
                           setTime={field.onChange}
                           time={field?.value || "00:00"}
                         />
@@ -397,7 +397,7 @@ export const LocationAddForm = () => {
                         </AlertDialog>
                       </div>
                       <div className="mobile:block hidden">
-                        <DesktopTimepicker
+                        <OptionsTimepicker
                           setTime={field.onChange}
                           time={field?.value || "00:00"}
                         />
