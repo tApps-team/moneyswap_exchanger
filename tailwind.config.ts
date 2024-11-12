@@ -10,7 +10,7 @@ module.exports = {
   prefix: "",
   theme: {
     screens: {
-      sm: "380px",
+      mobile: "450px",
     },
     container: {
       center: true,

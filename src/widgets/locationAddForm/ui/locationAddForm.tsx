@@ -16,6 +16,7 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
   Button,
+  DesktopTimepicker,
   Form,
   FormControl,
   FormField,
@@ -242,23 +243,35 @@ export const LocationAddForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <AlertDialog>
-                      <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
-                        {field.value || "00:00"}
-                        <LogoButtonIcon
-                          width={26}
-                          height={26}
-                          className="absolute -translate-y-[50%] top-[50%] right-3"
-                        />
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className="grid gap-0">
-                        <TimePicker
+                    <div>
+                      <div className="mobile:hidden block">
+                        <AlertDialog>
+                          <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                            {field?.value || "00:00"}
+                            <LogoButtonIcon
+                              width={26}
+                              height={26}
+                              className="absolute -translate-y-[50%] top-[50%] right-3"
+                            />
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="grid gap-0">
+                            <TimePicker
+                              setTime={field.onChange}
+                              time={field?.value || "00:00"}
+                            />
+                            <AlertDialogAction>
+                              {t("Сохранить")}
+                            </AlertDialogAction>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                      <div className="mobile:block hidden">
+                        <DesktopTimepicker
                           setTime={field.onChange}
-                          time={field.value || "00:00"}
+                          time={field?.value || "00:00"}
                         />
-                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
-                      </AlertDialogContent>
-                    </AlertDialog>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -273,23 +286,35 @@ export const LocationAddForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <AlertDialog>
-                      <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
-                        {field.value || "00:00"}
-                        <LogoButtonIcon
-                          width={26}
-                          height={26}
-                          className="absolute -translate-y-[50%] top-[50%] right-3"
-                        />
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className="grid gap-0">
-                        <TimePicker
+                    <div>
+                      <div className="mobile:hidden block">
+                        <AlertDialog>
+                          <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                            {field?.value || "00:00"}
+                            <LogoButtonIcon
+                              width={26}
+                              height={26}
+                              className="absolute -translate-y-[50%] top-[50%] right-3"
+                            />
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="grid gap-0">
+                            <TimePicker
+                              setTime={field.onChange}
+                              time={field?.value || "00:00"}
+                            />
+                            <AlertDialogAction>
+                              {t("Сохранить")}
+                            </AlertDialogAction>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                      <div className="mobile:block hidden">
+                        <DesktopTimepicker
                           setTime={field.onChange}
-                          time={field.value || "00:00"}
+                          time={field?.value || "00:00"}
                         />
-                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
-                      </AlertDialogContent>
-                    </AlertDialog>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -306,23 +331,35 @@ export const LocationAddForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <AlertDialog>
-                      <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
-                        {field.value || "00:00"}
-                        <LogoButtonIcon
-                          width={26}
-                          height={26}
-                          className="absolute -translate-y-[50%] top-[50%] right-3"
-                        />
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className="grid gap-0">
-                        <TimePicker
+                    <div>
+                      <div className="mobile:hidden block">
+                        <AlertDialog>
+                          <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                            {field?.value || "00:00"}
+                            <LogoButtonIcon
+                              width={26}
+                              height={26}
+                              className="absolute -translate-y-[50%] top-[50%] right-3"
+                            />
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="grid gap-0">
+                            <TimePicker
+                              setTime={field.onChange}
+                              time={field?.value || "00:00"}
+                            />
+                            <AlertDialogAction>
+                              {t("Сохранить")}
+                            </AlertDialogAction>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                      <div className="mobile:block hidden">
+                        <DesktopTimepicker
                           setTime={field.onChange}
-                          time={field.value || "00:00"}
+                          time={field?.value || "00:00"}
                         />
-                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
-                      </AlertDialogContent>
-                    </AlertDialog>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -337,23 +374,35 @@ export const LocationAddForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <AlertDialog>
-                      <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
-                        {field.value || "00:00"}
-                        <LogoButtonIcon
-                          width={26}
-                          height={26}
-                          className="absolute -translate-y-[50%] top-[50%] right-3"
-                        />
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className="grid gap-0">
-                        <TimePicker
+                    <div>
+                      <div className="mobile:hidden block">
+                        <AlertDialog>
+                          <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                            {field?.value || "00:00"}
+                            <LogoButtonIcon
+                              width={26}
+                              height={26}
+                              className="absolute -translate-y-[50%] top-[50%] right-3"
+                            />
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="grid gap-0">
+                            <TimePicker
+                              setTime={field.onChange}
+                              time={field?.value || "00:00"}
+                            />
+                            <AlertDialogAction>
+                              {t("Сохранить")}
+                            </AlertDialogAction>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                      <div className="mobile:block hidden">
+                        <DesktopTimepicker
                           setTime={field.onChange}
-                          time={field.value || "00:00"}
+                          time={field?.value || "00:00"}
                         />
-                        <AlertDialogAction>{t("Сохранить")}</AlertDialogAction>
-                      </AlertDialogContent>
-                    </AlertDialog>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
