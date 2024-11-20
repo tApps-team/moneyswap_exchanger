@@ -13,7 +13,7 @@ import { userSlice } from "@/entities/user";
 import { LogoButtonIcon } from "@/shared/assets";
 import { useTranslation } from "react-i18next";
 import { authApi, baseApi } from "@/shared/api";
-import { setActiveCity } from "@/entities/location";
+import { setActiveLocation } from "@/entities/location";
 
 export const Logout = () => {
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ export const Logout = () => {
     dispatch(userSlice.actions.logout());
     dispatch(baseApi.util.resetApiState());
     dispatch(authApi.util.resetApiState());
-    dispatch(setActiveCity(null));
+    dispatch(setActiveLocation(null));
   };
 
   return (

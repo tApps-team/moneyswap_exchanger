@@ -1,6 +1,6 @@
 import { Skeleton } from "@/shared/ui";
 
-export const CitySkeleton = () => {
+export const LocationSkeleton = () => {
   return (
     <Skeleton className="flex h-[70px] w-[100%] gap-4 rounded-[35px] overflow-hidden items-center justify-end bg-[#bbbbbb]">
       <Skeleton className="ml-[15px] flex-none h-[40px] w-[40px] rounded-full" />

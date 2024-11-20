@@ -1,3 +1,4 @@
+import { LocationMarker } from "@/shared/types";
 import { CurrencyCategory } from "../model/types";
 
 export type AvailableValutesDtoRequest = {
@@ -23,12 +24,14 @@ export type AddDirectionDtoRequest = {
   in_count: number;
   out_count: number;
   is_active: boolean;
-  city: string;
+  id: number;
+  marker: LocationMarker;
   valute_from: string;
   valute_to: string;
 };
 export type EditDirecitonRequest = {
-  city: string;
+  id: number;
+  marker: LocationMarker;
   directions: {
     id: number;
     in_count: number;

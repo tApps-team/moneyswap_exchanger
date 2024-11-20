@@ -1,9 +1,11 @@
 import {
   LocationEditSchemaType,
   locationEditSchema,
-  setActiveCity,
+  setActiveLocation,
   useDeletePartnerCityMutation,
+  useDeletePartnerCountryMutation,
   useEditPartnerCityMutationAuth,
+  useEditPartnerCountryMutationAuth,
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
 import { LogoArrowIcon, LogoButtonIcon } from "@/shared/assets";
@@ -43,49 +45,48 @@ export const LocationEditForm = () => {
   const { i18n, t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const activeEditCity = useAppSelector((state) => state.activeCity.activeCity);
+  const activeEditLocation = useAppSelector(
+    (state) => state.activeLocation.activeLocation
+  );
 
   const form = useForm<LocationEditSchemaType>({
     resolver: zodResolver(locationEditSchema),
     defaultValues: {
-      city: {
-        code_name: activeEditCity?.code_name,
+      location: {
+        id: activeEditLocation?.id,
         name: {
-          ru: activeEditCity?.name?.ru,
-          en: activeEditCity?.name?.en,
+          ru: activeEditLocation?.name?.ru,
+          en: activeEditLocation?.name?.en,
         },
+        code_name: activeEditLocation?.code_name || undefined,
       },
-      country: {
-        country_flag: activeEditCity?.country_flag,
-        name: {
-          ru: activeEditCity?.country?.ru,
-          en: activeEditCity?.country?.en,
-        },
-      },
-      deliviry: activeEditCity?.info?.delivery,
-      office: activeEditCity?.info?.office,
+      deliviry: activeEditLocation?.info?.delivery || false,
+      office: activeEditLocation?.info?.office || false,
       weekdays: {
-        time_from: activeEditCity?.info?.weekdays?.time_from || "00:00",
-        time_to: activeEditCity?.info?.weekdays?.time_to || "00:00",
+        time_from: activeEditLocation?.info?.weekdays?.time_from || "00:00",
+        time_to: activeEditLocation?.info?.weekdays?.time_to || "00:00",
       },
       weekends: {
-        time_from: activeEditCity?.info?.weekends?.time_from || "00:00",
-        time_to: activeEditCity?.info?.weekends?.time_to || "00:00",
+        time_from: activeEditLocation?.info?.weekends?.time_from || "00:00",
+        time_to: activeEditLocation?.info?.weekends?.time_to || "00:00",
       },
-      workDays: activeEditCity?.info?.working_days,
-      min_amount: activeEditCity?.min_amount || null,
-      max_amount: activeEditCity?.max_amount || null,
+      workDays: activeEditLocation?.info?.working_days,
+      min_amount: activeEditLocation?.min_amount || null,
+      max_amount: activeEditLocation?.max_amount || null,
     },
   });
   const navigate = useNavigate();
   const { toast } = useToast();
   const [editPartnerCity, { isLoading: isLoadingEditPartnerCity }] =
     useEditPartnerCityMutationAuth();
+  const [editPartnerCountry, { isLoading: isLoadingEditPartnerCountry }] =
+    useEditPartnerCountryMutationAuth();
   const [deletePartnerCity, { isLoading: isLoadingDeletePartnerCity }] =
     useDeletePartnerCityMutation();
+  const [deletePartnerCountry, { isLoading: isLoadingDeletePartnerCountry }] =
+    useDeletePartnerCountryMutation();
   const onSubmit = (data: LocationEditSchemaType) => {
-    editPartnerCity({
-      city: activeEditCity?.code_name,
+    const req = {
       delivery: data?.deliviry,
       office: data?.office,
       weekdays: {
@@ -93,49 +94,85 @@ export const LocationEditForm = () => {
         time_to: data?.weekdays?.time_to,
       },
       weekends: {
-        time_from: data?.weekends.time_from,
-        time_to: data?.weekends.time_to,
+        time_from: data?.weekends?.time_from,
+        time_to: data?.weekends?.time_to,
       },
       working_days: data?.workDays,
       min_amount: data?.min_amount || null,
       max_amount: data?.max_amount || null,
-    })
-      .unwrap()
-      .then(() => {
-        toast({
-          variant: "success",
-          title: t("Успешно обновленно!"),
+      ...(activeEditLocation?.code_name
+        ? { city: activeEditLocation.code_name }
+        : { country_id: activeEditLocation?.id }),
+    };
+    if (activeEditLocation?.code_name) {
+      editPartnerCity(req)
+        .unwrap()
+        .then(() => {
+          toast({
+            variant: "success",
+            title: t("Успешно обновленно!"),
+          });
+          navigate(paths.home);
         });
-        navigate(paths.home);
-      });
+    } else {
+      editPartnerCountry(req)
+        .unwrap()
+        .then(() => {
+          toast({
+            variant: "success",
+            title: t("Успешно обновленно!"),
+          });
+          navigate(paths.home);
+        });
+    }
   };
   const onHandleDelete = (id: number) => {
-    deletePartnerCity({ id: id })
-      .unwrap()
-      .then(() => {
-        toast({
-          variant: "success",
-          title: t("Город успешно удален"),
+    if (activeEditLocation?.code_name) {
+      deletePartnerCity({ city_id: id })
+        .unwrap()
+        .then(() => {
+          toast({
+            variant: "success",
+            title: t("Город успешно удален"),
+          });
+          dispatch(setActiveLocation(null));
+          navigate(paths.home);
+        })
+        .catch(() => {
+          toast({
+            title: t("Произошла ошибка на сервере, попробуйте позже..."),
+            variant: "destructive",
+          });
         });
-        dispatch(setActiveCity(null));
-        navigate(paths.home);
-      })
-      .catch(() => {
-        toast({
-          title: t("Произошла ошибка на сервере, попробуйте позже..."),
-          variant: "destructive",
+    } else {
+      deletePartnerCountry({ country_id: id })
+        .unwrap()
+        .then(() => {
+          toast({
+            variant: "success",
+            title: t("Город успешно удален"),
+          });
+          dispatch(setActiveLocation(null));
+          navigate(paths.home);
+        })
+        .catch(() => {
+          toast({
+            title: t("Произошла ошибка на сервере, попробуйте позже..."),
+            variant: "destructive",
+          });
         });
-      });
+    }
   };
   return (
     <Form {...form}>
       <form
         className="grid grid-flow-row grid-cols-1 gap-8"
         onSubmit={form.handleSubmit(onSubmit)}
+        onClick={() => console.log(form.getValues())}
       >
         <FormField
           control={form.control}
-          name={"country"}
+          name={"location"}
           render={() => (
             <FormItem className="flex flex-col gap-4">
               <FormLabel className="text-mainColor text-lg font-medium sm:text-xl uppercase">
@@ -143,12 +180,16 @@ export const LocationEditForm = () => {
               </FormLabel>
               <FormControl>
                 <ItemSelect
-                  itemIcon={activeEditCity?.country_flag || ""}
+                  itemIcon={activeEditLocation?.country_flag || ""}
                   disabled={true}
                   label={
-                    activeEditCity?.country?.[
-                      i18n.language === Lang.ru ? Lang.ru : Lang.en
-                    ]
+                    activeEditLocation?.code_name
+                      ? activeEditLocation?.country?.[
+                          i18n.language === Lang.ru ? Lang.ru : Lang.en
+                        ]
+                      : activeEditLocation?.name?.[
+                          i18n.language === Lang.ru ? Lang.ru : Lang.en
+                        ]
                   }
                 />
               </FormControl>
@@ -158,7 +199,7 @@ export const LocationEditForm = () => {
         />
         <FormField
           control={form.control}
-          name={"city"}
+          name={"location"}
           render={() => (
             <FormItem className="flex flex-col gap-4">
               <FormLabel className="text-mainColor font-medium text-lg  sm:text-xl uppercase">
@@ -168,9 +209,11 @@ export const LocationEditForm = () => {
                 <ItemSelect
                   disabled={true}
                   label={
-                    activeEditCity?.name?.[
-                      i18n.language === Lang.ru ? Lang.ru : Lang.en
-                    ]
+                    activeEditLocation?.code_name
+                      ? activeEditLocation?.name?.[
+                          i18n.language === Lang.ru ? Lang.ru : Lang.en
+                        ]
+                      : t("Все города")
                   }
                 />
               </FormControl>
@@ -422,7 +465,7 @@ export const LocationEditForm = () => {
                             checked={field.value}
                             onCheckedChange={field.onChange}
                             defaultChecked={
-                              activeEditCity?.info.working_days[day]
+                              activeEditLocation?.info.working_days[day]
                             }
                           />
                           <div className="font-light uppercase">
@@ -457,7 +500,6 @@ export const LocationEditForm = () => {
                         type="number"
                         onWheel={(e) => (e.target as HTMLInputElement).blur()}
                         className="bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                        disabled={!form.getValues("city.code_name")}
                         value={field.value === null ? "" : field.value}
                         onChange={(e) =>
                           field.onChange(
@@ -489,7 +531,6 @@ export const LocationEditForm = () => {
                         type="number"
                         onWheel={(e) => (e.target as HTMLInputElement).blur()}
                         className="bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                        disabled={!form.getValues("city.code_name")}
                         value={field.value === null ? "" : field.value}
                         onChange={(e) =>
                           field.onChange(
@@ -513,7 +554,7 @@ export const LocationEditForm = () => {
             type="submit"
             variant={"outline"}
           >
-            {isLoadingEditPartnerCity ? (
+            {isLoadingEditPartnerCity || isLoadingEditPartnerCountry ? (
               <Loader className="animate-spin" />
             ) : (
               t("Сохранить")
@@ -526,7 +567,7 @@ export const LocationEditForm = () => {
                 variant={"outline"}
                 className="w-full border-none text-darkGray text-lg  sm:text-xl disabled:pointer-events-none bg-mainColor  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none uppercase"
               >
-                {isLoadingDeletePartnerCity ? (
+                {isLoadingDeletePartnerCity || isLoadingDeletePartnerCountry ? (
                   <Loader className="animate-spin" />
                 ) : (
                   t("Удалить")
@@ -541,7 +582,7 @@ export const LocationEditForm = () => {
                 <AlertDialogCancel>{t("Отменить")}</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() =>
-                    activeEditCity && onHandleDelete(activeEditCity?.id)
+                    activeEditLocation && onHandleDelete(activeEditLocation?.id)
                   }
                 >
                   {t("Удалить")}

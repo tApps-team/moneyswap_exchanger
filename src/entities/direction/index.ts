@@ -2,7 +2,7 @@ export { DirectionCard } from "./ui/directionCard";
 export type { Direction, Currency, CurrencyCategory } from "./model/types";
 export {
   directionAPI,
-  useDirectionsByCityQuery,
+  useDirectionsByQuery,
   useEditDirectionMutation,
   useAvailableValutesQuery,
   useActualCourseQuery,

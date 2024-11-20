@@ -13,20 +13,20 @@ interface DirectionListProps {
   directions: Direction[];
   form: UseFormReturn<directionSchemaType>;
   directionsLoading: boolean;
-  citiesLoading: boolean;
+  locationsLoading: boolean;
 }
 
 export const DirectionList: FC<DirectionListProps> = ({
   directions,
   form,
   directionsLoading,
-  citiesLoading,
+  locationsLoading,
 }) => {
   const { t } = useTranslation();
 
   return (
     <div className="mt-2 grid gap-3 overflow-auto">
-      {directionsLoading || citiesLoading ? (
+      {directionsLoading || locationsLoading ? (
         <>
           <DirectionSkeleton />
           <DirectionSkeleton />

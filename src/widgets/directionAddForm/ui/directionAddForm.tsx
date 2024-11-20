@@ -10,6 +10,7 @@ import { ItemSelect } from "@/features/itemSelect";
 import { Lang } from "@/shared/config";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
+import { LocationMarker } from "@/shared/types";
 import {
   Button,
   Form,
@@ -41,8 +42,8 @@ export const DirectionAddForm = () => {
   });
   const navigate = useNavigate();
 
-  const activeCity = useAppSelector(
-    (state) => state.activeCity.activeCity?.code_name || ""
+  const activeLocation = useAppSelector(
+    (state) => state.activeLocation?.activeLocation || null
   );
 
   form.watch(["giveCurrency", "getCurrency"]);
@@ -81,35 +82,50 @@ export const DirectionAddForm = () => {
     out_count: number,
     data: DirectionAddSchemaType
   ) => {
-    addDirection({
-      city: activeCity,
-      in_count,
-      out_count,
-      is_active: true,
-      valute_from: data.giveCurrency?.code_name || "",
-      valute_to: data.getCurrency?.code_name || "",
-    })
-      .unwrap()
-      .then(() => {
-        navigate(paths.home);
-        toast({
-          title: t("Направление успешно добалено"),
-          variant: "success",
-        });
+    if (activeLocation) {
+      addDirection({
+        id: activeLocation?.id,
+        marker: activeLocation?.code_name
+          ? LocationMarker.city
+          : LocationMarker.country,
+        in_count,
+        out_count,
+        is_active: true,
+        valute_from: data.giveCurrency?.code_name || "",
+        valute_to: data.getCurrency?.code_name || "",
       })
-      .catch((error) => {
-        if (error.status === 423) {
+        .unwrap()
+        .then(() => {
+          navigate(paths.home);
           toast({
-            title: t("Такое направление уже добавлено!"),
-            variant: "destructive",
+            title: t("Направление успешно добалено"),
+            variant: "success",
           });
-        } else {
-          toast({
-            title: t("Произошла ошибка на сервере, попробуйте позже..."),
-            variant: "destructive",
-          });
-        }
-      });
+        })
+        .catch((error) => {
+          if (error.status === 423) {
+            toast({
+              title: t("Такое направление уже добавлено!"),
+              variant: "destructive",
+            });
+          } else if (error.status === 424) {
+            toast({
+              title: t(
+                "Такое направление уже существует на уровне партнерской страны"
+              ),
+              description: t(
+                "Чтобы добавить это направление в этом городе, удалите это направление в карточке страны"
+              ),
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: t("Произошла ошибка на сервере, попробуйте позже..."),
+              variant: "destructive",
+            });
+          }
+        });
+    }
   };
 
   const onSubmit = (data: DirectionAddSchemaType) => {

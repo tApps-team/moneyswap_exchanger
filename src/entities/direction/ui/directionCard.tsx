@@ -27,6 +27,8 @@ import { DirectionCardSwiper } from "./directionCardSwiper";
 import { useToast } from "@/shared/ui/toast";
 import { Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "@/shared/model";
+import { LocationMarker } from "@/shared/types";
 
 interface DirectionCardProps {
   direction: Direction;
@@ -41,20 +43,31 @@ export const DirectionCard: FC<DirectionCardProps> = ({
 }) => {
   const { t } = useTranslation();
   const isActive = form.watch(`directions.${index}.is_active`);
+  const activeLocation = useAppSelector(
+    (state) => state.activeLocation.activeLocation
+  );
 
   const [deleteDirection] = useDeleteDirectionMutation();
   const { toast } = useToast();
   const handleDelete = () => {
-    deleteDirection({ direction_id: direction.id })
-      .unwrap()
-      .then(() => {
-        toast({
-          title: t("Направлениe успешно удалено"),
-          description: "",
-          variant: "success",
-        });
+    if (activeLocation) {
+      deleteDirection({
+        id: activeLocation?.id,
+        direction_id: direction.id,
+        marker: activeLocation?.code_name
+          ? LocationMarker.city
+          : LocationMarker.country,
       })
-      .catch((error) => console.error("Ошибка...,", error));
+        .unwrap()
+        .then(() => {
+          toast({
+            title: t("Направлениe успешно удалено"),
+            description: "",
+            variant: "success",
+          });
+        })
+        .catch((error) => console.error("Ошибка...,", error));
+    }
   };
 
   return (

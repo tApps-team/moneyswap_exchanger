@@ -1,27 +1,27 @@
 export type City = {
+  id: number;
   name: {
     ru: string;
     en: string;
   };
   code_name: string;
-  id: number;
 };
 export type Country = {
+  id: number;
   name: {
     ru: string;
     en: string;
   };
-  id: number;
   country_flag: string;
 };
-export type ActiveCity = {
+export type ActiveLocation = {
   id: number;
   name: {
     ru: string;
     en: string;
   };
-  code_name: string;
-  country: {
+  code_name?: string;
+  country?: {
     ru: string;
     en: string;
   };

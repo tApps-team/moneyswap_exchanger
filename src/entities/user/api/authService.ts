@@ -20,7 +20,7 @@ export const authorizationAPI = baseApi.injectEndpoints({
         formData.append("password", authParams.password);
 
         return {
-          url: `/auth/token`,
+          url: `/api/auth/token`,
           method: `POST`,
           body: formData,
         };
@@ -34,7 +34,7 @@ export const changePasswordAPI = authApi.injectEndpoints({
   endpoints: (build) => ({
     changePassword: build.mutation<string, ChangePassword>({
       query: (password) => ({
-        url: `/partner/change_password`,
+        url: `/api/partner/change_password`,
         method: "POST",
         body: password,
       }),
@@ -47,7 +47,7 @@ export const profileInfoApi = authApi.injectEndpoints({
   endpoints: (build) => ({
     profileInfo: build.query<ProfileInfoDtoResponse, ProfileInfoDtoRequest>({
       query: () => ({
-        url: `/partner/account_info`,
+        url: `/api/partner/account_info`,
         method: "GET",
       }),
     }),

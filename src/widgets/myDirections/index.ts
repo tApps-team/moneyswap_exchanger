@@ -1,1 +1,1 @@
-export { MyDirections } from "./ui/myDirections";
+export * from "./ui/myDirections";

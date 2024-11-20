@@ -1,4 +1,4 @@
-import { Cities } from "../cities";
+import { Locations } from "../locations";
 import { Directions } from "../directions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,33 +6,39 @@ import { Form } from "@/shared/ui";
 import {
   directionSchema,
   directionSchemaType,
-  useDirectionsByCityQuery,
+  useDirectionsByQuery,
   useEditDirectionMutation,
 } from "@/entities/direction";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/shared/model";
 import {
-  ActiveCity,
-  setActiveCity,
+  ActiveLocation,
+  setActiveLocation,
   useGetCitiesQuery,
+  useGetCountriesQuery,
 } from "@/entities/location";
 import { EditDirection, UpdatedInfo } from "@/features/direction";
 import { useToast } from "@/shared/ui/toast";
 import { formattedDate, formattedTime } from "@/shared/lib";
 import { useTranslation } from "react-i18next";
+import { LocationMarker } from "@/shared/types";
 
 export const MyDirections = () => {
   const { t } = useTranslation();
-  const activeCity = useAppSelector((state) => state.activeCity.activeCity);
+  const activeLocation = useAppSelector(
+    (state) => state.activeLocation.activeLocation
+  );
   const dispatch = useAppDispatch();
-  const setActive = (city: ActiveCity) => {
-    dispatch(setActiveCity(city));
+  const setActive = (location: ActiveLocation) => {
+    dispatch(setActiveLocation(location));
   };
 
   const { data: cities, isLoading: citiesLoading } = useGetCitiesQuery();
+  const { data: countries, isLoading: countriesLoading } =
+    useGetCountriesQuery();
 
   useEffect(() => {
-    if (cities && !activeCity) {
+    if (cities && !activeLocation) {
       setActive(cities[0]);
     }
   }, [cities]);
@@ -49,9 +55,17 @@ export const MyDirections = () => {
     data: directions,
     isLoading: directionsLoading,
     isFetching: directionsFetching,
-  } = useDirectionsByCityQuery(activeCity?.code_name || "", {
-    skip: !activeCity,
-  });
+  } = useDirectionsByQuery(
+    {
+      id: activeLocation?.id || -1,
+      marker: activeLocation?.code_name
+        ? LocationMarker.city
+        : LocationMarker.country,
+    },
+    {
+      skip: !activeLocation,
+    }
+  );
 
   useEffect(() => {
     if (directions) {
@@ -65,7 +79,7 @@ export const MyDirections = () => {
   const { toast } = useToast();
 
   const onSubmit = (data: directionSchemaType) => {
-    if (activeCity) {
+    if (activeLocation) {
       const updatedDirections = data.directions.map((direction) => {
         let { in_count, out_count } = direction;
 
@@ -91,7 +105,10 @@ export const MyDirections = () => {
       });
 
       const formData = {
-        city: activeCity?.code_name,
+        id: activeLocation.id,
+        marker: activeLocation?.code_name
+          ? LocationMarker.city
+          : LocationMarker.country,
         directions: updatedDirections,
       };
       editDirection(formData)
@@ -101,18 +118,11 @@ export const MyDirections = () => {
           const currentDate = formattedDate(date);
           const currentTime = formattedTime(date);
           setActive({
-            code_name: activeCity.code_name,
-            country: activeCity.country,
-            country_flag: activeCity.country_flag,
-            id: activeCity.id,
-            info: activeCity.info,
-            name: activeCity.name,
+            ...activeLocation,
             updated: {
               date: currentDate,
               time: currentTime,
             },
-            min_amount: activeCity?.min_amount,
-            max_amount: activeCity?.max_amount,
           });
 
           toast({
@@ -135,27 +145,40 @@ export const MyDirections = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Cities
-          cities={cities || []}
+        <Locations
+          locations={cities || []}
           setActive={setActive}
-          activeCity={activeCity}
+          activeLocation={activeLocation}
           directionsLoading={directionsLoading}
-          citiesLoading={citiesLoading}
+          locationsLoading={citiesLoading || countriesLoading}
+          isCountry={false}
         />
+        {countries && countries?.length > 0 && (
+          <Locations
+            locations={countries || []}
+            setActive={setActive}
+            activeLocation={activeLocation}
+            directionsLoading={directionsLoading}
+            locationsLoading={citiesLoading || countriesLoading}
+            isCountry={true}
+          />
+        )}
         <Directions
           directions={directions || []}
           form={form}
           directionsLoading={directionsFetching}
-          citiesLoading={citiesLoading}
+          locationsLoading={citiesLoading || countriesLoading}
         />
         {directions && directions?.length > 0 && (
           <EditDirection editLoading={editLoading} />
         )}
       </form>
-      {activeCity &&
+      {activeLocation &&
         directions &&
         directions.length > 0 &&
-        activeCity.updated.date && <UpdatedInfo activeCity={activeCity} />}
+        activeLocation?.updated?.date && (
+          <UpdatedInfo activeLocation={activeLocation} />
+        )}
     </Form>
   );
 };

@@ -2,6 +2,7 @@ import {
   LocationSchemaType,
   locationSchema,
   useAddPartnerCityMutation,
+  useAddPartnerCountryMutation,
   useAllCountriesQuery,
   useCitiesByCountryNameQuery,
 } from "@/entities/location";
@@ -9,6 +10,7 @@ import { ItemSelect } from "@/features/itemSelect";
 import { LogoArrowIcon, LogoButtonIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
 import { paths } from "@/shared/routing";
+import { AllCitiesFlag } from "@/shared/types";
 
 import {
   AlertDialog,
@@ -39,8 +41,7 @@ export const LocationAddForm = () => {
   const form = useForm<LocationSchemaType>({
     resolver: zodResolver(locationSchema),
     defaultValues: {
-      city: undefined,
-      country: undefined,
+      location: undefined,
       deliviry: false,
       office: false,
       weekdays: {
@@ -71,10 +72,11 @@ export const LocationAddForm = () => {
 
   const [addPartnerCity, { isLoading: isLoadingAddPartnerCity }] =
     useAddPartnerCityMutation();
+  const [addPartnerCountry, { isLoading: isLoadingAddPartnerCountry }] =
+    useAddPartnerCountryMutation();
 
   const onSubmit = (data: LocationSchemaType) => {
-    addPartnerCity({
-      city: data?.city?.code_name,
+    const req = {
       delivery: data?.deliviry,
       office: data?.office,
       weekdays: {
@@ -82,46 +84,76 @@ export const LocationAddForm = () => {
         time_to: data?.weekdays?.time_to,
       },
       weekends: {
-        time_from: data?.weekends.time_from,
-        time_to: data?.weekends.time_to,
+        time_from: data?.weekends?.time_from,
+        time_to: data?.weekends?.time_to,
       },
       working_days: data?.workDays,
       min_amount: data?.min_amount || null,
       max_amount: data?.max_amount || null,
-    })
-      .unwrap()
-      .then(() => {
-        navigate(paths.home);
-        toast({
-          title: t("Город успешно добавлен!"),
-          description: t("Он появится на главной странице"),
-          variant: "success",
+      ...(data?.location?.code_name === AllCitiesFlag
+        ? { country_id: data.location.country_id }
+        : { city: data.location.code_name }),
+    };
+
+    if (data?.location?.code_name === AllCitiesFlag) {
+      addPartnerCountry(req)
+        .unwrap()
+        .then(() => {
+          toast({
+            variant: "success",
+            title: t("Успешно обновленно!"),
+          });
+          navigate(paths.home);
+        })
+        .catch((err) => {
+          if (err.status === 423) {
+            toast({
+              title: t("Такой город уже существует"),
+              description: t("Измените город!"),
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: t("Произошла ошибка на сервере, попробуйте позже..."),
+              variant: "destructive",
+            });
+          }
         });
-      })
-      .catch((err) => {
-        if (err.status === 423) {
+    } else {
+      addPartnerCity(req)
+        .unwrap()
+        .then(() => {
           toast({
-            title: t("Такой город уже существует"),
-            description: t("Измените город!"),
-            variant: "destructive",
+            variant: "success",
+            title: t("Успешно обновленно!"),
           });
-        } else {
-          toast({
-            title: t("Произошла ошибка на сервере, попробуйте позже..."),
-            variant: "destructive",
-          });
-        }
-      });
+          navigate(paths.home);
+        })
+        .catch((err) => {
+          if (err.status === 423) {
+            toast({
+              title: t("Такой город уже существует"),
+              description: t("Измените город!"),
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: t("Произошла ошибка на сервере, попробуйте позже..."),
+              variant: "destructive",
+            });
+          }
+        });
+    }
   };
 
-  form.watch(["weekdays", "weekends", "country.name"]);
+  const formState = form.watch();
 
   const { data: countries } = useAllCountriesQuery();
   const { data: cities } = useCitiesByCountryNameQuery(
     {
-      country_name: form.getValues("country.name.ru"),
+      country_name: form.getValues("location.country.ru"),
     },
-    { skip: !form.getValues("country.name.ru") }
+    { skip: !form.getValues("location.country.ru") }
   );
 
   return (
@@ -132,7 +164,7 @@ export const LocationAddForm = () => {
       >
         <FormField
           control={form.control}
-          name={"country"}
+          name={"location"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
               <FormLabel className="text-mainColor text-lg font-medium sm:text-xl uppercase">
@@ -146,13 +178,16 @@ export const LocationAddForm = () => {
                   inputPlaceholder={t("Поиск страны")}
                   items={countries}
                   label={
-                    field.value?.name?.[
+                    field.value?.country?.[
                       i18n.language === Lang.ru ? Lang.ru : Lang.en
                     ] || ""
                   }
                   onClick={(e) => {
-                    field.onChange(e);
-                    form.resetField("city");
+                    field.onChange({
+                      country: e.name,
+                      country_flag: e.country_flag,
+                      country_id: e.id,
+                    });
                   }}
                 />
               </FormControl>
@@ -162,7 +197,7 @@ export const LocationAddForm = () => {
         />
         <FormField
           control={form.control}
-          name={"city"}
+          name={"location"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
               <FormLabel className="text-mainColor font-medium text-lg sm:text-xl uppercase">
@@ -171,8 +206,15 @@ export const LocationAddForm = () => {
               <FormControl>
                 <ItemSelect
                   inputLabel={t("Выбор города")}
-                  disabled={!form.getValues("country")}
-                  onClick={(e) => field.onChange(e)}
+                  disabled={!form.getValues("location.country")}
+                  onClick={(e) => {
+                    field.onChange({
+                      ...formState.location,
+                      name: e.name,
+                      id: e.id,
+                      code_name: e.code_name,
+                    });
+                  }}
                   items={cities || []}
                   inputPlaceholder={t("Поиск города")}
                   label={
@@ -181,6 +223,7 @@ export const LocationAddForm = () => {
                     ]
                   }
                   emptyLabel={t("Выберите город")}
+                  isAllCitiesBtn
                 />
               </FormControl>
               <FormMessage />
@@ -462,7 +505,7 @@ export const LocationAddForm = () => {
                         type="number"
                         onWheel={(e) => (e.target as HTMLInputElement).blur()}
                         className="bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                        disabled={!form.getValues("city.code_name")}
+                        disabled={!form.getValues("location.code_name")}
                         value={field.value === null ? "" : field.value}
                         onChange={(e) =>
                           field.onChange(
@@ -494,7 +537,7 @@ export const LocationAddForm = () => {
                         type="number"
                         onWheel={(e) => (e.target as HTMLInputElement).blur()}
                         className="bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                        disabled={!form.getValues("city.code_name")}
+                        disabled={!form.getValues("location.code_name")}
                         value={field.value === null ? "" : field.value}
                         onChange={(e) =>
                           field.onChange(
@@ -517,7 +560,7 @@ export const LocationAddForm = () => {
           type="submit"
           variant={"outline"}
         >
-          {isLoadingAddPartnerCity ? (
+          {isLoadingAddPartnerCity || isLoadingAddPartnerCountry ? (
             <Loader className="animate-spin" />
           ) : (
             t("Добавить")

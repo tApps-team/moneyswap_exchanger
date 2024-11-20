@@ -9,14 +9,14 @@ interface DirectionsProps {
   form: UseFormReturn<directionSchemaType>;
   directions: Direction[];
   directionsLoading: boolean;
-  citiesLoading: boolean;
+  locationsLoading: boolean;
 }
 
 export const Directions: FC<DirectionsProps> = ({
   form,
   directions,
   directionsLoading,
-  citiesLoading,
+  locationsLoading,
 }) => {
   const { t } = useTranslation();
   return (
@@ -25,7 +25,7 @@ export const Directions: FC<DirectionsProps> = ({
       <CreateDirection />
       <DirectionList
         directionsLoading={directionsLoading}
-        citiesLoading={citiesLoading}
+        locationsLoading={locationsLoading}
         form={form}
         directions={directions}
       />
