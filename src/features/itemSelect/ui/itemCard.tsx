@@ -2,6 +2,7 @@ import { Currency } from "@/entities/direction";
 import { City, Country } from "@/entities/location";
 import { LogoButtonIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
+import { AllCitiesFlag } from "@/shared/types";
 import { Card, CardContent } from "@/shared/ui";
 import { useTranslation } from "react-i18next";
 
@@ -33,7 +34,7 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
           />
         ) : (
           <LogoButtonIcon
-            fill="white"
+            fill={item?.code_name === AllCitiesFlag ? "#f6ff5f" : "white"}
             width={34}
             height={34}
             className="-rotate-90"

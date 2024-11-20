@@ -1,23 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ActiveCity } from "./types";
+import { ActiveLocation } from "./types";
 
 interface locationState {
-  activeCity: ActiveCity | null;
+  activeLocation: ActiveLocation | null;
 }
 
 const initialState: locationState = {
-  activeCity: null,
+  activeLocation: null,
 };
 
 export const locationSlice = createSlice({
-  name: "activeCity",
+  name: "activeLocation",
   initialState,
   reducers: {
-    setActiveCity: (state, action: PayloadAction<ActiveCity | null>) => {
-      state.activeCity = action.payload;
+    setActiveLocation: (
+      state,
+      action: PayloadAction<ActiveLocation | null>
+    ) => {
+      state.activeLocation = action.payload;
     },
   },
 });
 
 export default locationSlice.reducer;
-export const { setActiveCity } = locationSlice.actions;
+export const { setActiveLocation } = locationSlice.actions;

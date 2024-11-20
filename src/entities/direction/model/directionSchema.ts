@@ -34,15 +34,21 @@ export const directionAddSchema = z.object({
       description: "required...",
     }
   ),
-  getCurrency: z.object({
-    id: z.number().nullable(),
-    name: z.object({
-      ru: z.string(),
-      en: z.string(),
-    }),
-    code_name: z.string(),
-    icon_url: z.string(),
-  }),
+  getCurrency: z.object(
+    {
+      id: z.number().nullable(),
+      name: z.object({
+        ru: z.string(),
+        en: z.string(),
+      }),
+      code_name: z.string(),
+      icon_url: z.string(),
+    },
+    {
+      required_error: "required...",
+      description: "required...",
+    }
+  ),
   giveCurrencyPrice: z.coerce
     .number()
     .positive({ message: "> 0" })

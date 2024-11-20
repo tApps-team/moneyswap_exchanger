@@ -17,7 +17,7 @@ import { Search } from "lucide-react";
 import { useDeferredValue, useState } from "react";
 import { ItemCard } from "./itemCard";
 import { useTranslation } from "react-i18next";
-import { Lang } from "@/shared/config";
+import { AllCitiesFlag } from "@/shared/types";
 
 type ItemSelectProps<T> = {
   items?: T[];
@@ -29,6 +29,7 @@ type ItemSelectProps<T> = {
   onClick?: (item: T) => void;
   inputLabel?: string;
   scrollRestore?: () => void;
+  isAllCitiesBtn?: boolean;
 };
 export const ItemSelect = <T extends Partial<City & Country & Currency>>(
   props: ItemSelectProps<T>
@@ -42,19 +43,35 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
     items,
     label,
     inputLabel,
+    isAllCitiesBtn,
   } = props;
 
   const { i18n, t } = useTranslation();
+  console.log(i18n.language);
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const defferredSearchValue = useDeferredValue(searchValue);
 
-  const filteredItems = items?.filter((item) =>
-    item.name?.[i18n.language === Lang.ru ? Lang.ru : Lang.en]
-      ?.toLowerCase()
-      .includes(defferredSearchValue.toLowerCase())
-  );
+  const filteredItems = items?.filter((item) => {
+    const searchText = defferredSearchValue.toLowerCase();
+
+    const nameRuMatch = item.name?.ru?.toLowerCase().includes(searchText);
+    const nameEnMatch = item.name?.en?.toLowerCase().includes(searchText);
+    const codeNameMatch = item.code_name?.toLowerCase().includes(searchText);
+
+    return nameRuMatch || nameEnMatch || codeNameMatch;
+  });
+
+  // all cities
+  const allCitiesCard = {
+    name: {
+      ru: "Все города",
+      en: "All cities",
+    },
+    code_name: AllCitiesFlag,
+    id: -1,
+  };
 
   const handleScrollToTop = () => {
     window.scrollTo({ left: 0, top: 0 });
@@ -98,7 +115,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           </div>
           <Input
             startAdornment={<Search className="translate-y-8 ml-2" />}
-            className="rounded-xl text-base bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0 placeholder:text-darkGray placeholder:text-opacity-50 placeholder:uppercase"
+            className="rounded-xl text-base bg-lightGray text-darkGray pl-10 focus-visible:ring-transparent focus-visible:ring-offset-0 placeholder:text-darkGray placeholder:text-opacity-50 placeholder:uppercase uppercase"
             value={searchValue}
             placeholder={inputPlaceholder || ""}
             onChange={(e) => setSearchValue(e.target.value.trim())}
@@ -108,11 +125,21 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
         <ScrollArea data-vaul-no-drag className="h-full p-4 w-full">
           <div className="grid grid-rows-1 items gap-2 p-2">
             {filteredItems?.length ? (
-              filteredItems?.map((item) => (
-                <DrawerClose key={item.id} asChild>
-                  <ItemCard item={item} onClick={() => onClick?.(item)} />
-                </DrawerClose>
-              ))
+              <>
+                {isAllCitiesBtn && (
+                  <DrawerClose asChild>
+                    <ItemCard
+                      item={allCitiesCard}
+                      onClick={() => onClick?.(allCitiesCard as T)}
+                    />
+                  </DrawerClose>
+                )}
+                {filteredItems?.map((item) => (
+                  <DrawerClose key={item.id} asChild>
+                    <ItemCard item={item} onClick={() => onClick?.(item)} />
+                  </DrawerClose>
+                ))}
+              </>
             ) : (
               <Empty text={t("Список пуст")} />
             )}

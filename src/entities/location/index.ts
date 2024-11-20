@@ -1,6 +1,6 @@
-export type { City, Country, ActiveCity } from "./model/types";
+export type * from "./model/types";
 
-export { MyCityCard } from "./ui/myCityCard";
+export { MyLocationCard } from "./ui/myLocationCard";
 export {
   locationApi,
   useAllCountriesQuery,
@@ -8,10 +8,11 @@ export {
 } from "./api/locationApi";
 export {
   useGetCitiesQuery,
+  useGetCountriesQuery,
   authLocationApi,
-  useAddPartnerCityMutation,
-  useEditPartnerCityMutation as useEditPartnerCityMutationAuth,
-  useDeletePartnerCityMutation,
+  useAddPartnerLocationMutation,
+  useEditPartnerLocationMutation,
+  useDeletePartnerLocationMutation,
 } from "./api/authLocationApi";
 export {
   type LocationSchemaType,
