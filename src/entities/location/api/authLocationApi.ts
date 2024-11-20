@@ -1,18 +1,12 @@
 import { authApi } from "@/shared/api";
 import { ActiveLocation } from "../model/types";
 import {
-  AddPartnerCityDtoRequest,
-  AddPartnerCityDtoResponse,
-  AddPartnerCountryDtoRequest,
-  AddPartnerCountryDtoResponse,
-  DeletePartnerCityDtoRequest,
-  DeletePartnerCityDtoResponse,
-  DeletePartnerCountryDtoRequest,
-  DeletePartnerCountryDtoResponse,
-  EditPartnerCityDtoRequest,
-  EditPartnerCityDtoResponse,
-  EditPartnerCountryDtoRequest,
-  EditPartnerCountryDtoResponse,
+  AddPartnerLocationDtoRequest,
+  AddPartnerLocationDtoResponse,
+  EditPartnerLocationDtoRequest,
+  EditPartnerLocationDtoResponse,
+  DeletePartnerLocationDtoRequest,
+  DeletePartnerLocationDtoResponse,
 } from "./types";
 import { LOCATION } from "@/shared/api/tags";
 
@@ -26,69 +20,37 @@ export const authLocationApi = authApi.injectEndpoints({
       query: () => `/api/partner/partner_cities`,
       providesTags: [LOCATION],
     }),
-    addPartnerCity: build.mutation<
-      AddPartnerCityDtoResponse,
-      AddPartnerCityDtoRequest
+    // объединенные запросы
+    addPartnerLocation: build.mutation<
+      AddPartnerLocationDtoResponse,
+      AddPartnerLocationDtoRequest
     >({
       query: (body) => ({
-        url: "/api/partner/add_partner_city",
+        url: "/api/test/partner/add_partner_city_country",
         method: "POST",
         body: body,
       }),
       invalidatesTags: [LOCATION],
     }),
-    addPartnerCountry: build.mutation<
-      AddPartnerCountryDtoResponse,
-      AddPartnerCountryDtoRequest
+    editPartnerLocation: build.mutation<
+      EditPartnerLocationDtoResponse,
+      EditPartnerLocationDtoRequest
     >({
       query: (body) => ({
-        url: "/api/test/partner/add_partner_country",
-        method: "POST",
-        body: body,
-      }),
-      invalidatesTags: [LOCATION],
-    }),
-    editPartnerCity: build.mutation<
-      EditPartnerCityDtoResponse,
-      EditPartnerCityDtoRequest
-    >({
-      query: (body) => ({
-        url: "/api/partner/edit_partner_city",
+        url: "/api/test/partner/edit_partner_city_country",
         body: body,
         method: "PATCH",
       }),
       invalidatesTags: [LOCATION],
     }),
-    editPartnerCountry: build.mutation<
-      EditPartnerCountryDtoResponse,
-      EditPartnerCountryDtoRequest
+    deletePartnerLocation: build.mutation<
+      DeletePartnerLocationDtoResponse,
+      DeletePartnerLocationDtoRequest
     >({
       query: (body) => ({
-        url: "/api/test/partner/edit_partner_country",
-        body: body,
-        method: "POST",
-      }),
-      invalidatesTags: [LOCATION],
-    }),
-    deletePartnerCity: build.mutation<
-      DeletePartnerCityDtoResponse,
-      DeletePartnerCityDtoRequest
-    >({
-      query: ({ city_id }) => ({
-        url: `/api/partner/delete_partner_city`,
+        url: `/api/test/partner/delete_partner_city_country`,
         method: "DELETE",
-        params: { city_id },
-      }),
-      invalidatesTags: [LOCATION],
-    }),
-    deletePartnerCountry: build.mutation<
-      DeletePartnerCountryDtoResponse,
-      DeletePartnerCountryDtoRequest
-    >({
-      query: ({ country_id }) => ({
-        url: `/api/test/partner/delete_partner_country`,
-        method: "DELETE",
-        body: { country_id },
+        body,
       }),
       invalidatesTags: [LOCATION],
     }),
@@ -97,10 +59,9 @@ export const authLocationApi = authApi.injectEndpoints({
 export const {
   useGetCountriesQuery,
   useGetCitiesQuery,
-  useAddPartnerCityMutation,
-  useAddPartnerCountryMutation,
-  useEditPartnerCityMutation,
-  useEditPartnerCountryMutation,
-  useDeletePartnerCityMutation,
-  useDeletePartnerCountryMutation,
+
+  // объединенные запросы
+  useAddPartnerLocationMutation,
+  useEditPartnerLocationMutation,
+  useDeletePartnerLocationMutation,
 } = authLocationApi;

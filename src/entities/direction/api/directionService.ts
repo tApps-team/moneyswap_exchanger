@@ -14,25 +14,6 @@ import { LocationMarker } from "@/shared/types";
 
 export const directionAPI = authApi.injectEndpoints({
   endpoints: (build) => ({
-    directionsBy: build.query<
-      Direction[],
-      { id: number; marker: LocationMarker }
-    >({
-      query: (params) => ({
-        url: `/api/test/partner/directions_by`,
-        method: `GET`,
-        params,
-      }),
-      providesTags: [DIRECTION],
-    }),
-    editDirection: build.mutation<void, EditDirecitonRequest>({
-      query: (BodyParams) => ({
-        url: `/api/test/partner/edit_partner_directions`,
-        method: `PATCH`,
-        body: BodyParams,
-      }),
-      invalidatesTags: [DIRECTION, LOCATION],
-    }),
     availableValutes: build.query<
       AvailableValutesDtoResponse,
       AvailableValutesDtoRequest
@@ -49,6 +30,17 @@ export const directionAPI = authApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    directionsBy: build.query<
+      Direction[],
+      { id: number; marker: LocationMarker }
+    >({
+      query: (params) => ({
+        url: `/api/test/partner/directions_by`,
+        method: `GET`,
+        params,
+      }),
+      providesTags: [DIRECTION],
+    }),
     addDirection: build.mutation<
       AddDirectionDtoResponse,
       AddDirectionDtoRequest
@@ -57,6 +49,14 @@ export const directionAPI = authApi.injectEndpoints({
         url: `/api/test/partner/add_partner_direction`,
         method: "POST",
         body: body,
+      }),
+      invalidatesTags: [DIRECTION, LOCATION],
+    }),
+    editDirection: build.mutation<void, EditDirecitonRequest>({
+      query: (BodyParams) => ({
+        url: `/api/test/partner/edit_partner_directions`,
+        method: `PATCH`,
+        body: BodyParams,
       }),
       invalidatesTags: [DIRECTION, LOCATION],
     }),
@@ -78,10 +78,10 @@ export const directionAPI = authApi.injectEndpoints({
   }),
 });
 export const {
-  useDirectionsByQuery,
-  useEditDirectionMutation,
   useAvailableValutesQuery,
   useActualCourseQuery,
+  useDirectionsByQuery,
   useAddDirectionMutation,
+  useEditDirectionMutation,
   useDeleteDirectionMutation,
 } = directionAPI;

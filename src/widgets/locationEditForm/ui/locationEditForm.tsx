@@ -2,16 +2,15 @@ import {
   LocationEditSchemaType,
   locationEditSchema,
   setActiveLocation,
-  useDeletePartnerCityMutation,
-  useDeletePartnerCountryMutation,
-  useEditPartnerCityMutationAuth,
-  useEditPartnerCountryMutationAuth,
+  useDeletePartnerLocationMutation,
+  useEditPartnerLocationMutation,
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
 import { LogoArrowIcon, LogoButtonIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
 import { useAppDispatch, useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
+import { LocationMarker } from "@/shared/types";
 
 import {
   AlertDialog,
@@ -77,16 +76,18 @@ export const LocationEditForm = () => {
   });
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [editPartnerCity, { isLoading: isLoadingEditPartnerCity }] =
-    useEditPartnerCityMutationAuth();
-  const [editPartnerCountry, { isLoading: isLoadingEditPartnerCountry }] =
-    useEditPartnerCountryMutationAuth();
-  const [deletePartnerCity, { isLoading: isLoadingDeletePartnerCity }] =
-    useDeletePartnerCityMutation();
-  const [deletePartnerCountry, { isLoading: isLoadingDeletePartnerCountry }] =
-    useDeletePartnerCountryMutation();
+
+  const [editPartnerLocation, { isLoading: isLoadingEditPartnerLocation }] =
+    useEditPartnerLocationMutation();
+  const [deletePartnerLocation, { isLoading: isLoadingDeletePartnerLocation }] =
+    useDeletePartnerLocationMutation();
+
   const onSubmit = (data: LocationEditSchemaType) => {
     const req = {
+      id: activeEditLocation?.id,
+      marker: activeEditLocation?.code_name
+        ? LocationMarker.city
+        : LocationMarker.country,
       delivery: data?.deliviry,
       office: data?.office,
       weekdays: {
@@ -100,68 +101,76 @@ export const LocationEditForm = () => {
       working_days: data?.workDays,
       min_amount: data?.min_amount || null,
       max_amount: data?.max_amount || null,
-      ...(activeEditLocation?.code_name
-        ? { city: activeEditLocation.code_name }
-        : { country_id: activeEditLocation?.id }),
     };
-    if (activeEditLocation?.code_name) {
-      editPartnerCity(req)
-        .unwrap()
-        .then(() => {
-          toast({
-            variant: "success",
-            title: t("Успешно обновленно!"),
-          });
-          navigate(paths.home);
+
+    editPartnerLocation(req)
+      .unwrap()
+      .then(() => {
+        toast({
+          variant: "success",
+          title: t("Успешно обновленно!"),
         });
-    } else {
-      editPartnerCountry(req)
-        .unwrap()
-        .then(() => {
-          toast({
-            variant: "success",
-            title: t("Успешно обновленно!"),
-          });
-          navigate(paths.home);
-        });
-    }
+        navigate(paths.home);
+      });
   };
   const onHandleDelete = (id: number) => {
-    if (activeEditLocation?.code_name) {
-      deletePartnerCity({ city_id: id })
-        .unwrap()
-        .then(() => {
-          toast({
-            variant: "success",
-            title: t("Город успешно удален"),
-          });
-          dispatch(setActiveLocation(null));
-          navigate(paths.home);
-        })
-        .catch(() => {
-          toast({
-            title: t("Произошла ошибка на сервере, попробуйте позже..."),
-            variant: "destructive",
-          });
+    const req = {
+      id,
+      marker: activeEditLocation?.code_name
+        ? LocationMarker.city
+        : LocationMarker.country,
+    };
+    deletePartnerLocation(req)
+      .unwrap()
+      .then(() => {
+        toast({
+          variant: "success",
+          title: t("Город успешно удален"),
         });
-    } else {
-      deletePartnerCountry({ country_id: id })
-        .unwrap()
-        .then(() => {
-          toast({
-            variant: "success",
-            title: t("Город успешно удален"),
-          });
-          dispatch(setActiveLocation(null));
-          navigate(paths.home);
-        })
-        .catch(() => {
-          toast({
-            title: t("Произошла ошибка на сервере, попробуйте позже..."),
-            variant: "destructive",
-          });
+        dispatch(setActiveLocation(null));
+        navigate(paths.home);
+      })
+      .catch(() => {
+        toast({
+          title: t("Произошла ошибка на сервере, попробуйте позже..."),
+          variant: "destructive",
         });
-    }
+      });
+    // if (activeEditLocation?.code_name) {
+    //   deletePartnerCity({ city_id: id })
+    //     .unwrap()
+    //     .then(() => {
+    //       toast({
+    //         variant: "success",
+    //         title: t("Город успешно удален"),
+    //       });
+    //       dispatch(setActiveLocation(null));
+    //       navigate(paths.home);
+    //     })
+    //     .catch(() => {
+    //       toast({
+    //         title: t("Произошла ошибка на сервере, попробуйте позже..."),
+    //         variant: "destructive",
+    //       });
+    //     });
+    // } else {
+    //   deletePartnerCountry({ country_id: id })
+    //     .unwrap()
+    //     .then(() => {
+    //       toast({
+    //         variant: "success",
+    //         title: t("Город успешно удален"),
+    //       });
+    //       dispatch(setActiveLocation(null));
+    //       navigate(paths.home);
+    //     })
+    //     .catch(() => {
+    //       toast({
+    //         title: t("Произошла ошибка на сервере, попробуйте позже..."),
+    //         variant: "destructive",
+    //       });
+    //     });
+    // }
   };
   return (
     <Form {...form}>
@@ -554,7 +563,7 @@ export const LocationEditForm = () => {
             type="submit"
             variant={"outline"}
           >
-            {isLoadingEditPartnerCity || isLoadingEditPartnerCountry ? (
+            {isLoadingEditPartnerLocation ? (
               <Loader className="animate-spin" />
             ) : (
               t("Сохранить")
@@ -567,7 +576,7 @@ export const LocationEditForm = () => {
                 variant={"outline"}
                 className="w-full border-none text-darkGray text-lg  sm:text-xl disabled:pointer-events-none bg-mainColor  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none uppercase"
               >
-                {isLoadingDeletePartnerCity || isLoadingDeletePartnerCountry ? (
+                {isLoadingDeletePartnerLocation ? (
                   <Loader className="animate-spin" />
                 ) : (
                   t("Удалить")

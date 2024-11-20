@@ -1,8 +1,7 @@
 import {
   LocationSchemaType,
   locationSchema,
-  useAddPartnerCityMutation,
-  useAddPartnerCountryMutation,
+  useAddPartnerLocationMutation,
   useAllCountriesQuery,
   useCitiesByCountryNameQuery,
 } from "@/entities/location";
@@ -10,7 +9,7 @@ import { ItemSelect } from "@/features/itemSelect";
 import { LogoArrowIcon, LogoButtonIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
 import { paths } from "@/shared/routing";
-import { AllCitiesFlag } from "@/shared/types";
+import { AllCitiesFlag, LocationMarker } from "@/shared/types";
 
 import {
   AlertDialog,
@@ -70,13 +69,19 @@ export const LocationAddForm = () => {
 
   const { toast } = useToast();
 
-  const [addPartnerCity, { isLoading: isLoadingAddPartnerCity }] =
-    useAddPartnerCityMutation();
-  const [addPartnerCountry, { isLoading: isLoadingAddPartnerCountry }] =
-    useAddPartnerCountryMutation();
+  const [addPartnerLocation, { isLoading: isLoadingAddPartnerLocation }] =
+    useAddPartnerLocationMutation();
 
   const onSubmit = (data: LocationSchemaType) => {
     const req = {
+      id:
+        data?.location?.code_name === AllCitiesFlag
+          ? data.location.country_id
+          : data.location.id,
+      marker:
+        data?.location?.code_name === AllCitiesFlag
+          ? LocationMarker.country
+          : LocationMarker.city,
       delivery: data?.deliviry,
       office: data?.office,
       weekdays: {
@@ -90,60 +95,31 @@ export const LocationAddForm = () => {
       working_days: data?.workDays,
       min_amount: data?.min_amount || null,
       max_amount: data?.max_amount || null,
-      ...(data?.location?.code_name === AllCitiesFlag
-        ? { country_id: data.location.country_id }
-        : { city: data.location.code_name }),
     };
 
-    if (data?.location?.code_name === AllCitiesFlag) {
-      addPartnerCountry(req)
-        .unwrap()
-        .then(() => {
-          toast({
-            variant: "success",
-            title: t("Успешно обновленно!"),
-          });
-          navigate(paths.home);
-        })
-        .catch((err) => {
-          if (err.status === 423) {
-            toast({
-              title: t("Такой город уже существует"),
-              description: t("Измените город!"),
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: t("Произошла ошибка на сервере, попробуйте позже..."),
-              variant: "destructive",
-            });
-          }
+    addPartnerLocation(req)
+      .unwrap()
+      .then(() => {
+        toast({
+          variant: "success",
+          title: t("Успешно обновленно!"),
         });
-    } else {
-      addPartnerCity(req)
-        .unwrap()
-        .then(() => {
+        navigate(paths.home);
+      })
+      .catch((err) => {
+        if (err.status === 423) {
           toast({
-            variant: "success",
-            title: t("Успешно обновленно!"),
+            title: t("Такой город уже существует"),
+            description: t("Измените город!"),
+            variant: "destructive",
           });
-          navigate(paths.home);
-        })
-        .catch((err) => {
-          if (err.status === 423) {
-            toast({
-              title: t("Такой город уже существует"),
-              description: t("Измените город!"),
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: t("Произошла ошибка на сервере, попробуйте позже..."),
-              variant: "destructive",
-            });
-          }
-        });
-    }
+        } else {
+          toast({
+            title: t("Произошла ошибка на сервере, попробуйте позже..."),
+            variant: "destructive",
+          });
+        }
+      });
   };
 
   const formState = form.watch();
@@ -560,7 +536,7 @@ export const LocationAddForm = () => {
           type="submit"
           variant={"outline"}
         >
-          {isLoadingAddPartnerCity || isLoadingAddPartnerCountry ? (
+          {isLoadingAddPartnerLocation ? (
             <Loader className="animate-spin" />
           ) : (
             t("Добавить")

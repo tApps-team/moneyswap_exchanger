@@ -38,10 +38,14 @@ export const MyDirections = () => {
     useGetCountriesQuery();
 
   useEffect(() => {
-    if (cities && !activeLocation) {
-      setActive(cities[0]);
+    if (!activeLocation) {
+      if (cities && cities.length) {
+        setActive(cities[0]);
+      } else if (countries) {
+        setActive(countries[0]);
+      }
     }
-  }, [cities]);
+  }, [cities, countries]);
 
   const form = useForm<directionSchemaType>({
     resolver: zodResolver(directionSchema),

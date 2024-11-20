@@ -46,7 +46,8 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
     isAllCitiesBtn,
   } = props;
 
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
+  console.log(i18n.language);
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [drawerOpen, setDrawerOpen] = useState(false);

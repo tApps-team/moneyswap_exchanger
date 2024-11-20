@@ -4,6 +4,7 @@ import * as ReactDOM from "react-dom/client";
 import App from "./app";
 import * as Sentry from "@sentry/react";
 import "@/shared/styles/global.scss";
+import { LanguageDetector } from "./features/languageDetector";
 
 Sentry.init({
   dsn: "https://c6a6682b2d56289fed2664de13424875@o4506694926336000.ingest.us.sentry.io/4507152941711360",
@@ -25,6 +26,7 @@ Sentry.init({
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    <LanguageDetector />
     <React.Suspense fallback={<div>Loading...</div>}>
       <App />
     </React.Suspense>
