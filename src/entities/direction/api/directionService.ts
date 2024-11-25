@@ -35,7 +35,7 @@ export const directionAPI = authApi.injectEndpoints({
       { id: number; marker: LocationMarker }
     >({
       query: (params) => ({
-        url: `/api/test/partner/directions_by`,
+        url: `/api/partner/directions_by`,
         method: `GET`,
         params,
       }),
@@ -46,7 +46,7 @@ export const directionAPI = authApi.injectEndpoints({
       AddDirectionDtoRequest
     >({
       query: (body) => ({
-        url: `/api/test/partner/add_partner_direction`,
+        url: `/api/partner/add_partner_direction`,
         method: "POST",
         body: body,
       }),
@@ -54,7 +54,7 @@ export const directionAPI = authApi.injectEndpoints({
     }),
     editDirection: build.mutation<void, EditDirecitonRequest>({
       query: (BodyParams) => ({
-        url: `/api/test/partner/edit_partner_directions`,
+        url: `/api/partner/edit_partner_directions`,
         method: `PATCH`,
         body: BodyParams,
       }),
@@ -69,7 +69,7 @@ export const directionAPI = authApi.injectEndpoints({
       }
     >({
       query: (body) => ({
-        url: "/api/test/partner/delete_partner_direction",
+        url: "/api/partner/delete_partner_direction",
         method: "DELETE",
         body,
       }),

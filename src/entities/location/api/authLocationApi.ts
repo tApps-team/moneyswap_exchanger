@@ -13,7 +13,7 @@ import { LOCATION } from "@/shared/api/tags";
 export const authLocationApi = authApi.injectEndpoints({
   endpoints: (build) => ({
     getCountries: build.query<ActiveLocation[], void>({
-      query: () => `/api/test/partner/partner_countries`,
+      query: () => `/api/partner/partner_countries`,
       providesTags: [LOCATION],
     }),
     getCities: build.query<ActiveLocation[], void>({
@@ -26,7 +26,7 @@ export const authLocationApi = authApi.injectEndpoints({
       AddPartnerLocationDtoRequest
     >({
       query: (body) => ({
-        url: "/api/test/partner/add_partner_city_country",
+        url: "/api/partner/add_partner_city_country",
         method: "POST",
         body: body,
       }),
@@ -37,7 +37,7 @@ export const authLocationApi = authApi.injectEndpoints({
       EditPartnerLocationDtoRequest
     >({
       query: (body) => ({
-        url: "/api/test/partner/edit_partner_city_country",
+        url: "/api/partner/edit_partner_city_country",
         body: body,
         method: "PATCH",
       }),
@@ -48,7 +48,7 @@ export const authLocationApi = authApi.injectEndpoints({
       DeletePartnerLocationDtoRequest
     >({
       query: (body) => ({
-        url: `/api/test/partner/delete_partner_city_country`,
+        url: `/api/partner/delete_partner_city_country`,
         method: "DELETE",
         body,
       }),
