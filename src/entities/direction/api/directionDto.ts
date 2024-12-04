@@ -1,10 +1,12 @@
 import { LocationMarker } from "@/shared/types";
-import { CurrencyCategory } from "../model/types";
+import { Bankomat, CurrencyCategory } from "../model/types";
 
 export type AvailableValutesDtoRequest = {
   base?: string;
 };
 export type AvailableValutesDtoResponse = CurrencyCategory;
+
+export type GetBankomatsByValuteResponse = Bankomat[];
 
 export type ActualCourseDtoResponse = {
   valute_from: string;
@@ -28,6 +30,12 @@ export type AddDirectionDtoRequest = {
   marker: LocationMarker;
   valute_from: string;
   valute_to: string;
+  bankomats:
+    | {
+        id: number;
+        available: boolean;
+      }[]
+    | null;
 };
 export type EditDirecitonRequest = {
   id: number;

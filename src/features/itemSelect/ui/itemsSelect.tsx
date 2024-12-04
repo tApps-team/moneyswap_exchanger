@@ -46,8 +46,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
     isAllCitiesBtn,
   } = props;
 
-  const { i18n, t } = useTranslation();
-  console.log(i18n.language);
+  const { t } = useTranslation();
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -126,7 +125,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
           <div className="grid grid-rows-1 items gap-2 p-2">
             {filteredItems?.length ? (
               <>
-                {isAllCitiesBtn && (
+                {isAllCitiesBtn && items && items?.length > 1 && (
                   <DrawerClose asChild>
                     <ItemCard
                       item={allCitiesCard}

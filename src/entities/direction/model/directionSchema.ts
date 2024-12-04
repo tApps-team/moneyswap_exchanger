@@ -1,3 +1,4 @@
+import { CurrencyType } from "@/shared/types";
 import { z } from "zod";
 
 export const directionSchema = z.object({
@@ -28,6 +29,14 @@ export const directionAddSchema = z.object({
       }),
       code_name: z.string(),
       icon_url: z.string(),
+      type_valute: z.enum([
+        CurrencyType.Cryptocurrency,
+        CurrencyType.Cash,
+        CurrencyType.Transfers,
+        CurrencyType.Banking,
+        CurrencyType.ElMoney,
+        CurrencyType.Bankomat,
+      ]),
     },
     {
       required_error: "required...",
@@ -43,6 +52,14 @@ export const directionAddSchema = z.object({
       }),
       code_name: z.string(),
       icon_url: z.string(),
+      type_valute: z.enum([
+        CurrencyType.Cryptocurrency,
+        CurrencyType.Cash,
+        CurrencyType.Transfers,
+        CurrencyType.Banking,
+        CurrencyType.ElMoney,
+        CurrencyType.Bankomat,
+      ]),
     },
     {
       required_error: "required...",
@@ -57,5 +74,16 @@ export const directionAddSchema = z.object({
     .number()
     .positive({ message: "> 0" })
     .min(0.00000001),
+  bankomats: z.union([
+    z.array(
+      z.object({
+        id: z.number(),
+        available: z.boolean(),
+        name: z.string(),
+        icon: z.string(),
+      })
+    ),
+    z.null(),
+  ]),
 });
 export type DirectionAddSchemaType = z.infer<typeof directionAddSchema>;

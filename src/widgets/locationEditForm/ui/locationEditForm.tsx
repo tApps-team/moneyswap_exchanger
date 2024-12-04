@@ -177,7 +177,6 @@ export const LocationEditForm = () => {
       <form
         className="grid grid-flow-row grid-cols-1 gap-8"
         onSubmit={form.handleSubmit(onSubmit)}
-        onClick={() => console.log(form.getValues())}
       >
         <FormField
           control={form.control}

@@ -8,6 +8,7 @@ import {
   AvailableValutesDtoRequest,
   AvailableValutesDtoResponse,
   EditDirecitonRequest,
+  GetBankomatsByValuteResponse,
 } from "./directionDto";
 import { DIRECTION, LOCATION } from "@/shared/api/tags";
 import { LocationMarker } from "@/shared/types";
@@ -23,6 +24,16 @@ export const directionAPI = authApi.injectEndpoints({
         method: "GET",
       }),
       // transformResponse: (response:AvailableValutesDtoResponse ) => response
+    }),
+    getBankomatsByValute: build.query<
+      GetBankomatsByValuteResponse,
+      { valute: string }
+    >({
+      query: (params) => ({
+        url: `/api/test/partner/bankomats_by_valute`,
+        method: "GET",
+        params,
+      }),
     }),
     actualCourse: build.query<ActualCourseDtoResponse, ActualCourseDtoRequest>({
       query: ({ valute_from, valute_to }) => ({
@@ -46,7 +57,7 @@ export const directionAPI = authApi.injectEndpoints({
       AddDirectionDtoRequest
     >({
       query: (body) => ({
-        url: `/api/partner/add_partner_direction`,
+        url: `/api/test/partner/add_partner_direction`,
         method: "POST",
         body: body,
       }),
@@ -79,6 +90,7 @@ export const directionAPI = authApi.injectEndpoints({
 });
 export const {
   useAvailableValutesQuery,
+  useGetBankomatsByValuteQuery,
   useActualCourseQuery,
   useDirectionsByQuery,
   useAddDirectionMutation,

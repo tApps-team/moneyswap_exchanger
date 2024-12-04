@@ -59,6 +59,8 @@
   "Получаю": "Client gets",
   "Выберите валюту": "Select currency",
   "Поиск валюты": "Search for currency",
+  "Укажите какие банкоматы поддерживаете для": "Please indicate which ATMs you support for",
+  "Доступные банкоматы": "Available ATMs",
   "Актуальный курс": "Current rate",
   "Нет данных": "Not found...",
   "Укажите свой курс в поле ниже": "Enter your course in the field below",
