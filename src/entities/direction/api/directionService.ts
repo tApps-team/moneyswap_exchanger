@@ -30,7 +30,7 @@ export const directionAPI = authApi.injectEndpoints({
       { valute: string }
     >({
       query: (params) => ({
-        url: `/api/test/partner/bankomats_by_valute`,
+        url: `/api/partner/bankomats_by_valute`,
         method: "GET",
         params,
       }),
@@ -57,7 +57,7 @@ export const directionAPI = authApi.injectEndpoints({
       AddDirectionDtoRequest
     >({
       query: (body) => ({
-        url: `/api/test/partner/add_partner_direction`,
+        url: `/api/partner/add_partner_direction`,
         method: "POST",
         body: body,
       }),
