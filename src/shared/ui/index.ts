@@ -41,3 +41,4 @@ export { TimePicker } from "./timepicker";
 export * from "./input-otp";
 export * from "./desktop-timepicker";
 export * from "./select";
+export * from "./accordion";

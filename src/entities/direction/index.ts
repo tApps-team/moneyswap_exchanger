@@ -1,11 +1,17 @@
 export { DirectionCard } from "./ui/directionCard";
-export type { Direction, Currency, CurrencyCategory } from "./model/types";
+export type {
+  Direction,
+  Currency,
+  CurrencyCategory,
+  Bankomat,
+} from "./model/types";
 export {
   directionAPI,
   useDirectionsByQuery,
   useEditDirectionMutation,
   useAvailableValutesQuery,
   useActualCourseQuery,
+  useGetBankomatsByValuteQuery,
   useAddDirectionMutation,
   useDeleteDirectionMutation,
 } from "./api/directionService";

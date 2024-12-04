@@ -25,3 +25,9 @@ export type Currency = {
 export type CurrencyCategory = {
   [key: string]: Currency[];
 };
+export type Bankomat = {
+  id: number;
+  available: boolean;
+  name: string;
+  icon: string;
+};

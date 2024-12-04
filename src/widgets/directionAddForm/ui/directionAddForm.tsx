@@ -4,15 +4,21 @@ import {
   useActualCourseQuery,
   useAddDirectionMutation,
   useAvailableValutesQuery,
+  useGetBankomatsByValuteQuery,
 } from "@/entities/direction";
 import { ActualCourse } from "@/features/direction/actualCourse";
 import { ItemSelect } from "@/features/itemSelect";
 import { Lang } from "@/shared/config";
 import { useAppSelector } from "@/shared/model";
 import { paths } from "@/shared/routing";
-import { LocationMarker } from "@/shared/types";
+import { CurrencyType, LocationMarker } from "@/shared/types";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
   Button,
+  Checkbox,
   Form,
   FormControl,
   FormField,
@@ -24,6 +30,7 @@ import {
 import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Circle, Equal, Loader } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -38,6 +45,7 @@ export const DirectionAddForm = () => {
       giveCurrency: undefined,
       getCurrencyPrice: 0,
       giveCurrencyPrice: 0,
+      bankomats: null,
     },
   });
   const navigate = useNavigate();
@@ -46,7 +54,7 @@ export const DirectionAddForm = () => {
     (state) => state.activeLocation?.activeLocation || null
   );
 
-  form.watch(["giveCurrency", "getCurrency"]);
+  form.watch(["giveCurrency", "getCurrency", "bankomats"]);
 
   const { toast } = useToast();
 
@@ -64,6 +72,36 @@ export const DirectionAddForm = () => {
   const currectAvailableCurrencies = Object.values(
     availableCurrencies || {}
   ).flat();
+
+  const {
+    data: bankomats,
+    refetch,
+    isLoading: isBankomatsLoading,
+    isFetching: isBankomatsFetching,
+  } = useGetBankomatsByValuteQuery(
+    {
+      valute: form.getValues("getCurrency.name.ru"),
+    },
+    {
+      skip:
+        !form.getValues("getCurrency.code_name") ||
+        form.getValues("getCurrency.type_valute") !== CurrencyType.Bankomat,
+      refetchOnMountOrArgChange: true,
+    }
+  );
+
+  useEffect(() => {
+    if (form.getValues("getCurrency.type_valute") === CurrencyType.Bankomat) {
+      refetch();
+      bankomats && form.setValue("bankomats", bankomats);
+    }
+  }, [form.getValues("getCurrency.type_valute")]);
+
+  useEffect(() => {
+    if (bankomats && bankomats.length > 0) {
+      form.setValue("bankomats", bankomats);
+    }
+  }, [bankomats]);
 
   const { data: actualCourse } = useActualCourseQuery(
     {
@@ -83,6 +121,11 @@ export const DirectionAddForm = () => {
     data: DirectionAddSchemaType
   ) => {
     if (activeLocation) {
+      const currentBankomats =
+        form.getValues("bankomats")?.map((bank) => ({
+          id: bank.id,
+          available: bank.available,
+        })) || null;
       addDirection({
         id: activeLocation?.id,
         marker: activeLocation?.code_name
@@ -93,6 +136,10 @@ export const DirectionAddForm = () => {
         is_active: true,
         valute_from: data.giveCurrency?.code_name || "",
         valute_to: data.getCurrency?.code_name || "",
+        bankomats:
+          form.getValues("getCurrency.type_valute") === CurrencyType.Bankomat
+            ? currentBankomats
+            : null,
       })
         .unwrap()
         .then(() => {
@@ -184,6 +231,7 @@ export const DirectionAddForm = () => {
                     field.onChange(e);
                     form.resetField("getCurrency");
                     form.resetField("getCurrencyPrice");
+                    form.setValue("bankomats", null);
                   }}
                 />
               </FormControl>
@@ -212,14 +260,92 @@ export const DirectionAddForm = () => {
                     ] || ""
                   }
                   disabled={!form.getValues("giveCurrency")}
-                  onClick={(e) => field.onChange(e)}
+                  onClick={(e) => {
+                    field.onChange(e);
+                    if (e.type_valute !== CurrencyType.Bankomat) {
+                      form.setValue("bankomats", null);
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
+        {/* банкоматы */}
+        {form.getValues("bankomats") &&
+          form.getValues("bankomats")?.length &&
+          !isBankomatsLoading &&
+          !isBankomatsFetching && (
+            <div className="grid grid-flow-row gap-6">
+              <p className="font-normal uppercase text-white mobile:text-sm text-xs text-center">
+                {t("Укажите какие банкоматы поддерживаете для")}{" "}
+                <span className="font-semibold">
+                  {i18n.language === Lang.ru
+                    ? form.getValues(`getCurrency.name.ru`)
+                    : i18n.language === Lang.en &&
+                      form.getValues(`getCurrency.name.en`)}
+                  :
+                </span>
+              </p>
+              <Accordion
+                type="single"
+                collapsible
+                className="w-full bg-black/30 backdrop-blur-2xl rounded-[35px] shadow-[1px_2px_8px_1px_rgba(0,0,0,0.6)]"
+              >
+                <AccordionItem value="accordion" className="border-b-0">
+                  <AccordionTrigger className="uppercase text-white font-medium mobile:h-mainHeight h-[60px] mobile:text-sm text-xs">
+                    {t("Доступные банкоматы")} (
+                    {form.getValues("bankomats")?.length})
+                  </AccordionTrigger>
+                  <AccordionContent className="mobile:px-6 px-4 pb-6 grid grid-flow-row gap-4 justify-start items-center text-sm">
+                    {form.getValues("bankomats")?.map((bank, index) => (
+                      <FormField
+                        key={bank?.id}
+                        control={form.control}
+                        name={`bankomats.${index}.available`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <div className="flex flex-row items-center gap-4">
+                                <Checkbox
+                                  id={bank?.name}
+                                  checked={field.value}
+                                  onCheckedChange={(value) =>
+                                    field.onChange(value)
+                                  }
+                                />
+                                <div className="flex flex-row gap-2 items-center">
+                                  <img
+                                    src={bank?.icon}
+                                    alt="icon"
+                                    className="w-6 h-6 rounded-full overflow-hidden"
+                                  />
+                                  <label
+                                    htmlFor={bank?.name}
+                                    className="text-white font-medium uppercase mobile:text-sm text-xs peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                  >
+                                    {bank?.name}
+                                  </label>
+                                </div>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    ))}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          )}
+        {(isBankomatsLoading || isBankomatsFetching) && (
+          <div className="flex justify-center items-center">
+            <Loader className="animate-spin" stroke="#fff" />
+          </div>
+        )}
+        {/* банкоматы */}
         <ActualCourse actualCourse={actualCourse} />
         <div className="grid grid-flow-row gap-10">
           <div>
