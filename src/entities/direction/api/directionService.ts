@@ -1,4 +1,3 @@
-import { Direction } from "../model/types";
 import { authApi } from "@/shared/api";
 import {
   ActualCourseDtoRequest,
@@ -9,6 +8,8 @@ import {
   AvailableValutesDtoResponse,
   EditDirecitonRequest,
   GetBankomatsByValuteResponse,
+  GetDirectionsByRequest,
+  GetDirectionsByResponse,
 } from "./directionDto";
 import { DIRECTION, LOCATION } from "@/shared/api/tags";
 import { LocationMarker } from "@/shared/types";
@@ -23,7 +24,6 @@ export const directionAPI = authApi.injectEndpoints({
         url: `/api/partner/available_valutes?base=${base}`,
         method: "GET",
       }),
-      // transformResponse: (response:AvailableValutesDtoResponse ) => response
     }),
     getBankomatsByValute: build.query<
       GetBankomatsByValuteResponse,
@@ -41,12 +41,9 @@ export const directionAPI = authApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    directionsBy: build.query<
-      Direction[],
-      { id: number; marker: LocationMarker }
-    >({
+    directionsBy: build.query<GetDirectionsByResponse, GetDirectionsByRequest>({
       query: (params) => ({
-        url: `/api/partner/directions_by`,
+        url: `/api/test/partner/directions_by`,
         method: `GET`,
         params,
       }),
