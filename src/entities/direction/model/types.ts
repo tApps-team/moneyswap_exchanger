@@ -11,6 +11,7 @@ export type Direction = {
   is_active: boolean;
   out_count_type: string;
   in_count_type: string;
+  bankomats: Bankomat[];
 };
 export type Currency = {
   id: number;

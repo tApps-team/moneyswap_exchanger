@@ -1,5 +1,5 @@
 import { LocationMarker } from "@/shared/types";
-import { Bankomat, CurrencyCategory } from "../model/types";
+import { Bankomat, CurrencyCategory, Direction } from "../model/types";
 
 export type AvailableValutesDtoRequest = {
   base?: string;
@@ -20,6 +20,12 @@ export type ActualCourseDtoRequest = {
   valute_from: string;
   valute_to: string;
 };
+
+export type GetDirectionsByRequest = {
+  id: number;
+  marker: LocationMarker;
+};
+export type GetDirectionsByResponse = Direction[];
 
 export type AddDirectionDtoResponse = void;
 export type AddDirectionDtoRequest = {

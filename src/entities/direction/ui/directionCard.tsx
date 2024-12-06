@@ -125,6 +125,18 @@ export const DirectionCard: FC<DirectionCardProps> = ({
               )}
             />
             <p className={styles.code}>{direction?.valute_to}</p>
+            {direction.bankomats && direction?.bankomats?.length > 0 && (
+              <div className="absolute -bottom-[44px] left-0 w-full justify-start inline-flex flex-row gap-1 overflow-auto cursor-pointer">
+                {direction?.bankomats?.map((bank) => (
+                  <div
+                    key={bank?.id}
+                    className="rounded-full overflow-hidden w-5 h-5 flex-shrink-0 cursor-pointer"
+                  >
+                    <img src={bank?.icon} alt="icon" className="w-5 h-5" />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.card__active}>
