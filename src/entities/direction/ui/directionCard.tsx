@@ -126,7 +126,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
             />
             <p className={styles.code}>{direction?.valute_to}</p>
             {direction.bankomats && direction?.bankomats?.length > 0 && (
-              <div className="absolute -bottom-[44px] left-0 w-full justify-start inline-flex flex-row gap-1 overflow-auto cursor-pointer">
+              <div className="pb-3 absolute -bottom-[56px] left-0 w-full justify-start inline-flex flex-row gap-1 overflow-auto cursor-pointer">
                 {direction?.bankomats?.map((bank) => (
                   <div
                     key={bank?.id}
