@@ -43,7 +43,7 @@ export const directionAPI = authApi.injectEndpoints({
     }),
     directionsBy: build.query<GetDirectionsByResponse, GetDirectionsByRequest>({
       query: (params) => ({
-        url: `/api/test/partner/directions_by`,
+        url: `/api/partner/directions_by`,
         method: `GET`,
         params,
       }),
