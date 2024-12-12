@@ -15,7 +15,11 @@ export const LanguageSwitcher = () => {
         <Label htmlFor="switch-language" className="uppercase text-xs">
           {t("Переключить язык")}
         </Label>
-        <Switch onCheckedChange={toggle} id="switch-language" className="" />
+        <Switch
+          onCheckedChange={toggle}
+          id="switch-language"
+          className="border-darkGray"
+        />
       </div>
     </div>
   );

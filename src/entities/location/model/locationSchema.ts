@@ -51,7 +51,7 @@ export const locationEditSchema = z.object({
   office: z.boolean(),
   weekdays: z.object({ time_from: z.string(), time_to: z.string() }),
   weekends: z.object({ time_from: z.string(), time_to: z.string() }),
-  workDays: z.record(z.string(), z.boolean()).optional(),
+  workDays: z.record(z.string(), z.boolean()),
   min_amount: z
     .number()
     .positive({ message: "> 0" })
