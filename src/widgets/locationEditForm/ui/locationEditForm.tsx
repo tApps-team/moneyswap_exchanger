@@ -136,42 +136,10 @@ export const LocationEditForm = () => {
           variant: "destructive",
         });
       });
-    // if (activeEditLocation?.code_name) {
-    //   deletePartnerCity({ city_id: id })
-    //     .unwrap()
-    //     .then(() => {
-    //       toast({
-    //         variant: "success",
-    //         title: t("Город успешно удален"),
-    //       });
-    //       dispatch(setActiveLocation(null));
-    //       navigate(paths.home);
-    //     })
-    //     .catch(() => {
-    //       toast({
-    //         title: t("Произошла ошибка на сервере, попробуйте позже..."),
-    //         variant: "destructive",
-    //       });
-    //     });
-    // } else {
-    //   deletePartnerCountry({ country_id: id })
-    //     .unwrap()
-    //     .then(() => {
-    //       toast({
-    //         variant: "success",
-    //         title: t("Город успешно удален"),
-    //       });
-    //       dispatch(setActiveLocation(null));
-    //       navigate(paths.home);
-    //     })
-    //     .catch(() => {
-    //       toast({
-    //         title: t("Произошла ошибка на сервере, попробуйте позже..."),
-    //         variant: "destructive",
-    //       });
-    //     });
-    // }
   };
+
+  const formState = form.watch();
+
   return (
     <Form {...form}>
       <form
@@ -266,7 +234,42 @@ export const LocationEditForm = () => {
             </FormItem>
           )}
         />
-
+        <div className="grid grid-rows-2 gap-6 text-white ">
+          <div className="text-lg sm:text-xl row-span-2 text-white uppercase">
+            {t("Дни работы")}
+          </div>
+          <div className="grid grid-cols-7">
+            {Object.keys(form.formState.defaultValues?.workDays || {}).map(
+              (day) => (
+                <FormField
+                  key={day}
+                  control={form.control}
+                  name={`workDays.${day}`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="flex flex-col items-center gap-4 ">
+                          <Switch
+                            className="-rotate-90"
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            defaultChecked={
+                              activeEditLocation?.info.working_days[day]
+                            }
+                          />
+                          <div className="font-light uppercase">
+                            {t(`${day}`)}
+                          </div>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )
+            )}
+          </div>
+        </div>
         <div className="flex flex-col gap-6">
           <div>
             <div className="text-white text-lg sm:text-xl uppercase">
@@ -364,129 +367,101 @@ export const LocationEditForm = () => {
               )}
             />
           </div>
-          <div className="text-md uppercase text-white text-center">
-            {t("Выходные дни")}
-          </div>
-          <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
-            <FormField
-              control={form.control}
-              name={"weekends.time_from"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div>
-                      <div className="mobile:hidden block">
-                        <AlertDialog>
-                          <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
-                            {field?.value || "00:00"}
-                            <LogoButtonIcon
-                              width={26}
-                              height={26}
-                              className="absolute -translate-y-[50%] top-[50%] right-3"
-                            />
-                          </AlertDialogTrigger>
-                          <AlertDialogContent className="grid gap-0">
-                            <TimePicker
-                              setTime={field.onChange}
-                              time={field?.value || "00:00"}
-                            />
-                            <AlertDialogAction>
-                              {t("Сохранить")}
-                            </AlertDialogAction>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </div>
-                      <div className="mobile:block hidden">
-                        <OptionsTimepicker
-                          setTime={field.onChange}
-                          time={field?.value || "00:00"}
-                        />
-                      </div>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex justify-center items-center">
-              <Minus color="white" />
+          <div
+            className={`transition-all duration-300 ease-in-out grid grid-flow-row gap-6 overflow-hidden ${
+              formState.workDays["СБ"] || formState.workDays["ВС"]
+                ? "opacity-100 max-h-[300px] pointer-events-auto"
+                : "opacity-0 max-h-0 pointer-events-none -mt-6"
+            }`}
+          >
+            <div className="text-md uppercase text-white text-center">
+              {t("Выходные дни")}
             </div>
-            <FormField
-              control={form.control}
-              name={"weekends.time_to"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div>
-                      <div className="mobile:hidden block">
-                        <AlertDialog>
-                          <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
-                            {field?.value || "00:00"}
-                            <LogoButtonIcon
-                              width={26}
-                              height={26}
-                              className="absolute -translate-y-[50%] top-[50%] right-3"
-                            />
-                          </AlertDialogTrigger>
-                          <AlertDialogContent className="grid gap-0">
-                            <TimePicker
-                              setTime={field.onChange}
-                              time={field?.value || "00:00"}
-                            />
-                            <AlertDialogAction>
-                              {t("Сохранить")}
-                            </AlertDialogAction>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </div>
-                      <div className="mobile:block hidden">
-                        <OptionsTimepicker
-                          setTime={field.onChange}
-                          time={field?.value || "00:00"}
-                        />
-                      </div>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-        <div className="grid grid-rows-2 gap-6 text-white ">
-          <div className="text-lg sm:text-xl row-span-2 text-white uppercase">
-            {t("Дни работы")}
-          </div>
-          <div className="grid grid-cols-7">
-            {Object.keys(form.formState.defaultValues?.workDays || {}).map(
-              (day) => (
-                <FormField
-                  key={day}
-                  control={form.control}
-                  name={`workDays.${day}`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <div className="flex flex-col items-center gap-4 ">
-                          <Switch
-                            className="rotate-90 "
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                            defaultChecked={
-                              activeEditLocation?.info.working_days[day]
-                            }
-                          />
-                          <div className="font-light uppercase">
-                            {t(`${day}`)}
-                          </div>
+            <div className="grid grid-cols-[1fr,50px,1fr]  items-center  grid-rows-1">
+              <FormField
+                control={form.control}
+                name={"weekends.time_from"}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div>
+                        <div className="mobile:hidden block">
+                          <AlertDialog>
+                            <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                              {field?.value || "00:00"}
+                              <LogoButtonIcon
+                                width={26}
+                                height={26}
+                                className="absolute -translate-y-[50%] top-[50%] right-3"
+                              />
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className="grid gap-0">
+                              <TimePicker
+                                setTime={field.onChange}
+                                time={field?.value || "00:00"}
+                              />
+                              <AlertDialogAction>
+                                {t("Сохранить")}
+                              </AlertDialogAction>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )
-            )}
+                        <div className="mobile:block hidden">
+                          <OptionsTimepicker
+                            setTime={field.onChange}
+                            time={field?.value || "00:00"}
+                          />
+                        </div>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-center items-center">
+                <Minus color="white" />
+              </div>
+              <FormField
+                control={form.control}
+                name={"weekends.time_to"}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div>
+                        <div className="mobile:hidden block">
+                          <AlertDialog>
+                            <AlertDialogTrigger className="w-full h-[100%] p-3 pr-10 bg-darkGray text-white rounded-2xl focus-visible:ring-transparent focus-visible:ring-offset-0 relative">
+                              {field?.value || "00:00"}
+                              <LogoButtonIcon
+                                width={26}
+                                height={26}
+                                className="absolute -translate-y-[50%] top-[50%] right-3"
+                              />
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className="grid gap-0">
+                              <TimePicker
+                                setTime={field.onChange}
+                                time={field?.value || "00:00"}
+                              />
+                              <AlertDialogAction>
+                                {t("Сохранить")}
+                              </AlertDialogAction>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </div>
+                        <div className="mobile:block hidden">
+                          <OptionsTimepicker
+                            setTime={field.onChange}
+                            time={field?.value || "00:00"}
+                          />
+                        </div>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
         </div>
         <div>
