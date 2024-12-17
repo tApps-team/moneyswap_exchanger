@@ -90,7 +90,7 @@ export const DirectionCard: FC<DirectionCardProps> = ({
                     {...field}
                     value={field.value || ""}
                     type="number"
-                    className=" bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
+                    className="bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
                     onWheel={(e) => (e.target as HTMLInputElement).blur()}
                   />
                 </FormControl>
@@ -98,7 +98,9 @@ export const DirectionCard: FC<DirectionCardProps> = ({
               </FormItem>
             )}
           />
-          <p className={styles.code}>{direction?.valute_from}</p>
+          <p className={`${styles.code} font_unbounded`}>
+            {direction?.valute_from}
+          </p>
         </div>
         <span className="text-xl">=</span>
         <div className={styles.input__block}>
@@ -123,7 +125,9 @@ export const DirectionCard: FC<DirectionCardProps> = ({
               </FormItem>
             )}
           />
-          <p className={styles.code}>{direction?.valute_to}</p>
+          <p className={`${styles.code} font_unbounded`}>
+            {direction?.valute_to}
+          </p>
           {direction.bankomats && direction?.bankomats?.length > 0 && (
             <div className="absolute top-full mt-[26px] left-0 w-full justify-start inline-flex flex-wrap flex-row gap-1 cursor-pointer">
               {direction?.bankomats?.map((bank) => (

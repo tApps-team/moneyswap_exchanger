@@ -26,38 +26,38 @@ export const ActualCourse = (props: ActualCourseProps) => {
       <CardContent className="p-4 h-full flex items-center">
         {actualCourse &&
         (actualCourse?.in_count !== 0 || actualCourse?.out_count !== 0) ? (
-          <div className="grid grid-cols-[auto,10px,auto] justify-between items-center gap-4">
+          <div className="grid grid-cols-[auto,10px,auto] justify-between items-center gap-2">
             <div className="flex items-center truncate gap-2">
               <img
                 src={actualCourse?.icon_valute_from}
                 alt={`icon ${actualCourse?.valute_to}`}
                 width={34}
                 height={34}
-                className="rounded-full overflow-hidden"
+                className="rounded-full overflow-hidden flex-shrink-0"
               />
               <div className="flex flex-wrap items-center leading-0 truncate">
-                <div className="mr-1 font-semibold text-xs sm:text-sm truncate">
+                <div className="font_unbounded mr-1 font-semibold text-xs sm:text-sm truncate">
                   {actualCourse?.in_count}
                 </div>
-                <div className="font-normal text-[14px] text-xs sm:text-sm truncate">
+                <div className="font_unbounded font-normal text-[14px] text-xs sm:text-sm truncate">
                   {actualCourse?.valute_from}
                 </div>
               </div>
             </div>
-            <div className="text-sm sm:text-lg">=</div>
+            <div className="text-base sm:text-lg font-medium">=</div>
             <div className="flex items-center truncate gap-2">
               <img
                 src={actualCourse?.icon_valute_to}
                 alt={`icon ${actualCourse?.valute_to}`}
                 width={34}
                 height={34}
-                className="rounded-full overflow-hidden"
+                className="rounded-full overflow-hidden flex-shrink-0"
               />
               <div className="flex flex-wrap items-center leading-0 truncate">
-                <div className="mr-1 font-semibold text-xs sm:text-sm truncate">
+                <div className="font_unbounded mr-1 font-semibold text-xs sm:text-sm truncate">
                   {actualCourse?.out_count}
                 </div>
-                <div className="font-normal text-xs sm:text-sm truncate">
+                <div className="font_unbounded font-normal text-xs sm:text-sm truncate">
                   {actualCourse?.valute_to}
                 </div>
               </div>

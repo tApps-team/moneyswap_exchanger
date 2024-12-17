@@ -9,12 +9,13 @@ import { useTranslation } from "react-i18next";
 type ItemCardProps<T> = {
   item: T;
   onClick: () => void;
+  isCity?: boolean;
 };
 export const ItemCard = <T extends Partial<City & Country & Currency>>(
   props: ItemCardProps<T>
 ) => {
   const { i18n } = useTranslation();
-  const { item, onClick } = props;
+  const { item, onClick, isCity } = props;
 
   const name = i18n.language === Lang.ru ? item?.name?.ru : item?.name?.en;
 
@@ -23,7 +24,7 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
       onClick={onClick}
       className="cursor-pointer  h-mainHeight rounded-[35px] border-0 border-lightGray bg-darkGray shadow-[1px_2px_8px_1px_rgba(0,0,0,0.6)]"
     >
-      <CardContent className="grid h-full   grid-flow-col px-4 py-2 justify-start  gap-3 items-center text-white rounded-full overflow-hidden">
+      <CardContent className="grid h-full grid-flow-col px-4 py-2 justify-start gap-3 items-center text-white rounded-full overflow-hidden">
         {item?.country_flag || item?.icon_url ? (
           <img
             width={34}
@@ -43,15 +44,23 @@ export const ItemCard = <T extends Partial<City & Country & Currency>>(
 
         {item?.code_name ? (
           <div>
-            <div className="uppercase truncate font-medium text-sm sm:text-lg">
+            <div
+              className={`uppercase truncate text-sm sm:text-lg ${
+                isCity ? "font-semibold" : "font_unbounded font-normal"
+              }`}
+            >
               {name}
             </div>
-            <div className="uppercase truncate font-light">
+            <div
+              className={`uppercase truncate text-sm font-thin ${
+                isCity ? "" : "font_unbounded"
+              }`}
+            >
               {item?.code_name}
             </div>
           </div>
         ) : (
-          <div className="uppercase truncate font-medium">{name}</div>
+          <div className="truncate font-medium">{name}</div>
         )}
       </CardContent>
     </Card>
