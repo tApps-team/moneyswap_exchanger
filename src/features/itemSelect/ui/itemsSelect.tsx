@@ -30,6 +30,7 @@ type ItemSelectProps<T> = {
   inputLabel?: string;
   scrollRestore?: () => void;
   isAllCitiesBtn?: boolean;
+  isCurrency?: boolean;
 };
 export const ItemSelect = <T extends Partial<City & Country & Currency>>(
   props: ItemSelectProps<T>
@@ -44,6 +45,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
     label,
     inputLabel,
     isAllCitiesBtn,
+    isCurrency,
   } = props;
 
   const { t } = useTranslation();
@@ -93,7 +95,11 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
                 className="rounded-full overflow-hidden"
               />
             )}
-            <div className="uppercase truncate text-sm sm:text-base">
+            <div
+              className={`uppercase truncate text-sm sm:text-base ${
+                label && isCurrency ? "font_unbounded" : ""
+              }`}
+            >
               {label ? label : emptyLabel}
             </div>
           </div>
@@ -105,7 +111,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
       <DrawerContent className="h-[100svh] bg-transparent border-none">
         <DrawerHeader className="gap-0">
           <div className="flex items-center justify-between">
-            <Label className="text-mainColor text-start uppercase">
+            <Label className="text-mainColor text-start uppercase text-lg">
               {inputLabel}
             </Label>
             <DrawerClose>
@@ -130,12 +136,17 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
                     <ItemCard
                       item={allCitiesCard}
                       onClick={() => onClick?.(allCitiesCard as T)}
+                      isCity={isAllCitiesBtn ? true : false}
                     />
                   </DrawerClose>
                 )}
                 {filteredItems?.map((item) => (
                   <DrawerClose key={item.id} asChild>
-                    <ItemCard item={item} onClick={() => onClick?.(item)} />
+                    <ItemCard
+                      item={item}
+                      onClick={() => onClick?.(item)}
+                      isCity={isAllCitiesBtn ? true : false}
+                    />
                   </DrawerClose>
                 ))}
               </>

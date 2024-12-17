@@ -22,28 +22,6 @@ html {
   overflow: hidden;
 }
 
-// /* Scroll bar stylings */
-// ::-webkit-scrollbar {
-//   width: 5px;
-//   height: 5px;
-// }
-
-// /* Track */
-// ::-webkit-scrollbar-track {
-//   background: transparent;
-// }
-
-// /* Handle */
-// ::-webkit-scrollbar-thumb {
-//   background: var(--main-color);
-//   border-radius: 5px;
-// }
-
-// /* Handle on hover */
-// ::-webkit-scrollbar-thumb:hover {
-//   background: var(--main-color);
-// }
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -118,7 +96,6 @@ html {
 }
 
 body {
-  font-family: "Unbounded", sans-serif;
   background: #2D2D2D;
 
   // input number
@@ -130,6 +107,10 @@ body {
   input[type="number"] {
     -moz-appearance: textfield;
   }
+}
+
+.font_unbounded {
+  font-family: "Unbounded", "Helvetica", sans-serif;
 }
 
 .overlay {

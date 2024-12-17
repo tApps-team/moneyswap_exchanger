@@ -233,6 +233,7 @@ export const DirectionAddForm = () => {
                     form.resetField("getCurrencyPrice");
                     form.setValue("bankomats", null);
                   }}
+                  isCurrency
                 />
               </FormControl>
               <FormMessage />
@@ -255,9 +256,13 @@ export const DirectionAddForm = () => {
                   itemIcon={field.value?.icon_url}
                   emptyLabel={t("Выберите валюту")}
                   label={
-                    field.value?.name?.[
-                      i18n.language === Lang.ru ? Lang.ru : Lang.en
-                    ] || ""
+                    field.value
+                      ? `${field.value?.code_name} (${
+                          field.value?.name?.[
+                            i18n.language === Lang.ru ? Lang.ru : Lang.en
+                          ]
+                        })`
+                      : ""
                   }
                   disabled={!form.getValues("giveCurrency")}
                   onClick={(e) => {
@@ -266,6 +271,7 @@ export const DirectionAddForm = () => {
                       form.setValue("bankomats", null);
                     }
                   }}
+                  isCurrency
                 />
               </FormControl>
               <FormMessage />
