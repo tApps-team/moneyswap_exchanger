@@ -1,10 +1,5 @@
 export { DirectionCard } from "./ui/directionCard";
-export type {
-  Direction,
-  Currency,
-  CurrencyCategory,
-  Bankomat,
-} from "./model/types";
+export type * from "./model/types";
 export {
   directionAPI,
   useDirectionsByQuery,

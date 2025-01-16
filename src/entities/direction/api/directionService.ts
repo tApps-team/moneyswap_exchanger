@@ -21,7 +21,8 @@ export const directionAPI = authApi.injectEndpoints({
       AvailableValutesDtoRequest
     >({
       query: ({ base = "all" }) => ({
-        url: `/api/partner/available_valutes?base=${base}`,
+        url: `/api/test/partner/available_valutes`,
+        params: { base },
         method: "GET",
       }),
     }),

@@ -1,4 +1,4 @@
-import { CurrencyType } from "@/shared/types";
+import { CurrencyType, Name } from "@/shared/types";
 
 export type Direction = {
   id: number;
@@ -15,16 +15,15 @@ export type Direction = {
 };
 export type Currency = {
   id: number;
-  name: {
-    ru: string;
-    en: string;
-  };
+  name: Name;
   code_name: string;
   icon_url: string;
   type_valute: CurrencyType;
 };
-export type CurrencyCategory = {
-  [key: string]: Currency[];
+export type CurrencyResponse = {
+  id: string;
+  name: Name;
+  currencies: Currency[];
 };
 export type Bankomat = {
   id: number;

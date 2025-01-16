@@ -1,10 +1,10 @@
 import { LocationMarker } from "@/shared/types";
-import { Bankomat, CurrencyCategory, Direction } from "../model/types";
+import { Bankomat, CurrencyResponse, Direction } from "../model/types";
 
 export type AvailableValutesDtoRequest = {
   base?: string;
 };
-export type AvailableValutesDtoResponse = CurrencyCategory;
+export type AvailableValutesDtoResponse = CurrencyResponse[];
 
 export type GetBankomatsByValuteResponse = Bankomat[];
 
