@@ -30,33 +30,32 @@ import {
 import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Circle, Equal, Loader } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 export const DirectionAddForm = () => {
   const { i18n, t } = useTranslation();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const currentLanguage = i18n.language as "ru" | "en";
+  const activeLocation = useAppSelector(
+    (state) => state.activeLocation?.activeLocation || null
+  );
 
   const form = useForm<DirectionAddSchemaType>({
     resolver: zodResolver(directionAddSchema),
     defaultValues: {
-      getCurrency: undefined,
-      giveCurrency: undefined,
+      getCurrency: null,
+      giveCurrency: null,
       getCurrencyPrice: 0,
       giveCurrencyPrice: 0,
       bankomats: null,
     },
   });
-  const navigate = useNavigate();
-
-  const activeLocation = useAppSelector(
-    (state) => state.activeLocation?.activeLocation || null
-  );
 
   form.watch(["giveCurrency", "getCurrency", "bankomats"]);
-
-  const { toast } = useToast();
 
   const [addDirection, { isLoading: isLoadingAddDirection }] =
     useAddDirectionMutation();
@@ -68,10 +67,33 @@ export const DirectionAddForm = () => {
     { skip: !form.getValues("giveCurrency.code_name") }
   );
 
-  const currectAllCurrencies = Object.values(currencies || {}).flat();
-  const currectAvailableCurrencies = Object.values(
-    availableCurrencies || {}
-  ).flat();
+  const currectAllCurrencies = useMemo(
+    () =>
+      currencies
+        ?.flatMap((currency) => currency.currencies)
+        .sort((a, b) =>
+          a.name[currentLanguage] > b.name[currentLanguage]
+            ? 1
+            : a.name[currentLanguage] < b.name[currentLanguage]
+            ? -1
+            : 0
+        ),
+    [currencies, currentLanguage]
+  );
+
+  const currectAvailableCurrencies = useMemo(
+    () =>
+      availableCurrencies
+        ?.flatMap((currency) => currency.currencies)
+        .sort((a, b) =>
+          a.name[currentLanguage] > b.name[currentLanguage]
+            ? 1
+            : a.name[currentLanguage] < b.name[currentLanguage]
+            ? -1
+            : 0
+        ),
+    [availableCurrencies, currentLanguage]
+  );
 
   const {
     data: bankomats,
@@ -464,7 +486,6 @@ export const DirectionAddForm = () => {
             t("Добавить")
           )}
         </Button>
-        <div></div>
       </form>
     </Form>
   );

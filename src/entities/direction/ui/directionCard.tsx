@@ -40,13 +40,15 @@ export const DirectionCard: FC<DirectionCardProps> = ({
   index,
 }) => {
   const { t } = useTranslation();
-  const isActive = form.watch(`directions.${index}.is_active`);
+  const { toast } = useToast();
+
+  const [deleteDirection] = useDeleteDirectionMutation();
   const activeLocation = useAppSelector(
     (state) => state.activeLocation.activeLocation
   );
 
-  const [deleteDirection] = useDeleteDirectionMutation();
-  const { toast } = useToast();
+  const isActive = form.watch(`directions.${index}.is_active`);
+
   const handleDelete = () => {
     if (activeLocation) {
       deleteDirection({
