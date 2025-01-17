@@ -54,6 +54,9 @@ export const DirectionAddForm = () => {
       bankomats: null,
     },
   });
+
+  form.watch(["giveCurrency", "getCurrency", "bankomats"]);
+
   const [addDirection, { isLoading: isLoadingAddDirection }] =
     useAddDirectionMutation();
 
@@ -139,7 +142,6 @@ export const DirectionAddForm = () => {
     out_count: number,
     data: DirectionAddSchemaType
   ) => {
-    console.log(data);
     if (activeLocation) {
       const currentBankomats =
         form.getValues("bankomats")?.map((bank) => ({
