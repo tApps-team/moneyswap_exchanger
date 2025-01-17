@@ -47,8 +47,8 @@ export const DirectionAddForm = () => {
   const form = useForm<DirectionAddSchemaType>({
     resolver: zodResolver(directionAddSchema),
     defaultValues: {
-      getCurrency: undefined,
-      giveCurrency: undefined,
+      getCurrency: null,
+      giveCurrency: null,
       getCurrencyPrice: 0,
       giveCurrencyPrice: 0,
       bankomats: null,
@@ -58,8 +58,6 @@ export const DirectionAddForm = () => {
     useAddDirectionMutation();
 
   const { data: currencies } = useAvailableValutesQuery({ base: "all" });
-
-  form.watch(["giveCurrency", "getCurrency", "bankomats"]);
 
   const { data: availableCurrencies } = useAvailableValutesQuery(
     { base: form.getValues("giveCurrency.code_name") },
@@ -141,6 +139,7 @@ export const DirectionAddForm = () => {
     out_count: number,
     data: DirectionAddSchemaType
   ) => {
+    console.log(data);
     if (activeLocation) {
       const currentBankomats =
         form.getValues("bankomats")?.map((bank) => ({
@@ -485,7 +484,6 @@ export const DirectionAddForm = () => {
             t("Добавить")
           )}
         </Button>
-        <div></div>
       </form>
     </Form>
   );

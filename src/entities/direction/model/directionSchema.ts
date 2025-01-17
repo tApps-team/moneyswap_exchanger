@@ -6,20 +6,23 @@ const currencyNameSchema = z.object({
   en: z.string(),
 });
 
-const currencySchema = z.object({
-  id: z.number().nullable(),
-  name: currencyNameSchema,
-  code_name: z.string(),
-  icon_url: z.string(),
-  type_valute: z.enum([
-    CurrencyType.Cryptocurrency,
-    CurrencyType.Cash,
-    CurrencyType.Transfers,
-    CurrencyType.Banking,
-    CurrencyType.ElMoney,
-    CurrencyType.Bankomat,
-  ]),
-});
+const currencySchema = z
+  .object({
+    id: z.string().nullable(),
+    name: currencyNameSchema,
+    code_name: z.string(),
+    icon_url: z.string(),
+    is_popular: z.boolean().optional(),
+    type_valute: z.enum([
+      CurrencyType.Cryptocurrency,
+      CurrencyType.Cash,
+      CurrencyType.Transfers,
+      CurrencyType.Banking,
+      CurrencyType.ElMoney,
+      CurrencyType.Bankomat,
+    ]),
+  })
+  .nullable();
 
 const positiveNumberSchema = z.coerce
   .number()
