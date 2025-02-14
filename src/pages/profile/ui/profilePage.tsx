@@ -61,14 +61,14 @@ export const ProfilePage = () => {
                     </p>
                   </div>
                   <AlertDialogFooter className="sm:grid-rows-2 grid-rows-2 sm:grid-cols-1">
-                    <Link to={support.support} target="_blank">
+                    <Link to={support.admin} target="_blank">
                       <AlertDialogAction className="w-full">
-                        Support
+                        Admin
                       </AlertDialogAction>
                     </Link>
-                    <Link to={support.admin} target="_blank">
+                    <Link to={support.support} target="_blank">
                       <AlertDialogAction className="bg-[#2d2d2d] border-[#2d2d2d] text-[#fff] w-full">
-                        Admin
+                        Support
                       </AlertDialogAction>
                     </Link>
                   </AlertDialogFooter>
