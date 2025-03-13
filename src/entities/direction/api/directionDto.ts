@@ -1,5 +1,10 @@
 import { LocationMarker } from "@/shared/types";
-import { Bankomat, CurrencyResponse, Direction } from "../model/types";
+import {
+  Bankomat,
+  CurrencyResponse,
+  Direction,
+  ExchangeRate,
+} from "../model/types";
 
 export type AvailableValutesDtoRequest = {
   base?: string;
@@ -29,27 +34,27 @@ export type GetDirectionsByResponse = Direction[];
 
 export type AddDirectionDtoResponse = void;
 export type AddDirectionDtoRequest = {
-  in_count: number;
-  out_count: number;
-  is_active: boolean;
   id: number;
   marker: LocationMarker;
   valute_from: string;
   valute_to: string;
+  is_active: boolean;
   bankomats:
     | {
         id: number;
         available: boolean;
       }[]
     | null;
+  exchange_rates: ExchangeRate[];
 };
-export type EditDirecitonRequest = {
+
+export type EditDirectionRequest = {
   id: number;
   marker: LocationMarker;
   directions: {
     id: number;
-    in_count: number;
-    out_count: number;
     is_active: boolean;
+    exchange_rates: ExchangeRate[] | null;
   }[];
 };
+export type EditDirectionResponse = void;

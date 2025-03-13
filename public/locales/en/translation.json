@@ -64,8 +64,16 @@
   "Актуальный курс": "Current rate",
   "Нет данных": "Not found...",
   "Укажите свой курс в поле ниже": "Enter your course in the field below",
+  "depends_volumes": "The rate depends on the exchange amount",
   "Минимальная и максимальная сумма": "Enter the minimum and maximum exchange amount in dollars ($)",
   "Добавить": "Add",
+  "Добавить ещё": "Add more",
+  "от": "from",
+  "до": "to",
+  "Сумма обмена": "Exchange amount (in dollars, $)",
+  "Курс обмена": "Exchange rate",
+  "Курс": "Rate",
+  "Сумма": "Amount",
 
   "Переключить язык": "русский",
 
