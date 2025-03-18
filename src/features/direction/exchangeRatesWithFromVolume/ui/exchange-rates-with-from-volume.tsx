@@ -6,9 +6,8 @@ import { ExchangeRate, Currency } from "@/entities/direction";
 import { DirectionAddSchemaType } from "@/entities/direction";
 import { CustomFormField } from "../../custom-form-field";
 import { VolumeInput } from "../../volumeInput/ui/volumeInput";
-import { LogoButtonIcon } from "@/shared/assets";
 
-interface ExchangeRatesWithVolumesProps {
+interface ExchangeRatesWithFromVolumesProps {
   control: Control<DirectionAddSchemaType>;
   form: UseFormReturn<DirectionAddSchemaType>;
   valuteFrom: Currency | null;
@@ -18,7 +17,7 @@ interface ExchangeRatesWithVolumesProps {
   onDeleteRate: (index: number) => void;
 }
 
-export const ExchangeRatesWithVolumes = ({
+export const ExchangeRatesWithFromVolume = ({
   control,
   form,
   valuteFrom,
@@ -26,18 +25,9 @@ export const ExchangeRatesWithVolumes = ({
   exchangeRates,
   onAddNewRate,
   onDeleteRate,
-}: ExchangeRatesWithVolumesProps) => {
+}: ExchangeRatesWithFromVolumesProps) => {
   const { t } = useTranslation();
   const [infinityIndex, setInfinityIndex] = useState<number | null>(null);
-
-  const handleSetInfinity = (index: number) => {
-    setInfinityIndex(infinityIndex === index ? null : index);
-    if (infinityIndex !== index) {
-      form.setValue(`exchange_rates.${index}.max_count`, null);
-    } else {
-      form.setValue(`exchange_rates.${index}.max_count`, 0);
-    }
-  };
 
   const handleVolumeChange = (index: number, field: "min_count" | "max_count", value: number) => {
     const rates = form.getValues("exchange_rates");
@@ -69,7 +59,7 @@ export const ExchangeRatesWithVolumes = ({
     return isNaN(numValue) || numValue === 0;
   };
   
-  const hasEmptyValues = isEmptyValue(lastRate.max_count) || 
+  const hasEmptyValues = (exchangeRates.length > 1 && isEmptyValue(lastRate.min_count)) ||
                         isEmptyValue(lastRate.in_count) || 
                         isEmptyValue(lastRate.out_count);
 
@@ -80,36 +70,9 @@ export const ExchangeRatesWithVolumes = ({
           <div className="grid grid-flow-row gap-4">
             <div className="grid grid-flow-row gap-3 justify-items-center">
               <p className="leading-none font-bold uppercase text-[#fff] text-sm text-center">
-                {t("Сумма обмена")}:
+                {t("Курс обмена")} {t("от")} {exchangeRates[index].min_count} ($):
               </p>
-              <div className="grid grid-cols-[1fr,auto,1fr] gap-2 items-center">
-                <VolumeInput
-                  control={control}
-                  index={index}
-                  field="min_count"
-                  label={t("от")}
-                  onValueChange={(value) => handleVolumeChange(index, "min_count", value)}
-                />
-                <div>
-                  <LogoButtonIcon fill="#fff" className="size-6 -rotate-90"/>
-                </div>
-                <VolumeInput
-                  control={control}
-                  index={index}
-                  field="max_count"
-                  label={t("до")}
-                  isLastMaxCount={index === exchangeRates.length - 1}
-                  onSetInfinity={() => handleSetInfinity(index)}
-                  isInfinity={infinityIndex === index}
-                  onValueChange={(value) => handleVolumeChange(index, "max_count", value)}
-                />
-              </div>
-            </div>
-            <div className="grid grid-flow-row gap-3 justify-items-center">
-              <p className="leading-none font-bold uppercase text-[#fff] text-sm text-center">
-                {t("Курс обмена")}:
-              </p>
-              <div className="grid grid-cols-[1fr,auto,1fr] gap-2 items-center">
+              <div className="grid grid-cols-[1fr,auto,1fr,1fr] mobile:gap-2 gap-1 items-center">
                 <CustomFormField
                   control={control}
                   name={`exchange_rates.${index}.in_count`}
@@ -122,14 +85,14 @@ export const ExchangeRatesWithVolumes = ({
                         alt={`image ${valuteFrom.name}`}
                         width={32}
                         height={32}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
                       />
                     ) : (
                       <Circle
                         width={32}
                         height={32}
                         color="white"
-                        className="absolute left-3 translate-y-2"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 translate-y-2"
                       />
                     )
                   }
@@ -149,17 +112,24 @@ export const ExchangeRatesWithVolumes = ({
                         alt={`image ${valuteTo.name}`}
                         width={32}
                         height={32}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
                       />
                     ) : (
                       <Circle
                         width={32}
                         height={32}
                         color="white"
-                        className="absolute left-3 translate-y-2"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 translate-y-2"
                       />
                     )
                   }
+                />
+                              <VolumeInput
+                  control={control}
+                  index={index}
+                  field="min_count"
+                  label={t("от")}
+                  onValueChange={(value) => handleVolumeChange(index, "min_count", value)}
                 />
               </div>
             </div>

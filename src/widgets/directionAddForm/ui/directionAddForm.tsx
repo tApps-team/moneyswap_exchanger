@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { ActualCourse, CustomFormField, ExchangeRatesWithVolumes } from "@/features/direction";
+import { ActualCourse, CustomFormField, ExchangeRatesWithVolumes, ExchangeRatesWithFromVolume } from "@/features/direction";
 import {
   DirectionAddSchemaType,
   ExchangeRate,
@@ -23,7 +23,7 @@ import { CurrencyType, LocationMarker } from "@/shared/types";
 import {
   Accordion,
   AccordionContent,
-  AccordionItem,
+  AccordionItem, 
   AccordionTrigger,
   Button,
   Checkbox,
@@ -268,8 +268,7 @@ export const DirectionAddForm = () => {
     // Обновляем объект data с новыми значениями exchange_rates
     const updatedData = { ...data, exchange_rates: updatedExchangeRates };
 
-    // handleAddDirection(updatedData);
-    console.log(updatedData);
+    handleAddDirection(updatedData);
   };
 
   const handleAddNewRate = () => {
@@ -304,6 +303,8 @@ export const DirectionAddForm = () => {
   };
 
   // console.log(form.formState.errors);
+
+  const isFirstVariant = false
 
   return (
     <Form {...form}>
@@ -472,7 +473,7 @@ export const DirectionAddForm = () => {
                 <X className="w-6 h-6" stroke="#fff" />
               </button>
             </div>
-            <ExchangeRatesWithVolumes
+            {isFirstVariant ?             <ExchangeRatesWithVolumes
               control={form.control}
               form={form}
               valuteFrom={form.getValues("valute_from")}
@@ -480,7 +481,15 @@ export const DirectionAddForm = () => {
               exchangeRates={form.getValues("exchange_rates") || []}
               onAddNewRate={handleAddNewRate}
               onDeleteRate={handleDeleteRate}
-            />
+            /> :             <ExchangeRatesWithFromVolume
+            control={form.control}
+            form={form}
+            valuteFrom={form.getValues("valute_from")}
+            valuteTo={form.getValues("valute_to")}
+            exchangeRates={form.getValues("exchange_rates") || []}
+            onAddNewRate={handleAddNewRate}
+            onDeleteRate={handleDeleteRate}
+          />}
           </div>
         ) : (
           <div className="grid grid-flow-row gap-10">
@@ -506,14 +515,14 @@ export const DirectionAddForm = () => {
                         alt={`image ${form.getValues("valute_from.name")}`}
                         width={32}
                         height={32}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
                       />
                     ) : (
                       <Circle
                         width={32}
                         height={32}
                         color="white"
-                        className="absolute left-3 translate-y-2"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 translate-y-2"
                       />
                     )
                   }
@@ -536,14 +545,14 @@ export const DirectionAddForm = () => {
                         alt={`image ${form.getValues("valute_to.name")}`}
                         width={32}
                         height={32}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
                       />
                     ) : (
                       <Circle
                         width={32}
                         height={32}
                         color="white"
-                        className="absolute left-3 translate-y-2"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 translate-y-2"
                       />
                     )
                   }

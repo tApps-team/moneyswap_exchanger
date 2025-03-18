@@ -41,4 +41,5 @@ export type ExchangeRate = {
   in_count: number;
   out_count: number;
   rate_coefficient: number;
+  id?: number | null;
 };

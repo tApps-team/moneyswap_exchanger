@@ -12,6 +12,7 @@ interface VolumeInputProps {
   isLastMaxCount?: boolean;
   onSetInfinity?: () => void;
   isInfinity?: boolean;
+  onValueChange?: (value: number) => void;
 }
 
 export const VolumeInput = ({ 
@@ -21,7 +22,8 @@ export const VolumeInput = ({
   label, 
   isLastMaxCount,
   onSetInfinity,
-  isInfinity 
+  isInfinity,
+  onValueChange
 }: VolumeInputProps) => {
   const { t } = useTranslation();
   const isFirstMinCount = index === 0 && field === "min_count";
@@ -29,13 +31,19 @@ export const VolumeInput = ({
   return (
     <div className="relative">
       <Input
-      onWheel={(e) => (e.target as HTMLInputElement).blur()}
+        onWheel={(e) => (e.target as HTMLInputElement).blur()}
         {...control.register(`exchange_rates.${index}.${field}`, {
-          valueAsNumber: true
+          valueAsNumber: true,
+          onChange: (e) => {
+            const value = parseFloat(e.target.value);
+            if (!isNaN(value) && onValueChange) {
+              onValueChange(value);
+            }
+          }
         })}
         type="number"
         disabled={isInfinity || isFirstMinCount}
-        className="bg-darkGray text-white text-base rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
+        className="bg-darkGray text-white text-base rounded-[35px] mobile:pl-12 pl-9 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
       />
       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white text-sm">
         {label}:

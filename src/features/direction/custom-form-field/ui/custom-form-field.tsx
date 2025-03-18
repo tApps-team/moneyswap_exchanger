@@ -36,7 +36,7 @@ export const CustomFormField: React.FC<CustomFormFieldProps> = ({
                 onWheel={(e) => (e.target as HTMLInputElement).blur()}
                 type={type}
                 disabled={disabled}
-                className="bg-darkGray text-white text-base rounded-[35px] pl-12 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                className="bg-darkGray text-white text-base rounded-[35px] mobile:pl-12 pl-10 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
               />
             </div>
           </FormControl>

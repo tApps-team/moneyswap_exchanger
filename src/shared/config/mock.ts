@@ -75,29 +75,29 @@ export const mock_mydirections = [
         min_count: 0,
         max_count: 500,
         in_count: 1,
-        out_count: 1.1,
-        rate_coefficient: 1.1
+        out_count: 90000,
+        rate_coefficient: 1
       },
       {
         min_count: 500,
         max_count: 1000,
         in_count: 1,
-        out_count: 1.1,
-        rate_coefficient: 1.1
+        out_count: 95000,
+        rate_coefficient: 1.056
       },
       {
         min_count: 1000,
         max_count: 5000,
         in_count: 1,
-        out_count: 1.1,
-        rate_coefficient: 1.1
+        out_count: 98000,
+        rate_coefficient: 1.089
       },
       {
         min_count: 5000,
         max_count: null,
         in_count: 1,
-        out_count: 1.1,
-        rate_coefficient: 1.1
+        out_count: 100000,
+        rate_coefficient: 1.111
       }
     ]
   },
@@ -118,22 +118,22 @@ export const mock_mydirections = [
         min_count: 0,
         max_count: 500,
         in_count: 1,
-        out_count: 0.95,
-        rate_coefficient: 0.95
+        out_count: 1800,
+        rate_coefficient: 1
       },
       {
         min_count: 500,
         max_count: 1000,
         in_count: 1,
-        out_count: 0.95,
-        rate_coefficient: 0.95
+        out_count: 1850,
+        rate_coefficient: 1.028
       },
       {
         min_count: 1000,
         max_count: null,
         in_count: 1,
-        out_count: 0.95,
-        rate_coefficient: 0.95
+        out_count: 1900,
+        rate_coefficient: 1.056
       }
     ]
   },
@@ -152,22 +152,22 @@ export const mock_mydirections = [
         min_count: 0,
         max_count: 500,
         in_count: 1,
-        out_count: 1.05,
-        rate_coefficient: 1.05
+        out_count: 75,
+        rate_coefficient: 1
       },
       {
         min_count: 500,
         max_count: 1000,
         in_count: 1,
-        out_count: 1.05,
-        rate_coefficient: 1.05
+        out_count: 78,
+        rate_coefficient: 1.04
       },
       {
         min_count: 1000,
         max_count: null,
         in_count: 1,
-        out_count: 1.05,
-        rate_coefficient: 1.05
+        out_count: 80,
+        rate_coefficient: 1.067
       }
     ]
   },
@@ -185,23 +185,23 @@ export const mock_mydirections = [
       {
         min_count: 0,
         max_count: 500,
-        in_count: 1,
-        out_count: 0.98,
-        rate_coefficient: 0.98
+        in_count: 100,
+        out_count: 1,
+        rate_coefficient: 1
       },
       {
         min_count: 500,
         max_count: 1000,
-        in_count: 1,
-        out_count: 0.98,
-        rate_coefficient: 0.98
+        in_count: 98,
+        out_count: 1,
+        rate_coefficient: 1.02
       },
       {
         min_count: 1000,
         max_count: null,
-        in_count: 1,
-        out_count: 0.98,
-        rate_coefficient: 0.98
+        in_count: 95,
+        out_count: 1,
+        rate_coefficient: 1.053
       }
     ]
   },

@@ -41,6 +41,15 @@ export const exchangeRateSchema = z.object({
   max_count: z.number().nullable(),
   in_count: positiveNumberSchema,
   out_count: positiveNumberSchema,
+  rate_coefficient: z.number().min(0).nullable(),
+  id: z.number().nullable(),
+});
+
+export const exchangeRateAddSchema = z.object({
+  min_count: z.number().nullable(),
+  max_count: z.number().nullable(),
+  in_count: positiveNumberSchema,
+  out_count: positiveNumberSchema,
   rate_coefficient: positiveNumberSchema,
 });
 
@@ -61,7 +70,7 @@ export const directionAddSchema = z.object({
   valute_to: currencySchema,
   is_active: z.boolean(),
   bankomats: z.union([z.array(bankomatSchema), z.null()]),
-  exchange_rates: z.array(exchangeRateSchema).nullable(),
+  exchange_rates: z.array(exchangeRateAddSchema).nullable(),
   is_exchange_rates: z.boolean(),
 });
 

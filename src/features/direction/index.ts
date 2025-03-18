@@ -6,3 +6,4 @@ export { DirectionSkeleton } from "./directionsList";
 export * from "./custom-form-field";
 export * from "./exchangeRatesWithVolumes";
 export * from "./actualCourse";
+export * from "./exchangeRatesWithFromVolume";

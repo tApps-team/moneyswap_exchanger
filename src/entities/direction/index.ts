@@ -16,3 +16,4 @@ export {
   type DirectionAddSchemaType,
   directionAddSchema,
 } from "./model/directionSchema";
+export { DirectionNewCard } from "./ui/directionNewCard";

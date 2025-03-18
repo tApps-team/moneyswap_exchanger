@@ -22,7 +22,7 @@ import { useToast } from "@/shared/ui/toast";
 import { formattedDate, formattedTime } from "@/shared/lib";
 import { useTranslation } from "react-i18next";
 import { LocationMarker } from "@/shared/types";
-import { mock_mydirections } from "@/shared/config/mock";
+
 export const MyDirections = () => {
   const { t } = useTranslation();
   const activeLocation = useAppSelector(
@@ -55,29 +55,34 @@ export const MyDirections = () => {
   });
   form.watch(["directions"]);
 
-  // const {
-  //   data: directions,
-  //   isLoading: directionsLoading,
-  //   isFetching: directionsFetching,
-  // } = useDirectionsByQuery(
-  //   {
-  //     id: activeLocation?.id || -1,
-  //     marker: activeLocation?.code_name
-  //       ? LocationMarker.city
-  //       : LocationMarker.country,
-  //   },
-  //   {
-  //     skip: !activeLocation,
-  //   }
-  // );
-
-  const directions = mock_mydirections;
-  const directionsLoading = false;
-  const directionsFetching = false;
+  const {
+    data: directions,
+    isLoading: directionsLoading,
+    isFetching: directionsFetching,
+  } = useDirectionsByQuery(
+    {
+      id: activeLocation?.id || -1,
+      marker: activeLocation?.code_name
+        ? LocationMarker.city
+        : LocationMarker.country,
+    },
+    {
+      skip: !activeLocation,
+    }
+  );
 
   useEffect(() => {
     if (directions) {
-      form.setValue("directions", directions);
+      const formattedDirections = directions.map(dir => ({
+        ...dir,
+        exchange_rates: dir.exchange_rates?.map(rate => ({
+          ...rate,
+          id: rate.id ?? null,
+          min_count: rate.min_count ?? null,
+          max_count: rate.max_count ?? null
+        })) || null
+      }));
+      form.setValue("directions", formattedDirections);
     }
   }, [directions]);
 
@@ -131,7 +136,8 @@ export const MyDirections = () => {
             return {
               ...rate,
               in_count,
-              out_count
+              out_count,
+              rate_coefficient: rate.rate_coefficient ?? 1
             };
           });
         }
@@ -147,39 +153,50 @@ export const MyDirections = () => {
         marker: activeLocation?.code_name
           ? LocationMarker.city
           : LocationMarker.country,
-        directions: updatedDirections,
+        directions: updatedDirections.map(dir => ({
+          id: dir.id,
+          is_active: dir.is_active,
+          exchange_rates: dir.exchange_rates?.map(rate => ({
+            id: rate.id ?? null,
+            min_count: rate.min_count,
+            max_count: rate.max_count,
+            in_count: rate.in_count,
+            out_count: rate.out_count,
+            rate_coefficient: rate.rate_coefficient ?? 1
+          })) ?? null
+        }))
       };
 
       console.log(formData);
 
-      // editDirection(formData)
-      //   .unwrap()
-      //   .then(() => {
-      //     const date = new Date();
-      //     const currentDate = formattedDate(date);
-      //     const currentTime = formattedTime(date);
-      //     setActive({
-      //       ...activeLocation,
-      //       updated: {
-      //         date: currentDate,
-      //         time: currentTime,
-      //       },
-      //     });
+      editDirection(formData)
+        .unwrap()
+        .then(() => {
+          const date = new Date();
+          const currentDate = formattedDate(date);
+          const currentTime = formattedTime(date);
+          setActive({
+            ...activeLocation,
+            updated: {
+              date: currentDate,
+              time: currentTime,
+            },
+          });
 
-      //     toast({
-      //       title: t("Направления успешно обновлены"),
-      //       description: "",
-      //       variant: "success",
-      //     });
-      //   })
-      //   .catch((error) => {
-      //     console.error("Ошибка...", error);
-      //     toast({
-      //       title: t("Что-то пошло не так..."),
-      //       description: t("При обновлении произошла ошибка"),
-      //       variant: "destructive",
-      //     });
-      //   });
+          toast({
+            title: t("Направления успешно обновлены"),
+            description: "",
+            variant: "success",
+          });
+        })
+        .catch((error) => {
+          console.error("Ошибка...", error);
+          toast({
+            title: t("Что-то пошло не так..."),
+            description: t("При обновлении произошла ошибка"),
+            variant: "destructive",
+          });
+        });
     }
   };
 
