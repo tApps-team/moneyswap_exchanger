@@ -147,22 +147,6 @@ export const DirectionAddForm = () => {
     }
   );
 
-  const calculateRateCoefficient = (rate: ExchangeRate, baseRate: ExchangeRate): number => {
-    // Если базовый курс не определен, возвращаем 1
-    if (!baseRate) return 1;
-
-    // Проверяем на деление на ноль
-    if (baseRate.in_count === 0 || baseRate.out_count === 0) return 1;
-
-    // Если in_count больше out_count, используем in_count для расчета
-    if (rate.in_count > rate.out_count) {
-      return rate.in_count / baseRate.in_count;
-    }
-    
-    // Иначе используем out_count
-    return rate.out_count / baseRate.out_count;
-  };
-
   const handleAddDirection = (data: DirectionAddSchemaType) => {
     if (activeLocation) {
       const currentBankomats =
@@ -226,12 +210,6 @@ export const DirectionAddForm = () => {
 
     const updatedExchangeRates =
       ratesToProcess?.map((rate: ExchangeRate, index: number, array: ExchangeRate[]) => {
-        // Получаем базовый курс (первый элемент массива)
-        const baseRate = array[0];
-        
-        // Рассчитываем коэффициент
-        const rate_coefficient = calculateRateCoefficient(rate, baseRate);
-
         let in_count: number = rate.in_count ?? 1;
         let out_count: number = rate.out_count ?? 1;
 
@@ -259,10 +237,10 @@ export const DirectionAddForm = () => {
         }
 
         if (index === array.length - 1) {
-          return { ...rate, in_count, out_count, max_count: null, rate_coefficient };
+          return { ...rate, in_count, out_count, max_count: null };
         }
 
-        return { ...rate, in_count, out_count, rate_coefficient };
+        return { ...rate, in_count, out_count };
       }) ?? null;
 
     // Обновляем объект data с новыми значениями exchange_rates
@@ -564,7 +542,7 @@ export const DirectionAddForm = () => {
               className={`grid grid-cols-[1fr,auto] items-center justify-center justify-items-center gap-2 p-4 bg-darkGray h-mainHeight overflow-hidden rounded-[35px] border-none cursor-pointer ${(!form.getValues("valute_from") ||
                 !form.getValues("valute_to")) && "opacity-50 cursor-not-allowed"}`}
             >
-              <p className="text-white leading-none uppercase font-semibold text-sm">
+              <p className="text-white leading-none uppercase font-semibold mobile:text-sm text-xs">
                 {t("depends_volumes")}
               </p>
               <div className="w-[28px] h-[28px]">

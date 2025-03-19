@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 import { ExchangeRate, Currency } from "@/entities/direction";
 import { DirectionAddSchemaType } from "@/entities/direction";
 import { CustomFormField } from "../../custom-form-field";
-import { VolumeInput } from "../../volumeInput/ui/volumeInput";
+import { RateCoefficient } from "../../rate-coefficient";
+import { VolumeInput } from "../../volumeInput";
 
 interface ExchangeRatesWithFromVolumesProps {
   control: Control<DirectionAddSchemaType>;
@@ -35,10 +36,8 @@ export const ExchangeRatesWithFromVolume = ({
     if (!rates) return;
     
     if (field === "max_count" && index < rates.length - 1) {
-      // Если изменяется max_count, обновляем min_count следующего рейта
       form.setValue(`exchange_rates.${index + 1}.min_count`, value);
     } else if (field === "min_count" && index > 0) {
-      // Если изменяется min_count, обновляем max_count предыдущего рейта
       form.setValue(`exchange_rates.${index - 1}.max_count`, value);
     }
   };
@@ -51,7 +50,6 @@ export const ExchangeRatesWithFromVolume = ({
     onAddNewRate();
   };
 
-  // Проверяем, есть ли пустые значения в последнем rate
   const lastRate = exchangeRates[exchangeRates.length - 1];
   const isEmptyValue = (value: number | null | undefined): boolean => {
     if (value === null || value === undefined) return true;
@@ -70,7 +68,7 @@ export const ExchangeRatesWithFromVolume = ({
           <div className="grid grid-flow-row gap-4">
             <div className="grid grid-flow-row gap-3 justify-items-center">
               <p className="leading-none font-bold uppercase text-[#fff] text-sm text-center">
-                {t("Курс обмена")} {t("от")} {exchangeRates[index].min_count} ($):
+                {t("Курс обмена")} {t("от")} <span className="text-mainColor">{exchangeRates[index]?.min_count || 0}</span>:
               </p>
               <div className="grid grid-cols-[1fr,auto,1fr,1fr] mobile:gap-2 gap-1 items-center">
                 <CustomFormField
@@ -85,20 +83,20 @@ export const ExchangeRatesWithFromVolume = ({
                         alt={`image ${valuteFrom.name}`}
                         width={32}
                         height={32}
-                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[20px] h-[20px] absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
                       />
                     ) : (
                       <Circle
                         width={32}
                         height={32}
                         color="white"
-                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 translate-y-2"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[20px] h-[20px] absolute left-3 translate-y-2"
                       />
                     )
                   }
                 />
                 <div>
-                  <Equal className="text-white" />
+                  <Equal className="text-white mobile:size-6 size-4" />
                 </div>
                 <CustomFormField
                   control={control}
@@ -112,19 +110,19 @@ export const ExchangeRatesWithFromVolume = ({
                         alt={`image ${valuteTo.name}`}
                         width={32}
                         height={32}
-                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[20px] h-[20px] absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
                       />
                     ) : (
                       <Circle
                         width={32}
                         height={32}
                         color="white"
-                        className="mobile:w-[32px] mobile:h-[32px] w-[24px] h-[24px] absolute left-3 translate-y-2"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[20px] h-[20px] absolute left-3 translate-y-2"
                       />
                     )
                   }
                 />
-                              <VolumeInput
+                <VolumeInput
                   control={control}
                   index={index}
                   field="min_count"
@@ -132,6 +130,12 @@ export const ExchangeRatesWithFromVolume = ({
                   onValueChange={(value) => handleVolumeChange(index, "min_count", value)}
                 />
               </div>
+              <RateCoefficient 
+                control={control}
+                form={form}
+                index={index}
+                baseRate={exchangeRates[0]}
+              />
             </div>
           </div>
           {exchangeRates.length > 1 && (

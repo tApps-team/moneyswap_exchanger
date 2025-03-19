@@ -122,14 +122,14 @@ export const ExchangeRatesWithVolumes = ({
                         alt={`image ${valuteFrom.name}`}
                         width={32}
                         height={32}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[20px] h-[20px] absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
                       />
                     ) : (
                       <Circle
                         width={32}
                         height={32}
                         color="white"
-                        className="absolute left-3 translate-y-2"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[20px] h-[20px] absolute left-3 translate-y-2"
                       />
                     )
                   }
@@ -149,14 +149,14 @@ export const ExchangeRatesWithVolumes = ({
                         alt={`image ${valuteTo.name}`}
                         width={32}
                         height={32}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[20px] h-[20px] absolute left-3 top-1/2 -translate-y-1/2 rounded-full overflow-hidden"
                       />
                     ) : (
                       <Circle
                         width={32}
                         height={32}
                         color="white"
-                        className="absolute left-3 translate-y-2"
+                        className="mobile:w-[32px] mobile:h-[32px] w-[20px] h-[20px] absolute left-3 translate-y-2"
                       />
                     )
                   }

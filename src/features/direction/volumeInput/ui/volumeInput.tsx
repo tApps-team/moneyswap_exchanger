@@ -43,7 +43,7 @@ export const VolumeInput = ({
         })}
         type="number"
         disabled={isInfinity || isFirstMinCount}
-        className="bg-darkGray text-white text-base rounded-[35px] mobile:pl-12 pl-9 min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
+        className="bg-darkGray text-white text-base rounded-[35px] mobile:pl-12 pl-9 mobile:min-h-12 min-h-10 focus-visible:ring-transparent focus-visible:ring-offset-0"
       />
       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white text-sm">
         {label}:

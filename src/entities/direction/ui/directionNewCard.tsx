@@ -221,16 +221,16 @@ import {
   
         {exchangeRates && exchangeRates.length > 1 && (
           <Accordion type="single" collapsible>
-            <AccordionItem value="rates" className="border-2 border-transparent data-[state=open]:border-gray-300/40 bg-darkGray data-[state=open]:bg-lightGray/70 rounded-[25px] transition-all duration-300 shadow-inner mt-4">
-              <AccordionTrigger className="rounded-full px-4 py-2 hover:no-underline [&>svg]:hidden group">
+            <AccordionItem value="rates" className="border-b-0 bg-darkGray data-[state=open]:bg-white/50 rounded-[15px] transition-all duration-300 shadow-[inset_2px_2px_10px_1px_rgba(0,0,0,0.25)] mt-4">
+              <AccordionTrigger className="rounded-[15px] px-4 py-2 hover:no-underline [&>svg]:hidden group data-[state=open]:bg-darkGray">
                 <div className="flex items-center gap-2">
-                  <span className="group-data-[state=open]:text-black text-white uppercase font-semibold text-sm">{t("Суммы и курсы")}</span>
-                  <LogoButtonIcon className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180 fill-white group-data-[state=open]:fill-[#000]" />
+                  <span className="group-data-[state=open]:text-mainColor text-white uppercase mobile:font-semibold font-medium text-sm">{t("Суммы и курсы")}</span>
+                  <LogoButtonIcon className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180 fill-white group-data-[state=open]:fill-mainColor" />
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="mobile:px-4 px-2 pb-4 pt-0 grid grid-flow-row gap-4">
+              <AccordionContent className="mobile:px-4 px-2 py-4 grid grid-flow-row gap-4">
                   {exchangeRates.slice(1).map((rate, rateIndex) => (
-                    <div key={rateIndex + 1} className="grid grid-flow-row gap-4 items-center">
+                    <div key={rateIndex + 1} className="grid grid-flow-row mobile:gap-4 gap-2 items-center">
                       <div className="grid mobile:grid-cols-[1fr,0.5fr] grid-cols-[1fr,0.4fr] mobile:gap-2 gap-1">
                         <ExchangeRate
                           form={form}
@@ -245,9 +245,50 @@ import {
                             rateIndex={rateIndex + 1} 
                           />
                       </div>
-                      <div className="font-semibold text-sm text-black text-center">
-                        Коэффициент:{" "}
-                        {rate.rate_coefficient}
+                      <div className="grid grid-cols-[0.42fr,1fr] mobile:gap-2 gap-1 items-center justify-stretch justify-items-center">
+                        <FormField
+                          control={form.control}
+                          name={`directions.${index}.exchange_rates.${rateIndex + 1}.rate_coefficient`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  {...field}
+                                  type="number"
+                                  step="any"
+                                  value={field.value || ""}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    field.onChange(value);
+                                    if (value !== '') {
+                                      const coefficient = parseFloat(value);
+                                      if (!isNaN(coefficient) && isFinite(coefficient)) {
+                                        const baseRate = exchangeRates[0];
+                                        if (baseRate.in_count > baseRate.out_count) {
+                                          const newInCount = baseRate.in_count * coefficient;
+                                          if (isFinite(newInCount)) {
+                                            form.setValue(`directions.${index}.exchange_rates.${rateIndex + 1}.in_count`, newInCount);
+                                          }
+                                        } else {
+                                          const newOutCount = baseRate.out_count * coefficient;
+                                          if (isFinite(newOutCount)) {
+                                            form.setValue(`directions.${index}.exchange_rates.${rateIndex + 1}.out_count`, newOutCount);
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }}
+                                  onWheel={(e) => (e.target as HTMLInputElement).blur()}
+                                  className="bg-darkGray text-white text-base rounded-[35px] mobile:min-h-12 min-h-10 focus-visible:ring-transparent focus-visible:ring-offset-0 text-center w-full"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <p className="text-black text-sm font-medium w-full">
+                          {t("rate_coefficient")}
+                        </p>
                       </div>
                     </div>
                   ))}

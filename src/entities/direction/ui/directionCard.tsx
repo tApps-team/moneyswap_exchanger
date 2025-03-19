@@ -220,14 +220,14 @@ export const DirectionCard: FC<DirectionCardProps> = ({
 
       {exchangeRates && exchangeRates.length > 1 && (
         <Accordion type="single" collapsible>
-          <AccordionItem value="rates" className="border-2 border-transparent data-[state=open]:border-gray-300/40 bg-darkGray data-[state=open]:bg-lightGray/70 rounded-[25px] transition-all duration-300 shadow-inner mt-4">
-            <AccordionTrigger className="rounded-full px-4 py-2 hover:no-underline [&>svg]:hidden group">
+          <AccordionItem value="rates" className="border-b-0 bg-darkGray data-[state=open]:bg-white/50 rounded-[15px] transition-all duration-300 shadow-[inset_2px_2px_10px_1px_rgba(0,0,0,0.25)] mt-4">
+            <AccordionTrigger className="rounded-[15px] px-4 py-2 hover:no-underline [&>svg]:hidden group data-[state=open]:bg-darkGray">
               <div className="flex items-center gap-2">
-                <span className="group-data-[state=open]:text-black text-white uppercase font-semibold text-sm">{t("Суммы и курсы")}</span>
-                <LogoButtonIcon className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180 fill-white group-data-[state=open]:fill-[#000]" />
+                <span className="group-data-[state=open]:text-mainColor text-white uppercase mobile:font-semibold font-medium text-sm">{t("Суммы и курсы")}</span>
+                <LogoButtonIcon className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180 fill-white group-data-[state=open]:fill-mainColor" />
               </div>
             </AccordionTrigger>
-            <AccordionContent className="mobile:px-4 px-2 pb-4 pt-0 grid grid-flow-row gap-4">
+            <AccordionContent className="px-4 py-4 grid grid-flow-row gap-4">
                 <div className="grid grid-flow-col justify-center items-center gap-4">
                   {/* <span className="font-semibold text-sm text-black">{t("Сумма")}:</span> */}
                   <AmountRange form={form} index={index} rateIndex={0} />
