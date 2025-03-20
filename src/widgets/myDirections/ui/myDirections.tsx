@@ -200,8 +200,6 @@ export const MyDirections = () => {
     }
   };
 
-  console.log(form.formState.errors);
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
