@@ -18,7 +18,6 @@ export const RateCoefficient = ({
   baseRate,
 }: RateCoefficientProps) => {
   const { t } = useTranslation()
-  console.log(baseRate)
 
   // Функция для расчета коэффициента
   const calculateRateCoefficient = (rate: any, baseRate: any): number => {

@@ -256,10 +256,10 @@ import {
                                   {...field}
                                   type="number"
                                   step="any"
-                                  value={field.value || ""}
+                                  value={field.value ?? ""}
                                   onChange={(e) => {
                                     const value = e.target.value;
-                                    field.onChange(value);
+                                    field.onChange(value === "" ? null : Number(value));
                                     if (value !== '') {
                                       const coefficient = parseFloat(value);
                                       if (!isNaN(coefficient) && isFinite(coefficient)) {
