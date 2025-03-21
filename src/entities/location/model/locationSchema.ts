@@ -24,8 +24,7 @@ export const locationSchema = z.object({
   workDays: z.record(z.string(), z.boolean()),
   min_amount: z
     .number()
-    .positive({ message: "> 0" })
-    .min(0.00000001)
+    .min(0,{ message: "> 0" })
     .nullable()
     .optional(),
   max_amount: z
@@ -54,8 +53,7 @@ export const locationEditSchema = z.object({
   workDays: z.record(z.string(), z.boolean()),
   min_amount: z
     .number()
-    .positive({ message: "> 0" })
-    .min(0.00000001)
+    .min(0,{ message: "> 0" })
     .nullable()
     .optional(),
   max_amount: z

@@ -52,6 +52,7 @@ export const LocationCarousel: FC<LocationCarouselProps> = ({
       ref={carouselRef}
       opts={{
         align: "start",
+        dragFree: true,
       }}
       setApi={setApi}
     >

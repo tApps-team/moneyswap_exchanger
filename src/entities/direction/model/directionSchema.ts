@@ -8,11 +8,11 @@ const currencyNameSchema = z.object({
 
 const currencySchema = z
   .object({
-    id: z.string().nullable(),
+    id: z.string(),
     name: currencyNameSchema,
     code_name: z.string(),
     icon_url: z.string(),
-    is_popular: z.boolean().optional(),
+    is_popular: z.boolean(),
     type_valute: z.enum([
       CurrencyType.Cryptocurrency,
       CurrencyType.Cash,
@@ -36,13 +36,29 @@ const bankomatSchema = z.object({
   icon: z.string(),
 });
 
+export const exchangeRateSchema = z.object({
+  min_count: z.number().nullable(),
+  max_count: z.number().nullable(),
+  in_count: positiveNumberSchema,
+  out_count: positiveNumberSchema,
+  rate_coefficient: z.number().min(0).nullable(),
+  id: z.number().nullable(),
+});
+
+export const exchangeRateAddSchema = z.object({
+  min_count: z.number().nullable(),
+  max_count: z.number().nullable(),
+  in_count: positiveNumberSchema,
+  out_count: positiveNumberSchema,
+  rate_coefficient: positiveNumberSchema,
+});
+
 export const directionSchema = z.object({
   directions: z.array(
     z.object({
       id: z.number(),
-      in_count: positiveNumberSchema,
-      out_count: positiveNumberSchema,
       is_active: z.boolean(),
+      exchange_rates: z.array(exchangeRateSchema).nullable(),
     })
   ),
 });
@@ -50,11 +66,12 @@ export const directionSchema = z.object({
 export type DirectionSchemaType = z.infer<typeof directionSchema>;
 
 export const directionAddSchema = z.object({
-  giveCurrency: currencySchema,
-  getCurrency: currencySchema,
-  giveCurrencyPrice: positiveNumberSchema,
-  getCurrencyPrice: positiveNumberSchema,
+  valute_from: currencySchema,
+  valute_to: currencySchema,
+  is_active: z.boolean(),
   bankomats: z.union([z.array(bankomatSchema), z.null()]),
+  exchange_rates: z.array(exchangeRateAddSchema).nullable(),
+  is_exchange_rates: z.boolean(),
 });
 
 export type DirectionAddSchemaType = z.infer<typeof directionAddSchema>;

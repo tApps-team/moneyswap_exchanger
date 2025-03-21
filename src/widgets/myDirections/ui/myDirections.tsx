@@ -73,7 +73,16 @@ export const MyDirections = () => {
 
   useEffect(() => {
     if (directions) {
-      form.setValue("directions", directions);
+      const formattedDirections = directions.map(dir => ({
+        ...dir,
+        exchange_rates: dir.exchange_rates?.map(rate => ({
+          ...rate,
+          id: rate.id ?? null,
+          min_count: rate.min_count ?? null,
+          max_count: rate.max_count ?? null
+        })) || null
+      }));
+      form.setValue("directions", formattedDirections);
     }
   }, [directions]);
 
@@ -85,26 +94,57 @@ export const MyDirections = () => {
   const onSubmit = (data: directionSchemaType) => {
     if (activeLocation) {
       const updatedDirections = data.directions.map((direction) => {
-        let { in_count, out_count } = direction;
+        let { exchange_rates } = direction;
 
-        if (in_count === out_count) {
-          in_count = 1;
-          out_count = 1;
-        } else if (in_count > out_count && in_count !== 1 && out_count !== 1) {
-          out_count = 1;
-          in_count = direction.in_count / direction.out_count;
-        } else if (in_count === 1 || out_count === 1) {
-          in_count = direction.in_count;
-          out_count = direction.out_count;
-        } else if (in_count < out_count && in_count !== 1 && out_count !== 1) {
-          in_count = 1;
-          out_count = direction.out_count / direction.in_count;
+        // Если есть exchange_rates, обрабатываем их
+        if (exchange_rates && exchange_rates.length > 0) {
+          // Если только один rate, делаем min_count и max_count null
+          if (exchange_rates.length === 1) {
+            exchange_rates = [{
+              ...exchange_rates[0],
+              min_count: null,
+              max_count: null
+            }];
+          } else {
+            // Для последнего rate делаем max_count null
+            exchange_rates = exchange_rates.map((rate, index, array) => {
+              if (index === array.length - 1) {
+                return { ...rate, max_count: null };
+              }
+              return rate;
+            });
+          }
+
+          // Обработка in_count и out_count для каждого rate
+          exchange_rates = exchange_rates.map(rate => {
+            let { in_count, out_count } = rate;
+
+            if (in_count === out_count) {
+              in_count = 1;
+              out_count = 1;
+            } else if (in_count > out_count && in_count !== 1 && out_count !== 1) {
+              out_count = 1;
+              in_count = rate.in_count / rate.out_count;
+            } else if (in_count === 1 || out_count === 1) {
+              in_count = rate.in_count;
+              out_count = rate.out_count;
+            } else if (in_count < out_count && in_count !== 1 && out_count !== 1) {
+              in_count = 1;
+              out_count = rate.out_count / rate.in_count;
+            }
+
+            return {
+              ...rate,
+              in_count,
+              out_count,
+              rate_coefficient: rate.rate_coefficient ?? 1
+            };
+          });
         }
 
         return {
           ...direction,
-          in_count,
-          out_count,
+          exchange_rates
         };
       });
 
@@ -113,8 +153,22 @@ export const MyDirections = () => {
         marker: activeLocation?.code_name
           ? LocationMarker.city
           : LocationMarker.country,
-        directions: updatedDirections,
+        directions: updatedDirections.map(dir => ({
+          id: dir.id,
+          is_active: dir.is_active,
+          exchange_rates: dir.exchange_rates?.map(rate => ({
+            id: rate.id ?? null,
+            min_count: rate.min_count,
+            max_count: rate.max_count,
+            in_count: rate.in_count,
+            out_count: rate.out_count,
+            rate_coefficient: rate.rate_coefficient ?? 1
+          })) ?? null
+        }))
       };
+
+      console.log(formData);
+
       editDirection(formData)
         .unwrap()
         .then(() => {

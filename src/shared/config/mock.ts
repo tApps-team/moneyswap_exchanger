@@ -1,6 +1,4 @@
-import { CurrencyResponse } from "@/entities/direction";
 import { City, Country } from "@/entities/location";
-import { CurrencyType } from "../types";
 
 export const mock_mycities = [
   {
@@ -64,53 +62,211 @@ export const mock_mydirections = [
     valute_from: "BTC",
     icon_valute_from: "https://api.moneyswap.online/media/icons/valute/BTC.svg",
     valute_to: "CASHRUB",
-    icon_valute_to:
-      "https://api.moneyswap.online/media/icons/valute/CASHRUB.svg",
-    in_count: 1,
-    in_count_type: "Криптовалюта",
-    out_count: 6512779.99,
-    out_count_type: "Наличные",
+    icon_valute_to: "https://api.moneyswap.online/media/icons/valute/CASHRUB.svg",
     is_active: true,
+    in_count_type: "Криптовалюта",
+    out_count_type: "Наличные",
+    bankomats: [
+      { id: 1, available: true, name: "Bank1", icon: "https://api.moneyswap.online/media/icons/bank/1.svg" },
+      { id: 2, available: true, name: "Bank2", icon: "https://api.moneyswap.online/media/icons/bank/2.svg" }
+    ],
+    exchange_rates: [
+      {
+        min_count: 0,
+        max_count: 500,
+        in_count: 1,
+        out_count: 90000,
+        rate_coefficient: 1
+      },
+      {
+        min_count: 500,
+        max_count: 1000,
+        in_count: 1,
+        out_count: 95000,
+        rate_coefficient: 1.056
+      },
+      {
+        min_count: 1000,
+        max_count: 5000,
+        in_count: 1,
+        out_count: 98000,
+        rate_coefficient: 1.089
+      },
+      {
+        min_count: 5000,
+        max_count: null,
+        in_count: 1,
+        out_count: 100000,
+        rate_coefficient: 1.111
+      }
+    ]
   },
   {
     id: 36,
     valute_from: "ETH",
     icon_valute_from: "https://api.moneyswap.online/media/icons/valute/ETH.svg",
     valute_to: "CASHEUR",
-    icon_valute_to:
-      "https://api.moneyswap.online/media/icons/valute/CASHEUR.svg",
-    in_count: 1,
-    in_count_type: "Криптовалюта",
-    out_count: 2441.62,
-    out_count_type: "Наличные",
+    icon_valute_to: "https://api.moneyswap.online/media/icons/valute/CASHEUR.svg",
     is_active: true,
+    in_count_type: "Криптовалюта",
+    out_count_type: "Наличные",
+    bankomats: [
+      { id: 3, available: true, name: "Bank3", icon: "https://api.moneyswap.online/media/icons/bank/3.svg" }
+    ],
+    exchange_rates: [
+      {
+        min_count: 0,
+        max_count: 500,
+        in_count: 1,
+        out_count: 1800,
+        rate_coefficient: 1
+      },
+      {
+        min_count: 500,
+        max_count: 1000,
+        in_count: 1,
+        out_count: 1850,
+        rate_coefficient: 1.028
+      },
+      {
+        min_count: 1000,
+        max_count: null,
+        in_count: 1,
+        out_count: 1900,
+        rate_coefficient: 1.056
+      }
+    ]
   },
   {
     id: 37,
     valute_from: "LTC",
     icon_valute_from: "https://api.moneyswap.online/media/icons/valute/LTC.svg",
     valute_to: "CASHUSD",
-    icon_valute_to:
-      "https://api.moneyswap.online/media/icons/valute/CASHUSD.svg",
-    in_count: 1,
-    in_count_type: "Криптовалюта",
-    out_count: 70.2,
-    out_count_type: "Наличные",
+    icon_valute_to: "https://api.moneyswap.online/media/icons/valute/CASHUSD.svg",
     is_active: true,
+    in_count_type: "Криптовалюта",
+    out_count_type: "Наличные",
+    bankomats: null,
+    exchange_rates: [
+      {
+        min_count: 0,
+        max_count: 500,
+        in_count: 1,
+        out_count: 75,
+        rate_coefficient: 1
+      },
+      {
+        min_count: 500,
+        max_count: 1000,
+        in_count: 1,
+        out_count: 78,
+        rate_coefficient: 1.04
+      },
+      {
+        min_count: 1000,
+        max_count: null,
+        in_count: 1,
+        out_count: 80,
+        rate_coefficient: 1.067
+      }
+    ]
   },
   {
     id: 231,
     valute_from: "CASHRUB",
-    icon_valute_from: "https://api.moneyswap.online/media/icons/valute/LTC.svg",
+    icon_valute_from: "https://api.moneyswap.online/media/icons/valute/CASHRUB.svg",
     valute_to: "CASHUSD",
-    icon_valute_to:
-      "https://api.moneyswap.online/media/icons/valute/CASHUSD.svg",
-    in_count: 1,
-    in_count_type: "Наличные",
-    out_count: 70.2,
-    out_count_type: "Наличные",
+    icon_valute_to: "https://api.moneyswap.online/media/icons/valute/CASHUSD.svg",
     is_active: true,
+    in_count_type: "Наличные",
+    out_count_type: "Наличные",
+    bankomats: null,
+    exchange_rates: [
+      {
+        min_count: 0,
+        max_count: 500,
+        in_count: 100,
+        out_count: 1,
+        rate_coefficient: 1
+      },
+      {
+        min_count: 500,
+        max_count: 1000,
+        in_count: 98,
+        out_count: 1,
+        rate_coefficient: 1.02
+      },
+      {
+        min_count: 1000,
+        max_count: null,
+        in_count: 95,
+        out_count: 1,
+        rate_coefficient: 1.053
+      }
+    ]
   },
+  {
+    id: 232,
+    valute_from: "USDT",
+    icon_valute_from: "https://api.moneyswap.online/media/icons/valute/USDT.svg",
+    valute_to: "CASHRUB",
+    icon_valute_to: "https://api.moneyswap.online/media/icons/valute/CASHRUB.svg",
+    is_active: true,
+    in_count_type: "Криптовалюта",
+    out_count_type: "Наличные",
+    bankomats: null,
+    exchange_rates: [
+      {
+        min_count: null,
+        max_count: null,
+        in_count: 1,
+        out_count: 0.99,
+        rate_coefficient: 0.99
+      }
+    ]
+  },
+  {
+    id: 233,
+    valute_from: "DOGE",
+    icon_valute_from: "https://api.moneyswap.online/media/icons/valute/DOGE.svg",
+    valute_to: "CASHEUR",
+    icon_valute_to: "https://api.moneyswap.online/media/icons/valute/CASHEUR.svg",
+    is_active: true,
+    in_count_type: "Криптовалюта",
+    out_count_type: "Наличные",
+    bankomats: [
+      { id: 4, available: true, name: "Bank4", icon: "https://api.moneyswap.online/media/icons/bank/4.svg" }
+    ],
+    exchange_rates: [
+      {
+        min_count: null,
+        max_count: null,
+        in_count: 1,
+        out_count: 1.02,
+        rate_coefficient: 1.02
+      }
+    ]
+  },
+  {
+    id: 234,
+    valute_from: "CASHUSD",
+    icon_valute_from: "https://api.moneyswap.online/media/icons/valute/CASHUSD.svg",
+    valute_to: "CASHEUR",
+    icon_valute_to: "https://api.moneyswap.online/media/icons/valute/CASHEUR.svg",
+    is_active: true,
+    in_count_type: "Наличные",
+    out_count_type: "Наличные",
+    bankomats: null,
+    exchange_rates: [
+      {
+        min_count: null,
+        max_count: null,
+        in_count: 1,
+        out_count: 0.95,
+        rate_coefficient: 0.95
+      }
+    ]
+  }
 ];
 
 export const mock_countires: Country[] = [
@@ -671,375 +827,3 @@ export const mock_cities: City[] = [
     code_name: "PTRS",
   },
 ];
-
-// export const mock_all_currencies: CurrencyResponse = {
-//   Криптовалюта: [
-//     {
-//       id: 1,
-//       name: { ru: "Биткоин", en: "Bitcoin" },
-//       code_name: "BTC",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/BTC.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 18,
-//       name: { ru: "Эфириум", en: "Ethereum" },
-//       code_name: "ETH",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/ETH.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 19,
-//       name: { ru: "Лайткоин", en: "Litecoin" },
-//       code_name: "LTC",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/LTC.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 20,
-//       name: { ru: "Солана", en: "Solana" },
-//       code_name: "SOL",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/SOL_LohzSyk.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 21,
-//       name: { ru: "ТРОН", en: "TRON" },
-//       code_name: "TRX",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/TRX_DkFRBv9.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 22,
-//       name: { ru: "Тезер BEP20 USDT", en: "Tether BEP20 USDT" },
-//       code_name: "USDTBEP20",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/USDTBEP20.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 23,
-//       name: { ru: "Тезер ERC20 USDT", en: "Tether ERC20 USDT" },
-//       code_name: "USDTERC20",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/USDTERC20.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 24,
-//       name: { ru: "Тезер TRC20 USDT", en: "Tether TRC20 USDT" },
-//       code_name: "USDTTRC20",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/USDTTRC20.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//   ],
-//   Наличные: [
-//     {
-//       id: 2,
-//       name: { ru: "Дирхам", en: "Dirham" },
-//       code_name: "CASHAED",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/CASHAED_IlnL5J0.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 3,
-//       name: { ru: "Армянский драм", en: "Armenian Dram" },
-//       code_name: "CASHAMD",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/dram_9rssp302m455.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 4,
-//       name: { ru: "Аргентинское песо", en: "Argentine Peso" },
-//       code_name: "CASHARS",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/arg_peso_YYAWjuL.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 5,
-//       name: { ru: "Канадский доллар", en: "Canadian Dollar" },
-//       code_name: "CASHCAD",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/canada_doll.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 6,
-//       name: { ru: "Евро", en: "Euro" },
-//       code_name: "CASHEUR",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/CASHEUR.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 7,
-//       name: { ru: "Фунт стерлингов", en: "Pound Sterling" },
-//       code_name: "CASHGBP",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/pound.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 8,
-//       name: { ru: "Грузинский лари", en: "Georgian Lari" },
-//       code_name: "CASHGEL",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/gruz_lari.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 9,
-//       name: { ru: "Индонезийская Рупия", en: "Indonesian Rupiah" },
-//       code_name: "CASHIDR",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/indonesian_rupia.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 10,
-//       name: { ru: "Израельский Шекель", en: "Israeli Shekel" },
-//       code_name: "CASHILS",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/shekel_1iv1afdwk20o.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 11,
-//       name: { ru: "Тенге", en: "Tenge" },
-//       code_name: "CASHKZT",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/CASHKZT_saW9di0.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 12,
-//       name: { ru: "Польский Злотый", en: "Polish Zloty" },
-//       code_name: "CASHPLN",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/CASHPLN_1Upett6.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 13,
-//       name: { ru: "Рубли", en: "Rubles" },
-//       code_name: "CASHRUB",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/CASHRUB.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 14,
-//       name: { ru: "Тайский бат", en: "Thai Baht" },
-//       code_name: "CASHTHB",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/CASHTHB.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 15,
-//       name: { ru: "Турецкая лира", en: "Turkish Lira" },
-//       code_name: "CASHTRY",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/lira.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 16,
-//       name: { ru: "Украинская гривна", en: "Ukrainian Hryvnia" },
-//       code_name: "CASHUAH",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/grivna_BhtuQoR.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 17,
-//       name: { ru: "Доллары", en: "Dollars" },
-//       code_name: "CASHUSD",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/CASHUSD.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//   ],
-// };
-
-// export const mock_available_currencies: CurrencyCategory = {
-//   Криптовалюта: [
-//     {
-//       id: 1,
-//       name: { ru: "Биткоин", en: "Bitcoin" },
-//       code_name: "BTC",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/BTC.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 18,
-//       name: { ru: "Эфириум", en: "Ethereum" },
-//       code_name: "ETH",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/ETH.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 19,
-//       name: { ru: "Лайткоин", en: "Litecoin" },
-//       code_name: "LTC",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/LTC.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 20,
-//       name: { ru: "Солана", en: "Solana" },
-//       code_name: "SOL",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/SOL_LohzSyk.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 21,
-//       name: { ru: "ТРОН", en: "TRON" },
-//       code_name: "TRX",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/TRX_DkFRBv9.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 22,
-//       name: { ru: "Тезер BEP20 USDT", en: "Tether BEP20 USDT" },
-//       code_name: "USDTBEP20",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/USDTBEP20.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 23,
-//       name: { ru: "Тезер ERC20 USDT", en: "Tether ERC20 USDT" },
-//       code_name: "USDTERC20",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/USDTERC20.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//     {
-//       id: 24,
-//       name: { ru: "Тезер TRC20 USDT", en: "Tether TRC20 USDT" },
-//       code_name: "USDTTRC20",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/USDTTRC20.svg",
-//       type_valute: CurrencyType.Cryptocurrency,
-//     },
-//   ],
-//   Наличные: [
-//     {
-//       id: 2,
-//       name: { ru: "Дирхам", en: "Dirham" },
-//       code_name: "CASHAED",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/CASHAED_IlnL5J0.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 3,
-//       name: { ru: "Армянский драм", en: "Armenian Dram" },
-//       code_name: "CASHAMD",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/dram_9rssp302m455.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 4,
-//       name: { ru: "Аргентинское песо", en: "Argentine Peso" },
-//       code_name: "CASHARS",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/arg_peso_YYAWjuL.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 5,
-//       name: { ru: "Канадский доллар", en: "Canadian Dollar" },
-//       code_name: "CASHCAD",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/canada_doll.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 6,
-//       name: { ru: "Евро", en: "Euro" },
-//       code_name: "CASHEUR",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/CASHEUR.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 7,
-//       name: { ru: "Фунт стерлингов", en: "Pound Sterling" },
-//       code_name: "CASHGBP",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/pound.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 8,
-//       name: { ru: "Грузинский лари", en: "Georgian Lari" },
-//       code_name: "CASHGEL",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/gruz_lari.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 9,
-//       name: { ru: "Индонезийская Рупия", en: "Indonesian Rupiah" },
-//       code_name: "CASHIDR",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/indonesian_rupia.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 10,
-//       name: { ru: "Израельский Шекель", en: "Israeli Shekel" },
-//       code_name: "CASHILS",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/shekel_1iv1afdwk20o.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 11,
-//       name: { ru: "Тенге", en: "Tenge" },
-//       code_name: "CASHKZT",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/CASHKZT_saW9di0.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 12,
-//       name: { ru: "Польский Злотый", en: "Polish Zloty" },
-//       code_name: "CASHPLN",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/CASHPLN_1Upett6.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 13,
-//       name: { ru: "Рубли", en: "Rubles" },
-//       code_name: "CASHRUB",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/CASHRUB.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 14,
-//       name: { ru: "Тайский бат", en: "Thai Baht" },
-//       code_name: "CASHTHB",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/CASHTHB.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 15,
-//       name: { ru: "Турецкая лира", en: "Turkish Lira" },
-//       code_name: "CASHTRY",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/lira.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 16,
-//       name: { ru: "Украинская гривна", en: "Ukrainian Hryvnia" },
-//       code_name: "CASHUAH",
-//       icon_url:
-//         "https://api.moneyswap.online/media/icons/valute/grivna_BhtuQoR.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//     {
-//       id: 17,
-//       name: { ru: "Доллары", en: "Dollars" },
-//       code_name: "CASHUSD",
-//       icon_url: "https://api.moneyswap.online/media/icons/valute/CASHUSD.svg",
-//       type_valute: CurrencyType.Cash,
-//     },
-//   ],
-// };

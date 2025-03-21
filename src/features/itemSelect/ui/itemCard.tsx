@@ -1,17 +1,17 @@
-import { Currency } from "@/entities/direction";
-import { City, Country } from "@/entities/location";
 import { LogoButtonIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
 import { AllCitiesFlag } from "@/shared/types";
 import { Card, CardContent } from "@/shared/ui";
 import { useTranslation } from "react-i18next";
+import { BaseItem } from "../model/types";
 
 type ItemCardProps<T> = {
   item: T;
   onClick: () => void;
   isCity?: boolean;
 };
-export const ItemCard = <T extends Partial<City & Country & Currency>>(
+
+export const ItemCard = <T extends BaseItem>(
   props: ItemCardProps<T>
 ) => {
   const { i18n } = useTranslation();

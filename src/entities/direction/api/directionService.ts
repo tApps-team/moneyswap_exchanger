@@ -6,7 +6,8 @@ import {
   AddDirectionDtoResponse,
   AvailableValutesDtoRequest,
   AvailableValutesDtoResponse,
-  EditDirecitonRequest,
+  EditDirectionRequest,
+  EditDirectionResponse,
   GetBankomatsByValuteResponse,
   GetDirectionsByRequest,
   GetDirectionsByResponse,
@@ -44,7 +45,7 @@ export const directionAPI = authApi.injectEndpoints({
     }),
     directionsBy: build.query<GetDirectionsByResponse, GetDirectionsByRequest>({
       query: (params) => ({
-        url: `/api/partner/directions_by`,
+        url: `/api/test/partner/directions_by`,
         method: `GET`,
         params,
       }),
@@ -55,15 +56,15 @@ export const directionAPI = authApi.injectEndpoints({
       AddDirectionDtoRequest
     >({
       query: (body) => ({
-        url: `/api/partner/add_partner_direction`,
+        url: `/api/test/partner/add_partner_direction`,
         method: "POST",
         body: body,
       }),
       invalidatesTags: [DIRECTION, LOCATION],
     }),
-    editDirection: build.mutation<void, EditDirecitonRequest>({
+    editDirection: build.mutation<EditDirectionResponse, EditDirectionRequest>({
       query: (BodyParams) => ({
-        url: `/api/partner/edit_partner_directions`,
+        url: `/api/test/partner/edit_partner_directions`,
         method: `PATCH`,
         body: BodyParams,
       }),

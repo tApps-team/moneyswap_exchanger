@@ -1,5 +1,3 @@
-import { Currency } from "@/entities/direction";
-import { City, Country } from "@/entities/location";
 import { LogoButtonIcon } from "@/shared/assets";
 import {
   Button,
@@ -18,6 +16,7 @@ import { useDeferredValue, useState } from "react";
 import { ItemCard } from "./itemCard";
 import { useTranslation } from "react-i18next";
 import { AllCitiesFlag } from "@/shared/types";
+import { BaseItem } from "../model/types";
 
 type ItemSelectProps<T> = {
   items?: T[];
@@ -32,7 +31,8 @@ type ItemSelectProps<T> = {
   isAllCitiesBtn?: boolean;
   isCurrency?: boolean;
 };
-export const ItemSelect = <T extends Partial<City & Country & Currency>>(
+
+export const ItemSelect = <T extends BaseItem>(
   props: ItemSelectProps<T>
 ) => {
   const {
@@ -65,7 +65,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
   });
 
   // all cities
-  const allCitiesCard = {
+  const allCitiesCard: BaseItem = {
     name: {
       ru: "Все города",
       en: "All cities",
@@ -133,7 +133,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
               <>
                 {isAllCitiesBtn && items && items?.length > 1 && (
                   <DrawerClose asChild>
-                    <ItemCard
+                    <ItemCard<BaseItem>
                       item={allCitiesCard}
                       onClick={() => onClick?.(allCitiesCard as T)}
                       isCity={isAllCitiesBtn ? true : false}
@@ -142,7 +142,7 @@ export const ItemSelect = <T extends Partial<City & Country & Currency>>(
                 )}
                 {filteredItems?.map((item) => (
                   <DrawerClose key={item.id} asChild>
-                    <ItemCard
+                    <ItemCard<T>
                       item={item}
                       onClick={() => onClick?.(item)}
                       isCity={isAllCitiesBtn ? true : false}
