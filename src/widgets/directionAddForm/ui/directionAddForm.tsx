@@ -280,9 +280,15 @@ export const DirectionAddForm = () => {
     form.setValue("exchange_rates", updatedRates);
   };
 
-  // console.log(form.formState.errors);
-
   const isFirstVariant = false
+
+  const isSubmitDisabled = () => {
+    const rates = form.getValues("exchange_rates");
+    if (!rates || rates.length <= 1) return false;
+    
+    const lastRate = rates[rates.length - 1];
+    return !lastRate.min_count || lastRate.min_count === 0;
+  };
 
   return (
     <Form {...form}>
@@ -554,6 +560,7 @@ export const DirectionAddForm = () => {
         <Button
           className="rounded-[35px] border border-bg-darkGray text-lg  sm:text-xl h-[70px] bg-darkGray text-mainColor uppercase"
           type="submit"
+          disabled={isSubmitDisabled()}
         >
           {isLoadingAddDirection ? (
             <Loader className="animate-spin" />
