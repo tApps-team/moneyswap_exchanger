@@ -4,13 +4,14 @@ import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { ActualCourse, CustomFormField, ExchangeRatesWithVolumes, ExchangeRatesWithFromVolume } from "@/features/direction";
+import { ActualCourse, CustomFormField, ExchangeRatesWithFromVolume } from "@/features/direction";
 import {
   DirectionAddSchemaType,
   ExchangeRate,
   directionAddSchema,
   useActualCourseQuery,
   useAddDirectionMutation,
+  useAddNoncashDirectionMutation,
   useAvailableValutesQuery,
   useGetBankomatsByValuteQuery,
 } from "@/entities/direction";
@@ -33,16 +34,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useToast
 } from "@/shared/ui";
-import { useToast } from "@/shared/ui/toast";
 
 export const DirectionAddForm = () => {
   const { i18n, t } = useTranslation();
   const { toast } = useToast();
   const navigate = useNavigate();
   const currentLanguage = i18n.language as "ru" | "en";
-  const activeLocation = useAppSelector(
-    (state) => state.activeLocation?.activeLocation || null
+  const {activeLocation, nonCash} = useAppSelector(
+    (state) => state.activeLocation
   );
 
   const form = useForm<DirectionAddSchemaType>({
@@ -69,6 +70,8 @@ export const DirectionAddForm = () => {
 
   const [addDirection, { isLoading: isLoadingAddDirection }] =
     useAddDirectionMutation();
+  const [addNoncashDirection, { isLoading: isLoadingAddNoncashDirection }] =
+    useAddNoncashDirectionMutation();
 
   const { data: currencies } = useAvailableValutesQuery({ base: "all" });
 
@@ -148,58 +151,65 @@ export const DirectionAddForm = () => {
   );
 
   const handleAddDirection = (data: DirectionAddSchemaType) => {
-    if (activeLocation) {
-      const currentBankomats =
-        form.getValues("bankomats")?.map((bank) => ({
-          id: bank.id,
-          available: bank.available,
-        })) || null;
-      addDirection({
-        id: activeLocation?.id,
-        marker: activeLocation?.code_name
+    const currentBankomats =
+      form.getValues("bankomats")?.map((bank) => ({
+        id: bank.id,
+        available: bank.available,
+      })) || null;
+
+    const requestData = {
+      is_active: true,
+      valute_from: data.valute_from?.code_name || "",
+      valute_to: data.valute_to?.code_name || "",
+      bankomats:
+        form.getValues("valute_to.type_valute") === CurrencyType.Bankomat
+          ? currentBankomats
+          : null,
+      exchange_rates: data.exchange_rates || [],
+    };
+
+    const addPromise = nonCash 
+      ? addNoncashDirection(requestData)
+      : activeLocation && addDirection({
+        ...requestData,
+        id: activeLocation.id,
+        marker: activeLocation.code_name
           ? LocationMarker.city
           : LocationMarker.country,
-        is_active: true,
-        valute_from: data.valute_from?.code_name || "",
-        valute_to: data.valute_to?.code_name || "",
-        bankomats:
-          form.getValues("valute_to.type_valute") === CurrencyType.Bankomat
-            ? currentBankomats
-            : null,
-        exchange_rates: data.exchange_rates || [],
-      })
-        .unwrap()
-        .then(() => {
-          navigate(paths.home);
-          toast({
-            title: t("Направление успешно добалено"),
-            variant: "success",
-          });
-        })
-        .catch((error) => {
-          if (error.status === 423) {
-            toast({
-              title: t("Такое направление уже добавлено!"),
-              variant: "destructive",
-            });
-          } else if (error.status === 424) {
-            toast({
-              title: t(
-                "Такое направление уже существует на уровне партнерской страны"
-              ),
-              description: t(
-                "Чтобы добавить это направление в этом городе, удалите это направление в карточке страны"
-              ),
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: t("Произошла ошибка на сервере, попробуйте позже..."),
-              variant: "destructive",
-            });
-          }
+      });
+
+    addPromise && addPromise
+      .unwrap()
+      .then(() => {
+        navigate(paths.home);
+        toast({
+          title: t("Направление успешно добалено"),
+          variant: "success",
         });
-    }
+      })
+      .catch((error) => {
+        if (error.status === 423) {
+          toast({
+            title: t("Такое направление уже добавлено!"),
+            variant: "destructive",
+          });
+        } else if (error.status === 424) {
+          toast({
+            title: t(
+              "Такое направление уже существует на уровне партнерской страны"
+            ),
+            description: t(
+              "Чтобы добавить это направление в этом городе, удалите это направление в карточке страны"
+            ),
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: t("Произошла ошибка на сервере, попробуйте позже..."),
+            variant: "destructive",
+          });
+        }
+      });
   };
 
   const onSubmit = (data: DirectionAddSchemaType) => {
@@ -280,8 +290,6 @@ export const DirectionAddForm = () => {
     form.setValue("exchange_rates", updatedRates);
   };
 
-  const isFirstVariant = false
-
   const isSubmitDisabled = () => {
     const rates = form.getValues("exchange_rates");
     if (!rates || rates.length <= 1) return false;
@@ -293,7 +301,7 @@ export const DirectionAddForm = () => {
   return (
     <Form {...form}>
       <form
-        className="grid grid-flow-row grid-cols-1 gap-10"
+        className="grid grid-flow-row grid-cols-1 gap-10 pb-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -457,15 +465,7 @@ export const DirectionAddForm = () => {
                 <X className="w-6 h-6" stroke="#fff" />
               </button>
             </div>
-            {isFirstVariant ?             <ExchangeRatesWithVolumes
-              control={form.control}
-              form={form}
-              valuteFrom={form.getValues("valute_from")}
-              valuteTo={form.getValues("valute_to")}
-              exchangeRates={form.getValues("exchange_rates") || []}
-              onAddNewRate={handleAddNewRate}
-              onDeleteRate={handleDeleteRate}
-            /> :             <ExchangeRatesWithFromVolume
+            <ExchangeRatesWithFromVolume
             control={form.control}
             form={form}
             valuteFrom={form.getValues("valute_from")}
@@ -473,7 +473,7 @@ export const DirectionAddForm = () => {
             exchangeRates={form.getValues("exchange_rates") || []}
             onAddNewRate={handleAddNewRate}
             onDeleteRate={handleDeleteRate}
-          />}
+          />
           </div>
         ) : (
           <div className="grid grid-flow-row gap-10">
@@ -562,7 +562,7 @@ export const DirectionAddForm = () => {
           type="submit"
           disabled={isSubmitDisabled()}
         >
-          {isLoadingAddDirection ? (
+          {(isLoadingAddDirection || isLoadingAddNoncashDirection) ? (
             <Loader className="animate-spin" />
           ) : (
             t("Добавить")

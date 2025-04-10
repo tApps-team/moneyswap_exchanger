@@ -3,12 +3,16 @@ export type * from "./model/types";
 export {
   directionAPI,
   useDirectionsByQuery,
+  useDirectionsByNoncashQuery,
   useEditDirectionMutation,
+  useEditNoncashDirectionMutation,
   useAvailableValutesQuery,
   useActualCourseQuery,
   useGetBankomatsByValuteQuery,
   useAddDirectionMutation,
+  useAddNoncashDirectionMutation,
   useDeleteDirectionMutation,
+  useDeleteNoncashDirectionMutation,
 } from "./api/directionService";
 export {
   type DirectionSchemaType as directionSchemaType,
@@ -16,4 +20,3 @@ export {
   type DirectionAddSchemaType,
   directionAddSchema,
 } from "./model/directionSchema";
-export { DirectionNewCard } from "./ui/directionNewCard";

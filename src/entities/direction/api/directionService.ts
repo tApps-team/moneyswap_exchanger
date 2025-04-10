@@ -10,7 +10,13 @@ import {
   EditDirectionResponse,
   GetBankomatsByValuteResponse,
   GetDirectionsByRequest,
+  GetDirectionsByNoncashRequest,
   GetDirectionsByResponse,
+  GetDirectionsByNoncashResponse,
+  AddNoncashDirectionDtoRequest,
+  AddNoncashDirectionDtoResponse,
+  EditNoncashDirectionResponse,
+  EditNoncashDirectionRequest
 } from "./directionDto";
 import { DIRECTION, LOCATION } from "@/shared/api/tags";
 import { LocationMarker } from "@/shared/types";
@@ -51,6 +57,13 @@ export const directionAPI = authApi.injectEndpoints({
       }),
       providesTags: [DIRECTION],
     }),
+    directionsByNoncash: build.query<GetDirectionsByNoncashResponse, GetDirectionsByNoncashRequest>({
+      query: () => ({
+        url: `/api/partner/directions_by_noncash`,
+        method: `GET`,
+      }),
+      providesTags: [DIRECTION],
+    }),
     addDirection: build.mutation<
       AddDirectionDtoResponse,
       AddDirectionDtoRequest
@@ -62,9 +75,28 @@ export const directionAPI = authApi.injectEndpoints({
       }),
       invalidatesTags: [DIRECTION, LOCATION],
     }),
+    addNoncashDirection: build.mutation<
+    AddNoncashDirectionDtoResponse,
+    AddNoncashDirectionDtoRequest
+  >({
+    query: (body) => ({
+      url: `/api/partner/add_partner_direction_noncash`,
+      method: "POST",
+      body: body,
+    }),
+    invalidatesTags: [DIRECTION, LOCATION],
+  }),
     editDirection: build.mutation<EditDirectionResponse, EditDirectionRequest>({
       query: (BodyParams) => ({
         url: `/api/partner/edit_partner_directions`,
+        method: `PATCH`,
+        body: BodyParams,
+      }),
+      invalidatesTags: [DIRECTION, LOCATION],
+    }),
+    editNoncashDirection: build.mutation<EditNoncashDirectionResponse, EditNoncashDirectionRequest>({
+      query: (BodyParams) => ({
+        url: `/api/partner/edit_partner_directions_noncash`,
         method: `PATCH`,
         body: BodyParams,
       }),
@@ -85,6 +117,19 @@ export const directionAPI = authApi.injectEndpoints({
       }),
       invalidatesTags: [DIRECTION],
     }),
+    deleteNoncashDirection: build.mutation<
+    void,
+    {
+      direction_id: number;
+    }
+  >({
+    query: (body) => ({
+      url: "/api/partner/delete_partner_direction_noncash",
+      method: "DELETE",
+      body,
+    }),
+    invalidatesTags: [DIRECTION],
+  }),
   }),
 });
 export const {
@@ -92,7 +137,11 @@ export const {
   useGetBankomatsByValuteQuery,
   useActualCourseQuery,
   useDirectionsByQuery,
+  useDirectionsByNoncashQuery,
   useAddDirectionMutation,
+  useAddNoncashDirectionMutation,
   useEditDirectionMutation,
+  useEditNoncashDirectionMutation,
   useDeleteDirectionMutation,
+  useDeleteNoncashDirectionMutation,
 } = directionAPI;
