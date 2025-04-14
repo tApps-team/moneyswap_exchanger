@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { ActualCourse, CustomFormField, ExchangeRatesWithVolumes, ExchangeRatesWithFromVolume } from "@/features/direction";
+import { ActualCourse, CustomFormField, ExchangeRatesWithFromVolume } from "@/features/direction";
 import {
   DirectionAddSchemaType,
   ExchangeRate,
@@ -252,6 +252,16 @@ export const DirectionAddForm = () => {
   const handleAddNewRate = () => {
     const currentRates = form.getValues("exchange_rates") || [];
     const lastRate = currentRates[currentRates.length - 1];
+    const baseRate = currentRates[0];
+    
+    let coefficient = 1;
+    if (baseRate && lastRate) {
+      if (baseRate.in_count > baseRate.out_count) {
+        coefficient = lastRate.in_count / baseRate.in_count;
+      } else {
+        coefficient = lastRate.out_count / baseRate.out_count;
+      }
+    }
     
     form.setValue("exchange_rates", [
       ...currentRates,
@@ -260,7 +270,7 @@ export const DirectionAddForm = () => {
         max_count: 0,
         in_count: lastRate.in_count,
         out_count: lastRate.out_count,
-        rate_coefficient: 1,
+        rate_coefficient: coefficient,
       },
     ]);
   };
@@ -280,7 +290,6 @@ export const DirectionAddForm = () => {
     form.setValue("exchange_rates", updatedRates);
   };
 
-  const isFirstVariant = false
 
   const isSubmitDisabled = () => {
     const rates = form.getValues("exchange_rates");
@@ -457,15 +466,7 @@ export const DirectionAddForm = () => {
                 <X className="w-6 h-6" stroke="#fff" />
               </button>
             </div>
-            {isFirstVariant ?             <ExchangeRatesWithVolumes
-              control={form.control}
-              form={form}
-              valuteFrom={form.getValues("valute_from")}
-              valuteTo={form.getValues("valute_to")}
-              exchangeRates={form.getValues("exchange_rates") || []}
-              onAddNewRate={handleAddNewRate}
-              onDeleteRate={handleDeleteRate}
-            /> :             <ExchangeRatesWithFromVolume
+            <ExchangeRatesWithFromVolume
             control={form.control}
             form={form}
             valuteFrom={form.getValues("valute_from")}
@@ -473,7 +474,7 @@ export const DirectionAddForm = () => {
             exchangeRates={form.getValues("exchange_rates") || []}
             onAddNewRate={handleAddNewRate}
             onDeleteRate={handleDeleteRate}
-          />}
+          />
           </div>
         ) : (
           <div className="grid grid-flow-row gap-10">
