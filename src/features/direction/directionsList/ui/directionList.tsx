@@ -1,6 +1,5 @@
 import {
   Direction,
-  DirectionCard,
   DirectionNewCard,
   directionSchemaType,
 } from "@/entities/direction";
@@ -24,7 +23,6 @@ export const DirectionList: FC<DirectionListProps> = ({
   locationsLoading,
 }) => {
   const { t } = useTranslation();
-  const isNew = true
 
   return (
     <div className="mt-2 grid gap-3 overflow-auto">
@@ -36,17 +34,12 @@ export const DirectionList: FC<DirectionListProps> = ({
         </>
       ) : (
         directions.map((direction, index) => (
-          isNew ? <DirectionNewCard
+           <DirectionNewCard
             form={form}
             key={direction.id}
             direction={direction}
             index={index}
-          /> : <DirectionCard
-            form={form}
-            key={direction.id}
-            direction={direction}
-            index={index}
-          />
+          /> 
         ))
       )}
 

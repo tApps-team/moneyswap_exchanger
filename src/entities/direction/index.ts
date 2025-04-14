@@ -1,4 +1,3 @@
-export { DirectionCard } from "./ui/directionCard";
 export type * from "./model/types";
 export {
   directionAPI,
