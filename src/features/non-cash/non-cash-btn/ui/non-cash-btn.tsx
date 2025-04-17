@@ -1,7 +1,7 @@
 import { NotepadText } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/shared/lib/utils"
-import { AddNonCashDirection } from "../components/add-direction";
+import { AddNonCashDirection } from "../components";
 
 interface NonCashBtnProps {
   isActive?: boolean

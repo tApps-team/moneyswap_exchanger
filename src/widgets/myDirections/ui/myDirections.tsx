@@ -25,6 +25,7 @@ import { useAppDispatch, useAppSelector } from "@/shared/model";
 import { LocationMarker } from "@/shared/types";
 import { formattedDate, formattedTime } from "@/shared/lib";
 import { Form, useToast } from "@/shared/ui";
+import { DirectionBtns } from "@/features/direction-btns";
 
 export const MyDirections = () => {
   const { t } = useTranslation();
@@ -37,15 +38,21 @@ export const MyDirections = () => {
     dispatch(setNonCash(false));
   };
 
-  // activeLocation -> null
+  const { data: cities, isLoading: citiesLoading } = useGetCitiesQuery();
+  const { data: countries, isLoading: countriesLoading } =
+    useGetCountriesQuery();
+
+      // activeLocation -> null
   const handleNonCash = () => {
     dispatch(setNonCash(true));
     dispatch(setActiveLocation(null));
   };
-
-  const { data: cities, isLoading: citiesLoading } = useGetCitiesQuery();
-  const { data: countries, isLoading: countriesLoading } =
-    useGetCountriesQuery();
+  // setCash
+  const setLocation = () => {
+    dispatch(setNonCash(false));
+    const currentLocation = cities ? cities[0] : countries ? countries[0] : null;
+    dispatch(setActiveLocation(currentLocation));
+  };
 
   useEffect(() => {
     if (!activeLocation && !nonCash) {
@@ -218,7 +225,9 @@ export const MyDirections = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Locations
+        <DirectionBtns isNoncash={nonCash} setNonCash={handleNonCash} setCash={setLocation}/>
+        {!nonCash && <>
+          <Locations
           locations={cities || []}
           setActive={setActive}
           activeLocation={activeLocation}
@@ -236,15 +245,38 @@ export const MyDirections = () => {
             isCountry={true}
           />
         )}
-        <NonCashBtn isActive={nonCash} setNonCash={handleNonCash}/>
+        </>}
+        {/* <Locations
+          locations={cities || []}
+          setActive={setActive}
+          activeLocation={activeLocation}
+          directionsLoading={directionsLoading || directionsNoncashLoading}
+          locationsLoading={citiesLoading || countriesLoading}
+          isCountry={false}
+        />
+        {countries && countries?.length > 0 && (
+          <Locations
+            locations={countries || []}
+            setActive={setActive}
+            activeLocation={activeLocation}
+            directionsLoading={directionsLoading || directionsNoncashLoading}
+            locationsLoading={citiesLoading || countriesLoading}
+            isCountry={true}
+          />
+        )}
+        <NonCashBtn isActive={nonCash} setNonCash={handleNonCash}/> */}
         <Directions
           directions={!nonCash ? directions || [] : directionsNoncash || []}
           form={form}
           directionsLoading={directionsFetching || directionsNoncashFetching}
           locationsLoading={citiesLoading || countriesLoading}
+          isActive={nonCash ? true : activeLocation ? true : false}
         />
-        {directions && directions?.length > 0 && (
-          <EditDirection editLoading={editLoading || editNoncashLoading} />
+        {!nonCash && directions && directions?.length > 0 && (
+          <EditDirection editLoading={editLoading} />
+        )}
+        {nonCash && directionsNoncash && directionsNoncash?.length > 0 && (
+          <EditDirection editLoading={editNoncashLoading} />
         )}
       </form>
       {activeLocation &&

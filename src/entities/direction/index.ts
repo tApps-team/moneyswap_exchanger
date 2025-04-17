@@ -12,7 +12,6 @@ export {
   useAddDirectionMutation,
   useAddNoncashDirectionMutation,
   useDeleteDirectionMutation,
-  useDeleteNoncashDirectionMutation,
 } from "./api/directionService";
 export {
   type DirectionSchemaType as directionSchemaType,

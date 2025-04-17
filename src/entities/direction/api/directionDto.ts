@@ -8,6 +8,7 @@ import {
 
 export type AvailableValutesDtoRequest = {
   base?: string;
+  is_no_cash?: boolean;
 };
 export type AvailableValutesDtoResponse = CurrencyResponse[];
 
@@ -42,12 +43,10 @@ export type AddDirectionDtoRequest = {
   valute_from: string;
   valute_to: string;
   is_active: boolean;
-  bankomats:
-    | {
-        id: number;
-        available: boolean;
-      }[]
-    | null;
+  bankomats?: {
+    id: number;
+    available: boolean;
+  }[] | null;
   exchange_rates: ExchangeRate[];
 };
 
@@ -55,7 +54,7 @@ export type AddNoncashDirectionDtoRequest = {
   valute_from: string;
   valute_to: string;
   is_active: boolean;
-  bankomats:
+  bankomats?:
     | {
         id: number;
         available: boolean;

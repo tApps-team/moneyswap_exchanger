@@ -27,9 +27,9 @@ export const directionAPI = authApi.injectEndpoints({
       AvailableValutesDtoResponse,
       AvailableValutesDtoRequest
     >({
-      query: ({ base = "all" }) => ({
+      query: ({ base = "all", is_no_cash }) => ({
         url: `/api/partner/available_valutes`,
-        params: { base },
+        params: { base, is_no_cash },
         method: "GET",
       }),
     }),
@@ -59,7 +59,7 @@ export const directionAPI = authApi.injectEndpoints({
     }),
     directionsByNoncash: build.query<GetDirectionsByNoncashResponse, GetDirectionsByNoncashRequest>({
       query: () => ({
-        url: `/api/partner/directions_by_noncash`,
+        url: `/api/partner/no_cash_directions`,
         method: `GET`,
       }),
       providesTags: [DIRECTION],
@@ -80,7 +80,7 @@ export const directionAPI = authApi.injectEndpoints({
     AddNoncashDirectionDtoRequest
   >({
     query: (body) => ({
-      url: `/api/partner/add_partner_direction_noncash`,
+      url: `/api/partner/add_partner_no_cash_direction`,
       method: "POST",
       body: body,
     }),
@@ -96,7 +96,7 @@ export const directionAPI = authApi.injectEndpoints({
     }),
     editNoncashDirection: build.mutation<EditNoncashDirectionResponse, EditNoncashDirectionRequest>({
       query: (BodyParams) => ({
-        url: `/api/partner/edit_partner_directions_noncash`,
+        url: `/api/partner/edit_partner_no_cash_directions`,
         method: `PATCH`,
         body: BodyParams,
       }),
@@ -105,7 +105,7 @@ export const directionAPI = authApi.injectEndpoints({
     deleteDirection: build.mutation<
       void,
       {
-        id: number;
+        id?: number;
         marker: LocationMarker;
         direction_id: number;
       }
@@ -117,19 +117,6 @@ export const directionAPI = authApi.injectEndpoints({
       }),
       invalidatesTags: [DIRECTION],
     }),
-    deleteNoncashDirection: build.mutation<
-    void,
-    {
-      direction_id: number;
-    }
-  >({
-    query: (body) => ({
-      url: "/api/partner/delete_partner_direction_noncash",
-      method: "DELETE",
-      body,
-    }),
-    invalidatesTags: [DIRECTION],
-  }),
   }),
 });
 export const {
@@ -143,5 +130,4 @@ export const {
   useEditDirectionMutation,
   useEditNoncashDirectionMutation,
   useDeleteDirectionMutation,
-  useDeleteNoncashDirectionMutation,
 } = directionAPI;

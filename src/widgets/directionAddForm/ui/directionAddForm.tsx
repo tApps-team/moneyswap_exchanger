@@ -73,10 +73,17 @@ export const DirectionAddForm = () => {
   const [addNoncashDirection, { isLoading: isLoadingAddNoncashDirection }] =
     useAddNoncashDirectionMutation();
 
-  const { data: currencies } = useAvailableValutesQuery({ base: "all" });
+    const currenciesRequest = nonCash ? { base: "all", is_no_cash: true } : { base: "all" };
+    console.log('currenciesRequest:', currenciesRequest);
+
+  const { data: currencies } = useAvailableValutesQuery(currenciesRequest);
+
+  const availableCurrenciesRequest = nonCash 
+    ? { base: form.getValues("valute_from.code_name"), is_no_cash: true } 
+    : { base: form.getValues("valute_from.code_name") };
 
   const { data: availableCurrencies } = useAvailableValutesQuery(
-    { base: form.getValues("valute_from.code_name") },
+    availableCurrenciesRequest,
     { skip: !form.getValues("valute_from.code_name") }
   );
 
@@ -157,16 +164,21 @@ export const DirectionAddForm = () => {
         available: bank.available,
       })) || null;
 
-    const requestData = {
+    const baseRequestData = {
       is_active: true,
       valute_from: data.valute_from?.code_name || "",
       valute_to: data.valute_to?.code_name || "",
-      bankomats:
-        form.getValues("valute_to.type_valute") === CurrencyType.Bankomat
-          ? currentBankomats
-          : null,
       exchange_rates: data.exchange_rates || [],
     };
+
+    const requestData = nonCash 
+      ? baseRequestData
+      : {
+          ...baseRequestData,
+          bankomats: form.getValues("valute_to.type_valute") === CurrencyType.Bankomat
+            ? currentBankomats
+            : null,
+        };
 
     const addPromise = nonCash 
       ? addNoncashDirection(requestData)

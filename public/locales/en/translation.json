@@ -78,8 +78,12 @@
   "Суммы и курсы": "Amounts and rates",
   "Безналичные направления": "Non-cash directions",
   "Безналичные": "Non-cash",
+  "Наличные": "Cash",
 
   "Переключить язык": "русский",
+
+  "Чтобы добавить новое направление укажите город или страну.": "To add a new direction, specify a city or country.",
+  "Для добавления безналичного направления, выберите 'Безналичные'": "To add a non-cash direction, select 'Non-cash'",
 
   "Направлениe успешно удалено": "Pair successfully deleted",
   "Неверный логин или пароль": "Incorrect login or password",

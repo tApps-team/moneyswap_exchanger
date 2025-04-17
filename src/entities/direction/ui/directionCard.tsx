@@ -16,7 +16,6 @@ import {
     Direction,
     directionSchemaType,
     useDeleteDirectionMutation,
-    useDeleteNoncashDirectionMutation,
   } from "@/entities/direction";
   import { useTranslation } from "react-i18next";
   import { useAppSelector } from "@/shared/model";
@@ -50,7 +49,6 @@ import {
     };
   
     const [deleteDirection] = useDeleteDirectionMutation();
-    const [deleteNoncashDirection] = useDeleteNoncashDirectionMutation();
 
     const {activeLocation, nonCash} = useAppSelector(
       (state) => state.activeLocation
@@ -65,7 +63,7 @@ import {
       }
 
       const deletePromise = nonCash
-      ? deleteNoncashDirection(requestData)
+      ? deleteDirection({...requestData, marker: LocationMarker.no_cash})
       : activeLocation && deleteDirection({
         ...requestData,
         id: activeLocation.id,
