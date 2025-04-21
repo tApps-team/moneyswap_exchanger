@@ -20,11 +20,8 @@ import {
   import { useTranslation } from "react-i18next";
   import { useAppSelector } from "@/shared/model";
   import { LocationMarker } from "@/shared/types";
-  import { AmountRangeFrom } from "./amountRangeFrom";
-  import { ExchangeRate } from "./exchangeRate";
-  import { BankomatsList } from "./bankomatsList";
-  import { DirectionControls } from "./directionControls";
   import { LogoButtonIcon } from "@/shared/assets";
+  import { AmountRangeFrom, ExchangeRate, BankomatsList, DirectionControls} from "./components";
 
   interface DirectionNewCardProps {
     direction: Direction;
