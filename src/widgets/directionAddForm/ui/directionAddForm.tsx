@@ -274,6 +274,16 @@ export const DirectionAddForm = () => {
   const handleAddNewRate = () => {
     const currentRates = form.getValues("exchange_rates") || [];
     const lastRate = currentRates[currentRates.length - 1];
+    const baseRate = currentRates[0];
+    
+    let coefficient = 1;
+    if (baseRate && lastRate) {
+      if (baseRate.in_count > baseRate.out_count) {
+        coefficient = lastRate.in_count / baseRate.in_count;
+      } else {
+        coefficient = lastRate.out_count / baseRate.out_count;
+      }
+    }
     
     form.setValue("exchange_rates", [
       ...currentRates,
@@ -282,7 +292,7 @@ export const DirectionAddForm = () => {
         max_count: 0,
         in_count: lastRate.in_count,
         out_count: lastRate.out_count,
-        rate_coefficient: 1,
+        rate_coefficient: coefficient,
       },
     ]);
   };

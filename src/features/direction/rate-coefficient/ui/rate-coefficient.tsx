@@ -25,9 +25,9 @@ export const RateCoefficient = ({
     if (baseRate.in_count === 0 || baseRate.out_count === 0) return 1
 
     if (baseRate.in_count > baseRate.out_count) {
-      return rate.in_count / baseRate.in_count
+      return Number((rate.in_count / baseRate.in_count).toFixed(8))
     }
-    return rate.out_count / baseRate.out_count
+    return Number((rate.out_count / baseRate.out_count).toFixed(8))
   }
 
   // Функция для обновления курса на основе коэффициента
