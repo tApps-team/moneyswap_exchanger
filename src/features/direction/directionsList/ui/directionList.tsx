@@ -1,6 +1,6 @@
 import {
   Direction,
-  DirectionCard,
+  DirectionNewCard,
   directionSchemaType,
 } from "@/entities/direction";
 import { FC } from "react";
@@ -34,7 +34,7 @@ export const DirectionList: FC<DirectionListProps> = ({
         </>
       ) : (
         directions.map((direction, index) => (
-          <DirectionCard
+          <DirectionNewCard
             form={form}
             key={direction.id}
             direction={direction}

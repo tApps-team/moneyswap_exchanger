@@ -20,16 +20,19 @@ import {
   import { useTranslation } from "react-i18next";
   import { useAppSelector } from "@/shared/model";
   import { LocationMarker } from "@/shared/types";
-  import { AmountRangeFrom, ExchangeRate, BankomatsList, DirectionControls } from "./components";
+  import { AmountRangeFrom } from "./amountRangeFrom";
+  import { ExchangeRate } from "./exchangeRate";
+  import { BankomatsList } from "./bankomatsList";
+  import { DirectionControls } from "./directionControls";
   import { LogoButtonIcon } from "@/shared/assets";
 
-  interface DirectionCardProps {
+  interface DirectionNewCardProps {
     direction: Direction;
     form: UseFormReturn<directionSchemaType>;
     index: number;
   }
   
-  export const DirectionCard: FC<DirectionCardProps> = ({
+  export const DirectionNewCard: FC<DirectionNewCardProps> = ({
     direction,
     form,
     index,
