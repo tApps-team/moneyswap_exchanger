@@ -271,6 +271,7 @@ export const MyDirections = () => {
           directionsLoading={directionsFetching || directionsNoncashFetching}
           locationsLoading={citiesLoading || countriesLoading}
           isActive={nonCash ? true : activeLocation ? true : false}
+          isNoncash={nonCash}
         />
         {!nonCash && directions && directions?.length > 0 && (
           <EditDirection editLoading={editLoading} />
