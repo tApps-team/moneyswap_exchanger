@@ -1,4 +1,4 @@
-import { Navigation, NavigationOff } from "lucide-react";
+import { Banknote, CreditCard } from "lucide-react";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -17,7 +17,7 @@ export const DirectionBtns:FC<DirectionBtnsProps> = ({isNoncash, setNonCash, set
           onClick={setCash}
         >
           <div className="[&>svg]:size-5">
-            <Navigation />
+            <Banknote />
           </div>
           <p className="truncate">{t("Наличные")}</p>
         </li>
@@ -26,7 +26,7 @@ export const DirectionBtns:FC<DirectionBtnsProps> = ({isNoncash, setNonCash, set
           onClick={setNonCash}
         >
           <div className="[&>svg]:size-5">
-            <NavigationOff />
+            <CreditCard />
           </div>
           <p className="truncate">{t("Безналичные")}</p>
         </li>

@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { Locations } from "../locations";
 import { Directions } from "../directions";
-import { NonCashBtn } from "@/features/non-cash";
 import { EditDirection, UpdatedInfo } from "@/features/direction";
 import {
   directionSchema,
@@ -246,25 +245,6 @@ export const MyDirections = () => {
           />
         )}
         </>}
-        {/* <Locations
-          locations={cities || []}
-          setActive={setActive}
-          activeLocation={activeLocation}
-          directionsLoading={directionsLoading || directionsNoncashLoading}
-          locationsLoading={citiesLoading || countriesLoading}
-          isCountry={false}
-        />
-        {countries && countries?.length > 0 && (
-          <Locations
-            locations={countries || []}
-            setActive={setActive}
-            activeLocation={activeLocation}
-            directionsLoading={directionsLoading || directionsNoncashLoading}
-            locationsLoading={citiesLoading || countriesLoading}
-            isCountry={true}
-          />
-        )}
-        <NonCashBtn isActive={nonCash} setNonCash={handleNonCash}/> */}
         <Directions
           directions={!nonCash ? directions || [] : directionsNoncash || []}
           form={form}
