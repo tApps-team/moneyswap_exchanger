@@ -2,11 +2,14 @@ export type * from "./model/types";
 export {
   directionAPI,
   useDirectionsByQuery,
+  useDirectionsByNoncashQuery,
   useEditDirectionMutation,
+  useEditNoncashDirectionMutation,
   useAvailableValutesQuery,
   useActualCourseQuery,
   useGetBankomatsByValuteQuery,
   useAddDirectionMutation,
+  useAddNoncashDirectionMutation,
   useDeleteDirectionMutation,
 } from "./api/directionService";
 export {

@@ -8,6 +8,7 @@ import {
 
 export type AvailableValutesDtoRequest = {
   base?: string;
+  is_no_cash?: boolean;
 };
 export type AvailableValutesDtoResponse = CurrencyResponse[];
 
@@ -32,6 +33,9 @@ export type GetDirectionsByRequest = {
 };
 export type GetDirectionsByResponse = Direction[];
 
+export type GetDirectionsByNoncashRequest = void;
+export type GetDirectionsByNoncashResponse = Direction[];
+
 export type AddDirectionDtoResponse = void;
 export type AddDirectionDtoRequest = {
   id: number;
@@ -39,7 +43,18 @@ export type AddDirectionDtoRequest = {
   valute_from: string;
   valute_to: string;
   is_active: boolean;
-  bankomats:
+  bankomats?: {
+    id: number;
+    available: boolean;
+  }[] | null;
+  exchange_rates: ExchangeRate[];
+};
+
+export type AddNoncashDirectionDtoRequest = {
+  valute_from: string;
+  valute_to: string;
+  is_active: boolean;
+  bankomats?:
     | {
         id: number;
         available: boolean;
@@ -47,6 +62,7 @@ export type AddDirectionDtoRequest = {
     | null;
   exchange_rates: ExchangeRate[];
 };
+export type AddNoncashDirectionDtoResponse = void;
 
 export type EditDirectionRequest = {
   id: number;
@@ -58,3 +74,12 @@ export type EditDirectionRequest = {
   }[];
 };
 export type EditDirectionResponse = void;
+
+export type EditNoncashDirectionRequest = {
+  directions: {
+    id: number;
+    is_active: boolean;
+    exchange_rates: ExchangeRate[] | null;
+  }[];
+};
+export type EditNoncashDirectionResponse = void;

@@ -1,7 +1,7 @@
 import { paths } from "@/shared/routing";
 import { Link } from "react-router-dom";
 import styles from "./addLocationButton.module.scss";
-import { PlusIcon } from "@/shared/assets/icons";
+import { PlusIcon } from "@/shared/assets";
 
 export const AddLocationButton = () => {
   return (

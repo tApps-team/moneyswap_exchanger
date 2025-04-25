@@ -11,6 +11,7 @@ import {
   directionAddSchema,
   useActualCourseQuery,
   useAddDirectionMutation,
+  useAddNoncashDirectionMutation,
   useAvailableValutesQuery,
   useGetBankomatsByValuteQuery,
 } from "@/entities/direction";
@@ -33,16 +34,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useToast
 } from "@/shared/ui";
-import { useToast } from "@/shared/ui/toast";
 
 export const DirectionAddForm = () => {
   const { i18n, t } = useTranslation();
   const { toast } = useToast();
   const navigate = useNavigate();
   const currentLanguage = i18n.language as "ru" | "en";
-  const activeLocation = useAppSelector(
-    (state) => state.activeLocation?.activeLocation || null
+  const {activeLocation, nonCash} = useAppSelector(
+    (state) => state.activeLocation
   );
 
   const form = useForm<DirectionAddSchemaType>({
@@ -69,11 +70,20 @@ export const DirectionAddForm = () => {
 
   const [addDirection, { isLoading: isLoadingAddDirection }] =
     useAddDirectionMutation();
+  const [addNoncashDirection, { isLoading: isLoadingAddNoncashDirection }] =
+    useAddNoncashDirectionMutation();
 
-  const { data: currencies } = useAvailableValutesQuery({ base: "all" });
+    const currenciesRequest = nonCash ? { base: "all", is_no_cash: true } : { base: "all" };
+    console.log('currenciesRequest:', currenciesRequest);
+
+  const { data: currencies } = useAvailableValutesQuery(currenciesRequest);
+
+  const availableCurrenciesRequest = nonCash 
+    ? { base: form.getValues("valute_from.code_name"), is_no_cash: true } 
+    : { base: form.getValues("valute_from.code_name") };
 
   const { data: availableCurrencies } = useAvailableValutesQuery(
-    { base: form.getValues("valute_from.code_name") },
+    availableCurrenciesRequest,
     { skip: !form.getValues("valute_from.code_name") }
   );
 
@@ -148,58 +158,70 @@ export const DirectionAddForm = () => {
   );
 
   const handleAddDirection = (data: DirectionAddSchemaType) => {
-    if (activeLocation) {
-      const currentBankomats =
-        form.getValues("bankomats")?.map((bank) => ({
-          id: bank.id,
-          available: bank.available,
-        })) || null;
-      addDirection({
-        id: activeLocation?.id,
-        marker: activeLocation?.code_name
-          ? LocationMarker.city
-          : LocationMarker.country,
-        is_active: true,
-        valute_from: data.valute_from?.code_name || "",
-        valute_to: data.valute_to?.code_name || "",
-        bankomats:
-          form.getValues("valute_to.type_valute") === CurrencyType.Bankomat
+    const currentBankomats =
+      form.getValues("bankomats")?.map((bank) => ({
+        id: bank.id,
+        available: bank.available,
+      })) || null;
+
+    const baseRequestData = {
+      is_active: true,
+      valute_from: data.valute_from?.code_name || "",
+      valute_to: data.valute_to?.code_name || "",
+      exchange_rates: data.exchange_rates || [],
+    };
+
+    const requestData = nonCash 
+      ? baseRequestData
+      : {
+          ...baseRequestData,
+          bankomats: form.getValues("valute_to.type_valute") === CurrencyType.Bankomat
             ? currentBankomats
             : null,
-        exchange_rates: data.exchange_rates || [],
-      })
-        .unwrap()
-        .then(() => {
-          navigate(paths.home);
-          toast({
-            title: t("Направление успешно добалено"),
-            variant: "success",
-          });
-        })
-        .catch((error) => {
-          if (error.status === 423) {
-            toast({
-              title: t("Такое направление уже добавлено!"),
-              variant: "destructive",
-            });
-          } else if (error.status === 424) {
-            toast({
-              title: t(
-                "Такое направление уже существует на уровне партнерской страны"
-              ),
-              description: t(
-                "Чтобы добавить это направление в этом городе, удалите это направление в карточке страны"
-              ),
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: t("Произошла ошибка на сервере, попробуйте позже..."),
-              variant: "destructive",
-            });
-          }
+        };
+
+    const addPromise = nonCash 
+      ? addNoncashDirection(requestData)
+      : activeLocation && addDirection({
+        ...requestData,
+        id: activeLocation.id,
+        marker: activeLocation.code_name
+          ? LocationMarker.city
+          : LocationMarker.country,
+      });
+
+    addPromise && addPromise
+      .unwrap()
+      .then(() => {
+        navigate(paths.home);
+        toast({
+          title: t("Направление успешно добалено"),
+          variant: "success",
         });
-    }
+      })
+      .catch((error) => {
+        if (error.status === 423) {
+          toast({
+            title: t("Такое направление уже добавлено!"),
+            variant: "destructive",
+          });
+        } else if (error.status === 424) {
+          toast({
+            title: t(
+              "Такое направление уже существует на уровне партнерской страны"
+            ),
+            description: t(
+              "Чтобы добавить это направление в этом городе, удалите это направление в карточке страны"
+            ),
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: t("Произошла ошибка на сервере, попробуйте позже..."),
+            variant: "destructive",
+          });
+        }
+      });
   };
 
   const onSubmit = (data: DirectionAddSchemaType) => {
@@ -290,7 +312,6 @@ export const DirectionAddForm = () => {
     form.setValue("exchange_rates", updatedRates);
   };
 
-
   const isSubmitDisabled = () => {
     const rates = form.getValues("exchange_rates");
     if (!rates || rates.length <= 1) return false;
@@ -302,7 +323,7 @@ export const DirectionAddForm = () => {
   return (
     <Form {...form}>
       <form
-        className="grid grid-flow-row grid-cols-1 gap-10"
+        className="grid grid-flow-row grid-cols-1 gap-10 pb-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -563,7 +584,7 @@ export const DirectionAddForm = () => {
           type="submit"
           disabled={isSubmitDisabled()}
         >
-          {isLoadingAddDirection ? (
+          {(isLoadingAddDirection || isLoadingAddNoncashDirection) ? (
             <Loader className="animate-spin" />
           ) : (
             t("Добавить")

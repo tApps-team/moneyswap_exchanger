@@ -8,6 +8,7 @@ import {
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
+    useToast
   } from "@/shared/ui";
   import { FC } from "react";
   import { UseFormReturn } from "react-hook-form";
@@ -16,15 +17,11 @@ import {
     directionSchemaType,
     useDeleteDirectionMutation,
   } from "@/entities/direction";
-  import { useToast } from "@/shared/ui/toast";
   import { useTranslation } from "react-i18next";
   import { useAppSelector } from "@/shared/model";
   import { LocationMarker } from "@/shared/types";
-  import { AmountRangeFrom } from "./amountRangeFrom";
-  import { ExchangeRate } from "./exchangeRate";
-  import { BankomatsList } from "./bankomatsList";
-  import { DirectionControls } from "./directionControls";
   import { LogoButtonIcon } from "@/shared/assets";
+  import { AmountRangeFrom, ExchangeRate, BankomatsList, DirectionControls} from "./components";
 
   interface DirectionNewCardProps {
     direction: Direction;
@@ -52,22 +49,30 @@ import {
     };
   
     const [deleteDirection] = useDeleteDirectionMutation();
-    const activeLocation = useAppSelector(
-      (state) => state.activeLocation.activeLocation
+
+    const {activeLocation, nonCash} = useAppSelector(
+      (state) => state.activeLocation
     );
   
     const isActive = form.watch(`directions.${index}.is_active`);
     const exchangeRates = form.watch(`directions.${index}.exchange_rates`);
   
     const handleDelete = () => {
-      if (activeLocation) {
-        deleteDirection({
-          id: activeLocation?.id,
-          direction_id: direction.id,
-          marker: activeLocation?.code_name
-            ? LocationMarker.city
-            : LocationMarker.country,
-        })
+      const requestData = {
+        direction_id: direction.id,
+      }
+
+      const deletePromise = nonCash
+      ? deleteDirection({...requestData, marker: LocationMarker.no_cash})
+      : activeLocation && deleteDirection({
+        ...requestData,
+        id: activeLocation.id,
+        marker: activeLocation.code_name
+          ? LocationMarker.city
+          : LocationMarker.country,
+      });
+
+      deletePromise && deletePromise
           .unwrap()
           .then(() => {
             toast({
@@ -77,7 +82,6 @@ import {
             });
           })
           .catch((error) => console.error("Ошибка...,", error));
-      }
     };
   
     const handleBaseRateChange = (value: number, isInCount: boolean) => {

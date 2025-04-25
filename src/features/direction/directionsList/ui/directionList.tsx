@@ -34,7 +34,7 @@ export const DirectionList: FC<DirectionListProps> = ({
         </>
       ) : (
         directions.map((direction, index) => (
-           <DirectionNewCard
+          <DirectionNewCard
             form={form}
             key={direction.id}
             direction={direction}

@@ -27,8 +27,8 @@ import {
   Input,
   Switch,
   TimePicker,
+  useToast
 } from "@/shared/ui";
-import { useToast } from "@/shared/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader, Minus } from "lucide-react";
 import { useForm } from "react-hook-form";
