@@ -4,6 +4,8 @@ import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { ItemSelect } from "@/features/itemSelect";
+import { MinMaxAmount } from "@/features/min-max-amount";
 import { ActualCourse, CustomFormField, ExchangeRatesWithFromVolume } from "@/features/direction";
 import {
   DirectionAddSchemaType,
@@ -15,7 +17,6 @@ import {
   useAvailableValutesQuery,
   useGetBankomatsByValuteQuery,
 } from "@/entities/direction";
-import { ItemSelect } from "@/features/itemSelect";
 import { LogoButtonIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
 import { useAppSelector } from "@/shared/model";
@@ -36,7 +37,6 @@ import {
   FormMessage,
   useToast
 } from "@/shared/ui";
-import { MinMaxAmount } from "@/features/min-max-amount";
 
 export const DirectionAddForm = () => {
   const { i18n, t } = useTranslation();
