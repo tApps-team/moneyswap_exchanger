@@ -40,18 +40,12 @@ import {
     const calculateRateCoefficient = (rate: { in_count: number; out_count: number }, baseRate: { in_count: number; out_count: number }): number => {
       if (!baseRate) return 1;
       if (baseRate.in_count === 0 || baseRate.out_count === 0) return 1;
-
-      if (
-        baseRate.in_count <= 1 ||
-        baseRate.out_count <= 1
-      ) {
-        return Number((rate.out_count / baseRate.out_count).toFixed(8));
-      }
-
+  
       if (rate.in_count > rate.out_count) {
-        return Number((rate.in_count / baseRate.in_count).toFixed(8));
+        return rate.in_count / baseRate.in_count;
       }
-      return Number((rate.out_count / baseRate.out_count).toFixed(8));
+      
+      return rate.out_count / baseRate.out_count;
     };
   
     const [deleteDirection] = useDeleteDirectionMutation();
@@ -93,7 +87,7 @@ import {
     const handleBaseRateChange = (value: number, isInCount: boolean) => {
       const rates = form.getValues(`directions.${index}.exchange_rates`);
       if (!rates) return;
-
+  
       // Обновляем значение базового курса
       const basePath = `directions.${index}.exchange_rates.0` as const;
       form.setValue(
@@ -102,34 +96,29 @@ import {
           : `${basePath}.out_count` as const, 
         value
       );
-
+  
       // Если есть дополнительные курсы, обновляем их
       if (rates.length > 1) {
-        const baseRate = {
-          ...rates[0],
-          [isInCount ? 'in_count' : 'out_count']: value
-        };
+        const baseRate = rates[0];
+        const isBaseInCountGreater = baseRate.in_count > baseRate.out_count;
+  
+        // Пересчитываем все остальные курсы
         rates.slice(1).forEach((rate, idx) => {
           const ratePath = `directions.${index}.exchange_rates.${idx + 1}` as const;
           const rateCoefficient = rate.rate_coefficient ?? 1;
-
-          // Новая логика: если хотя бы один из in_count/out_count или их базовых <= 1 — меняем out_count
-          if (
-            baseRate.in_count <= 1 ||
-            baseRate.out_count <= 1
-          ) {
-            const newOutCount = Number((baseRate.out_count * rateCoefficient).toFixed(8));
-            form.setValue(`${ratePath}.out_count` as const, newOutCount);
-          } else if (baseRate.in_count > baseRate.out_count) {
-            const newInCount = Number((baseRate.in_count * rateCoefficient).toFixed(8));
-            form.setValue(`${ratePath}.in_count` as const, newInCount);
-          } else {
-            const newOutCount = Number((baseRate.out_count * rateCoefficient).toFixed(8));
-            form.setValue(`${ratePath}.out_count` as const, newOutCount);
+  
+          // Пересчитываем только in_count если базовый in_count больше out_count
+          // Или только out_count если базовый out_count больше in_count
+          if (isBaseInCountGreater && isInCount) {
+            const newValue = value * rateCoefficient;
+            form.setValue(`${ratePath}.in_count` as const, newValue);
+          } else if (!isBaseInCountGreater && !isInCount) {
+            const newValue = value * rateCoefficient;
+            form.setValue(`${ratePath}.out_count` as const, newValue);
           }
         });
       }
-
+  
       form.trigger();
     };
   
@@ -181,6 +170,7 @@ import {
                   <FormControl>
                     <Input
                       {...field}
+                      disabled={field.value === 1 && form.getValues(`directions.${index}.exchange_rates.0.out_count`) !== 1}
                       value={field.value || ""}
                       type="number"
                       className="bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
@@ -212,6 +202,7 @@ import {
                   <FormControl>
                     <Input
                       {...field}
+                      disabled={field.value === 1 && form.getValues(`directions.${index}.exchange_rates.0.in_count`) !== 1}
                       value={field.value || ""}
                       type="number"
                       className="bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"

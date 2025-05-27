@@ -235,14 +235,23 @@ export const DirectionAddForm = () => {
       ratesToProcess?.map((rate: ExchangeRate, index: number, array: ExchangeRate[]) => {
         let in_count: number = rate.in_count ?? 1;
         let out_count: number = rate.out_count ?? 1;
+        let base_in_count: number = ratesToProcess[0].in_count ?? 1;
+        let base_out_count: number = ratesToProcess[0].out_count ?? 1;
+        let rate_coefficient: number = rate.rate_coefficient ?? 1;
 
         if (rate.in_count === rate.out_count) {
           in_count = 1;
           out_count = 1;
-        } else if (rate.in_count === 1 || rate.out_count === 1) {
+        } else if ((rate.in_count === 1 && rate.out_count >= 1) || (rate.in_count >= 1 && rate.out_count === 1)) {
           in_count = rate.in_count;
           out_count = rate.out_count;
         } else if (rate.in_count !== 1 || rate.out_count !== 1) {
+          base_in_count = ratesToProcess[0].in_count > ratesToProcess[0].out_count
+          ? ratesToProcess[0].in_count / ratesToProcess[0].out_count
+          : 1;
+          base_out_count = ratesToProcess[0].out_count > ratesToProcess[0].in_count
+          ? ratesToProcess[0].out_count / ratesToProcess[0].in_count
+          : 1;
           in_count =
             rate.in_count > rate.out_count
               ? rate.in_count / rate.out_count
@@ -252,6 +261,8 @@ export const DirectionAddForm = () => {
             rate.in_count > rate.out_count
               ? 1
               : rate.out_count / rate.in_count;
+
+          rate_coefficient = in_count > out_count ? Number((in_count / base_in_count).toFixed(4)) : Number((out_count / base_out_count).toFixed(4));
         }
 
         if (array.length === 1) {
@@ -259,14 +270,13 @@ export const DirectionAddForm = () => {
         }
 
         if (index === array.length - 1) {
-          return { ...rate, in_count, out_count, max_count: null };
+          return { ...rate, in_count, out_count, max_count: null, rate_coefficient };
         }
 
-        return { ...rate, in_count, out_count };
+        return { ...rate, in_count, out_count, rate_coefficient };
       }) ?? null;
 
     const updatedData = { ...data, exchange_rates: updatedExchangeRates };
-
     handleAddDirection(updatedData);
   };
 
@@ -289,8 +299,8 @@ export const DirectionAddForm = () => {
       {
         min_count: lastRate?.max_count || 0,
         max_count: 0,
-        in_count: lastRate.in_count,
-        out_count: lastRate.out_count,
+        in_count: baseRate.in_count,
+        out_count: baseRate.out_count,
         rate_coefficient: coefficient,
       },
     ]);

@@ -20,7 +20,6 @@ export const ExchangeRate: React.FC<ExchangeRateProps> = ({
 }) => {
   return (
     <div className="flex items-center gap-4">
-      {/* <span className="font-semibold text-sm text-black">{t("Курс")}:</span> */}
       <div className="flex items-center mobile:gap-2 gap-1">
         <FormField
           control={form.control}
@@ -35,6 +34,7 @@ export const ExchangeRate: React.FC<ExchangeRateProps> = ({
                   />
                   <Input
                     {...field}
+                    disabled={field.value === 1 && form.getValues(`directions.${index}.exchange_rates.0.out_count`) !== 1}
                     value={field.value || ""}
                     type="number"
                     className="bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base pl-8"
@@ -64,6 +64,7 @@ export const ExchangeRate: React.FC<ExchangeRateProps> = ({
                   />
                   <Input
                     {...field}
+                    disabled={field.value === 1 && form.getValues(`directions.${index}.exchange_rates.0.in_count`) !== 1}
                     value={field.value || ""}
                     type="number"
                     className="bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base pl-8"
