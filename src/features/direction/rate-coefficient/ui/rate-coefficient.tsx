@@ -24,7 +24,9 @@ export const RateCoefficient = ({
     if (!baseRate || !rate) return 1
     if (baseRate.in_count === 0 || baseRate.out_count === 0) return 1
 
-    if (baseRate.in_count > baseRate.out_count) {
+    const isLessThanOne = baseRate.in_count <= 1 || baseRate.out_count <= 1
+
+    if (baseRate.in_count > baseRate.out_count && !isLessThanOne) {
       return Number((rate.in_count / baseRate.in_count).toFixed(8))
     }
     return Number((rate.out_count / baseRate.out_count).toFixed(8))
@@ -32,27 +34,38 @@ export const RateCoefficient = ({
 
   // Функция для обновления курса на основе коэффициента
   const updateRateBasedOnCoefficient = (value: string | number) => {
-    if (!baseRate) return
+    if (!baseRate) return;
 
-    const coefficient = typeof value === 'string' ? parseFloat(value) : value
-    if (isNaN(coefficient) || !isFinite(coefficient)) return
+    const coefficient = typeof value === 'string' ? parseFloat(value) : value;
+    if (isNaN(coefficient) || !isFinite(coefficient)) return;
 
-    const currentRate = form.getValues(`exchange_rates.${index}`)
-    if (!currentRate) return
+    const currentRate = form.getValues(`exchange_rates.${index}`);
+    if (!currentRate) return;
 
-    // Определяем по baseRate, какое значение нужно обновлять
+    // Если хотя бы один из in_count/out_count или их базовых ≤ 1 — меняем out_count
+    if (
+      baseRate.in_count <= 1 ||
+      baseRate.out_count <= 1
+    ) {
+      const newOutCount = baseRate.out_count * coefficient;
+      if (isFinite(newOutCount)) {
+        form.setValue(`exchange_rates.${index}.out_count`, newOutCount);
+      }
+      return;
+    }
+
     if (baseRate.in_count > baseRate.out_count) {
-      const newInCount = baseRate.in_count * coefficient
+      const newInCount = baseRate.in_count * coefficient;
       if (isFinite(newInCount)) {
-        form.setValue(`exchange_rates.${index}.in_count`, newInCount)
+        form.setValue(`exchange_rates.${index}.in_count`, newInCount);
       }
     } else {
-      const newOutCount = baseRate.out_count * coefficient
+      const newOutCount = baseRate.out_count * coefficient;
       if (isFinite(newOutCount)) {
-        form.setValue(`exchange_rates.${index}.out_count`, newOutCount)
+        form.setValue(`exchange_rates.${index}.out_count`, newOutCount);
       }
     }
-  }
+  };
 
   // Эффект для отслеживания изменений курса
   useEffect(() => {

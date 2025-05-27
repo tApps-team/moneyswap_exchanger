@@ -40,12 +40,18 @@ import {
     const calculateRateCoefficient = (rate: { in_count: number; out_count: number }, baseRate: { in_count: number; out_count: number }): number => {
       if (!baseRate) return 1;
       if (baseRate.in_count === 0 || baseRate.out_count === 0) return 1;
-  
-      if (rate.in_count > rate.out_count) {
-        return rate.in_count / baseRate.in_count;
+
+      if (
+        baseRate.in_count <= 1 ||
+        baseRate.out_count <= 1
+      ) {
+        return Number((rate.out_count / baseRate.out_count).toFixed(8));
       }
-      
-      return rate.out_count / baseRate.out_count;
+
+      if (rate.in_count > rate.out_count) {
+        return Number((rate.in_count / baseRate.in_count).toFixed(8));
+      }
+      return Number((rate.out_count / baseRate.out_count).toFixed(8));
     };
   
     const [deleteDirection] = useDeleteDirectionMutation();
@@ -87,7 +93,7 @@ import {
     const handleBaseRateChange = (value: number, isInCount: boolean) => {
       const rates = form.getValues(`directions.${index}.exchange_rates`);
       if (!rates) return;
-  
+
       // Обновляем значение базового курса
       const basePath = `directions.${index}.exchange_rates.0` as const;
       form.setValue(
@@ -96,29 +102,34 @@ import {
           : `${basePath}.out_count` as const, 
         value
       );
-  
+
       // Если есть дополнительные курсы, обновляем их
       if (rates.length > 1) {
-        const baseRate = rates[0];
-        const isBaseInCountGreater = baseRate.in_count > baseRate.out_count;
-  
-        // Пересчитываем все остальные курсы
+        const baseRate = {
+          ...rates[0],
+          [isInCount ? 'in_count' : 'out_count']: value
+        };
         rates.slice(1).forEach((rate, idx) => {
           const ratePath = `directions.${index}.exchange_rates.${idx + 1}` as const;
           const rateCoefficient = rate.rate_coefficient ?? 1;
-  
-          // Пересчитываем только in_count если базовый in_count больше out_count
-          // Или только out_count если базовый out_count больше in_count
-          if (isBaseInCountGreater && isInCount) {
-            const newValue = value * rateCoefficient;
-            form.setValue(`${ratePath}.in_count` as const, newValue);
-          } else if (!isBaseInCountGreater && !isInCount) {
-            const newValue = value * rateCoefficient;
-            form.setValue(`${ratePath}.out_count` as const, newValue);
+
+          // Новая логика: если хотя бы один из in_count/out_count или их базовых <= 1 — меняем out_count
+          if (
+            baseRate.in_count <= 1 ||
+            baseRate.out_count <= 1
+          ) {
+            const newOutCount = Number((baseRate.out_count * rateCoefficient).toFixed(8));
+            form.setValue(`${ratePath}.out_count` as const, newOutCount);
+          } else if (baseRate.in_count > baseRate.out_count) {
+            const newInCount = Number((baseRate.in_count * rateCoefficient).toFixed(8));
+            form.setValue(`${ratePath}.in_count` as const, newInCount);
+          } else {
+            const newOutCount = Number((baseRate.out_count * rateCoefficient).toFixed(8));
+            form.setValue(`${ratePath}.out_count` as const, newOutCount);
           }
         });
       }
-  
+
       form.trigger();
     };
   
@@ -268,13 +279,21 @@ import {
                                       const coefficient = parseFloat(value);
                                       if (!isNaN(coefficient) && isFinite(coefficient)) {
                                         const baseRate = exchangeRates[0];
-                                        if (baseRate.in_count > baseRate.out_count) {
-                                          const newInCount = baseRate.in_count * coefficient;
+                                        if (
+                                          baseRate.in_count <= 1 ||
+                                          baseRate.out_count <= 1
+                                        ) {
+                                          const newOutCount = Number((baseRate.out_count * coefficient).toFixed(8));
+                                          if (isFinite(newOutCount)) {
+                                            form.setValue(`directions.${index}.exchange_rates.${rateIndex + 1}.out_count`, newOutCount);
+                                          }
+                                        } else if (baseRate.in_count > baseRate.out_count) {
+                                          const newInCount = Number((baseRate.in_count * coefficient).toFixed(8));
                                           if (isFinite(newInCount)) {
                                             form.setValue(`directions.${index}.exchange_rates.${rateIndex + 1}.in_count`, newInCount);
                                           }
                                         } else {
-                                          const newOutCount = baseRate.out_count * coefficient;
+                                          const newOutCount = Number((baseRate.out_count * coefficient).toFixed(8));
                                           if (isFinite(newOutCount)) {
                                             form.setValue(`directions.${index}.exchange_rates.${rateIndex + 1}.out_count`, newOutCount);
                                           }
