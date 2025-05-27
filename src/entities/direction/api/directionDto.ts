@@ -61,6 +61,8 @@ export type AddNoncashDirectionDtoRequest = {
       }[]
     | null;
   exchange_rates: ExchangeRate[];
+  min_amount: number | null;
+  max_amount: number | null;
 };
 export type AddNoncashDirectionDtoResponse = void;
 

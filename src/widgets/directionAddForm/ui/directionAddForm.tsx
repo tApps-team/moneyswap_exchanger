@@ -24,7 +24,7 @@ import { CurrencyType, LocationMarker } from "@/shared/types";
 import {
   Accordion,
   AccordionContent,
-  AccordionItem, 
+  AccordionItem,
   AccordionTrigger,
   Button,
   Checkbox,
@@ -36,13 +36,14 @@ import {
   FormMessage,
   useToast
 } from "@/shared/ui";
+import { MinMaxAmount } from "@/features/min-max-amount";
 
 export const DirectionAddForm = () => {
   const { i18n, t } = useTranslation();
   const { toast } = useToast();
   const navigate = useNavigate();
   const currentLanguage = i18n.language as "ru" | "en";
-  const {activeLocation, nonCash} = useAppSelector(
+  const { activeLocation, nonCash } = useAppSelector(
     (state) => state.activeLocation
   );
 
@@ -68,13 +69,10 @@ export const DirectionAddForm = () => {
     "exchange_rates",
   ]);
 
-  const [addDirection, { isLoading: isLoadingAddDirection }] =
-    useAddDirectionMutation();
-  const [addNoncashDirection, { isLoading: isLoadingAddNoncashDirection }] =
-    useAddNoncashDirectionMutation();
+  const [addDirection, { isLoading: isLoadingAddDirection }] = useAddDirectionMutation();
+  const [addNoncashDirection, { isLoading: isLoadingAddNoncashDirection }] = useAddNoncashDirectionMutation();
 
-    const currenciesRequest = nonCash ? { base: "all", is_no_cash: true } : { base: "all" };
-    console.log('currenciesRequest:', currenciesRequest);
+  const currenciesRequest = nonCash ? { base: "all", is_no_cash: true } : { base: "all" };
 
   const { data: currencies } = useAvailableValutesQuery(currenciesRequest);
 
@@ -181,14 +179,18 @@ export const DirectionAddForm = () => {
         };
 
     const addPromise = nonCash 
-      ? addNoncashDirection(requestData)
+      ? addNoncashDirection({
+          ...requestData,
+          min_amount: data.min_amount || null,
+          max_amount: data.max_amount || null,
+        })
       : activeLocation && addDirection({
-        ...requestData,
-        id: activeLocation.id,
-        marker: activeLocation.code_name
-          ? LocationMarker.city
-          : LocationMarker.country,
-      });
+          ...requestData,
+          id: activeLocation.id,
+          marker: activeLocation.code_name
+            ? LocationMarker.city
+            : LocationMarker.country,
+        });
 
     addPromise && addPromise
       .unwrap()
@@ -225,7 +227,6 @@ export const DirectionAddForm = () => {
   };
 
   const onSubmit = (data: DirectionAddSchemaType) => {
-    // Если is_exchange_rates false, оставляем только первый объект
     const ratesToProcess = data.is_exchange_rates 
       ? data.exchange_rates 
       : data.exchange_rates?.slice(0, 1);
@@ -253,7 +254,6 @@ export const DirectionAddForm = () => {
               : rate.out_count / rate.in_count;
         }
 
-        // Если в массиве только один элемент, делаем min_count и max_count null
         if (array.length === 1) {
           return { ...rate, in_count, out_count, min_count: null, max_count: null };
         }
@@ -265,7 +265,6 @@ export const DirectionAddForm = () => {
         return { ...rate, in_count, out_count };
       }) ?? null;
 
-    // Обновляем объект data с новыми значениями exchange_rates
     const updatedData = { ...data, exchange_rates: updatedExchangeRates };
 
     handleAddDirection(updatedData);
@@ -301,7 +300,6 @@ export const DirectionAddForm = () => {
     const currentRates = form.getValues("exchange_rates") || [];
     const updatedRates = currentRates.filter((_, i) => i !== index);
     
-    // Если удалили первый rate, сбрасываем min_count в 0 для нового первого rate
     if (index === 0 && updatedRates.length > 0) {
       updatedRates[0] = {
         ...updatedRates[0],
@@ -313,7 +311,10 @@ export const DirectionAddForm = () => {
   };
 
   const isSubmitDisabled = () => {
+    const isExchangeRates = form.getValues("is_exchange_rates");
     const rates = form.getValues("exchange_rates");
+    
+    if (!isExchangeRates) return false;
     if (!rates || rates.length <= 1) return false;
     
     const lastRate = rates[rates.length - 1];
@@ -401,7 +402,6 @@ export const DirectionAddForm = () => {
             </FormItem>
           )}
         />
-        {/* банкоматы */}
         {form.getValues("bankomats") &&
           form.getValues("bankomats")?.length &&
           !isBankomatsLoading &&
@@ -474,7 +474,6 @@ export const DirectionAddForm = () => {
             <Loader className="animate-spin" stroke="#fff" />
           </div>
         )}
-        {/* банкоматы */}
         <ActualCourse actualCourse={actualCourse} />
         {form.getValues("is_exchange_rates") ? (
           <div className="grid grid-flow-row gap-4">
@@ -488,14 +487,14 @@ export const DirectionAddForm = () => {
               </button>
             </div>
             <ExchangeRatesWithFromVolume
-            control={form.control}
-            form={form}
-            valuteFrom={form.getValues("valute_from")}
-            valuteTo={form.getValues("valute_to")}
-            exchangeRates={form.getValues("exchange_rates") || []}
-            onAddNewRate={handleAddNewRate}
-            onDeleteRate={handleDeleteRate}
-          />
+              control={form.control}
+              form={form}
+              valuteFrom={form.getValues("valute_from")}
+              valuteTo={form.getValues("valute_to")}
+              exchangeRates={form.getValues("exchange_rates") || []}
+              onAddNewRate={handleAddNewRate}
+              onDeleteRate={handleDeleteRate}
+            />
           </div>
         ) : (
           <div className="grid grid-flow-row gap-10">
@@ -579,8 +578,15 @@ export const DirectionAddForm = () => {
             </div>
           </div>
         )}
+        {nonCash && (
+          <MinMaxAmount 
+            control={form.control}
+            disabled={!form.getValues("valute_from") || !form.getValues("valute_to")}
+            t={t}
+          />
+        )}
         <Button
-          className="rounded-[35px] border border-bg-darkGray text-lg  sm:text-xl h-[70px] bg-darkGray text-mainColor uppercase"
+          className="rounded-[35px] border border-bg-darkGray text-lg sm:text-xl h-[70px] bg-darkGray text-mainColor uppercase"
           type="submit"
           disabled={isSubmitDisabled()}
         >
