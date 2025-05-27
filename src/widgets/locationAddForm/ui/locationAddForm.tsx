@@ -6,7 +6,7 @@ import {
   useCitiesByCountryNameQuery,
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
-import { LogoArrowIcon, LogoButtonIcon } from "@/shared/assets";
+import { LogoButtonIcon } from "@/shared/assets";
 import { Lang } from "@/shared/config";
 import { paths } from "@/shared/routing";
 import { AllCitiesFlag, LocationMarker } from "@/shared/types";
@@ -24,7 +24,6 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
   Switch,
   TimePicker,
   useToast
@@ -34,6 +33,7 @@ import { Loader, Minus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { MinMaxAmount } from "@/features/min-max-amount";
 
 export const LocationAddForm = () => {
   const { i18n, t } = useTranslation();
@@ -470,75 +470,11 @@ export const LocationAddForm = () => {
             </div>
           </div>
         </div>
-        <div>
-          <div className="grid justify-center items-center pb-4 px-2">
-            <p className="font-semibold uppercase text-[#fff] text-xs text-center">
-              {t("Минимальная и максимальная сумма")}
-            </p>
-          </div>
-          <div className="grid grid-cols-[1fr,50px,1fr] items-center  grid-row-1">
-            <FormField
-              control={form.control}
-              name={"min_amount"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        {...field}
-                        type="number"
-                        onWheel={(e) => (e.target as HTMLInputElement).blur()}
-                        className="bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                        disabled={!form.getValues("location.code_name")}
-                        value={field.value === null ? "" : field.value}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value === ""
-                              ? null
-                              : Number(e.target.value)
-                          )
-                        }
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex items-center justify-center text-white font-extrabold">
-              <LogoArrowIcon className="rotate-180" />
-            </div>
-
-            <FormField
-              control={form.control}
-              name={"max_amount"}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        {...field}
-                        type="number"
-                        onWheel={(e) => (e.target as HTMLInputElement).blur()}
-                        className="bg-darkGray text-white text-base rounded-[35px] min-h-12 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                        disabled={!form.getValues("location.code_name")}
-                        value={field.value === null ? "" : field.value}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value === ""
-                              ? null
-                              : Number(e.target.value)
-                          )
-                        }
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
+        <MinMaxAmount 
+          control={form.control}
+          disabled={!form.getValues("location.code_name")}
+          t={t}
+        />
         <Button
           className="w-full border-2  text-mainColor text-lg  sm:text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none uppercase"
           type="submit"

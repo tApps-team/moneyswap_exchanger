@@ -72,6 +72,17 @@ export const directionAddSchema = z.object({
   bankomats: z.union([z.array(bankomatSchema), z.null()]),
   exchange_rates: z.array(exchangeRateAddSchema).nullable(),
   is_exchange_rates: z.boolean(),
+  min_amount: z
+    .number()
+    .min(0,{ message: "> 0" })
+    .nullable()
+    .optional(),
+  max_amount: z
+    .number()
+    .positive({ message: "> 0" })
+    .min(0.00000001)
+    .nullable()
+    .optional(),
 });
 
 export type DirectionAddSchemaType = z.infer<typeof directionAddSchema>;
