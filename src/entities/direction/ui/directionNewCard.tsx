@@ -170,7 +170,6 @@ import {
                   <FormControl>
                     <Input
                       {...field}
-                      disabled={field.value === 1 && form.getValues(`directions.${index}.exchange_rates.0.out_count`) !== 1}
                       value={field.value || ""}
                       type="number"
                       className="bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
@@ -202,7 +201,6 @@ import {
                   <FormControl>
                     <Input
                       {...field}
-                      disabled={field.value === 1 && form.getValues(`directions.${index}.exchange_rates.0.in_count`) !== 1}
                       value={field.value || ""}
                       type="number"
                       className="bg-darkGray border-none text-white p-2.5 rounded-full focus-visible:ring-transparent focus-visible:ring-offset-0 text-center h-[34px] text-base"
@@ -245,11 +243,11 @@ import {
                           direction={direction}
                           onRateChange={handleRateChange}
                         />
-                          <AmountRangeFrom 
-                            form={form} 
-                            index={index} 
-                            rateIndex={rateIndex + 1} 
-                          />
+                        <AmountRangeFrom 
+                          form={form} 
+                          index={index} 
+                          rateIndex={rateIndex + 1} 
+                        />
                       </div>
                       <div className="grid grid-cols-[0.42fr,1fr] mobile:gap-2 gap-1 items-center justify-stretch justify-items-center">
                         <FormField

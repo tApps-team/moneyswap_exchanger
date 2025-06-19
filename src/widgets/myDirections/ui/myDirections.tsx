@@ -136,30 +136,30 @@ export const MyDirections = () => {
           });
         }
 
-        exchange_rates = exchange_rates.map(rate => {
-          let { in_count, out_count } = rate;
+        // exchange_rates = exchange_rates.map(rate => {
+        //   let { in_count, out_count } = rate;
 
-          if (in_count === out_count) {
-            in_count = 1;
-            out_count = 1;
-          } else if (in_count > out_count && in_count !== 1 && out_count !== 1) {
-            out_count = 1;
-            in_count = rate.in_count / rate.out_count;
-          } else if (in_count === 1 || out_count === 1) {
-            in_count = rate.in_count;
-            out_count = rate.out_count;
-          } else if (in_count < out_count && in_count !== 1 && out_count !== 1) {
-            in_count = 1;
-            out_count = rate.out_count / rate.in_count;
-          }
+        //   if (in_count === out_count) {
+        //     in_count = 1;
+        //     out_count = 1;
+        //   } else if (in_count > out_count && in_count !== 1 && out_count !== 1) {
+        //     out_count = 1;
+        //     in_count = rate.in_count / rate.out_count;
+        //   } else if (in_count === 1 || out_count === 1) {
+        //     in_count = rate.in_count;
+        //     out_count = rate.out_count;
+        //   } else if (in_count < out_count && in_count !== 1 && out_count !== 1) {
+        //     in_count = 1;
+        //     out_count = rate.out_count / rate.in_count;
+        //   }
 
-          return {
-            ...rate,
-            in_count,
-            out_count,
-            rate_coefficient: rate.rate_coefficient ?? 1
-          };
-        });
+        //   return {
+        //     ...rate,
+        //     in_count,
+        //     out_count,
+        //     rate_coefficient: rate.rate_coefficient ?? 1
+        //   };
+        // });
       }
 
       return {
