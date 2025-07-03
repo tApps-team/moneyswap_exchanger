@@ -1,3 +1,7 @@
+import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { TelegramAccount } from "@/features/telegram-account";
 import { useProfileInfoQuery } from "@/entities/user";
 import { Lang } from "@/shared/config";
 import { support } from "@/shared/routing";
@@ -10,9 +14,6 @@ import {
   AlertDialogTrigger,
   Skeleton,
 } from "@/shared/ui";
-import { X } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 
 export const ProfileInfo = () => {
   const { i18n, t } = useTranslation();
@@ -21,14 +22,14 @@ export const ProfileInfo = () => {
   const title =
     i18n.language === Lang.ru ? profileInfo?.title?.ru : profileInfo?.title?.en;
   return (
-    <div className="text-white grid grid-rows-2 grid-cols-1 h-[50vh] ">
+    <div className="text-white grid grid-flow-row content-between gap-10 min-h-[60vh]">
       {isLoadingProfileInfo ? (
         <div>
           <Skeleton className="w-full h-12 sm:h-16 rounded-xl" />
         </div>
       ) : (
         <div>
-          <div className="text-lg sm:text-xl uppercase">{title}</div>
+          <div className="truncate text-lg sm:text-xl uppercase">{title}</div>
           <Link
             className="text-xs sm:text-sm font-light underline"
             to={profileInfo?.partner_link || ""}
@@ -38,7 +39,10 @@ export const ProfileInfo = () => {
           </Link>
         </div>
       )}
-      <div className="grid grid-rows-2">
+      <div>
+        <TelegramAccount />
+      </div>
+      <div className="grid grid-flow-row gap-6 items-end h-fit">
         <div className="text-center">
           <p>{t("Свяжитесь с поддержкой")}</p>
           <p>{t("для изменений")}</p>
