@@ -7,7 +7,7 @@ export const TelegramAccount = () => {
   const data = {
     username: "exchange_bot",
     user_id: 1234567890,
-    is_current: true,
+    is_current: false,
   };
 
   const tg_link = data.is_current ? "https://t.me/exchange_bot_edit" : "https://t.me/exchange_bot_add";

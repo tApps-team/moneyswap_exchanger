@@ -19,7 +19,6 @@ export const userSlice = createSlice({
     login: (state, action: PayloadAction<Tokens>) => {
       Cookies.set("isAuth", "true");
       state.isAuth = true;
-      state.isUserSeeTelegramErrorModal = true;
       Cookies.set("accessToken", action.payload.access_token, {
         secure: true,
         httpOnly: false,
@@ -37,7 +36,7 @@ export const userSlice = createSlice({
       Cookies.set("isAuth", "false");
       localStorage.removeItem("persist:root");
       state.isAuth = false;
-      state.isUserSeeTelegramErrorModal = true;
+      state.isUserSeeTelegramErrorModal = false;
     },
     setAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload;

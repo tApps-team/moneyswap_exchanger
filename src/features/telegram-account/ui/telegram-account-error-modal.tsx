@@ -23,7 +23,6 @@ export const TelegramAccountErrorModal = () => {
       setIsOpen(true);
       dispatch(setLinkedState(true));
     }
-    console.log("effect")
   }, [data.is_current, isUserSeeTelegramErrorModal, dispatch]);
 
   const tg_link = "https://t.me/exchange_bot_add";
