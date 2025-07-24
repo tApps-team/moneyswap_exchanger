@@ -1,6 +1,14 @@
 import { Tokens } from "../model/types";
 import { authApi, baseApi } from "@/shared/api";
-import { ProfileInfoDtoRequest, ProfileInfoDtoResponse } from "./types";
+import {
+  AddTelegramAccountDtoRequest,
+  AddTelegramAccountDtoResponse,
+  EditTelegramAccountDtoRequest,
+  EditTelegramAccountDtoResponse,
+  ProfileInfoDtoRequest,
+  ProfileInfoDtoResponse,
+} from "./types";
+import { TELEGRAM } from "@/shared/api/tags";
 
 type AuthParams = {
   username: string;
@@ -50,7 +58,48 @@ export const profileInfoApi = authApi.injectEndpoints({
         url: `/api/partner/account_info`,
         method: "GET",
       }),
+      keepUnusedDataFor: 0,
+      providesTags: [TELEGRAM],
     }),
+    switchNotificationActivity: build.mutation<string, void>({
+      query: () => ({
+        url: `/api/partner/switch_notification_activity`,
+        method: "GET",
+      }),
+      invalidatesTags: [TELEGRAM],
+    }),
+    addTelegramAccount: build.mutation<
+      AddTelegramAccountDtoResponse,
+      AddTelegramAccountDtoRequest
+    >({
+      query: (params) => ({
+        url: `/api/partner/add_admin_exchange_order`,
+        method: "POST",
+        params,
+      }),
+      invalidatesTags: [TELEGRAM],
+    }),
+    editTelegramAccount: build.mutation<
+     EditTelegramAccountDtoResponse,
+     EditTelegramAccountDtoRequest
+  >({
+      query: (params) => ({
+        url: `/api/partner/edit_admin_exchange_order`,
+        method: "POST",
+        params,
+      }),
+      invalidatesTags: [TELEGRAM],
+    }),
+    deleteTelegramAccount: build.mutation<
+     string,
+     void
+ >({
+     query: () => ({
+       url: `/api/partner/delete_admin_exchange_order`,
+       method: "DELETE",
+     }),
+     invalidatesTags: [TELEGRAM],
+   }),
   }),
 });
-export const { useProfileInfoQuery } = profileInfoApi;
+export const { useProfileInfoQuery, useSwitchNotificationActivityMutation, useAddTelegramAccountMutation, useEditTelegramAccountMutation, useDeleteTelegramAccountMutation } = profileInfoApi;

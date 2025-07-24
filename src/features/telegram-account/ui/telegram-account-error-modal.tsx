@@ -3,8 +3,9 @@ import { Link } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/shared/ui";
 import { TelegramLinkBtn } from "./link-btn";
-import { setLinkedState } from "@/entities/user";
+import { setLinkedState, useProfileInfoQuery } from "@/entities/user";
 import { useAppDispatch, useAppSelector } from "@/shared/model";
+import { paths } from "@/shared/routing";
 
 export const TelegramAccountErrorModal = () => {
   const { t } = useTranslation();
@@ -12,20 +13,17 @@ export const TelegramAccountErrorModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isUserSeeTelegramErrorModal } = useAppSelector((state) => state.user);
   
-  const data = {
-    username: "exchange_bot",
-    user_id: 1234567890,
-    is_current: false,
-  };
+  const { data: profileInfo, isSuccess } =
+    useProfileInfoQuery();
 
   useEffect(() => {
-    if (!data.is_current && !isUserSeeTelegramErrorModal) {
+    if (!profileInfo?.telegram && !isUserSeeTelegramErrorModal && isSuccess) {
       setIsOpen(true);
       dispatch(setLinkedState(true));
     }
-  }, [data.is_current, isUserSeeTelegramErrorModal, dispatch]);
+  }, [profileInfo?.telegram, isUserSeeTelegramErrorModal, dispatch]);
 
-  const tg_link = "https://t.me/exchange_bot_add";
+  const profilePageLink = paths.profile+paths.profileSettings+paths.profileInfo;
   const tg_text = "telegram_account.add_btn";
 
   return (
@@ -39,7 +37,7 @@ export const TelegramAccountErrorModal = () => {
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
-            <TelegramLinkBtn link={tg_link} text={tg_text} icon={<Link className="size-5" />} />
+            <TelegramLinkBtn link={profilePageLink} text={tg_text} icon={<Link className="size-5" />} />
           </DialogClose>
         </DialogFooter>
       </DialogContent>

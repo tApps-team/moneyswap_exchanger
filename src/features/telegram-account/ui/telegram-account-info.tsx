@@ -1,30 +1,55 @@
-import { Link, Unlink } from "lucide-react";
+import { FC } from "react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { TelegramLinkBtn } from "./link-btn";
+import { TelegramAccountType, useSwitchNotificationActivityMutation } from "@/entities/user";
+import { Skeleton, Switch } from "@/shared/ui";
+import { TelegramAddModal } from "./telegram-add-modal";
+import { TelegramDeleteModal } from "./telegram-delete-modal";
 
-export const TelegramAccount = () => {
+interface TelegramAccountProps {
+  telegram_account: TelegramAccountType | null;
+  isLoading: boolean;
+  has_exchange_admin_order: boolean;
+}
+
+export const TelegramAccount:FC<TelegramAccountProps> = ({telegram_account, isLoading, has_exchange_admin_order}) => {
   const { t } = useTranslation();
-  const data = {
-    username: "exchange_bot",
-    user_id: 1234567890,
-    is_current: false,
-  };
-
-  const tg_link = data.is_current ? "https://t.me/exchange_bot_edit" : "https://t.me/exchange_bot_add";
-  const tg_text = data.is_current ? "telegram_account.edit_btn" : "telegram_account.add_btn";
+  const [switchNotificationActivity] = useSwitchNotificationActivityMutation();
   
   return (
-    <div className="grid grid-flow-row gap-8">
-      {data.is_current ? (
-        <div className="grid grid-flow-row gap-1 text-center text-base font-normal"><p>{t("telegram_account.telegram_success")}</p><p className="font-semibold text-mainColor underline">{data.user_id} | {data.username}</p></div>
+    <>
+    {isLoading ? <Skeleton className="w-full h-[150px] rounded-xl bg-lightGray" /> :     <div className="grid grid-flow-row gap-6">
+      {telegram_account ? (
+        <div className="grid grid-flow-row gap-4">
+          <p className="text-center mobile:text-lg text-base uppercase font-medium">{t("telegram_account.telegram_account_info")}:</p>
+          <div className="grid grid-flow-row gap-2 mobile:text-base text-sm">
+            <div className="flex justify-between">
+              <span className="font-medium">Telegram ID:</span>
+              <span className="font-semibold text-mainColor">{telegram_account.id}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Username:</span>
+              <span className="font-semibold text-mainColor">{telegram_account.name}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">{t("telegram_account.telegram_account_link")}:</span>
+              <Link to={telegram_account.link} target="_blank" className="font-semibold text-mainColor underline">{telegram_account.link}</Link>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="font-medium">{t("telegram_account.telegram_account_notification")}:</span>
+              <Switch
+                  checked={telegram_account.notification}
+                  onCheckedChange={() => switchNotificationActivity()}
+                />
+            </div>
+          </div>
+          {telegram_account && <TelegramDeleteModal />}
+        </div>
       ) : (
-        <div className="grid grid-flow-row gap-1 text-center text-base font-normal"><p>{t("telegram_account.telegram_error")}</p><p className="mx-auto w-[90%] font-semibold text-mainColor text-sm">{t("telegram_account.telegram_error_description")}</p></div>
+        <div className="grid grid-flow-row gap-4 mobile:text-lg text-base font-medium"><p className="text-center uppercase">{t("telegram_account.telegram_error")}</p><p className="mx-auto w-[90%] text-center font-semibold text-mainColor text-sm">{t("telegram_account.telegram_error_description")}</p></div>
       )}
-      {data.is_current ? (
-        <TelegramLinkBtn link={tg_link} text={tg_text} icon={<Unlink className="size-5" />} />
-      ) : (
-        <TelegramLinkBtn link={tg_link} text={tg_text} icon={<Link className="size-5" />} />
-      )}
-    </div>
+      <TelegramAddModal is_add={telegram_account ? false : true} has_exchange_admin_order={has_exchange_admin_order} />
+    </div>}
+    </>
   );
 };

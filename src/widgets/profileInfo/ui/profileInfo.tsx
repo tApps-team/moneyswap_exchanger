@@ -25,13 +25,13 @@ export const ProfileInfo = () => {
     <div className="text-white grid grid-flow-row content-between gap-10 min-h-[60vh]">
       {isLoadingProfileInfo ? (
         <div>
-          <Skeleton className="w-full h-12 sm:h-16 rounded-xl" />
+          <Skeleton className="w-full h-14 rounded-xl bg-lightGray" />
         </div>
       ) : (
         <div>
-          <div className="truncate text-lg sm:text-xl uppercase">{title}</div>
+          <div className="truncate text-lg uppercase">{title}</div>
           <Link
-            className="text-xs sm:text-sm font-light underline"
+            className="text-base font-semibold text-mainColor underline"
             to={profileInfo?.partner_link || ""}
             target="_blank"
           >
@@ -40,9 +40,9 @@ export const ProfileInfo = () => {
         </div>
       )}
       <div>
-        <TelegramAccount />
+        <TelegramAccount telegram_account={profileInfo?.telegram || null} isLoading={isLoadingProfileInfo} has_exchange_admin_order={profileInfo?.has_exchange_admin_order || false}/>
       </div>
-      <div className="grid grid-flow-row gap-6 items-end h-fit">
+      <div className="grid grid-flow-row gap-6 items-end h-fit pb-10">
         <div className="text-center">
           <p>{t("Свяжитесь с поддержкой")}</p>
           <p>{t("для изменений")}</p>
