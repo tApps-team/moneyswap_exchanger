@@ -1,7 +1,12 @@
 export * from "./model/userSlice";
-export type { Tokens } from "./model/types";
+export { setLinkedState } from "./model/userSlice";
+export type * from "./model/types";
 export {
   useLoginMutation,
   authorizationAPI,
   useProfileInfoQuery,
+  useSwitchNotificationActivityMutation,
+  useAddTelegramAccountMutation,
+  useEditTelegramAccountMutation,
+  useDeleteTelegramAccountMutation,
 } from "./api/authService";

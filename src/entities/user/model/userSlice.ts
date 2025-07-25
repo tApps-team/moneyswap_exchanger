@@ -4,10 +4,12 @@ import { Tokens } from "./types";
 
 interface UserState {
   isAuth: boolean;
+  isUserSeeTelegramErrorModal: boolean;
 }
 
 const initialState: UserState = {
   isAuth: Cookies.get("isAuth") === "true" ? true : false,
+  isUserSeeTelegramErrorModal: false,
 };
 
 export const userSlice = createSlice({
@@ -34,11 +36,16 @@ export const userSlice = createSlice({
       Cookies.set("isAuth", "false");
       localStorage.removeItem("persist:root");
       state.isAuth = false;
+      state.isUserSeeTelegramErrorModal = false;
     },
     setAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload;
     },
+    setLinkedState: (state, action: PayloadAction<boolean>) => {
+      state.isUserSeeTelegramErrorModal = action.payload;
+    },
   },
 });
 
+export const { login, logout, setAuth, setLinkedState } = userSlice.actions;
 export default userSlice.reducer;

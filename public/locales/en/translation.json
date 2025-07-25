@@ -104,5 +104,31 @@
   "Направления успешно обновлены": "Directions successfully updated",
   "Что-то пошло не так...": "Something went wrong...",
   "При обновлении произошла ошибка": "An error occurred during update...",
-  "Курсы не могут быть равны": "Rates cannot be equal"
+  "Курсы не могут быть равны": "Rates cannot be equal",
+
+  "telegram_account": {
+    "telegram_account_info": "Telegram account",
+    "telegram_account_link": "Link",
+    "telegram_account_notification": "Notifications",
+    "telegram_success": "Telegram account successfully linked",
+    "telegram_error": "Notifications are not connected",
+    "telegram_error_description": "Get notifications about important events in your exchange via the Telegram bot",
+    "edit_btn": "Edit",
+    "add_btn": "Add",
+    "telegram_error_modal_title": "Important! You don't have a Telegram account for notifications",
+    "telegram_error_modal_description": "Attach a Telegram account to receive instant notifications about important events in your exchange",
+    "telegram_add_title": "Attach a Telegram account",
+    "telegram_edit_title": "Change Telegram account",
+    "telegram_add_description": "Enter your Telegram ID account that you want to link to your exchange, notifications will be sent to your account via the Telegram bot",
+    "telegram_id_placeholder": "Enter your Telegram ID",
+    "telegram_add_success_title": "Request successfully created",
+    "telegram_add_success_description": "Click the button below to complete the account linking",
+    "telegram_user_id_how_to_find": "How to find your Telegram ID?",
+    "telegram_add_success_btn": "Confirm",
+    "telegram_delete_title": "Unlink Telegram account",
+    "telegram_delete_description": "Are you sure you want to unlink your Telegram account? You will no longer receive notifications about important events in your exchange via the Telegram bot",
+    "telegram_delete_btn": "Unlink",
+    "telegram_no_delete_btn": "Cancel",
+    "telegram_delete_success_title": "Telegram account successfully unlinked"
+  }
 }

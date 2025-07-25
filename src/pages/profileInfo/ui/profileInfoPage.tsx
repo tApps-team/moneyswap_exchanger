@@ -1,5 +1,5 @@
-import styles from "./profileInfoPage.module.scss";
 import { ProfileInfo } from "@/widgets/profileInfo";
+import styles from "./profileInfoPage.module.scss";
 
 export const ProfileInfoPage = () => {
   return (
