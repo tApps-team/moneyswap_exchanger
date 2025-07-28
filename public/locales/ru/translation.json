@@ -106,8 +106,12 @@
   "При обновлении произошла ошибка": "При обновлении произошла ошибка",
   "Курсы не могут быть равны": "Курсы не могут быть равны",
 
+  "notifications": {
+    "page_title": "Уведомления"
+  },
+
   "telegram_account": {
-    "telegram_account_info": "Телеграм аккаунт",
+    "telegram_account_info": "Телеграм",
     "telegram_account_link": "Ссылка",
     "telegram_account_notification": "Уведомления",
     "telegram_success": "Телеграм аккаунт успешно привязан",

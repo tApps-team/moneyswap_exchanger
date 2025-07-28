@@ -1,7 +1,6 @@
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { TelegramAccount } from "@/features/telegram-account";
 import { useProfileInfoQuery } from "@/entities/user";
 import { Lang } from "@/shared/config";
 import { support } from "@/shared/routing";
@@ -19,6 +18,7 @@ export const ProfileInfo = () => {
   const { i18n, t } = useTranslation();
   const { data: profileInfo, isLoading: isLoadingProfileInfo } =
     useProfileInfoQuery();
+    
   const title =
     i18n.language === Lang.ru ? profileInfo?.title?.ru : profileInfo?.title?.en;
   return (
@@ -39,9 +39,6 @@ export const ProfileInfo = () => {
           </Link>
         </div>
       )}
-      <div>
-        <TelegramAccount telegram_account={profileInfo?.telegram || null} isLoading={isLoadingProfileInfo} has_exchange_admin_order={profileInfo?.has_exchange_admin_order || false}/>
-      </div>
       <div className="grid grid-flow-row gap-6 items-end h-fit pb-10">
         <div className="text-center">
           <p>{t("Свяжитесь с поддержкой")}</p>

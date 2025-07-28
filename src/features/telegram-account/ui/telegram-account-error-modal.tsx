@@ -23,7 +23,7 @@ export const TelegramAccountErrorModal = () => {
     }
   }, [profileInfo?.telegram, isUserSeeTelegramErrorModal, dispatch]);
 
-  const profilePageLink = paths.profile+paths.profileSettings+paths.profileInfo;
+  const profilePageLink = paths.notifications;
   const tg_text = "telegram_account.add_btn";
 
   return (
