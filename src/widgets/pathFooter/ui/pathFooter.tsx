@@ -1,3 +1,4 @@
+import { useProfileInfoQuery } from "@/entities/user";
 import {
   HomeIcon,
   NotificationIcon,
@@ -9,6 +10,9 @@ import { Link, useLocation } from "react-router-dom";
 
 export const PathFooter = () => {
   const { pathname } = useLocation();
+  const { data: profileInfo } =
+  useProfileInfoQuery();
+
   return (
     <div className="w-full bg-none grid grid-cols-4 gap-10 p-4">
       <Link to={paths.profile} className="flex items-center justify-center">
@@ -33,7 +37,7 @@ export const PathFooter = () => {
       </Link>
       <Link
         to={paths.notifications}
-        className="flex items-center justify-center"
+        className="flex items-center justify-center relative"
       >
         <NotificationIcon
           width={20}
@@ -44,6 +48,10 @@ export const PathFooter = () => {
               : "var(--light-grey)"
           }
         />
+        {!profileInfo?.telegram && (
+          <div className="absolute -top-[2.5px] right-[32px] size-2.5 rounded-full bg-red-500">
+          </div>
+        )}
       </Link>
       <Link to={paths.statistics} className="flex items-center justify-center">
         <StatisticsIcon

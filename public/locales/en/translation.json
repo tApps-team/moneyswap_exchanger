@@ -106,8 +106,12 @@
   "При обновлении произошла ошибка": "An error occurred during update...",
   "Курсы не могут быть равны": "Rates cannot be equal",
 
+  "notifications": {
+    "page_title": "Notifications"
+  },
+
   "telegram_account": {
-    "telegram_account_info": "Telegram account",
+    "telegram_account_info": "Telegram",
     "telegram_account_link": "Link",
     "telegram_account_notification": "Notifications",
     "telegram_success": "Telegram account successfully linked",
