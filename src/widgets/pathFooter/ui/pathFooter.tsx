@@ -37,7 +37,7 @@ export const PathFooter = () => {
       </Link>
       <Link
         to={paths.notifications}
-        className="flex items-center justify-center relative"
+        className="flex items-center justify-center relative w-fit mx-auto"
       >
         <NotificationIcon
           width={20}
@@ -49,7 +49,7 @@ export const PathFooter = () => {
           }
         />
         {!profileInfo?.telegram && (
-          <div className="absolute -top-[2.5px] right-[32px] size-2.5 rounded-full bg-red-500">
+          <div className="absolute -top-[2.5px] -right-[2px] size-2.5 rounded-full bg-red-500">
           </div>
         )}
       </Link>
