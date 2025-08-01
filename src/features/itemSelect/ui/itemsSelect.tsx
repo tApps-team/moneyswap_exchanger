@@ -5,6 +5,7 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerHeader,
+  DrawerTitle,
   DrawerTrigger,
   Empty,
   Input,
@@ -109,6 +110,8 @@ export const ItemSelect = <T extends BaseItem>(
         </Button>
       </DrawerTrigger>
       <DrawerContent className="h-[100svh] bg-transparent border-none">
+        <DrawerTitle className="sr-only">
+        </DrawerTitle>
         <DrawerHeader className="gap-0">
           <div className="flex items-center justify-between">
             <Label className="text-mainColor text-start uppercase text-lg">

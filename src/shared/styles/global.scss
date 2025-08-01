@@ -125,3 +125,34 @@ body {
 .container {
   padding: var(--container-padding-all);
 }
+
+// Анимации для карточек городов
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutScale {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+.city-card-enter {
+  animation: fadeInScale 0.3s ease-out;
+}
+
+.city-card-exit {
+  animation: fadeOutScale 0.3s ease-in;
+}

@@ -3,7 +3,9 @@ import {
   locationEditSchema,
   setActiveLocation,
   useDeletePartnerLocationMutation,
+  useEditCitiesByCountryMutation,
   useEditPartnerLocationMutation,
+  useGetCitiesByCountryMutationMutation,
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
 import { LogoButtonIcon } from "@/shared/assets";
@@ -39,6 +41,8 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { MinMaxAmount } from "@/features/min-max-amount";
+import { useEffect } from "react";
+import { IncludedCities } from "@/features/location";
 
 export const LocationEditForm = () => {
   const { i18n, t } = useTranslation();
@@ -47,6 +51,26 @@ export const LocationEditForm = () => {
   const activeEditLocation = useAppSelector(
     (state) => state.activeLocation.activeLocation
   );
+
+
+  // const { data: citiesByCountry } = useGetCitiesByCountryQuery({
+  //   country_id: activeEditLocation?.id || 0,
+  // }, {
+  //   skip: !activeEditLocation?.id || !!activeEditLocation?.code_name,
+  // });
+
+  const [getCitiesByCountryMutation, { isLoading: isLoadingGetCitiesByCountry }] = useGetCitiesByCountryMutationMutation();
+
+  useEffect(() => {
+    if (activeEditLocation && !activeEditLocation?.code_name) {
+      getCitiesByCountryMutation({
+        country_id: activeEditLocation?.id,
+      }).unwrap().then((data) => {
+        form.setValue("active_pks", data.active_pks);
+        form.setValue("unactive_pks", data.unactive_pks);
+      });
+    }
+  }, [activeEditLocation]);
 
   const form = useForm<LocationEditSchemaType>({
     resolver: zodResolver(locationEditSchema),
@@ -74,6 +98,7 @@ export const LocationEditForm = () => {
       max_amount: activeEditLocation?.max_amount || null,
     },
   });
+
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -81,6 +106,13 @@ export const LocationEditForm = () => {
     useEditPartnerLocationMutation();
   const [deletePartnerLocation, { isLoading: isLoadingDeletePartnerLocation }] =
     useDeletePartnerLocationMutation();
+
+  const [editCitiesByCountry, { isLoading: isLoadingEditCitiesByCountry }] =
+    useEditCitiesByCountryMutation();
+
+  const handleFormStateChange = (newState: LocationEditSchemaType) => {
+    form.reset(newState);
+  };
 
   const onSubmit = (data: LocationEditSchemaType) => {
     const req = {
@@ -105,6 +137,17 @@ export const LocationEditForm = () => {
 
     editPartnerLocation(req)
       .unwrap()
+      .then(() => {
+        if (!activeEditLocation?.code_name && activeEditLocation?.id) {
+          // Отправляем запрос для обновления городов
+          const editCitiesReq = {
+            country_id: activeEditLocation?.id,
+            active_pks: data.active_pks.map(city => city.id),
+            unactive_pks: data.unactive_pks.map(city => city.id),
+          };
+          return editCitiesByCountry(editCitiesReq).unwrap();
+        }
+      })
       .then(() => {
         toast({
           variant: "success",
@@ -197,6 +240,8 @@ export const LocationEditForm = () => {
             </FormItem>
           )}
         />
+
+        {isLoadingGetCitiesByCountry ? <Loader className="animate-spin mx-auto size-10 text-mainColor" /> : !activeEditLocation?.code_name && <IncludedCities formState={formState} onFormStateChange={handleFormStateChange} />}
 
         <FormField
           control={form.control}
@@ -487,7 +532,7 @@ export const LocationEditForm = () => {
                 variant={"outline"}
                 className="w-full border-none text-darkGray text-lg  sm:text-xl disabled:pointer-events-none bg-mainColor  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none uppercase"
               >
-                {isLoadingDeletePartnerLocation ? (
+                {isLoadingDeletePartnerLocation || isLoadingEditCitiesByCountry ? (
                   <Loader className="animate-spin" />
                 ) : (
                   t("Удалить")

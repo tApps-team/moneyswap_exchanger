@@ -7,6 +7,10 @@ import {
   EditPartnerLocationDtoResponse,
   DeletePartnerLocationDtoRequest,
   DeletePartnerLocationDtoResponse,
+  GetCitiesByCountryDtoRequest,
+  GetCitiesByCountryDtoResponse,
+  EditCitiesByCountryDtoRequest,
+  EditCitiesByCountryDtoResponse,
 } from "./types";
 import { LOCATION } from "@/shared/api/tags";
 
@@ -20,6 +24,38 @@ export const authLocationApi = authApi.injectEndpoints({
       query: () => `/api/partner/partner_cities`,
       providesTags: [LOCATION],
     }),
+    // города в стране
+    getCitiesByCountry: build.query<
+      GetCitiesByCountryDtoResponse,
+      GetCitiesByCountryDtoRequest
+    >({
+      query: (params) => ({
+        url: "/api/partner/cities_for_exclude_by_partner_country",
+        method: "GET",
+        params: params,
+      }),
+    }),
+    getCitiesByCountryMutation: build.mutation<
+      GetCitiesByCountryDtoResponse,
+      GetCitiesByCountryDtoRequest
+    >({
+      query: (params) => ({
+        url: "/api/partner/cities_for_exclude_by_partner_country",
+        method: "GET",
+        params: params,
+      }),
+    }),
+    editCitiesByCountry: build.mutation<
+      EditCitiesByCountryDtoResponse,
+      EditCitiesByCountryDtoRequest
+  >({
+    query: (body) => ({
+        url: "/api/partner/edit_excluded_cities_by_partner_country",
+        method: "PATCH",
+        body: body,
+      }),
+    }),
+
     // объединенные запросы
     addPartnerLocation: build.mutation<
       AddPartnerLocationDtoResponse,
@@ -59,6 +95,11 @@ export const authLocationApi = authApi.injectEndpoints({
 export const {
   useGetCountriesQuery,
   useGetCitiesQuery,
+
+  // города в стране
+  useGetCitiesByCountryQuery,
+  useGetCitiesByCountryMutationMutation,
+  useEditCitiesByCountryMutation,
 
   // объединенные запросы
   useAddPartnerLocationMutation,

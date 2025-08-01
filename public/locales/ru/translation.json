@@ -110,6 +110,14 @@
     "page_title": "Уведомления"
   },
 
+  "choosen_cities": {
+    "title": "Управление городами",
+    "active_cities": "Активные города:",
+    "unactive_cities": "Неактивные города:",
+    "active_cities_empty": "Пусто...",
+    "unactive_cities_empty": "Пусто..."
+  },
+
   "telegram_account": {
     "telegram_account_info": "Телеграм",
     "telegram_account_link": "Ссылка",

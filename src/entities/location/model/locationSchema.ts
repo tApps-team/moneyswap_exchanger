@@ -33,6 +33,22 @@ export const locationSchema = z.object({
     .min(0.00000001)
     .nullable()
     .optional(),
+  active_pks: z.array(z.object({
+    id: z.number(),
+    name: z.object({
+      ru: z.string(),
+      en: z.string(),
+    }),
+    code_name: z.string(),
+  })).default([]),
+  unactive_pks: z.array(z.object({
+    id: z.number(),
+    name: z.object({
+      ru: z.string(),
+      en: z.string(),
+    }),
+    code_name: z.string(),
+  })).default([]),
 });
 
 export type LocationSchemaType = z.infer<typeof locationSchema>;
@@ -62,6 +78,22 @@ export const locationEditSchema = z.object({
     .min(0.00000001)
     .nullable()
     .optional(),
+    active_pks: z.array(z.object({
+      id: z.number(),
+      name: z.object({
+        ru: z.string(),
+        en: z.string(),
+      }),
+      code_name: z.string(),
+    })).default([]),
+    unactive_pks: z.array(z.object({
+      id: z.number(),
+      name: z.object({
+        ru: z.string(),
+        en: z.string(),
+      }),
+      code_name: z.string(),
+    })).default([]),
 });
 
 export type LocationEditSchemaType = z.infer<typeof locationEditSchema>;
