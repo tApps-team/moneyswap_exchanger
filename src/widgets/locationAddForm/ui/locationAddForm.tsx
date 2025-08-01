@@ -4,6 +4,7 @@ import {
   useAddPartnerLocationMutation,
   useAllCountriesQuery,
   useCitiesByCountryNameQuery,
+  useEditCitiesByCountryMutation,
 } from "@/entities/location";
 import { ItemSelect } from "@/features/itemSelect";
 import { LogoButtonIcon } from "@/shared/assets";
@@ -26,7 +27,7 @@ import {
   FormMessage,
   Switch,
   TimePicker,
-  useToast
+  useToast,
 } from "@/shared/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader, Minus } from "lucide-react";
@@ -34,6 +35,8 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { MinMaxAmount } from "@/features/min-max-amount";
+import { IncludedCities } from "@/features/location";
+import { useEffect } from "react";
 
 export const LocationAddForm = () => {
   const { i18n, t } = useTranslation();
@@ -62,6 +65,8 @@ export const LocationAddForm = () => {
       },
       min_amount: null,
       max_amount: null,
+      active_pks: [],
+      unactive_pks: [],
     },
   });
 
@@ -71,6 +76,13 @@ export const LocationAddForm = () => {
 
   const [addPartnerLocation, { isLoading: isLoadingAddPartnerLocation }] =
     useAddPartnerLocationMutation();
+
+  const [editCitiesByCountry, { isLoading: isLoadingEditCitiesByCountry }] =
+    useEditCitiesByCountryMutation();
+
+  const handleFormStateChange = (newState: LocationSchemaType) => {
+    form.reset(newState);
+  };
 
   const onSubmit = (data: LocationSchemaType) => {
     const req = {
@@ -99,6 +111,19 @@ export const LocationAddForm = () => {
 
     addPartnerLocation(req)
       .unwrap()
+      .then((data_res) => {
+        // Отправляем запрос для обновления городов
+
+        if (data.location.code_name === AllCitiesFlag) {
+          const editCitiesReq = {
+            country_id: data_res?.location_id,
+            active_pks: data.active_pks.map(city => city.id),
+            unactive_pks: data.unactive_pks.map(city => city.id),
+          };
+
+          return editCitiesByCountry(editCitiesReq).unwrap();
+        }
+      })
       .then(() => {
         toast({
           variant: "success",
@@ -131,6 +156,13 @@ export const LocationAddForm = () => {
     },
     { skip: !form.getValues("location.country.ru") }
   );
+
+  useEffect(() => {
+    if (cities) {
+      form.setValue("active_pks", cities);
+      form.setValue("unactive_pks", []);
+    }
+  }, [cities]);
 
   return (
     <Form {...form}>
@@ -206,6 +238,10 @@ export const LocationAddForm = () => {
             </FormItem>
           )}
         />
+
+        {/* Секция с чекбоксами для городов */}
+        {formState.location?.code_name === AllCitiesFlag && <IncludedCities formState={formState} onFormStateChange={handleFormStateChange} />}
+        {/* Секция с чекбоксами для городов */}
 
         <FormField
           control={form.control}
@@ -479,8 +515,9 @@ export const LocationAddForm = () => {
           className="w-full border-2  text-mainColor text-lg  sm:text-xl disabled:pointer-events-none bg-darkGray  disabled:bg-lightGray  items-center rounded-[35px] gap-2 select-none uppercase"
           type="submit"
           variant={"outline"}
+          disabled={isLoadingAddPartnerLocation || isLoadingEditCitiesByCountry}
         >
-          {isLoadingAddPartnerLocation ? (
+          {isLoadingAddPartnerLocation || isLoadingEditCitiesByCountry ? (
             <Loader className="animate-spin" />
           ) : (
             t("Добавить")

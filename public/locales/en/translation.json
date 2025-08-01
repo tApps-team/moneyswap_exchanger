@@ -110,6 +110,14 @@
     "page_title": "Notifications"
   },
 
+  "choosen_cities": {
+    "title": "City management",
+    "active_cities": "Active cities",
+    "unactive_cities": "Inactive cities",
+    "active_cities_empty": "No active cities...",
+    "unactive_cities_empty": "No inactive cities..."
+  },
+
   "telegram_account": {
     "telegram_account_info": "Telegram",
     "telegram_account_link": "Link",
