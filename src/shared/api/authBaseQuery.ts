@@ -27,6 +27,10 @@ const authBaseQuery: BaseQueryFn<
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
+    prepareHeaders: (headers) => {
+      headers.set('moneyswap', 'true');
+      return headers;
+    },
   });
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);

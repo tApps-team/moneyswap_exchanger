@@ -18,9 +18,10 @@ export const locationApi = baseApi.injectEndpoints({
       CitiesByCountryDtoNameResponse,
       CitiesByCountryDtoNameRequest
     >({
-      query: ({ country_name }) => ({
-        url: `/api/partner/cities?country_name=${country_name}`,
+      query: (params) => ({
+        url: `/api/partner/cities`,
         method: "GET",
+        params,
       }),
     }),
   }),

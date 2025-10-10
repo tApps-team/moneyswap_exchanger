@@ -28,30 +28,31 @@ export const directionAPI = authApi.injectEndpoints({
       AvailableValutesDtoRequest
     >({
       query: ({ base = "all", is_no_cash }) => ({
-        url: `/api/partner/available_valutes`,
+        url: `/api/v2/partner/available_valutes`,
         params: { base, is_no_cash },
         method: "GET",
       }),
     }),
     getBankomatsByValute: build.query<
       GetBankomatsByValuteResponse,
-      { valute: string }
+      { valute_id: number }
     >({
       query: (params) => ({
-        url: `/api/partner/bankomats_by_valute`,
+        url: `/api/v2/partner/bankomats_by_valute`,
         method: "GET",
         params,
       }),
     }),
     actualCourse: build.query<ActualCourseDtoResponse, ActualCourseDtoRequest>({
-      query: ({ valute_from, valute_to }) => ({
-        url: `/api/partner/actual_course?valute_from=${valute_from}&valute_to=${valute_to}`,
+      query: (params) => ({
+        url: `/api/v2/partner/actual_course`,
         method: "GET",
+        params,
       }),
     }),
     directionsBy: build.query<GetDirectionsByResponse, GetDirectionsByRequest>({
       query: (params) => ({
-        url: `/api/partner/directions_by`,
+        url: `/api/v2/partner/directions_by`,
         method: `GET`,
         params,
       }),
@@ -59,7 +60,7 @@ export const directionAPI = authApi.injectEndpoints({
     }),
     directionsByNoncash: build.query<GetDirectionsByNoncashResponse, GetDirectionsByNoncashRequest>({
       query: () => ({
-        url: `/api/partner/no_cash_directions`,
+        url: `/api/v2/partner/no_cash_directions`,
         method: `GET`,
       }),
       providesTags: [DIRECTION],
@@ -69,7 +70,7 @@ export const directionAPI = authApi.injectEndpoints({
       AddDirectionDtoRequest
     >({
       query: (body) => ({
-        url: `/api/partner/add_partner_direction`,
+        url: `/api/v2/partner/add_partner_direction`,
         method: "POST",
         body: body,
       }),
@@ -80,7 +81,7 @@ export const directionAPI = authApi.injectEndpoints({
     AddNoncashDirectionDtoRequest
   >({
     query: (body) => ({
-      url: `/api/partner/add_partner_no_cash_direction`,
+      url: `/api/v2/partner/add_partner_no_cash_direction`,
       method: "POST",
       body: body,
     }),
@@ -88,7 +89,7 @@ export const directionAPI = authApi.injectEndpoints({
   }),
     editDirection: build.mutation<EditDirectionResponse, EditDirectionRequest>({
       query: (BodyParams) => ({
-        url: `/api/partner/edit_partner_directions`,
+        url: `/api/v2/partner/edit_partner_directions`,
         method: `PATCH`,
         body: BodyParams,
       }),
@@ -96,7 +97,7 @@ export const directionAPI = authApi.injectEndpoints({
     }),
     editNoncashDirection: build.mutation<EditNoncashDirectionResponse, EditNoncashDirectionRequest>({
       query: (BodyParams) => ({
-        url: `/api/partner/edit_partner_no_cash_directions`,
+        url: `/api/v2/partner/edit_partner_no_cash_directions`,
         method: `PATCH`,
         body: BodyParams,
       }),
@@ -111,7 +112,7 @@ export const directionAPI = authApi.injectEndpoints({
       }
     >({
       query: (body) => ({
-        url: "/api/partner/delete_partner_direction",
+        url: "/api/v2/partner/delete_partner_direction",
         method: "DELETE",
         body,
       }),

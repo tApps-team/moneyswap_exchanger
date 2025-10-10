@@ -6,15 +6,15 @@ export type Direction = {
   icon_valute_from: string;
   valute_to: string;
   icon_valute_to: string;
-  is_active: boolean;
-  out_count_type: string;
   in_count_type: string;
+  out_count_type: string;
+  is_active: boolean;
   bankomats: Bankomat[] | null;
   exchange_rates: ExchangeRate[] | null;
 };
 
 export type Currency = {
-  id: string;
+  id: number;
   name: Name;
   code_name: string;
   icon_url: string;
@@ -23,7 +23,7 @@ export type Currency = {
 };
 
 export type CurrencyResponse = {
-  id: string;
+  id: number;
   name: Name;
   currencies: Currency[];
 };

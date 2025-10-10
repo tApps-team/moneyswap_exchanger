@@ -8,7 +8,7 @@ const currencyNameSchema = z.object({
 
 const currencySchema = z
   .object({
-    id: z.string(),
+    id: z.number(),
     name: currencyNameSchema,
     code_name: z.string(),
     icon_url: z.string(),
@@ -21,8 +21,7 @@ const currencySchema = z
       CurrencyType.ElMoney,
       CurrencyType.Bankomat,
     ]),
-  })
-  .nullable();
+  }).nullable();
 
 const positiveNumberSchema = z.coerce
   .number()
