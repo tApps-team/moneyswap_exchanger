@@ -120,11 +120,11 @@ export const DirectionAddForm = () => {
     isFetching: isBankomatsFetching,
   } = useGetBankomatsByValuteQuery(
     {
-      valute: form.getValues("valute_to.name.ru"),
+      valute_id: form.getValues("valute_to.id"),
     },
     {
       skip:
-        !form.getValues("valute_to.code_name") ||
+        !form.getValues("valute_to.id") ||
         form.getValues("valute_to.type_valute") !== CurrencyType.Bankomat,
       refetchOnMountOrArgChange: true,
     }
@@ -233,55 +233,20 @@ export const DirectionAddForm = () => {
 
     const updatedExchangeRates =
       ratesToProcess?.map((rate: ExchangeRate, index: number, array: ExchangeRate[]) => {
-        // let in_count: number = rate.in_count ?? 1;
-        // let out_count: number = rate.out_count ?? 1;
-        // let base_in_count: number = ratesToProcess[0].in_count ?? 1;
-        // let base_out_count: number = ratesToProcess[0].out_count ?? 1;
-        // let rate_coefficient: number = rate.rate_coefficient ?? 1;
-
-        // if (rate.in_count === rate.out_count) {
-        //   in_count = 1;
-        //   out_count = 1;
-        // } else if ((rate.in_count === 1 && rate.out_count >= 1) || (rate.in_count >= 1 && rate.out_count === 1)) {
-        //   in_count = rate.in_count;
-        //   out_count = rate.out_count;
-        // } else if (rate.in_count !== 1 || rate.out_count !== 1) {
-        //   base_in_count = ratesToProcess[0].in_count > ratesToProcess[0].out_count
-        //   ? ratesToProcess[0].in_count / ratesToProcess[0].out_count
-        //   : 1;
-        //   base_out_count = ratesToProcess[0].out_count > ratesToProcess[0].in_count
-        //   ? ratesToProcess[0].out_count / ratesToProcess[0].in_count
-        //   : 1;
-        //   in_count =
-        //     rate.in_count > rate.out_count
-        //       ? rate.in_count / rate.out_count
-        //       : 1;
-
-        //   out_count =
-        //     rate.in_count > rate.out_count
-        //       ? 1
-        //       : rate.out_count / rate.in_count;
-
-        //   rate_coefficient = in_count > out_count ? Number((in_count / base_in_count).toFixed(4)) : Number((out_count / base_out_count).toFixed(4));
-        // }
 
         if (array.length === 1) {
-          // return { ...rate, in_count, out_count, min_count: null, max_count: null };
           return { ...rate, min_count: null, max_count: null };
         }
 
         if (index === array.length - 1) {
-          // return { ...rate, in_count, out_count, max_count: null, rate_coefficient };
           return { ...rate, max_count: null };
         }
 
-        // return { ...rate, in_count, out_count, rate_coefficient };
         return { ...rate };
       }) ?? null;
 
     const updatedData = { ...data, exchange_rates: updatedExchangeRates };
     handleAddDirection(updatedData);
-    // console.log(updatedData);
   };
 
   const handleAddNewRate = () => {

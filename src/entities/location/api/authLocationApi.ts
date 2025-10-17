@@ -17,11 +17,11 @@ import { LOCATION } from "@/shared/api/tags";
 export const authLocationApi = authApi.injectEndpoints({
   endpoints: (build) => ({
     getCountries: build.query<ActiveLocation[], void>({
-      query: () => `/api/partner/partner_countries`,
+      query: () => `/api/v2/partner/partner_countries`,
       providesTags: [LOCATION],
     }),
     getCities: build.query<ActiveLocation[], void>({
-      query: () => `/api/partner/partner_cities`,
+      query: () => `/api/v2/partner/partner_cities`,
       providesTags: [LOCATION],
     }),
     // города в стране
@@ -30,7 +30,7 @@ export const authLocationApi = authApi.injectEndpoints({
       GetCitiesByCountryDtoRequest
     >({
       query: (params) => ({
-        url: "/api/partner/cities_for_exclude_by_partner_country",
+        url: "/api/v2/partner/cities_for_exclude_by_partner_country",
         method: "GET",
         params: params,
       }),
@@ -40,7 +40,7 @@ export const authLocationApi = authApi.injectEndpoints({
       GetCitiesByCountryDtoRequest
     >({
       query: (params) => ({
-        url: "/api/partner/cities_for_exclude_by_partner_country",
+        url: "/api/v2/partner/cities_for_exclude_by_partner_country",
         method: "GET",
         params: params,
       }),
@@ -50,7 +50,7 @@ export const authLocationApi = authApi.injectEndpoints({
       EditCitiesByCountryDtoRequest
   >({
     query: (body) => ({
-        url: "/api/partner/edit_excluded_cities_by_partner_country",
+        url: "/api/v2/partner/edit_excluded_cities_by_partner_country",
         method: "PATCH",
         body: body,
       }),
@@ -62,7 +62,7 @@ export const authLocationApi = authApi.injectEndpoints({
       AddPartnerLocationDtoRequest
     >({
       query: (body) => ({
-        url: "/api/partner/add_partner_city_country",
+        url: "/api/v2/partner/add_partner_city_country",
         method: "POST",
         body: body,
       }),
@@ -73,7 +73,7 @@ export const authLocationApi = authApi.injectEndpoints({
       EditPartnerLocationDtoRequest
     >({
       query: (body) => ({
-        url: "/api/partner/edit_partner_city_country",
+        url: "/api/v2/partner/edit_partner_city_country",
         body: body,
         method: "PATCH",
       }),
@@ -84,7 +84,7 @@ export const authLocationApi = authApi.injectEndpoints({
       DeletePartnerLocationDtoRequest
     >({
       query: (body) => ({
-        url: `/api/partner/delete_partner_city_country`,
+        url: `/api/v2/partner/delete_partner_city_country`,
         method: "DELETE",
         body,
       }),

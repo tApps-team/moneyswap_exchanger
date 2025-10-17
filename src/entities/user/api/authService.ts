@@ -28,7 +28,7 @@ export const authorizationAPI = baseApi.injectEndpoints({
         formData.append("password", authParams.password);
 
         return {
-          url: `/api/auth/token`,
+          url: `/api/v2/auth/token`,
           method: `POST`,
           body: formData,
         };
@@ -42,7 +42,7 @@ export const changePasswordAPI = authApi.injectEndpoints({
   endpoints: (build) => ({
     changePassword: build.mutation<string, ChangePassword>({
       query: (password) => ({
-        url: `/api/partner/change_password`,
+        url: `/api/v2/partner/change_password`,
         method: "POST",
         body: password,
       }),
@@ -55,7 +55,7 @@ export const profileInfoApi = authApi.injectEndpoints({
   endpoints: (build) => ({
     profileInfo: build.query<ProfileInfoDtoResponse, ProfileInfoDtoRequest>({
       query: () => ({
-        url: `/api/partner/account_info`,
+        url: `/api/v2/partner/account_info`,
         method: "GET",
       }),
       keepUnusedDataFor: 0,
@@ -63,7 +63,7 @@ export const profileInfoApi = authApi.injectEndpoints({
     }),
     switchNotificationActivity: build.mutation<string, void>({
       query: () => ({
-        url: `/api/partner/switch_notification_activity`,
+        url: `/api/v2/partner/switch_notification_activity`,
         method: "GET",
       }),
       invalidatesTags: [TELEGRAM],
@@ -73,7 +73,7 @@ export const profileInfoApi = authApi.injectEndpoints({
       AddTelegramAccountDtoRequest
     >({
       query: (params) => ({
-        url: `/api/partner/add_admin_exchange_order`,
+        url: `/api/v2/partner/add_admin_exchange_order`,
         method: "POST",
         params,
       }),
@@ -84,7 +84,7 @@ export const profileInfoApi = authApi.injectEndpoints({
      EditTelegramAccountDtoRequest
   >({
       query: (params) => ({
-        url: `/api/partner/edit_admin_exchange_order`,
+        url: `/api/v2/partner/edit_admin_exchange_order`,
         method: "POST",
         params,
       }),
@@ -95,7 +95,7 @@ export const profileInfoApi = authApi.injectEndpoints({
      void
  >({
      query: () => ({
-       url: `/api/partner/delete_admin_exchange_order`,
+       url: `/api/v2/partner/delete_admin_exchange_order`,
        method: "DELETE",
      }),
      invalidatesTags: [TELEGRAM],
