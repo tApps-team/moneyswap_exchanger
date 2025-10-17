@@ -21,7 +21,7 @@ const authBaseQuery: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  const accessToken = Cookies.get("accessToken");
+  let accessToken = Cookies.get("accessToken");
   const baseQuery = fetchBaseQuery({
     baseUrl,
     headers: {
@@ -43,7 +43,7 @@ const authBaseQuery: BaseQueryFn<
         const refreshResult = (await baseQuery(
           {
             method: "POST",
-            url: "/api/auth/refresh",
+            url: "/api/v2/auth/refresh",
             body: { refresh_token: refreshToken },
           },
           api,
@@ -52,15 +52,36 @@ const authBaseQuery: BaseQueryFn<
 
         if (refreshResult.data) {
           const newAccessToken = refreshResult.data.access_token;
-          Cookies.set("accessToken", newAccessToken);
           const newRefreshToken = refreshResult.data.refresh_token;
+          
+          // Обновляем токены в cookies
+          Cookies.set("accessToken", newAccessToken);
           Cookies.set("refreshToken", newRefreshToken);
+          
+          // Обновляем токены в Redux store
+          api.dispatch(userSlice.actions.setTokens({
+            access_token: newAccessToken,
+            refresh_token: newRefreshToken,
+            token_type: refreshResult.data.token_type || 'bearer'
+          }));
+          
+          // Обновляем локальную переменную токена
+          accessToken = newAccessToken;
+          
+          // Создаем новый baseQuery с обновленным токеном
           const newBaseQuery = fetchBaseQuery({
             baseUrl,
             headers: {
               Authorization: `Bearer ${newAccessToken}`,
+              'Moneyswap': 'true',
+            },
+            prepareHeaders: (headers) => {
+              headers.set('moneyswap', 'true');
+              return headers;
             },
           });
+          
+          // Повторяем оригинальный запрос с новым токеном
           result = await newBaseQuery(args, api, extraOptions);
         } else {
           api.dispatch(userSlice.actions.logout());
@@ -70,7 +91,19 @@ const authBaseQuery: BaseQueryFn<
       }
     } else {
       await mutex.waitForUnlock();
-      result = await baseQuery(args, api, extraOptions);
+      // Перечитываем токен после разблокировки мьютекса
+      const updatedAccessToken = Cookies.get("accessToken");
+      const updatedBaseQuery = fetchBaseQuery({
+        baseUrl,
+        headers: {
+          Authorization: `Bearer ${updatedAccessToken}`,
+        },
+        prepareHeaders: (headers) => {
+          headers.set('moneyswap', 'true');
+          return headers;
+        },
+      });
+      result = await updatedBaseQuery(args, api, extraOptions);
     }
   }
 
